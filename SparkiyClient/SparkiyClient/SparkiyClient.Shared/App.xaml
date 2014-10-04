@@ -1,7 +1,8 @@
-﻿<Application
+﻿<prism:MvvmAppBase
     x:Class="SparkiyClient.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
     xmlns:local="using:SparkiyClient">
 
-</Application>
+</prism:MvvmAppBase>
