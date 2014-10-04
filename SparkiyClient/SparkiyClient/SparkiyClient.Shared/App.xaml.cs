@@ -30,11 +30,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SparkiyClient
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
-    public sealed partial class App : Microsoft.Practices.Prism.Mvvm.MvvmAppBase
-    {
+	/// <summary>
+	/// Provides application-specific behavior to supplement the default Application class.
+	/// </summary>
+	public sealed partial class App : Microsoft.Practices.Prism.Mvvm.MvvmAppBase
+	{
 		// Create the singleton container that will be used for type resolution in the app
 		private readonly IUnityContainer container = new UnityContainer();
 
@@ -48,8 +48,8 @@ namespace SparkiyClient
 		/// executed, and as such is the logical equivalent of main() or WinMain().
 		/// </summary>
 		public App()
-        {
-            this.InitializeComponent();
+		{
+			this.InitializeComponent();
 			this.RequestedTheme = ApplicationTheme.Light;
 		}
 
@@ -67,6 +67,12 @@ namespace SparkiyClient
 			// Ensure the current window is active
 			Window.Current.Activate();
 			return Task.FromResult<object>(null);
+		}
+
+		protected override void OnRegisterKnownTypesForSerialization()
+		{
+			// Set up the list of known types for the SuspensionManager
+			//SessionStateService.RegisterKnownType(typeof(SOME_MODEL));
 		}
 
 		protected override Task OnInitializeAsync(IActivatedEventArgs args)

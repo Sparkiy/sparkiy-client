@@ -15,9 +15,10 @@
     <FileAlignment>512</FileAlignment>
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>SparkiyClient.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>SparkiyClient.Windows_StoreKey.pfx</PackageCertificateKeyFile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <PackageCertificateThumbprint>C8A1990B51B222792CBFBF1503A0F656387022C8</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -112,6 +113,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="packages.config" />
+    <None Include="SparkiyClient.Windows_StoreKey.pfx" />
     <None Include="SparkiyClient.Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +121,7 @@
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
+    <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.Prism.Mvvm">

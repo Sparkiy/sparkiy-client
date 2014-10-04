@@ -39,6 +39,20 @@ namespace SparkiyClient.Views
 
         }
 
+		protected override void SaveState(System.Collections.Generic.Dictionary<string, object> pageState)
+		{
+			if (pageState == null) return;
+
+			base.SaveState(pageState);
+		}
+
+		protected override void LoadState(object navigationParameter, System.Collections.Generic.Dictionary<string, object> pageState)
+		{
+			if (pageState == null) return;
+
+			base.LoadState(navigationParameter, pageState);
+		}
+
 		private void PageSizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			
