@@ -22,7 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Converters\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Assets\" />
     <Folder Include="$(MSBuildThisFileDirectory)Themes\" />
   </ItemGroup>
   <ItemGroup>
@@ -33,5 +32,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\sparkiy.png" />
   </ItemGroup>
 </Project>

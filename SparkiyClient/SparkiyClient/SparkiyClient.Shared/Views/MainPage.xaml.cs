@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.StoreApps;
+using SparkiyEngine.Graphics.DirectX;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,12 +24,12 @@ namespace SparkiyClient.Views
     /// </summary>
     public sealed partial class MainPage : VisualStateAwarePage
     {
+		private Renderer renderer;
+
         public MainPage()
         {
             this.InitializeComponent();
 			this.SizeChanged += this.PageSizeChanged;
-
-
 		}
 
         /// <summary>
@@ -38,8 +39,15 @@ namespace SparkiyClient.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+			this.renderer = new Renderer(this.swapChainPanel);
+		}
 
-        }
+		protected override void OnNavigatedFrom(NavigationEventArgs e)
+		{
+			this.renderer.Dispose();
+
+			base.OnNavigatedFrom(e);
+		}
 
 		protected override void SaveState(System.Collections.Generic.Dictionary<string, object> pageState)
 		{
