@@ -27,6 +27,8 @@ namespace SparkiyClient.Views
         {
             this.InitializeComponent();
 			this.SizeChanged += this.PageSizeChanged;
+
+
 		}
 
         /// <summary>
