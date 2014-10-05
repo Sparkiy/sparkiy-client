@@ -1,13 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<ClInclude Include="$(MSBuildThisFileDirectory)Class1.h"/>
-		<ClInclude Include="$(MSBuildThisFileDirectory)pch.h"/>
-	</ItemGroup>
-	<ItemGroup>
-		<ClCompile Include="$(MSBuildThisFileDirectory)Class1.cpp" />
-		<ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
-			<PrecompiledHeader>Create</PrecompiledHeader>
-		</ClCompile>
-	</ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Game.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)HitTestingHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ppltasks_extra.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StarterKitMain.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)VSD3DStarter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animation\Animation.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Common\DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Common\DirectXHelper.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Common\StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Content\SampleFpsTextRenderer.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DirectXTex\DDSTextureLoader.h">
+      <Filter>DirectXTex</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Game.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StarterKitMain.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Common\DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Content\SampleFpsTextRenderer.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DirectXTex\DDSTextureLoader.cpp">
+      <Filter>DirectXTex</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="$(MSBuildThisFileDirectory)Assets\GlowEffect.hlsl">
+      <Filter>Assets</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)Animation\SkinningVertexShader.hlsl">
+      <Filter>Animation</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Assets\gamelevel.fbx">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Assets\GlowEffect.dgsl">
+      <Filter>Assets</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Assets\teapot.fbx">
+      <Filter>Assets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{62dc0290-2415-4be7-83f9-5d6cfe4bdd46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{3312b8fd-5c59-429b-bc96-c1037f559362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{658fa23f-9efb-4e2a-8df2-d29a5cf18dac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>{c41827bb-eb08-4d56-b24c-d90b8528c61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXTex">
+      <UniqueIdentifier>{a0a7c48e-8bfa-4e54-a435-7b92e4b0bf08}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="$(MSBuildThisFileDirectory)Assets\CubeUVImage.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

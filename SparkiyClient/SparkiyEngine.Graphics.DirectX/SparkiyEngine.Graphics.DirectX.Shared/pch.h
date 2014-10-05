@@ -13,4 +13,3 @@
 #include <agile.h>
 #include <concrt.h>
 #include <collection.h>
-#include "App.xaml.h"
