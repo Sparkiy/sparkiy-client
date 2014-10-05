@@ -58,9 +58,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK_Windows81", "Dire
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK", "DirectXTK\DirectXTK_WindowsPhone81.vcxproj", "{AF2F1DAB-BDCE-40E5-9225-1F02BA0BF2E4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SparkiyEngine.Graphics.DirectX", "SparkiyEngine.Graphics.DirectX", "{16516BCD-945A-4BA7-BA3B-4BAC4CF9AFD2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparkiyEngine.Graphics.DirectX.Shared", "SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.Shared\SparkiyEngine.Graphics.DirectX.Shared.vcxitems", "{440E2535-405C-4834-9A03-8918B37E7782}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparkiyEngine.Graphics.DirectX.Windows", "SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.Windows\SparkiyEngine.Graphics.DirectX.Windows.vcxproj", "{428AB712-CAF9-497B-9228-C3348E4F4B1E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparkiyEngine.Graphics.DirectX.WindowsPhone", "SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.WindowsPhone\SparkiyEngine.Graphics.DirectX.WindowsPhone.vcxproj", "{CD06F3AB-0771-42A4-A82C-370F590462E4}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SparkiyEngine.Language.LuaImplementation\SparkiyEngine.Language.LuaImplementation.Shared\SparkiyEngine.Language.LuaImplementation.Shared.vcxitems*{b14c3355-3485-4977-928d-00cf669a0614}*SharedItemsImports = 9
+		SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.Shared\SparkiyEngine.Graphics.DirectX.Shared.vcxitems*{440e2535-405c-4834-9a03-8918b37e7782}*SharedItemsImports = 9
 		SparkiyEngine.Language.LuaImplementation\SparkiyEngine.Language.LuaImplementation.Shared\SparkiyEngine.Language.LuaImplementation.Shared.vcxitems*{3f5b304e-68be-4674-aa73-c9dec0dea6f1}*SharedItemsImports = 4
 		SparkiyClient\SparkiyClient.Shared\SparkiyClient.Shared.projitems*{921b2fe9-7ad1-4f92-8465-77c03dd95b4f}*SharedItemsImports = 4
 		SparkiyEngine.Language.Lua\SparkiyEngine.Language.Lua.Shared\SparkiyEngine.Language.Lua.Shared.vcxitems*{d79c0239-df0d-4a1f-9c93-b0cf735c41e8}*SharedItemsImports = 9
@@ -68,7 +77,9 @@ Global
 		SparkiyEngine.Language.LuaImplementation\SparkiyEngine.Language.LuaImplementation.Shared\SparkiyEngine.Language.LuaImplementation.Shared.vcxitems*{5e82d3af-4629-4992-95dc-e94fa0ed0a19}*SharedItemsImports = 4
 		SparkiyClient\SparkiyClient.Shared\SparkiyClient.Shared.projitems*{5cda09a9-a58b-48c5-ac0b-0bc159149350}*SharedItemsImports = 13
 		SparkiyClient\SparkiyClient.Shared\SparkiyClient.Shared.projitems*{7b4c6e81-e0e3-4ea2-bf16-675706b979c5}*SharedItemsImports = 4
+		SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.Shared\SparkiyEngine.Graphics.DirectX.Shared.vcxitems*{cd06f3ab-0771-42a4-a82c-370f590462e4}*SharedItemsImports = 4
 		SparkiyEngine.Language.Lua\SparkiyEngine.Language.Lua.Shared\SparkiyEngine.Language.Lua.Shared.vcxitems*{84799c77-191f-4e39-9275-9e0a4accee21}*SharedItemsImports = 4
+		SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.Shared\SparkiyEngine.Graphics.DirectX.Shared.vcxitems*{428ab712-caf9-497b-9228-c3348e4f4b1e}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -367,6 +378,48 @@ Global
 		{AF2F1DAB-BDCE-40E5-9225-1F02BA0BF2E4}.Release|x64.ActiveCfg = Release|Win32
 		{AF2F1DAB-BDCE-40E5-9225-1F02BA0BF2E4}.Release|x86.ActiveCfg = Release|Win32
 		{AF2F1DAB-BDCE-40E5-9225-1F02BA0BF2E4}.Release|x86.Build.0 = Release|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|ARM.Build.0 = Debug|ARM
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|Win32.Build.0 = Debug|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|x64.ActiveCfg = Debug|x64
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|x64.Build.0 = Debug|x64
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|x86.ActiveCfg = Debug|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Debug|x86.Build.0 = Debug|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|ARM.ActiveCfg = Release|ARM
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|ARM.Build.0 = Release|ARM
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|Win32.ActiveCfg = Release|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|Win32.Build.0 = Release|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|x64.ActiveCfg = Release|x64
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|x64.Build.0 = Release|x64
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|x86.ActiveCfg = Release|Win32
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E}.Release|x86.Build.0 = Release|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|ARM.ActiveCfg = Debug|ARM
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|ARM.Build.0 = Debug|ARM
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|Win32.Build.0 = Debug|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|x64.ActiveCfg = Debug|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|x86.ActiveCfg = Debug|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Debug|x86.Build.0 = Debug|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|Any CPU.ActiveCfg = Release|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|ARM.ActiveCfg = Release|ARM
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|ARM.Build.0 = Release|ARM
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|Win32.ActiveCfg = Release|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|Win32.Build.0 = Release|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|x64.ActiveCfg = Release|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|x86.ActiveCfg = Release|Win32
+		{CD06F3AB-0771-42A4-A82C-370F590462E4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -394,5 +447,9 @@ Global
 		{7D442F8F-EF5A-42C6-9117-CFC6BD6E33A0} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
 		{E0B52AE7-E160-4D32-BF3F-910B785E5A8E} = {7D442F8F-EF5A-42C6-9117-CFC6BD6E33A0}
 		{AF2F1DAB-BDCE-40E5-9225-1F02BA0BF2E4} = {7D442F8F-EF5A-42C6-9117-CFC6BD6E33A0}
+		{16516BCD-945A-4BA7-BA3B-4BAC4CF9AFD2} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
+		{440E2535-405C-4834-9A03-8918B37E7782} = {16516BCD-945A-4BA7-BA3B-4BAC4CF9AFD2}
+		{428AB712-CAF9-497B-9228-C3348E4F4B1E} = {16516BCD-945A-4BA7-BA3B-4BAC4CF9AFD2}
+		{CD06F3AB-0771-42A4-A82C-370F590462E4} = {16516BCD-945A-4BA7-BA3B-4BAC4CF9AFD2}
 	EndGlobalSection
 EndGlobal
