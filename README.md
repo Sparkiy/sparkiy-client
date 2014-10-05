@@ -18,5 +18,5 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 - [Prism.StoreApps](http://prismwindowsruntime.codeplex.com/)
 - [CommonServiceLocator](http://commonservicelocator.codeplex.com/)
 - [Unity](http://unity.codeplex.com/)
-- [Lua](http://lua.org/)
-- [DirectX Tool Kit](http://directxtk.codeplex.com/)
+- [Lua](http://lua.org/) (_Version 5.2.3_)
+- [DirectX Tool Kit](http://directxtk.codeplex.com/) (_Version Sep 5, 2014_)
