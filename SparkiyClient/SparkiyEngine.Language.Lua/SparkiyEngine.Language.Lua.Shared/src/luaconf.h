@@ -34,7 +34,8 @@
 #endif
 
 #if defined(LUA_WIN)
-#define LUA_DL_DLL
+// Disabled for Windows Store apps
+//#define LUA_DL_DLL
 #define LUA_USE_AFORMAT		/* assume 'printf' handles 'aA' specifiers */
 #endif
 

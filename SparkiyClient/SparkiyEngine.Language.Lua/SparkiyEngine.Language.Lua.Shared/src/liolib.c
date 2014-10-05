@@ -237,20 +237,21 @@ static int io_open (lua_State *L) {
 /*
 ** function to close 'popen' files
 */
-static int io_pclose (lua_State *L) {
-  LStream *p = tolstream(L);
-  return luaL_execresult(L, lua_pclose(L, p->f));
-}
+// io_pclose not supported on Windows Store
+//static int io_pclose (lua_State *L) {
+//  LStream *p = tolstream(L);
+//  return luaL_execresult(L, lua_pclose(L, p->f));
+//}
 
-
-static int io_popen (lua_State *L) {
-  const char *filename = luaL_checkstring(L, 1);
-  const char *mode = luaL_optstring(L, 2, "r");
-  LStream *p = newprefile(L);
-  p->f = lua_popen(L, filename, mode);
-  p->closef = &io_pclose;
-  return (p->f == NULL) ? luaL_fileresult(L, 0, filename) : 1;
-}
+// io_popen not supported on Windows Store
+//static int io_popen (lua_State *L) {
+//  const char *filename = luaL_checkstring(L, 1);
+//  const char *mode = luaL_optstring(L, 2, "r");
+//  LStream *p = newprefile(L);
+//  p->f = lua_popen(L, filename, mode);
+//  p->closef = &io_pclose;
+//  return (p->f == NULL) ? luaL_fileresult(L, 0, filename) : 1;
+//}
 
 
 static int io_tmpfile (lua_State *L) {
@@ -594,7 +595,7 @@ static const luaL_Reg iolib[] = {
   {"lines", io_lines},
   {"open", io_open},
   {"output", io_output},
-  {"popen", io_popen},
+  //{"popen", io_popen}, // io_popen not supported on Windows Store
   {"read", io_read},
   {"tmpfile", io_tmpfile},
   {"type", io_type},

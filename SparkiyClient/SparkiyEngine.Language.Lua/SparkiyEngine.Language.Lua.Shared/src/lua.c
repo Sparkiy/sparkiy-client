@@ -422,10 +422,14 @@ static int runargs (lua_State *L, char **argv, int n) {
 
 static int handle_luainit (lua_State *L) {
   const char *name = "=" LUA_INITVERSION;
-  const char *init = getenv(name + 1);
+  // getenv not supported on Windows Store
+  //const char *init = getenv(name + 1);
+  const char *init = NULL;
   if (init == NULL) {
     name = "=" LUA_INIT;
-    init = getenv(name + 1);  /* try alternative name */
+	// getenv not supported on Windows Store
+	//init = getenv(name + 1);  /* try alternative name */
+    init = NULL;  /* try alternative name */
   }
   if (init == NULL) return LUA_OK;
   else if (init[0] == '@')
