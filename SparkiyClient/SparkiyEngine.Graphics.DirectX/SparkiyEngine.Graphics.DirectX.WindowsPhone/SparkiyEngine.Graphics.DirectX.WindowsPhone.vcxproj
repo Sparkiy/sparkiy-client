@@ -100,6 +100,7 @@
 		<Link>
 			<SubSystem>Console</SubSystem>
 			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<AdditionalDependencies>WindowsPhoneCore.lib;RuntimeObject.lib;PhoneAppModelHost.lib;DXGI.lib;D3D11.lib;D2D1.lib;DWrite.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
 	</ItemDefinitionGroup>
 
@@ -115,6 +116,7 @@
 		<Link>
 			<SubSystem>Console</SubSystem>
 			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<AdditionalDependencies>WindowsPhoneCore.lib;RuntimeObject.lib;PhoneAppModelHost.lib;DXGI.lib;D3D11.lib;D2D1.lib;DWrite.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
 	</ItemDefinitionGroup>
 
@@ -130,6 +132,7 @@
 		<Link>
 			<SubSystem>Console</SubSystem>
 			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<AdditionalDependencies>WindowsPhoneCore.lib;RuntimeObject.lib;PhoneAppModelHost.lib;DXGI.lib;D3D11.lib;D2D1.lib;DWrite.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
 	</ItemDefinitionGroup>
 
@@ -145,6 +148,7 @@
 		<Link>
 			<SubSystem>Console</SubSystem>
 			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<AdditionalDependencies>WindowsPhoneCore.lib;RuntimeObject.lib;PhoneAppModelHost.lib;DXGI.lib;D3D11.lib;D2D1.lib;DWrite.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
 	</ItemDefinitionGroup>
 
