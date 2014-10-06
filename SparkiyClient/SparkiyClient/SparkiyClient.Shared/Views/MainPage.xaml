@@ -19,7 +19,7 @@
 		
 		<TextBlock Text="Sparkiy" Grid.Row="0" />
 		
-		<SwapChainPanel x:Name="swapChainPanel" Grid.Row="1" />
+		<SwapChainPanel x:Name="SwapChainPanel" Grid.Row="1" />
 
 	</Grid>
 </prism:VisualStateAwarePage>

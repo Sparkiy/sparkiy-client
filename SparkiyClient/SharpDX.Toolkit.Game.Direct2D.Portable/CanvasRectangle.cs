@@ -13,6 +13,7 @@ namespace SharpDX.Toolkit.Direct2D.Test.CanvasStub {
         }
 
         public Brush Brush { get; set; }
+
         public bool Fill { get; set; }
 
         public RectangleF Bounds { get; set; }

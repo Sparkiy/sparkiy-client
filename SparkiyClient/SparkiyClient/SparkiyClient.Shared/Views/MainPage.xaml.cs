@@ -39,7 +39,7 @@ namespace SparkiyClient.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-			this.renderer = new Renderer(this.swapChainPanel);
+			this.renderer = new Renderer(this.SwapChainPanel);
 		}
 
 		protected override void OnNavigatedFrom(NavigationEventArgs e)

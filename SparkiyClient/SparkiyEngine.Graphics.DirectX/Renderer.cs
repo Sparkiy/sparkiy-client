@@ -68,15 +68,18 @@ namespace SparkiyEngine.Graphics.DirectX
 			Canvas = new SharpDX.Toolkit.Direct2D.Test.CanvasStub.Canvas(this);
 			Brushes.Initialize(Canvas.DeviceContext);
 
-			Canvas.PushObject(new CanvasRectangle(new RectangleF(0.0f, 100.0f, 90.0f, 90.0f), Brushes.GhostWhite));
+			Canvas.Clear();
+			Canvas.PushObject(new CanvasBitmap(this.logoTexture, new RectangleF(100, 100, this.logoTexture.Width, this.logoTexture.Height)));
+			Canvas.PushObject(new CanvasRectangle(new RectangleF(97f, 97.0f, this.logoTexture.Width + 5, this.logoTexture.Height + 5), Brushes.Orange, false, 2f, null));
+			Canvas.PushObject(new CanvasRectangle(new RectangleF(100f, 100.0f, this.logoTexture.Width, this.logoTexture.Height), Brushes.Orange, false, 2f, null));
+			Canvas.PushObject(new CanvasRectangle(new RectangleF(103f, 103.0f, this.logoTexture.Width-5, this.logoTexture.Height-5), Brushes.Orange, false, 2f, null));
 			Canvas.PushObject(new CanvasText(
 				"Hello there",
-				new TextFormat(Canvas.DirectWriteFactory, "Consolas", 20.0f),
+				new TextFormat(Canvas.DirectWriteFactory, "Consolas", 12.0f),
 				new RectangleF(300, 300, 100, 100),
 				Brushes.White,
-				DrawTextOptions.None,
+				DrawTextOptions.NoSnap,
 				MeasuringMode.Natural));
-
 
 			base.LoadContent();
 		}
@@ -93,32 +96,9 @@ namespace SparkiyEngine.Graphics.DirectX
 			base.Draw(gameTime);
 
 			// Clears the screen with the Color.CornflowerBlue
-			GraphicsDevice.Clear(Color.CornflowerBlue);
-
-			spriteBatch.Begin(SpriteSortMode.Deferred, GraphicsDevice.BlendStates.NonPremultiplied);
-			spriteBatch.Draw(logoTexture, new Vector2(100, 100), Color.White);
-			//spriteBatch.DrawString(this.debugFont, "Test text", new Vector2(10, 10), Color.Black);
-			spriteBatch.End();
+			GraphicsDevice.Clear(Color.Purple);
 
 			Canvas.Render();
-
-			//// Retrive d2d context
-			//var d2dContext = this.Services.GetService<IDirect2DService>().Context;
-
-			//// Retrieve dxwrite factory
-			//var fontFactory = this.Services.GetService<IDirect2DService>().DwFactory;
-
-			//// Define desired font
-			//var textFormat = new TextFormat(fontFactory, "Consolas", 24.0f);
-
-			//// Define font foreground color
-			//var textForeground = new SolidColorBrush(d2dContext, Color.Black);
-
-			//// Draw a block of text that will be clipped against the specified layout rectangle.
-			//d2dContext.DrawText("This text is long enough to overflow the designed region but will be clipped to the containing rectangle.", 
-			//	textFormat, 
-			//	new RectangleF(50, 50, 200, 200),
-			//	textForeground);
 		}
 	}
 
