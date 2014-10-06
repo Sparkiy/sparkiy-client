@@ -4,7 +4,6 @@ using SharpDX.DirectWrite;
 using SharpDX.Toolkit;
 using SharpDX.Toolkit.Graphics;
 using SharpDX.Toolkit.Direct2D;
-using SharpDX.Toolkit.Direct2D.Test.CanvasStub;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +23,7 @@ namespace SparkiyEngine.Graphics.DirectX
 		private SpriteBatch spriteBatch;
 		private SpriteFont debugFont;
 		private Texture2D logoTexture;
-		public SharpDX.Toolkit.Direct2D.Test.CanvasStub.Canvas Canvas { get; set; }
+		public SharpDX.Toolkit.Direct2D.Canvas Canvas { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SparkiyGame" /> class.
@@ -65,7 +64,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// Create 2D Canvas for caching 
-			Canvas = new SharpDX.Toolkit.Direct2D.Test.CanvasStub.Canvas(this);
+			Canvas = new SharpDX.Toolkit.Direct2D.Canvas(this);
 			Brushes.Initialize(Canvas.DeviceContext);
 
 			Canvas.Clear();

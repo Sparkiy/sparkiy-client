@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22013.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SparkiyClient", "SparkiyClient", "{4953258D-D77C-4D81-8635-E690143BA96C}"
 EndProject
@@ -56,7 +56,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Graphics.Dire
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharpDX", "SharpDX", "{DB1B440A-3EED-4A74-926A-AC0B9B4C0985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpDX.Toolkit.Game.Direct2D.Portable", "SharpDX.Toolkit.Game.Direct2D.Portable\SharpDX.Toolkit.Game.Direct2D.Portable.csproj", "{BDFE077F-B079-4A94-B147-326AF9531294}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpDX.Toolkit.Direct2D", "SharpDX.Toolkit.Game.Direct2D\SharpDX.Toolkit.Direct2D\SharpDX.Toolkit.Direct2D.csproj", "{76C266AE-873F-490A-9124-DB60916D0F95}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -341,22 +341,22 @@ Global
 		{E9172DFA-125C-4C68-8DF8-EF88E36AB410}.Release|Win32.ActiveCfg = Release|Any CPU
 		{E9172DFA-125C-4C68-8DF8-EF88E36AB410}.Release|x64.ActiveCfg = Release|Any CPU
 		{E9172DFA-125C-4C68-8DF8-EF88E36AB410}.Release|x86.ActiveCfg = Release|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Release|ARM.ActiveCfg = Release|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Release|Win32.ActiveCfg = Release|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Release|x64.ActiveCfg = Release|Any CPU
-		{BDFE077F-B079-4A94-B147-326AF9531294}.Release|x86.ActiveCfg = Release|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|ARM.ActiveCfg = Release|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|Win32.ActiveCfg = Release|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|x64.ActiveCfg = Release|Any CPU
+		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -383,6 +383,6 @@ Global
 		{65DC3E23-563D-4FCF-B81A-FD2B95D49414} = {33632E57-519F-4D68-82D6-88690211E54D}
 		{E9172DFA-125C-4C68-8DF8-EF88E36AB410} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
 		{DB1B440A-3EED-4A74-926A-AC0B9B4C0985} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
-		{BDFE077F-B079-4A94-B147-326AF9531294} = {DB1B440A-3EED-4A74-926A-AC0B9B4C0985}
+		{76C266AE-873F-490A-9124-DB60916D0F95} = {DB1B440A-3EED-4A74-926A-AC0B9B4C0985}
 	EndGlobalSection
 EndGlobal
