@@ -27,4 +27,4 @@ Sparkiy is fully-featured platform for game and application development. Touch f
     - SharpDX.Toolkit.Graphics
     - SharpDX.Toolkit.Game
     - SharpDX.Toolkit.Input
-    - [SharpDX.Toolkit.Direct2D](https://github.com/Sparkiy/SharpDX.Toolkit.Game.Direct2D)
+    - [SharpDX.Toolkit.Direct2D](https://github.com/Sparkiy/SharpDX.Toolkit.Game.Direct2D) (_external_)
