@@ -42,7 +42,7 @@ namespace SparkiyEngine.Graphics.DirectX
 		protected override void LoadContent()
 		{
 			// Loads the balls texture (32 textures (32x32) stored vertically => 32 x 1024 ).
-			logoTexture = Content.Load<Texture2D>("sparkiy");
+			logoTexture = Content.Load<Texture2D>("sparkiy.png");
 
 			// SpriteFont supports the following font file format:
 			// - DirectX Toolkit MakeSpriteFont or SharpDX Toolkit tkfont

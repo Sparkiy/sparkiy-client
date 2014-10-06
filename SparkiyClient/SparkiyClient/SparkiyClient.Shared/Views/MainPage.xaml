@@ -13,13 +13,13 @@
 
     <Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition />
+			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
 		
 		<TextBlock Text="Sparkiy" Grid.Row="0" />
 		
-		<SwapChainPanel x:Name="swapChainPanel" Width="400" Height="300" Grid.Row="1" />
+		<SwapChainPanel x:Name="swapChainPanel" Grid.Row="1" />
 
 	</Grid>
 </prism:VisualStateAwarePage>

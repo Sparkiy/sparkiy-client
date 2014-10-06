@@ -60,9 +60,6 @@
     <Reference Include="SharpDX.DXGI">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.DXGI.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.SimpleInitializer">
-      <HintPath>..\packages\SharpDX.SimpleInitializer.1.0.0\lib\portable-netcore451+wpa81\SharpDX.SimpleInitializer.dll</HintPath>
-    </Reference>
     <Reference Include="SharpDX.Toolkit">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.dll</HintPath>
     </Reference>
