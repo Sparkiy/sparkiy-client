@@ -19,4 +19,12 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 - [CommonServiceLocator](http://commonservicelocator.codeplex.com/)
 - [Unity](http://unity.codeplex.com/)
 - [Lua](http://lua.org/) (_Version 5.2.3_)
-- [DirectX Tool Kit](http://directxtk.codeplex.com/) (_Version Sep 5, 2014_)
+- [SharpDX](http://sharpdx.org/)
+    - SharpDX.Direct2D1
+    - SharpDX.Direct3D11
+    - SharpDX.DXGI
+    - SharpDX.Toolkit
+    - SharpDX.Toolkit.Graphics
+    - SharpDX.Toolkit.Game
+    - SharpDX.Toolkit.Input
+    - [SharpDX.Toolkit.Direct2D](https://github.com/Sparkiy/SharpDX.Toolkit.Game.Direct2D)
