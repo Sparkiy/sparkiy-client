@@ -16,9 +16,11 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-		
-		<TextBlock Text="Sparkiy" Grid.Row="0" />
-		
+
+		<StackPanel Orientation="Horizontal" Grid.Row="0">
+			<TextBlock Text="Sparkiy"  />
+		</StackPanel>
+
 		<SwapChainPanel x:Name="SwapChainPanel" Grid.Row="1" />
 
 	</Grid>

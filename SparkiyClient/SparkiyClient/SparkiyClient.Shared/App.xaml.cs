@@ -98,7 +98,7 @@ namespace SparkiyClient
 				{
 					var viewModelTypeName = string.Format(
 						CultureInfo.InvariantCulture,
-						"SparkiyClient.UILogic.ViewModels.{0}ViewModel, SparkiyClient.UILogic, Version=1.1.0.0, Culture=neutral", 
+						"SparkiyClient.UILogic.ViewModels.{0}ViewModel, SparkiyClient.UILogic, Version=1.0.0.0, Culture=neutral", 
 						viewType.Name);
 					var viewModelType = Type.GetType(viewModelTypeName);
 					if (viewModelType == null)

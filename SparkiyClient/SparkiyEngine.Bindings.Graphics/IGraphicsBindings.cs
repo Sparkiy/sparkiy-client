@@ -7,5 +7,8 @@ namespace SparkiyEngine.Bindings.Graphics
 {
     public interface IGraphicsBindings
     {
+	    void SetBackground(float r, float g, float b);
+
+	    void DrawRectangle(int x, int y, int w, int h);
     }
 }

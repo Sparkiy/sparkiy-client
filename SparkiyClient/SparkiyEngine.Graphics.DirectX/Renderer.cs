@@ -9,12 +9,13 @@ using Windows.ApplicationModel;
 using Windows.Graphics.Imaging;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using SparkiyEngine.Bindings.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
 	public class Renderer : IDisposable
 	{
-		private Game game;
+		private SparkiyGame game;
 
 
 		public Renderer(SwapChainPanel panel)
@@ -64,5 +65,10 @@ namespace SparkiyEngine.Graphics.DirectX
 			// GC.SuppressFinalize(this);
 		}
 		#endregion
+
+		public IGraphicsBindings GraphicsBindings
+		{
+			get { return this.game.GraphicsBindings; }
+		}
 	}
 }

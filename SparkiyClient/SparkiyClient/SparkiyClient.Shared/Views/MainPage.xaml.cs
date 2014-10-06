@@ -40,6 +40,7 @@ namespace SparkiyClient.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
 			this.renderer = new Renderer(this.SwapChainPanel);
+			this.renderer.GraphicsBindings.SetBackground(0.18f, 0.28f, 0.31f);
 		}
 
 		protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -67,5 +68,5 @@ namespace SparkiyClient.Views
 		{
 			
 		}
-	}
+    }
 }

@@ -7,5 +7,6 @@ namespace SparkiyEngine.Bindings.Engine
 {
     public interface IEngineBindings
     {
+
     }
 }
