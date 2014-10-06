@@ -1,0 +1,3 @@
+[submodule "SparkiyClient/SharpDX.Toolkit.Game.Direct2D/SharpDX.Toolkit.Game.Direct2D"]
+	path = SparkiyClient/SharpDX.Toolkit.Game.Direct2D/SharpDX.Toolkit.Game.Direct2D
+	url = https://github.com/aybe/SharpDX.Toolkit.Game.Direct2D.git

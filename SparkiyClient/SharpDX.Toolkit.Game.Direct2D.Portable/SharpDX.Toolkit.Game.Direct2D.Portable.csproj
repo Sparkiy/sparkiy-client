@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E9172DFA-125C-4C68-8DF8-EF88E36AB410}</ProjectGuid>
+    <ProjectGuid>{BDFE077F-B079-4A94-B147-326AF9531294}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SparkiyEngine.Graphics.DirectX</RootNamespace>
-    <AssemblyName>SparkiyEngine.Graphics.DirectX</AssemblyName>
+    <RootNamespace>SharpDX.Toolkit.Game.Direct2D.Portable</RootNamespace>
+    <AssemblyName>SharpDX.Toolkit.Game.Direct2D.Portable</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -44,16 +44,29 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Brushes.cs" />
+    <Compile Include="Canvas.cs" />
+    <Compile Include="CanvasBitmap.cs" />
+    <Compile Include="CanvasDrawing.cs" />
+    <Compile Include="CanvasEllipse.cs" />
+    <Compile Include="CanvasGeometry.cs" />
+    <Compile Include="CanvasGlyphRun.cs" />
+    <Compile Include="CanvasLine.cs" />
+    <Compile Include="CanvasMetafile.cs" />
+    <Compile Include="CanvasObject.cs" />
+    <Compile Include="CanvasRectangle.cs" />
+    <Compile Include="CanvasRoundedRectangle.cs" />
+    <Compile Include="CanvasState.cs" />
+    <Compile Include="CanvasText.cs" />
+    <Compile Include="CanvasTextLayout.cs" />
+    <Compile Include="CanvasTransform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SharpDX">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Direct2D1">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Direct2D1.dll</HintPath>
-    </Reference>
+    <Reference Include="SharpDX.Direct2D1, Version=2.6.2.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL" />
     <Reference Include="SharpDX.Direct3D11">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Direct3D11.dll</HintPath>
     </Reference>
@@ -63,27 +76,12 @@
     <Reference Include="SharpDX.Toolkit">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Toolkit.Audio">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Audio.dll</HintPath>
-    </Reference>
     <Reference Include="SharpDX.Toolkit.Game">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Game.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Toolkit.Graphics">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Graphics.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Toolkit.Input">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Input.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XAudio2">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.XAudio2.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SharpDX.Toolkit.Game.Direct2D.Portable\SharpDX.Toolkit.Game.Direct2D.Portable.csproj">
-      <Project>{bdfe077f-b079-4a94-b147-326af9531294}</Project>
-      <Name>SharpDX.Toolkit.Game.Direct2D.Portable</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
