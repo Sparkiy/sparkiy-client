@@ -20,19 +20,34 @@ namespace SparkiyEngine.Graphics.DirectX
 		}
 
 
-		public void SetBackground(float r, float g, float b)
+		public void SetBackground(float red, float green, float blue)
 		{
-			this.game.BackgroundColor = new Color4(r, g, b, 1f);
+			this.game.BackgroundColor = new Color4(red, green, blue, 1f);
 		}
 
-		public void DrawRectangle(int x, int y, int w, int h)
+		public void DrawRectangle(float x, float y, float width, float height)
 		{
 			this.game.Canvas.PushObject(
 				new CanvasRectangle(
-					new RectangleF(x, y, w, h),
-					Brushes.Purple,
-					false, 
-					2f));
+					new RectangleF(x, y, width, height),
+					new SolidColorBrush(this.game.Canvas.DeviceContext, this.game.StrokeColor),
+					false,
+					4f));
+		}
+
+		public FloatGroup3 GetStrokeColor()
+		{
+			return new FloatGroup3()
+			{
+				First = this.game.StrokeColor.Red,
+				Second = this.game.StrokeColor.Green,
+				Third = this.game.StrokeColor.Blue
+			};
+		}
+
+		public void SetStrokeColor(float red, float green, float blue)
+		{
+			this.game.StrokeColor = new Color4(red, green, blue, 1f);
 		}
 	}
 
@@ -44,6 +59,10 @@ namespace SparkiyEngine.Graphics.DirectX
 		private Texture2D logoTexture;
 
 		private Color4 backgroundColor; 
+
+		// Styles
+		private Color4 strokeColor;
+		private float strokeThickness;
 
 
 		/// <summary>
@@ -117,6 +136,12 @@ namespace SparkiyEngine.Graphics.DirectX
 		{
 			get { return this.backgroundColor; }
 			set { this.backgroundColor = value; }
+		}
+
+		public Color4 StrokeColor
+		{
+			get { return this.strokeColor; }
+			set { this.strokeColor = value; }
 		}
 
 		public IGraphicsBindings GraphicsBindings

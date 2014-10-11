@@ -9,12 +9,11 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 	public class MethodDeclarationAttribute : Attribute
 	{
-		public MethodDeclarationAttribute(SupportedLanguages languages, string name, MethodTypes type, BindingsVersion supportedVersion = new BindingsVersion())
+		public MethodDeclarationAttribute(SupportedLanguages languages, string name, MethodTypes type)
 		{
 			this.Languages = languages;
 			this.Name = name;
 			this.Type = type;
-			this.SupportedVersion = supportedVersion;
 		}
 
 

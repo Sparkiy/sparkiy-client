@@ -55,8 +55,8 @@ namespace SparkiyEngine.Bindings.Graphics
 
 	public interface IGraphicsBindings : IGraphicsStyleBindings
 	{
-		void SetBackground(float r, float g, float b);
+		void SetBackground(float red, float green, float blue);
 
-		void DrawRectangle(float x, float y, float w, float h);
+		void DrawRectangle(float x, float y, float width, float height);
 	}
 }

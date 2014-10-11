@@ -41,6 +41,8 @@ namespace SparkiyClient.Views
         {
 			this.renderer = new Renderer(this.SwapChainPanel);
 			this.renderer.GraphicsBindings.SetBackground(0.18f, 0.28f, 0.31f);
+			this.renderer.GraphicsBindings.SetStrokeColor(1f, 0f, 0f);
+			this.renderer.GraphicsBindings.DrawRectangle(100, 100, 50, 50);
 		}
 
 		protected override void OnNavigatedFrom(NavigationEventArgs e)

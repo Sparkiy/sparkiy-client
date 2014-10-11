@@ -35,6 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Common\SparkiyEngine.Bindings.Common.csproj">
+      <Project>{ABE22A03-468E-492B-81AB-99EF0D8E245C}</Project>
+      <Name>SparkiyEngine.Bindings.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />

@@ -14,9 +14,11 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LuaImplementation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LuaImplementation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
