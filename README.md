@@ -28,3 +28,4 @@ Sparkiy is fully-featured platform for game and application development. Touch f
     - SharpDX.Toolkit.Game
     - SharpDX.Toolkit.Input
     - [SharpDX.Toolkit.Direct2D](https://github.com/Sparkiy/SharpDX.Toolkit.Game.Direct2D) (_external_)
+- [Fluent Assertions](https://github.com/dennisdoomen/fluentassertions)

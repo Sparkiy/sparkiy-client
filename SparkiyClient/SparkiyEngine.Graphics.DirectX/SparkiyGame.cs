@@ -88,20 +88,8 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			// Create 2D Canvas for caching 
 			this.Canvas = new SharpDX.Toolkit.Direct2D.Canvas(this);
-			Brushes.Initialize(this.Canvas.DeviceContext);
-
 			this.Canvas.Clear();
-			this.Canvas.PushObject(new CanvasBitmap(this.logoTexture, new RectangleF(100, 100, this.logoTexture.Width, this.logoTexture.Height)));
-			this.Canvas.PushObject(new CanvasRectangle(new RectangleF(96f, 96.0f, this.logoTexture.Width + 8, this.logoTexture.Height + 8), Brushes.White, false, 2f, null));
-			this.Canvas.PushObject(new CanvasRectangle(new RectangleF(100f, 100.0f, this.logoTexture.Width, this.logoTexture.Height), Brushes.White, false, 2f, null));
-			this.Canvas.PushObject(new CanvasRectangle(new RectangleF(104f, 104.0f, this.logoTexture.Width - 8, this.logoTexture.Height - 8), Brushes.White, false, 2f, null));
-			this.Canvas.PushObject(new CanvasText(
-				"Hello from Sparkiy",
-				new TextFormat(Canvas.DirectWriteFactory, "Segoe UI Light", 24.0f),
-				new RectangleF(10, 10, 900, 100),
-				Brushes.White,
-				DrawTextOptions.NoSnap,
-				MeasuringMode.Natural));
+			Brushes.Initialize(this.Canvas.DeviceContext);
 
 			base.LoadContent();
 		}

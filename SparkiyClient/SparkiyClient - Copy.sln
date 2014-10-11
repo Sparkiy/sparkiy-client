@@ -58,6 +58,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharpDX", "SharpDX", "{DB1B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpDX.Toolkit.Direct2D", "SharpDX.Toolkit.Game.Direct2D\SharpDX.Toolkit.Direct2D\SharpDX.Toolkit.Direct2D.csproj", "{76C266AE-873F-490A-9124-DB60916D0F95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Bindings.Common", "SparkiyEngine.Bindings.Common\SparkiyEngine.Bindings.Common.csproj", "{ABE22A03-468E-492B-81AB-99EF0D8E245C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0459AB71-2DCE-4FAC-8E8D-13508622AEBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Bindings.Common.Test", "SparkiyEngine.Bindings.Common.Test\SparkiyEngine.Bindings.Common.Test.csproj", "{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SparkiyEngine.Language.LuaImplementation\SparkiyEngine.Language.LuaImplementation.Shared\SparkiyEngine.Language.LuaImplementation.Shared.vcxitems*{b14c3355-3485-4977-928d-00cf669a0614}*SharedItemsImports = 9
@@ -357,6 +363,38 @@ Global
 		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|Win32.ActiveCfg = Release|Any CPU
 		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|x64.ActiveCfg = Release|Any CPU
 		{76C266AE-873F-490A-9124-DB60916D0F95}.Release|x86.ActiveCfg = Release|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Release|Win32.ActiveCfg = Release|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Release|x64.ActiveCfg = Release|Any CPU
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C}.Release|x86.ActiveCfg = Release|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Release|Win32.ActiveCfg = Release|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Release|x64.ActiveCfg = Release|Any CPU
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -384,5 +422,8 @@ Global
 		{E9172DFA-125C-4C68-8DF8-EF88E36AB410} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
 		{DB1B440A-3EED-4A74-926A-AC0B9B4C0985} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
 		{76C266AE-873F-490A-9124-DB60916D0F95} = {DB1B440A-3EED-4A74-926A-AC0B9B4C0985}
+		{ABE22A03-468E-492B-81AB-99EF0D8E245C} = {33632E57-519F-4D68-82D6-88690211E54D}
+		{0459AB71-2DCE-4FAC-8E8D-13508622AEBC} = {33632E57-519F-4D68-82D6-88690211E54D}
+		{AACD4FA4-7793-4A2F-94C0-7D18C9CF758E} = {0459AB71-2DCE-4FAC-8E8D-13508622AEBC}
 	EndGlobalSection
 EndGlobal
