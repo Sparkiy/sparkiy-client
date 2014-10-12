@@ -6,3 +6,6 @@
 
 // Helpers
 #include "StringHelper.h"
+
+// Lua
+#include "lua.hpp"

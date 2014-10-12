@@ -28,7 +28,14 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 
 			var methods = target
 				.GetTypeInfo()
-				.DeclaredMethods;
+				.DeclaredMethods.Union(
+					target
+						.GetTypeInfo()
+						.ImplementedInterfaces
+						.SelectMany(
+							inter => inter
+								.GetTypeInfo()
+								.DeclaredMethods));
 
 			foreach (var method in methods)
 			{
@@ -48,11 +55,20 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 				// Retrieve returning type
 				// Retrieve calling types
 
-				availableMethods.Add(attribute.Name, new MethodDeclarationDetails()
+				if (availableMethods.ContainsKey(attribute.Name))
 				{
-					Name = attribute.Name,
-					Type = attribute.Type
-				});
+					var details = availableMethods[attribute.Name];
+
+					details.Type &= attribute.Type;
+				}
+				else
+				{
+					availableMethods.Add(attribute.Name, new MethodDeclarationDetails()
+					{
+						Name = attribute.Name,
+						Type = attribute.Type
+					});
+				}
 			}
 
 			this.AvailableMethods = availableMethods;

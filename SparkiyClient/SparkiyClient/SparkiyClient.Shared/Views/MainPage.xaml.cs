@@ -55,6 +55,7 @@ namespace SparkiyClient.Views
 			// Initialize lua implementation and retrieve language bindings
 			this.lua = new LuaImplementation();
 			this.languageBindings = this.lua.GetLanguageBindings();
+			this.languageBindings.MapToGraphicsMethods(this.methodDeclarationResolver.AvailableMethods);
 
 			// Initialize graphics implementation and retrieve graphics bindings
 			this.renderer = new Renderer(this.SwapChainPanel);

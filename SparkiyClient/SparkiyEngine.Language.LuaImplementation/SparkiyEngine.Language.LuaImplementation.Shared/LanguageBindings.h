@@ -19,6 +19,10 @@ namespace SparkiyEngine_Language_LuaImplementation
 		LanguageBindings(LuaImplementation ^impl);
 
 	private:
-		LuaImplementation							^luaImpl;
+		LuaImplementation																					^m_luaImpl;
+		IMapView<String ^, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^>			^m_declarations;
+
+		// State
+		bool																								 m_didLoadScript;
 	};
 }
