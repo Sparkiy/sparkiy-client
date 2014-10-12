@@ -59,7 +59,7 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 				{
 					var details = availableMethods[attribute.Name];
 
-					details.Type &= attribute.Type;
+					details.Type = details.Type | attribute.Type;
 				}
 				else
 				{

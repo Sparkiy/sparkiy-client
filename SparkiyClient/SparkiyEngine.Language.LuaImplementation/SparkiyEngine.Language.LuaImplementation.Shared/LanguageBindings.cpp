@@ -39,6 +39,9 @@ void LanguageBindings::LoadScript(String ^id, String ^content)
 		script->RegisterMethod(details);
 	});
 
+	// Load content to the script
+	script->Load();
+
 	// Add to the scripts list
 	this->m_luaImpl->AddScript(sId, script);
 

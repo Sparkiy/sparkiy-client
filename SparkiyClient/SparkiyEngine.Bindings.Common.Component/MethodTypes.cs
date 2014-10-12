@@ -5,8 +5,8 @@ namespace SparkiyEngine.Bindings.Common.Component
 	[Flags]
 	public enum MethodTypes
 	{
-		Get,
-		Set,
-		Function
+		Get = 0x01,
+		Set = 0x02,
+		Function = 0x03
 	}
 }

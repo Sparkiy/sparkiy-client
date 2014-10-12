@@ -38,6 +38,10 @@ void LuaScript::RegisterMethod(SparkiyEngine::Bindings::Common::Component::Metho
 {
 	OutputDebugStringW(GetWString("Registering method \"" + declaration->Name + "\"\n").c_str());
 	OutputDebugStringW(L"Warning: Not implemented function\n");
+
+	auto cName = GetCString(declaration->Name);
+
+	this->RegisterFunction(cName, UniversalFunction);
 }
 
 //
@@ -47,6 +51,18 @@ void LuaScript::Start()
 {
 	OutputDebugStringW(GetWString("Starting script with id(" + this->m_id + ")\n").c_str());
 	OutputDebugStringW(L"Warning: Not implemented function\n");
+
+	this->m_isRunning = true;
+
+	// Check if receiving function exists
+	//if (LuaScript::FunctionExist(this->m_luaState, StartFunctionName))
+	//{
+	//	// Push all arguments
+	//	LuaScript::AddArgumentStringArray(this->m_luaState, parameters);
+
+	//	// Call the function
+	//	int callError = LuaScript::CallFunction(this->m_luaState, StartFunctionName, parameters.size(), 0);
+	//}
 }
 
 // 
@@ -54,7 +70,9 @@ void LuaScript::Start()
 //
 void LuaScript::RegisterFunction(const char *name, FunctionPointer pt)
 {
-	lua_register(m_luaState, name, pt);
+	lua_pushstring(this->m_luaState, name);
+	lua_pushcclosure(this->m_luaState, pt, 1);
+	lua_setglobal(this->m_luaState, name);
 }
 
 // 
@@ -66,6 +84,69 @@ void LuaScript::RegisterLibrary(const char *name, const luaL_Reg *functions) {
 }
 
 //
+// Load
+//
+void LuaScript::Load()
+{
+	// Run the script
+	this->m_isValid = HandleResult(luaL_dostring(m_luaState, this->m_content));
+
+	// Call loaded function
+	//if (FunctionExist(this->m_luaState, LoadedFunctionName))
+	//	CallFunction(this->m_luaState, LoadedFunctionName, 0, 0);
+}
+
+// 
+// HandleResult
+//
+bool LuaScript::HandleResult(int status)
+{
+	// Check if error occurred
+	if (status != LUA_OK)
+	{
+		// Retrieve error message from native Lua interface
+		int type = lua_type(m_luaState, -1);
+		const char *msg;
+		if (type == LUA_TSTRING)
+			msg = lua_tostring(m_luaState, -1);
+		else msg = "(error object is not a string)";
+
+		// Build final message
+		Platform::String^ message = GetPString(this->m_id) + ": " + GetPString(msg);
+
+		// Display the error message
+		//if (m_engineValues->m_userService != nullptr)
+		//	m_engineValues->m_userService->WriteMessage(message, MessageTypes::Debug);
+
+		// Failed
+		return false;
+	}
+
+	// Confirm successful
+	return true;
+}
+
+// static 
+// UniversalFunction
+//
+int LuaScript::UniversalFunction(lua_State* luaState)
+{
+	auto functionName = GetFunctionName(luaState);
+
+	OutputDebugStringW(GetWString("Called function \"" + GetString(functionName) + "\"\n").c_str());
+
+	return 0;
+}
+
+// static
+// GetFunctionName
+//
+const char* LuaScript::GetFunctionName(lua_State* luaState)
+{
+	return lua_tostring(luaState, lua_upvalueindex(1));
+}
+
+// static
 // GetCallerScript
 //
 LuaScript* LuaScript::GetCallerScript(lua_State *luaState) {
@@ -75,7 +156,7 @@ LuaScript* LuaScript::GetCallerScript(lua_State *luaState) {
 	return const_cast<LuaScript *>(pt);
 }
 
-//
+// static
 // PanicHandler
 //
 int LuaScript::PanicHandler(lua_State *luaState)
