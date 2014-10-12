@@ -11,7 +11,7 @@ luaImpl(impl)
 
 void LanguageBindings::LoadScript(String ^id, String ^content) 
 {
-	// Convert to C compatible string
+	// Convert to C and C++ compatible strings
 	std::string sId = GetString(id);
 	const char *cContent = GetCString(content);
 
@@ -20,5 +20,17 @@ void LanguageBindings::LoadScript(String ^id, String ^content)
 
 	// Add to the scripts list
 	this->luaImpl->AddScript(sId, script);
+}
+
+void LanguageBindings::StartScript(Platform::String ^id)
+{
+	// Convert to C and C++ compatible strings
+	std::string sId = GetString(id);
+
+	// Retrieve script
+	auto script = this->luaImpl->GetScript(sId);
+
+	// Start script
+	script->Start();
 }
 

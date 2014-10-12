@@ -27,3 +27,8 @@ void LuaImplementation::AddScript(std::string id, LuaScript *script)
 
 	OutputDebugStringW(GetWString("Added script with id(" + id + ")\n").c_str());
 }
+
+LuaScript* LuaImplementation::GetScript(std::string id)
+{
+	return this->m_scripts[id];
+}

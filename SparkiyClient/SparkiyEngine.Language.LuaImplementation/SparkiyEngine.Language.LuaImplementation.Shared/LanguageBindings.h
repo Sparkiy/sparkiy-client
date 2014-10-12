@@ -10,6 +10,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 	{
 	public:
 		virtual void LoadScript(Platform::String ^id, Platform::String ^content);
+		virtual void StartScript(Platform::String ^id);
 
 	internal:
 		LanguageBindings(LuaImplementation ^impl);

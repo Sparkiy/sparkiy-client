@@ -5,16 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using SparkiyEngine.Bindings.Common.Component;
 
 namespace SparkiyEngine.Bindings.Common.Attributes
 {
-	public sealed class MethodDeclarationDetails
-	{
-		public string Name { get; set; }
-
-		public MethodTypes Type { get; set; }
-	}
-
 	public sealed class MethodDeclarationResolver
 	{
 		public MethodDeclarationResolver(SupportedLanguages language)

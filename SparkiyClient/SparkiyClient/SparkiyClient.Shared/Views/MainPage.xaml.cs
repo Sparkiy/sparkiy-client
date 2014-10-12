@@ -1,4 +1,7 @@
 ﻿using Microsoft.Practices.Prism.StoreApps;
+using SparkiyEngine.Bindings.Common;
+using SparkiyEngine.Bindings.Common.Attributes;
+using SparkiyEngine.Bindings.Graphics;
 using SparkiyEngine.Bindings.Language;
 using SparkiyEngine.Graphics.DirectX;
 using SparkiyEngine_Language_LuaImplementation;
@@ -27,6 +30,8 @@ namespace SparkiyClient.Views
     public sealed partial class MainPage : VisualStateAwarePage
     {
 		private Renderer renderer;
+	    private IGraphicsBindings graphicsBindings;
+	    private MethodDeclarationResolver methodDeclarationResolver;
 		private LuaImplementation lua;
 	    private ILanguageBindings languageBindings;
 
@@ -43,15 +48,25 @@ namespace SparkiyClient.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-			this.renderer = new Renderer(this.SwapChainPanel);
-			this.renderer.GraphicsBindings.SetBackground(0.18f, 0.28f, 0.31f);
-			this.renderer.GraphicsBindings.SetStrokeColor(1f, 0f, 0f);
-			this.renderer.GraphicsBindings.DrawRectangle(100, 100, 50, 50);
+			// Lua graphics bindings methods resolver
+			this.methodDeclarationResolver = new MethodDeclarationResolver(SupportedLanguages.Lua);
+			this.methodDeclarationResolver.ResolveAll(typeof(IGraphicsBindings));
 
+			// Initialize lua implementation and retrieve language bindings
 			this.lua = new LuaImplementation();
-	        this.languageBindings = this.lua.GetLanguageBindings();
+			this.languageBindings = this.lua.GetLanguageBindings();
 
-			this.languageBindings.LoadScript("001", "local testVariable = 5");
+			// Initialize graphics implementation and retrieve graphics bindings
+			this.renderer = new Renderer(this.SwapChainPanel);
+			this.graphicsBindings = this.renderer.GraphicsBindings;
+
+
+			this.languageBindings.LoadScript("001", "stroke(1, 1, 0)");
+			this.languageBindings.StartScript("001");
+
+			this.graphicsBindings.SetBackground(0.18f, 0.28f, 0.31f);
+			this.graphicsBindings.SetStrokeColor(1f, 0f, 0f);
+			this.graphicsBindings.DrawRectangle(100, 100, 50, 50);
         }
 
 		protected override void OnNavigatedFrom(NavigationEventArgs e)

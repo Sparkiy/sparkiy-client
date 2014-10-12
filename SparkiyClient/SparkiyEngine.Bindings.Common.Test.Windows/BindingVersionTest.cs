@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace SparkiyEngine.Bindings.Common.Test
+namespace SparkiyEngine.Bindings.Common.Test.Windows
 {
 	[TestClass]
 	public class BindingVersionTest

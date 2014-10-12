@@ -16,6 +16,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 
 	internal:
 		void AddScript(std::string id, LuaScript *script);
+		LuaScript* GetScript(std::string id);
 
 	private:
 		void Initialize();
