@@ -2,10 +2,15 @@
 #include "LanguageBindings.h"
 
 using namespace Platform;
+using namespace Windows::Foundation::Collections;
 using namespace SparkiyEngine_Language_LuaImplementation;
 
 LanguageBindings::LanguageBindings(LuaImplementation ^impl) :
 luaImpl(impl)
+{
+}
+
+void LanguageBindings::MapToGraphicsMethods(IMapView<String ^, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^> ^declarations)
 {
 }
 

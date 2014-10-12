@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6489f783-bf69-4130-98e0-6a92ba8345a1}</ProjectGuid>
+    <ProjectGuid>{6489F783-BF69-4130-98E0-6A92BA8345A1}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SparkiyEngine.Bindings.Common.Component</RootNamespace>
@@ -41,7 +41,8 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="MethodDeclarationDetails.cs" />
+    <Compile Include="MethodTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
@@ -52,5 +53,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
 </Project>

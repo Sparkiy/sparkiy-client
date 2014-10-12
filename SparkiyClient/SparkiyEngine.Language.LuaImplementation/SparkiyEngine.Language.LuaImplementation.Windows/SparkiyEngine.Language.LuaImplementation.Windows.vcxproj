@@ -27,6 +27,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Common.Component\SparkiyEngine.Bindings.Common.Component.csproj">
+      <Project>{6489f783-bf69-4130-98e0-6a92ba8345a1}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\SparkiyEngine.Bindings.Language\SparkiyEngine.Bindings.Language.csproj">
       <Project>{ffb9832f-3a5e-445c-af38-b5a990b6ca52}</Project>
     </ProjectReference>
@@ -127,12 +130,16 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>..\..\SparkiyEngine.Language.Lua\SparkiyEngine.Language.Lua.Shared\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

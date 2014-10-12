@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph DataVirtualized="True" Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="(@1)" Category="CodeSchema_Assembly" Bounds="1031.39684717424,358.313357395623,310.326666666667,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="SparkiyEngine.Language.Lua.WindowsPhone.lib" />
+    <Node Id="(@24)" Category="CodeSchema_Assembly" Bounds="372.853196166301,-30.9889925874427,237.843333333333,25" CodeSchemaProperty_StrongName="SparkiyClient.UILogic.Windows, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(cf6d58ec-de96-4447-a21a-fedd344cce21.OutputPath)" Group="Collapsed" Label="SparkiyClient.UILogic.Windows.dll" UseManualLocation="True" />
+    <Node Id="(@25)" Category="CodeSchema_Assembly" Bounds="1427.91985787016,358.500537261233,360.87,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="SparkiyEngine.Language.LuaImplementation.Windows.dll" />
+    <Node Id="@11" Category="CodeSchema_Assembly" Bounds="-274.950236400241,360.543112842384,337.713333333334,25" CodeSchemaProperty_StrongName="SparkiyEngine.Bindings.Common.Component, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(6489f783-bf69-4130-98e0-6a92ba8345a1.OutputPath)" Group="Collapsed" Label="SparkiyEngine.Bindings.Common.Component.winmd" />
+    <Node Id="@13" Category="CodeSchema_Assembly" Bounds="369.853364633555,-85.9890925874426,234.396666666666,25" CodeSchemaProperty_StrongName="SparkiyClient.WindowsPhone, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(921b2fe9-7ad1-4f92-8465-77c03dd95b4f.OutputPath)" Group="Collapsed" Label="SparkiyClient.WindowsPhone.exe" />
+    <Node Id="@15" Category="CodeSchema_Assembly" AssemblyTimestamp="10/12/2014 01:55:01" Bounds="634.656044098713,-85.9890925874427,200.790000000001,25" CodeSchemaProperty_StrongName="SparkiyClient.Windows, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FilePath="$(7b4c6e81-e0e3-4ea2-bf16-675706b979c5.OutputPath)" Group="Collapsed" Label="SparkiyClient.Windows.exe">
+      <Category Ref="FileSystem.Category.FileOfType.exe" />
+    </Node>
+    <Node Id="@17" Category="CodeSchema_Assembly" Bounds="641.814568298024,-30.6840048317066,186.473333333333,25" CodeSchemaProperty_StrongName="SparkiyClient.UILogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(f911b0b9-7c40-4a76-b8e8-48fac2341f4f.OutputPath)" Group="Collapsed" Label="SparkiyClient.UILogic.dll" />
+    <Node Id="@19" Category="CodeSchema_Assembly" Bounds="734.152856038887,375.403942926771,209.12,25" CodeSchemaProperty_StrongName="SharpDX.Toolkit.Direct2D, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(76c266ae-873f-490a-9124-db60916d0f95.OutputPath)" Group="Collapsed" Label="SharpDX.Toolkit.Direct2D.dll" />
+    <Node Id="@21" Category="CodeSchema_Assembly" Bounds="1427.91985787016,303.500437261232,394.476666666666,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="SparkiyEngine.Language.LuaImplementation.WindowsPhone.dll" />
+    <Node Id="@23" Category="CodeSchema_Assembly" Bounds="-230.801903066902,305.543012842384,249.416666666667,25" CodeSchemaProperty_StrongName="SparkiyEngine.Bindings.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(abe22a03-468e-492b-81ab-99ef0d8e245c.OutputPath)" Group="Collapsed" Label="SparkiyEngine.Bindings.Common.dll" />
+    <Node Id="@27" Category="CodeSchema_Assembly" Bounds="-268.648569733566,250.542912842384,325.11,25" CodeSchemaProperty_StrongName="SparkiyEngine.Bindings.Common.Test.Windows, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(810340c0-6acd-4148-8cce-1408c0357cae.OutputPath)" Group="Collapsed" Label="SparkiyEngine.Bindings.Common.Test.Windows.dll" />
+    <Node Id="@29" Category="CodeSchema_Assembly" Bounds="719.052856038888,320.403842926772,239.32,25" CodeSchemaProperty_StrongName="SparkiyEngine.Graphics.DirectX, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(e9172dfa-125c-4c68-8df8-ef88e36ab410.OutputPath)" Group="Collapsed" Label="SparkiyEngine.Graphics.DirectX.dll" />
+    <Node Id="@3" Category="CodeSchema_Assembly" Bounds="1031.39684717424,303.313257395623,276.72,25" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="SparkiyEngine.Language.Lua.Windows.lib" />
+    <Node Id="@30" Category="CodeSchema_Namespace" Bounds="436.166983172286,-12.3274296381769,125.76,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="SparkiyClient" UseManualLocation="True" />
+    <Node Id="@31" Category="CodeSchema_Namespace" Bounds="413.671983172287,67.3972764963291,170.75,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="SparkiyClient‎.Services" UseManualLocation="True" />
+    <Node Id="@32" Category="CodeSchema_Namespace" Bounds="629.121983172287,-12.9652765707124,158.763333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="SparkiyClient‎.Views" UseManualLocation="True" />
+    <Node Id="@33" Category="CodeSchema_Class" Bounds="417.619443243457,181.595831970031,170.15,25" CodeSchemaProperty_IsPublic="True" CommonLabel="AlertMessageService" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Icon="CodeSchema_Class" Label="AlertMessageService" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyClient/SparkiyClient.Shared/Services/AlertMessageService.cs StartLineNumber=10 StartCharacterOffset=1 EndLineNumber=10 EndCharacterOffset=1)" UseManualLocation="True" />
+    <Node Id="@34" Category="CodeSchema_Class" Bounds="465.208754434362,38.7407480368608,82.8466666666666,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" CommonLabel="App" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Icon="CodeSchema_Class" Label="App" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/aleksandar/documents/github/sparkiy-client/sparkiyclient/sparkiyclient/sparkiyclient.shared/app.xaml.cs StartLineNumber=37 StartCharacterOffset=1 EndLineNumber=37 EndCharacterOffset=1)" UseManualLocation="True" />
+    <Node Id="@35" Category="CodeSchema_Class" Bounds="282.656666666667,80,113.75,25" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" CommonLabel="MainPage" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Icon="CodeSchema_Class" Label="MainPage" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/aleksandar/documents/github/sparkiy-client/sparkiyclient/sparkiyclient/sparkiyclient.shared/views/mainpage.xaml.cs StartLineNumber=29 StartCharacterOffset=4 EndLineNumber=29 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="@5" Category="CodeSchema_Assembly" Bounds="-750.324892561089,551.290645250185,275.21,25" CodeSchemaProperty_StrongName="SparkiyEngine.Bindings.Language, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(ffb9832f-3a5e-445c-af38-b5a990b6ca52.OutputPath)" Group="Collapsed" Label="SparkiyEngine.Bindings.Language.winmd" />
+    <Node Id="@7" Category="CodeSchema_Assembly" Bounds="243.855468529588,563.960513465495,259.256666666667,25" CodeSchemaProperty_StrongName="SparkiyEngine.Bindings.Engine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(65dc3e23-563d-4fcf-b81a-fd2b95d49414.OutputPath)" Group="Collapsed" Label="SparkiyEngine.Bindings.Engine.winmd" />
+    <Node Id="@9" Category="CodeSchema_Assembly" Bounds="-243.271551989893,559.772079022748,269.256666666667,25" CodeSchemaProperty_StrongName="SparkiyEngine.Bindings.Graphics, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime" DelayedChildNodesState="NotFetched" DelayedCrossGroupLinksState="Fetched" FilePath="$(f115ed0b-82a4-4877-994a-8c560080a129.OutputPath)" Group="Collapsed" Label="SparkiyEngine.Bindings.Graphics.winmd" />
+    <Node Id="Bindings" Bounds="-790.324892561089,170.542712842384,1333.43702775734,458.418000623111" Group="Expanded" UseManualLocation="True" />
+    <Node Id="ClientApplications" Bounds="349.853364633555,-125.989192587443,505.59267946516,140.305287755736" Group="Expanded" Label="Client Applications" UseManualLocation="True" />
+    <Node Id="CommonBindings" Bounds="-294.950236400241,210.542812842384,377.713333333334,195.0004" Group="Expanded" Label="Common Bindings" UseManualLocation="True" />
+    <Node Id="EngineBindings" Bounds="223.855468529588,452.040244946434,299.256666666667,156.920368519061" Group="Expanded" Label="Engine Bindings" UseManualLocation="True" />
+    <Node Id="GraphicsBindings" Bounds="-263.271551989893,447.851942846521,309.256666666667,156.9203" Group="Expanded" Label="Graphics Bindings" UseManualLocation="True" />
+    <Node Id="Implementation" Bounds="676.030180507576,167.352957395623,1186.36634402925,273.051185531148" Group="Expanded" UseManualLocation="True" />
+    <Node Id="SparkiyEngine.Bindings.DirectX.Test.Windows" Category="Comment" Bounds="716.030180507576,248.483704170974,245.366666666667,41.9200000000001" Label="SparkiyEngine.Bindings.DirectX.Test.Windows" />
+    <Node Id="SparkiyEngine.Bindings.Engine.Test.Windows" Category="Comment" Bounds="252.078734527898,492.040344946434,242.81,41.9200000000001" />
+    <Node Id="SparkiyEngine.Bindings.Graphics.Test.Windows" Category="Comment" Bounds="-234.533087752262,487.852042846521,245.78,41.92" />
+    <Node Id="SparkiyEngine.Bindings.Language.Test.Windows" Category="Comment" Bounds="-736.054920693081,495.330545250185,246.67,25.96" />
+    <Node Id="SparkiyEngine.Graphics.DirectX" Bounds="696.030180507576,208.483604170974,285.366666666667,211.920438755797" Group="Expanded" Label="SparkiyEngine.Graphics.DirectX" UseManualLocation="True" />
+    <Node Id="SparkiyEngine.Language.Lua" Bounds="1011.39684717424,207.353057395623,350.326666666667,195.9604" Group="Expanded" UseManualLocation="True" />
+    <Node Id="SparkiyEngine.Language.Lua.Test.Windows" Category="Comment" Bounds="1046.96850260417,247.353157395623,245.576666666667,25.96" />
+    <Node Id="SparkiyEngine.Language.LuaImplementation" Bounds="1407.91985787016,207.540196421225,434.476666666666,195.960440840008" Group="Expanded" UseManualLocation="True" />
+    <Node Id="SparkiyEngine.Language.LuaImplementation.Test.Windows" Category="Comment" Bounds="1500.66123128255,247.540296421225,248.993333333333,25.96" />
+    <Node Id="a7104e18-a213-47b7-a75f-700d1aa37036" Bounds="-770.324892561089,455.330445250185,315.21,140.9603" Group="Expanded" Label="Language Bindings" UseManualLocation="True" />
+  </Nodes>
+  <Links>
+    <Link Source="@13" Target="@17" Category="References" Bounds="543.104302496948,-60.9890925874426,127.110102585335,28.3461633163647" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="12">
+      <Category Ref="CodeSchema_Calls" />
+      <Category Ref="Implements" />
+    </Link>
+    <Link Source="@13" Target="@23" Category="References" Bounds="554.617167651054,-215.375729801659,234.065811761413,555.992512692166" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@13" Target="@29" Category="References" Bounds="896.033632684456,-188.187765269595,326.994423565523,1048.54949759851" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@13" Target="@5" Category="References" Bounds="546.008400336272,-282.413757718205,244.133348173792,544.362392089064" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@13" Target="@9" Category="References" Bounds="546.633390862868,-279.240076562557,166.673084433696,375.613841846212" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@15" Target="@30" Category="Contains" FetchingParent="@15" />
+    <Link Source="@15" Target="@31" Category="Contains" FetchingParent="@15" />
+    <Link Source="@15" Target="@32" Category="Contains" FetchingParent="@15" />
+    <Link Source="@23" Target="@11" Category="References" Bounds="-106.093569733572,330.543012842384,2.1316282072803E-12,21.0001000000004" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="16">
+      <Category Ref="CodeSchema_Calls" />
+      <Category Ref="CodeSchema_ReturnTypeLink" />
+    </Link>
+    <Link Source="@27" Target="@23" Category="CodeSchema_FieldRead" Bounds="-106.093569733568,275.542912842384,7.105427357601E-13,21.0001" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="25">
+      <Category Ref="CodeSchema_FieldWrite" />
+    </Link>
+    <Link Source="@29" Target="@19" Category="References" Bounds="838.712856038887,345.403842926772,5.6843418860808E-13,21.0000999999993" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="13">
+      <Category Ref="CodeSchema_Calls" />
+      <Category Ref="CodeSchema_ReturnTypeLink" />
+    </Link>
+    <Link Source="@29" Target="@9" Category="References" Bounds="1182.18293200246,695.379247124026,44.2369818496111,173.574383534843" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="9">
+      <Category Ref="CodeSchema_FieldWrite" />
+      <Category Ref="CodeSchema_ReturnTypeLink" />
+      <Category Ref="Implements" />
+    </Link>
+    <Link Source="@30" Target="@34" Category="Contains" FetchingParent="@30" />
+    <Link Source="@31" Target="@33" Category="Contains" FetchingParent="@31" />
+    <Link Source="@32" Target="@35" Category="Contains" FetchingParent="@32" />
+    <Link Source="@33" Target="@17" Category="References" Bounds="209.428238909907,217.587792849081,609.266586864109,72.8621117289425" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="11">
+      <Category Ref="CodeSchema_Calls" />
+      <Category Ref="Implements" />
+    </Link>
+    <Link Source="@34" Target="@17" Category="References" Bounds="165.37780753763,103.154311319163,698.093137626961,184.54549626858" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@34" Target="@33" Category="References" Bounds="125.075,105,2.8421709430404E-14,81" IsSourceVirtualized="True" Weight="1" />
+    <Link Source="@35" Target="@23" Category="References" Bounds="360.544361979167,105,488.164751106446,290.398699361552" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@35" Target="@29" Category="References" Bounds="341.37244047619,105,25.93223654032,176.096028244695" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@35" Target="@5" Category="References" Bounds="358.515297619048,105,273.440942870487,180.050475825985" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="3">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@35" Target="@9" Category="References" Bounds="364.905487421384,105,479.103865765067,236.022725152656" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="4">
+      <Category Ref="CodeSchema_Calls" />
+    </Link>
+    <Link Source="@5" Target="@11" Category="References" Bounds="801.315324761682,295.160605378436,28.8143592258332,191.101094666531" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="1" />
+    <Link Source="@9" Target="@23" Category="CodeSchema_AttributeUse" Bounds="727.001222290678,129.600233178228,98.5601510922514,273.919201865006" IsSourceVirtualized="True" IsTargetVirtualized="True" Weight="2" />
+    <Link Source="Bindings" Target="CommonBindings" Category="Contains" />
+    <Link Source="Bindings" Target="EngineBindings" Category="Contains" />
+    <Link Source="Bindings" Target="GraphicsBindings" Category="Contains" />
+    <Link Source="Bindings" Target="a7104e18-a213-47b7-a75f-700d1aa37036" Category="Contains" />
+    <Link Source="ClientApplications" Target="(@24)" Category="Contains" />
+    <Link Source="ClientApplications" Target="@13" Category="Contains" />
+    <Link Source="ClientApplications" Target="@15" Category="Contains" />
+    <Link Source="ClientApplications" Target="@17" Category="Contains" />
+    <Link Source="CommonBindings" Target="@11" Category="Contains" />
+    <Link Source="CommonBindings" Target="@23" Category="Contains" />
+    <Link Source="CommonBindings" Target="@27" Category="Contains" />
+    <Link Source="EngineBindings" Target="@7" Category="Contains" />
+    <Link Source="EngineBindings" Target="SparkiyEngine.Bindings.Engine.Test.Windows" Category="Contains" />
+    <Link Source="GraphicsBindings" Target="@9" Category="Contains" />
+    <Link Source="GraphicsBindings" Target="SparkiyEngine.Bindings.Graphics.Test.Windows" Category="Contains" />
+    <Link Source="Implementation" Target="SparkiyEngine.Graphics.DirectX" Category="Contains" />
+    <Link Source="Implementation" Target="SparkiyEngine.Language.Lua" Category="Contains" />
+    <Link Source="Implementation" Target="SparkiyEngine.Language.LuaImplementation" Category="Contains" />
+    <Link Source="SparkiyEngine.Bindings.DirectX.Test.Windows" Target="@29" Bounds="838.713078899155,290.403704170974,0.000217678908256858,21.0001387562807" />
+    <Link Source="SparkiyEngine.Bindings.Engine.Test.Windows" Target="@7" Bounds="373.483756767708,533.960344946434,2.22824312459124E-05,21.0001685190659" />
+    <Link Source="SparkiyEngine.Bindings.Graphics.Test.Windows" Target="@9" Bounds="-110.652272165052,529.772042846521,0.993185742648336,21.0101389548383" />
+    <Link Source="SparkiyEngine.Bindings.Language.Test.Windows" Target="@5" Bounds="-612.719914111383,521.290545250185,1.06484063735479E-05,21.0001000000011" />
+    <Link Source="SparkiyEngine.Graphics.DirectX" Target="@19" Category="Contains" />
+    <Link Source="SparkiyEngine.Graphics.DirectX" Target="@29" Category="Contains" />
+    <Link Source="SparkiyEngine.Graphics.DirectX" Target="SparkiyEngine.Bindings.DirectX.Test.Windows" Category="Contains" />
+    <Link Source="SparkiyEngine.Language.Lua" Target="(@1)" Category="Contains" />
+    <Link Source="SparkiyEngine.Language.Lua" Target="@3" Category="Contains" />
+    <Link Source="SparkiyEngine.Language.Lua" Target="SparkiyEngine.Language.Lua.Test.Windows" Category="Contains" />
+    <Link Source="SparkiyEngine.Language.Lua.Test.Windows" Target="@3" Bounds="1169.75683856642,273.313157395623,4.25328653363977E-06,21.0001000000002" />
+    <Link Source="SparkiyEngine.Language.LuaImplementation" Target="(@25)" Category="Contains" />
+    <Link Source="SparkiyEngine.Language.LuaImplementation" Target="@21" Category="Contains" />
+    <Link Source="SparkiyEngine.Language.LuaImplementation" Target="SparkiyEngine.Language.LuaImplementation.Test.Windows" Category="Contains" />
+    <Link Source="SparkiyEngine.Language.LuaImplementation.Test.Windows" Target="@21" Bounds="1625.15796655828,273.500296421225,0.000111001538016353,21.000140840133" />
+    <Link Source="a7104e18-a213-47b7-a75f-700d1aa37036" Target="@5" Category="Contains" />
+    <Link Source="a7104e18-a213-47b7-a75f-700d1aa37036" Target="SparkiyEngine.Bindings.Language.Test.Windows" Category="Contains" />
+  </Links>
+  <Categories>
+    <Category Id="CodeSchema_Assembly" Label="Assembly" BasedOn="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Assembly" NavigationActionLabel="Assemblies" />
+    <Category Id="CodeSchema_AttributeUse" Label="Uses Attribute" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Used by" OutgoingActionLabel="Uses Attribute" />
+    <Category Id="CodeSchema_Calls" Label="Calls" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Called By" OutgoingActionLabel="Calls" />
+    <Category Id="CodeSchema_Class" Label="Class" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Classes" />
+    <Category Id="CodeSchema_FieldRead" Label="Field Read" BasedOn="CodeSchema_FieldReference" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Read By" OutgoingActionLabel="Reads Fields" />
+    <Category Id="CodeSchema_FieldReference" Label="Field Reference" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References Fields" />
+    <Category Id="CodeSchema_FieldWrite" Label="Field Write" BasedOn="CodeSchema_FieldReference" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Written By" OutgoingActionLabel="Writes Fields" />
+    <Category Id="CodeSchema_Namespace" Label="Namespace" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Type" Icon="CodeSchema_Namespace" NavigationActionLabel="Namespaces" />
+    <Category Id="CodeSchema_ReturnTypeLink" Label="Return" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Return types" OutgoingActionLabel="Return types" />
+    <Category Id="CodeSchema_Type" Label="Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Types" />
+    <Category Id="Comment" Label="Comment" Description="Represents a user defined comment on the diagram" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Comments" />
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+    <Category Id="File" Label="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="File" NavigationActionLabel="Files" />
+    <Category Id="FileSystem.Category.FileOfType.exe" BasedOn="CodeSchema_Assembly" CanBeDataDriven="True" IsProviderRoot="False" />
+    <Category Id="Implements" Label="Implements" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Implemented by" OutgoingActionLabel="Implements" />
+    <Category Id="References" Label="References" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Referenced By" OutgoingActionLabel="References" />
+  </Categories>
+  <Properties>
+    <Property Id="AssemblyTimestamp" DataType="System.DateTime" />
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsFinal" Label="Is Final" Description="Flag to indicate the member is 'Final' and cannot be derived from" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPublic" Label="Is Public" Description="Flag to indicate the scope is Public" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_StrongName" Label="StrongName" Description="StrongName" DataType="System.String" />
+    <Property Id="CommonLabel" DataType="System.String" />
+    <Property Id="DataVirtualized" Label="Data Virtualized" Description="If true, the graph can contain nodes and links that represent data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
+    <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
+    <Property Id="DelayedChildNodesState" Label="Delayed Child Nodes State" Description="Unspecified if the delayed child nodes state is not specified. NotFetched if the group contains child nodes that are not fetched into the graph yet. Fetched if the group has all its delayed child nodes already fetched." DataType="Microsoft.VisualStudio.GraphModel.DelayedDataState" />
+    <Property Id="DelayedCrossGroupLinksState" Label="Delayed Cross-Group Links State" Description="Unspecified if the delayed cross-group links state is not specified. NotFetched if delayed cross-group links on this node are not fetched into the graph yet. Fetched if all delayed cross-group links have already fetched." DataType="Microsoft.VisualStudio.GraphModel.DelayedDataState" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="FetchingParent" DataType="Microsoft.VisualStudio.GraphModel.GraphNodeId" />
+    <Property Id="FilePath" Label="File Path" Description="File Path" DataType="System.String" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="Icon" Label="Icon" Description="Icon" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsProviderRoot" Label="IsProviderRoot" Description="IsProviderRoot" DataType="System.Boolean" />
+    <Property Id="IsSourceVirtualized" Label="Link Source Virtualized" Description="If true, the link source end contains data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
+    <Property Id="IsTargetVirtualized" Label="Link Target Virtualized" Description="If true, the link target end contains data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="Language" Label="Language" Description="Language" DataType="System.String" />
+    <Property Id="Layout" DataType="System.String" />
+    <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="SourceLocation" Label="Start Line Number" DataType="Microsoft.VisualStudio.GraphModel.CodeSchema.SourceLocation" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+    <Property Id="Visibility" Label="Visibility" Description="Defines whether a node in the graph is visible or not" DataType="System.Windows.Visibility" />
+    <Property Id="Weight" Label="Weight" Description="Weight" DataType="System.Double" />
+    <Property Id="ZoomLevel" DataType="System.String" />
+  </Properties>
+  <QualifiedNames>
+    <Name Id="Assembly" Label="Assembly" ValueType="Uri" />
+    <Name Id="Namespace" Label="Namespace" ValueType="System.String" />
+    <Name Id="Type" Label="Type" ValueType="System.Object" />
+  </QualifiedNames>
+  <IdentifierAliases>
+    <Alias n="1" Uri="Assembly=$(84799c77-191f-4e39-9275-9e0a4accee21.OutputPathUri)" />
+    <Alias n="2" Uri="Assembly=$(3d1ab151-fb20-4b5c-9acc-03be5cdfe8a0.OutputPathUri)" />
+    <Alias n="3" Id="(@2)" />
+    <Alias n="4" Uri="Assembly=$(ffb9832f-3a5e-445c-af38-b5a990b6ca52.OutputPathUri)" />
+    <Alias n="5" Id="(@4)" />
+    <Alias n="6" Uri="Assembly=$(65dc3e23-563d-4fcf-b81a-fd2b95d49414.OutputPathUri)" />
+    <Alias n="7" Id="(@6)" />
+    <Alias n="8" Uri="Assembly=$(f115ed0b-82a4-4877-994a-8c560080a129.OutputPathUri)" />
+    <Alias n="9" Id="(@8)" />
+    <Alias n="10" Uri="Assembly=$(6489f783-bf69-4130-98e0-6a92ba8345a1.OutputPathUri)" />
+    <Alias n="11" Id="(@10)" />
+    <Alias n="12" Uri="Assembly=$(921b2fe9-7ad1-4f92-8465-77c03dd95b4f.OutputPathUri)" />
+    <Alias n="13" Id="(@12)" />
+    <Alias n="14" Uri="Assembly=$(7b4c6e81-e0e3-4ea2-bf16-675706b979c5.OutputPathUri)" />
+    <Alias n="15" Id="(@14)" />
+    <Alias n="16" Uri="Assembly=$(f911b0b9-7c40-4a76-b8e8-48fac2341f4f.OutputPathUri)" />
+    <Alias n="17" Id="(@16)" />
+    <Alias n="18" Uri="Assembly=$(76c266ae-873f-490a-9124-db60916d0f95.OutputPathUri)" />
+    <Alias n="19" Id="(@18)" />
+    <Alias n="20" Uri="Assembly=$(5e82d3af-4629-4992-95dc-e94fa0ed0a19.OutputPathUri)" />
+    <Alias n="21" Id="(@20)" />
+    <Alias n="22" Uri="Assembly=$(abe22a03-468e-492b-81ab-99ef0d8e245c.OutputPathUri)" />
+    <Alias n="23" Id="(@22)" />
+    <Alias n="24" Uri="Assembly=$(cf6d58ec-de96-4447-a21a-fedd344cce21.OutputPathUri)" />
+    <Alias n="25" Uri="Assembly=$(3f5b304e-68be-4674-aa73-c9dec0dea6f1.OutputPathUri)" />
+    <Alias n="26" Uri="Assembly=$(810340c0-6acd-4148-8cce-1408c0357cae.OutputPathUri)" />
+    <Alias n="27" Id="(@26)" />
+    <Alias n="28" Uri="Assembly=$(e9172dfa-125c-4c68-8df8-ef88e36ab410.OutputPathUri)" />
+    <Alias n="29" Id="(@28)" />
+    <Alias n="30" Id="(@14 Namespace=SparkiyClient)" />
+    <Alias n="31" Id="(@14 Namespace=SparkiyClient.Services)" />
+    <Alias n="32" Id="(@14 Namespace=SparkiyClient.Views)" />
+    <Alias n="33" Id="(@14 Namespace=SparkiyClient.Services Type=AlertMessageService)" />
+    <Alias n="34" Id="(@14 Namespace=SparkiyClient Type=App)" />
+    <Alias n="35" Id="(@14 Namespace=SparkiyClient.Views Type=MainPage)" />
+  </IdentifierAliases>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Category 4" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Category4')" />
+      <Setter Property="Background" Value="#FF1BA1E2" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Results" ValueLabel="True">
+      <Condition Expression="HasCategory('QueryResult')" />
+      <Setter Property="Background" Value="#FF94ED93" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Assembly" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Assembly')" />
+      <Setter Property="Background" Value="#FF094167" />
+      <Setter Property="Stroke" Value="#FF094167" />
+      <Setter Property="Icon" Value="CodeSchema_Assembly" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Namespace" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Namespace')" />
+      <Setter Property="Background" Value="#FF0E619A" />
+      <Setter Property="Stroke" Value="#FF0E619A" />
+      <Setter Property="Icon" Value="CodeSchema_Namespace" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Interface" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Interface')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Interface" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Struct" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Struct')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Struct" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Enumeration" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Enum')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Enum" />
+      <Setter Property="LayoutSettings" Value="List" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Delegate" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Delegate')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Delegate" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Class" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Type')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Class" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Property')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Property" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Method" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Method') Or HasCategory('CodeSchema_CallStackUnresolvedMethod')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Method" />
+      <Setter Property="LayoutSettings" Value="List" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Event" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Event')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Event" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Field')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Field" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Out Parameter" ValueLabel="Has category">
+      <Condition Expression="CodeSchemaProperty_IsOut = 'True'" />
+      <Setter Property="Icon" Value="CodeSchema_OutParameter" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Parameter" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Parameter')" />
+      <Setter Property="Icon" Value="CodeSchema_Parameter" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Local Variable" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_LocalExpression')" />
+      <Setter Property="Icon" Value="CodeSchema_LocalExpression" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Externals" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Externals')" />
+      <Setter Property="Background" Value="#FF424242" />
+      <Setter Property="Stroke" Value="#FF424242" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Inherits From" ValueLabel="Has category">
+      <Condition Expression="HasCategory('InheritsFrom')" />
+      <Setter Property="Stroke" Value="#FF00A600" />
+      <Setter Property="StrokeDashArray" Value="2 0" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Implements" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Implements')" />
+      <Setter Property="Stroke" Value="#8000A600" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Calls" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Calls')" />
+      <Setter Property="Stroke" Value="#FFFF00FF" />
+      <Setter Property="StrokeDashArray" Value="2 0" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Function Pointer" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_FunctionPointer')" />
+      <Setter Property="Stroke" Value="#FFFF00FF" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Field Reference" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_FieldReference')" />
+      <Setter Property="Stroke" Value="#FF00AEEF" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Inherits From" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('InheritsFrom') And Target.HasCategory('CodeSchema_Class')" />
+      <Setter Property="TargetDecorator" Value="OpenArrow" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Implements" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('Implements') And Target.HasCategory('CodeSchema_Interface')" />
+      <Setter Property="TargetDecorator" Value="OpenArrow" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Field Read" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="Target.HasCategory('CodeSchema_Field') And HasCategory('CodeSchema_FieldRead')" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Comment Link" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="Source.HasCategory('Comment')" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Cursor Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsCursorLocation" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Disabled Breakpoint Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="DisabledBreakpointCount" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Enabled Breakpoint Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="EnabledBreakpointCount" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Instruction Pointer Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsInstructionPointerLocation" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Current Callstack Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsCurrentCallstackFrame" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Comment" ValueLabel="Has comment">
+      <Condition Expression="HasCategory('Comment')" />
+      <Setter Property="Background" Value="#FFFFFACD" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+      <Setter Property="StrokeThickness" Value="1" />
+      <Setter Property="NodeRadius" Value="2" />
+      <Setter Property="MaxWidth" Value="250" />
+    </Style>
+  </Styles>
+  <Paths>
+    <Path Id="3d1ab151-fb20-4b5c-9acc-03be5cdfe8a0.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/Debug/SparkiyEngine.Language.Lua.Windows/SparkiyEngine.Language.Lua.Windows.lib" />
+    <Path Id="3f5b304e-68be-4674-aa73-c9dec0dea6f1.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/Debug/SparkiyEngine.Language.LuaImplementation.Windows/SparkiyEngine.Language.LuaImplementation.Windows.dll" />
+    <Path Id="5e82d3af-4629-4992-95dc-e94fa0ed0a19.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/Debug/SparkiyEngine.Language.LuaImplementation.WindowsPhone/SparkiyEngine.Language.LuaImplementation.WindowsPhone.dll" />
+    <Path Id="6489f783-bf69-4130-98e0-6a92ba8345a1.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyEngine.Bindings.Common.Component\bin\Debug\SparkiyEngine.Bindings.Common.Component.winmd" />
+    <Path Id="6489f783-bf69-4130-98e0-6a92ba8345a1.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyEngine.Bindings.Common.Component/bin/Debug/SparkiyEngine.Bindings.Common.Component.winmd" />
+    <Path Id="65dc3e23-563d-4fcf-b81a-fd2b95d49414.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyEngine.Bindings.Engine\bin\Debug\SparkiyEngine.Bindings.Engine.winmd" />
+    <Path Id="65dc3e23-563d-4fcf-b81a-fd2b95d49414.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyEngine.Bindings.Engine/bin/Debug/SparkiyEngine.Bindings.Engine.winmd" />
+    <Path Id="76c266ae-873f-490a-9124-db60916d0f95.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SharpDX.Toolkit.Game.Direct2D\SharpDX.Toolkit.Direct2D\bin\Debug\SharpDX.Toolkit.Direct2D.dll" />
+    <Path Id="76c266ae-873f-490a-9124-db60916d0f95.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SharpDX.Toolkit.Game.Direct2D/SharpDX.Toolkit.Direct2D/bin/Debug/SharpDX.Toolkit.Direct2D.dll" />
+    <Path Id="7b4c6e81-e0e3-4ea2-bf16-675706b979c5.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\x86\Debug\SparkiyClient.Windows.exe" />
+    <Path Id="7b4c6e81-e0e3-4ea2-bf16-675706b979c5.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyClient/SparkiyClient.Windows/bin/x86/Debug/SparkiyClient.Windows.exe" />
+    <Path Id="810340c0-6acd-4148-8cce-1408c0357cae.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyEngine.Bindings.Common.Test.Windows\bin\x86\Debug\SparkiyEngine.Bindings.Common.Test.Windows.dll" />
+    <Path Id="810340c0-6acd-4148-8cce-1408c0357cae.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyEngine.Bindings.Common.Test.Windows/bin/x86/Debug/SparkiyEngine.Bindings.Common.Test.Windows.dll" />
+    <Path Id="84799c77-191f-4e39-9275-9e0a4accee21.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/Debug/SparkiyEngine.Language.Lua.WindowsPhone/SparkiyEngine.Language.Lua.WindowsPhone.lib" />
+    <Path Id="921b2fe9-7ad1-4f92-8465-77c03dd95b4f.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.WindowsPhone\bin\x86\Debug\SparkiyClient.WindowsPhone.exe" />
+    <Path Id="921b2fe9-7ad1-4f92-8465-77c03dd95b4f.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyClient/SparkiyClient.WindowsPhone/bin/x86/Debug/SparkiyClient.WindowsPhone.exe" />
+    <Path Id="abe22a03-468e-492b-81ab-99ef0d8e245c.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyEngine.Bindings.Common\bin\Debug\SparkiyEngine.Bindings.Common.dll" />
+    <Path Id="abe22a03-468e-492b-81ab-99ef0d8e245c.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyEngine.Bindings.Common/bin/Debug/SparkiyEngine.Bindings.Common.dll" />
+    <Path Id="cf6d58ec-de96-4447-a21a-fedd344cce21.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyClient.UILogic.Windows\bin\x86\Debug\SparkiyClient.UILogic.Windows.dll" />
+    <Path Id="cf6d58ec-de96-4447-a21a-fedd344cce21.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyClient.UILogic.Windows/bin/x86/Debug/SparkiyClient.UILogic.Windows.dll" />
+    <Path Id="e9172dfa-125c-4c68-8df8-ef88e36ab410.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyEngine.Graphics.DirectX\bin\Debug\SparkiyEngine.Graphics.DirectX.dll" />
+    <Path Id="e9172dfa-125c-4c68-8df8-ef88e36ab410.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyEngine.Graphics.DirectX/bin/Debug/SparkiyEngine.Graphics.DirectX.dll" />
+    <Path Id="f115ed0b-82a4-4877-994a-8c560080a129.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyEngine.Bindings.Graphics\bin\Debug\SparkiyEngine.Bindings.Graphics.winmd" />
+    <Path Id="f115ed0b-82a4-4877-994a-8c560080a129.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyEngine.Bindings.Graphics/bin/Debug/SparkiyEngine.Bindings.Graphics.winmd" />
+    <Path Id="f911b0b9-7c40-4a76-b8e8-48fac2341f4f.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyClient.UILogic\bin\Debug\SparkiyClient.UILogic.dll" />
+    <Path Id="f911b0b9-7c40-4a76-b8e8-48fac2341f4f.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyClient.UILogic/bin/Debug/SparkiyClient.UILogic.dll" />
+    <Path Id="ffb9832f-3a5e-445c-af38-b5a990b6ca52.OutputPath" Value="C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyEngine.Bindings.Language\bin\Debug\SparkiyEngine.Bindings.Language.winmd" />
+    <Path Id="ffb9832f-3a5e-445c-af38-b5a990b6ca52.OutputPathUri" Value="file:///C:/Users/Aleksandar/Documents/GitHub/sparkiy-client/SparkiyClient/SparkiyEngine.Bindings.Language/bin/Debug/SparkiyEngine.Bindings.Language.winmd" />
+  </Paths>
+</DirectedGraph>

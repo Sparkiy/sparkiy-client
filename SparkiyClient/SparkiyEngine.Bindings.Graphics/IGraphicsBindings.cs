@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SparkiyEngine.Bindings.Common;
 using SparkiyEngine.Bindings.Common.Attributes;
+using SparkiyEngine.Bindings.Common.Component;
 
 namespace SparkiyEngine.Bindings.Graphics
 {

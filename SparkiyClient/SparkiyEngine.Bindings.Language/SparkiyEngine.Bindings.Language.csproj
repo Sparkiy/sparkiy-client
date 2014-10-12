@@ -35,6 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Common.Component\SparkiyEngine.Bindings.Common.Component.csproj">
+      <Project>{6489F783-BF69-4130-98E0-6A92BA8345A1}</Project>
+      <Name>SparkiyEngine.Bindings.Common.Component</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SparkiyEngine.Bindings.Common\SparkiyEngine.Bindings.Common.csproj">
       <Project>{ABE22A03-468E-492B-81AB-99EF0D8E245C}</Project>
       <Name>SparkiyEngine.Bindings.Common</Name>

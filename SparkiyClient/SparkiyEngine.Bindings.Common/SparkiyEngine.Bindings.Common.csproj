@@ -40,13 +40,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\MethodDeclarationAttribute.cs" />
-    <Compile Include="Attributes\MethodDeclarationDetails.cs" />
     <Compile Include="Attributes\MethodDeclarationResolver.cs" />
     <Compile Include="BindingsVersion.cs" />
     <Compile Include="LatestBindingsVersion.cs" />
-    <Compile Include="MethodTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SupportedLanguages.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Common.Component\SparkiyEngine.Bindings.Common.Component.csproj">
+      <Project>{6489f783-bf69-4130-98e0-6a92ba8345a1}</Project>
+      <Name>SparkiyEngine.Bindings.Common.Component</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
