@@ -3,11 +3,33 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LuaImplementation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LanguageBindings.h">
+      <Filter>Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LuaScript.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LuaImplementation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)LanguageBindings.cpp">
+      <Filter>Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LuaScript.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Bindings">
+      <UniqueIdentifier>{84181a76-e851-4d33-b5a0-508263e488ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{c87959c6-3663-4016-8672-c2669aefe12e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{813d74b5-4094-46c1-9e67-cbda51a2d1e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -7,6 +7,6 @@ namespace SparkiyEngine.Bindings.Language
 {
     public interface ILanguageBindings
     {
-
+	    void LoadScript(string id, string content);
     }
 }

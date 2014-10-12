@@ -1,5 +1,7 @@
 ﻿using Microsoft.Practices.Prism.StoreApps;
+using SparkiyEngine.Bindings.Language;
 using SparkiyEngine.Graphics.DirectX;
+using SparkiyEngine_Language_LuaImplementation;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +27,8 @@ namespace SparkiyClient.Views
     public sealed partial class MainPage : VisualStateAwarePage
     {
 		private Renderer renderer;
+		private LuaImplementation lua;
+	    private ILanguageBindings languageBindings;
 
         public MainPage()
         {
@@ -43,7 +47,12 @@ namespace SparkiyClient.Views
 			this.renderer.GraphicsBindings.SetBackground(0.18f, 0.28f, 0.31f);
 			this.renderer.GraphicsBindings.SetStrokeColor(1f, 0f, 0f);
 			this.renderer.GraphicsBindings.DrawRectangle(100, 100, 50, 50);
-		}
+
+			this.lua = new LuaImplementation();
+	        this.languageBindings = this.lua.GetLanguageBindings();
+
+			this.languageBindings.LoadScript("001", "local testVariable = 5");
+        }
 
 		protected override void OnNavigatedFrom(NavigationEventArgs e)
 		{
