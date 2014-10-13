@@ -41,7 +41,11 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NumberGroup2.cs" />
+    <Compile Include="NumberGroup3.cs" />
+    <Compile Include="DataTypes.cs" />
     <Compile Include="MethodDeclarationDetails.cs" />
+    <Compile Include="MethodDeclarationOverloadDetails.cs" />
     <Compile Include="MethodTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

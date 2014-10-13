@@ -7,6 +7,6 @@ namespace SparkiyEngine.Bindings.Common.Component
 	{
 		Get = 0x01,
 		Set = 0x02,
-		Function = 0x03
+		Function = 0x04
 	}
 }

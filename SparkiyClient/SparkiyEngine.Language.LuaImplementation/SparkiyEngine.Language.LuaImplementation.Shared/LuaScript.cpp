@@ -1,8 +1,12 @@
 #include "pch.h"
 #include "LuaScript.h"
 
+using namespace SparkiyEngine_Language_LuaImplementation;
+
+
 // Constructor
-LuaScript::LuaScript(std::string id, const char *content) :
+LuaScript::LuaScript(LuaImplementation^ luaImpl, const char *id, const char *content) :
+m_luaImpl(luaImpl),
 m_id(id),
 m_content(content),
 m_isRunning(false),
@@ -34,13 +38,16 @@ LuaScript::~LuaScript()
 	lua_close(m_luaState);
 }
 
+//
+// RegisterMethod
+//
 void LuaScript::RegisterMethod(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^declaration)
 {
-	OutputDebugStringW(GetWString("Registering method \"" + declaration->Name + "\"\n").c_str());
+	OutputDebugStringW(GetWString("Registering method \"" + GetString(declaration->Name) + "\"\n").c_str());
 	OutputDebugStringW(L"Warning: Not implemented function\n");
 
+	// Register function with lua VM
 	auto cName = GetCString(declaration->Name);
-
 	this->RegisterFunction(cName, UniversalFunction);
 }
 
@@ -49,7 +56,7 @@ void LuaScript::RegisterMethod(SparkiyEngine::Bindings::Common::Component::Metho
 //
 void LuaScript::Start()
 {
-	OutputDebugStringW(GetWString("Starting script with id(" + this->m_id + ")\n").c_str());
+	OutputDebugStringW(GetWString("Starting script with id(" + GetString(this->m_id) + ")\n").c_str());
 	OutputDebugStringW(L"Warning: Not implemented function\n");
 
 	this->m_isRunning = true;
@@ -131,7 +138,11 @@ bool LuaScript::HandleResult(int status)
 //
 int LuaScript::UniversalFunction(lua_State* luaState)
 {
+	auto callerScript = GetCallerScript(luaState);
 	auto functionName = GetFunctionName(luaState);
+	auto declaration = callerScript->m_luaImpl->m_declarations[functionName];
+
+	int numberOfArguments = lua_gettop(luaState);
 
 	OutputDebugStringW(GetWString("Called function \"" + GetString(functionName) + "\"\n").c_str());
 

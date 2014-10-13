@@ -5,6 +5,7 @@ using SharpDX.DirectWrite;
 using SharpDX.Toolkit;
 using SharpDX.Toolkit.Direct2D;
 using SharpDX.Toolkit.Graphics;
+using SparkiyEngine.Bindings.Common.Component;
 using SparkiyEngine.Bindings.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
@@ -35,9 +36,9 @@ namespace SparkiyEngine.Graphics.DirectX
 					4f));
 		}
 
-		public FloatGroup3 GetStrokeColor()
+		public NumberGroup3 GetStrokeColor()
 		{
-			return new FloatGroup3()
+			return new NumberGroup3()
 			{
 				First = this.game.StrokeColor.Red,
 				Second = this.game.StrokeColor.Green,

@@ -11,6 +11,9 @@ m_didLoadScript(false)
 {
 }
 
+//
+// MapToGraphicsMethods
+//
 void LanguageBindings::MapToGraphicsMethods(IMapView<String ^, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^> ^declarations)
 {
 	// Check if we didnt already loaded some scripts, in case we did, throw exception
@@ -19,22 +22,30 @@ void LanguageBindings::MapToGraphicsMethods(IMapView<String ^, SparkiyEngine::Bi
 		throw ref new Exception(-1, "Can't map methods, already loaded at least one script. Map methods first before loading scripts.");
 	}
 
-	this->m_declarations = declarations;
+	// Populate map in LuaImplementation instance
+	std::for_each(begin(declarations), end(declarations),
+		[=](IKeyValuePair<Platform::String^, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^>^ decl) {
+		this->m_luaImpl->m_declarations[GetCString(decl->Key)] = decl->Value;
+	});
 }
 
-void LanguageBindings::LoadScript(String ^id, String ^content) 
+//
+// LoadScript
+//
+void LanguageBindings::LoadScript(String ^id, String ^content)
 {
-	// Convert to C and C++ compatible strings
-	std::string sId = GetString(id);
+	// Convert to C compatible strings
+	const char *cId = GetCString(id);
 	const char *cContent = GetCString(content);
 
 	// Create script
-	auto script = new LuaScript(sId, cContent);
+	LuaScript *script = new LuaScript(this->m_luaImpl, cId, cContent);
 
 	// Map methods
-	std::for_each(begin(this->m_declarations), end(this->m_declarations), [=](IKeyValuePair<Platform::String^, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^>^ decl) 
+	std::for_each(this->m_luaImpl->m_declarations.begin(), this->m_luaImpl->m_declarations.end(),
+		[=](std::pair<const char *, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^> decl)
 	{
-		auto details = decl->Value;
+		auto details = decl.second;
 
 		script->RegisterMethod(details);
 	});
@@ -43,19 +54,22 @@ void LanguageBindings::LoadScript(String ^id, String ^content)
 	script->Load();
 
 	// Add to the scripts list
-	this->m_luaImpl->AddScript(sId, script);
+	this->m_luaImpl->AddScript(cId, script);
 
 	// mark that binding loaded at least one script
 	this->m_didLoadScript = true;
 }
 
+// 
+// StartScript
+//
 void LanguageBindings::StartScript(Platform::String ^id)
 {
-	// Convert to C and C++ compatible strings
-	std::string sId = GetString(id);
+	// Convert to C compatible strings
+	const char *cId = GetCString(id);
 
 	// Retrieve script
-	auto script = this->m_luaImpl->GetScript(sId);
+	auto script = this->m_luaImpl->GetScript(cId);
 
 	// Start script
 	script->Start();

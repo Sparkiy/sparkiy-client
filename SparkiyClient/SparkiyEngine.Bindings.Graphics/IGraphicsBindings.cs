@@ -8,13 +8,6 @@ using SparkiyEngine.Bindings.Common.Component;
 
 namespace SparkiyEngine.Bindings.Graphics
 {
-	public struct FloatGroup3
-	{
-		public float First;
-		public float Second;
-		public float Third;
-	}
-
 	public interface IGraphicsStyleBindings
 	{
 		/// <summary>
@@ -28,7 +21,7 @@ namespace SparkiyEngine.Bindings.Graphics
 		/// Stroke is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
 		/// </remarks>
 		[MethodDeclaration(SupportedLanguages.Lua, "stroke", MethodTypes.Get)]
-		FloatGroup3 GetStrokeColor();
+		NumberGroup3 GetStrokeColor();
 
 		/// <summary>
 		/// Sets the color of the stroke.

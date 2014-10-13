@@ -2,6 +2,16 @@
 
 #include "pch.h"
 
+// String comparer
+// Note: source http://stackoverflow.com/questions/4157687/using-char-as-a-key-in-stdmap
+struct StrCompare : public std::binary_function<const char*, const char*, bool> {
+public:
+	bool operator() (const char* str1, const char* str2) const
+	{
+		return std::strcmp(str1, str2) < 0;
+	}
+};
+
 // String helpers
 static const char* GetCString(std::string str);
 static const char* GetCString(std::wstring str);

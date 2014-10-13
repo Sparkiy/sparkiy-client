@@ -53,25 +53,79 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 				}
 
 				// Retrieve returning type
-				// Retrieve calling types
+				var returnTypes = ResolveDataTypes(method.ReturnType);
 
+				// Retrieve calling types
+				var parameters = method.GetParameters().Select(pi => pi.ParameterType).SelectMany(ResolveDataTypes).ToArray();
+
+				// Retrieve or create new declaration
+				MethodDeclarationDetails details;
 				if (availableMethods.ContainsKey(attribute.Name))
 				{
-					var details = availableMethods[attribute.Name];
-
-					details.Type = details.Type | attribute.Type;
+					details = availableMethods[attribute.Name];
 				}
 				else
 				{
-					availableMethods.Add(attribute.Name, new MethodDeclarationDetails()
+					details = new MethodDeclarationDetails()
 					{
 						Name = attribute.Name,
-						Type = attribute.Type
-					});
+					};
+
+					availableMethods.Add(attribute.Name, details);
 				}
+
+				// Add method overload to the declaration
+				var overloadsList = details.Overloads as List<MethodDeclarationOverloadDetails>;
+				if (overloadsList == null) 
+					throw new NullReferenceException("Couldn't retrieve list containing method declaration overloads");
+				overloadsList.Add(new MethodDeclarationOverloadDetails()
+				{
+					Type = attribute.Type,
+					Input = parameters,
+					Return = returnTypes
+				});
 			}
 
+			// Replace old list with new list
 			this.AvailableMethods = availableMethods;
+		}
+
+		private static DataTypes[] ResolveDataTypes(Type type)
+		{
+			DataTypes[] dataTypes;
+			if (IsOfType(type, typeof (void)))
+			{
+				dataTypes = new DataTypes[0];
+			}
+			else if (IsOfType(type, typeof(int)) ||
+				IsOfType(type, typeof(float)) ||
+				IsOfType(type, typeof(double)))
+			{
+				dataTypes = new DataTypes[] { DataTypes.Number };
+			}
+			else if (IsOfType(type, typeof(string)))
+			{
+				dataTypes = new DataTypes[] { DataTypes.String };
+			}
+			else if (IsOfType(type, typeof(NumberGroup2)))
+			{
+				dataTypes = new DataTypes[] { DataTypes.Number, DataTypes.Number };
+			}
+			else if (IsOfType(type, typeof(NumberGroup3)))
+			{
+				dataTypes = new DataTypes[] { DataTypes.Number, DataTypes.Number, DataTypes.Number };
+			}
+			else
+			{
+				throw new NotSupportedException("Given type is not supported.");
+			}
+
+			return dataTypes;
+		}
+
+		private static bool IsOfType(Type source, Type reference)
+		{
+			return source.GetTypeInfo().IsAssignableFrom(reference.GetTypeInfo());
 		}
 
 		public SupportedLanguages Language { get; private set; }

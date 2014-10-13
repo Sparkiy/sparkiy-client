@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace SparkiyEngine.Bindings.Common.Component
 {
@@ -6,12 +7,12 @@ namespace SparkiyEngine.Bindings.Common.Component
 	{
 		public MethodDeclarationDetails()
 		{
-			
+			this.Overloads = new List<MethodDeclarationOverloadDetails>();
 		}
 
 
 		public string Name { get; set; }
 
-		public MethodTypes Type { get; set; }
+		public IEnumerable<MethodDeclarationOverloadDetails> Overloads { get; private set; } 
 	}
 }

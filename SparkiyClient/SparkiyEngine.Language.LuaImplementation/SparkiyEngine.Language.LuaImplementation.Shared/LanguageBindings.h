@@ -1,7 +1,7 @@
 #pragma once
 
 #include "pch.h"
-#include <LuaImplementation.h>
+#include "LuaImplementation.h"
 
 using namespace Platform;
 using namespace Windows::Foundation::Collections;
@@ -20,7 +20,6 @@ namespace SparkiyEngine_Language_LuaImplementation
 
 	private:
 		LuaImplementation																					^m_luaImpl;
-		IMapView<String ^, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^>			^m_declarations;
 
 		// State
 		bool																								 m_didLoadScript;
