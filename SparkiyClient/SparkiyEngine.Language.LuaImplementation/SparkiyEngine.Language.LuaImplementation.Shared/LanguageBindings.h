@@ -15,6 +15,9 @@ namespace SparkiyEngine_Language_LuaImplementation
 		virtual void LoadScript(String ^id, String ^content);
 		virtual void StartScript(String ^id);
 
+		virtual event SparkiyEngine::Bindings::Language::Component::MethodRequestEventHandler^ OnMethodRequested;
+		virtual void RaiseMethodRequestedEvent(SparkiyEngine::Bindings::Language::Component::MethodRequestEventArguments^ args);
+
 	internal:
 		LanguageBindings(LuaImplementation ^impl);
 

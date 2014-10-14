@@ -170,6 +170,10 @@
       <Project>{f115ed0b-82a4-4877-994a-8c560080a129}</Project>
       <Name>SparkiyEngine.Bindings.Graphics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Language.Component\SparkiyEngine.Bindings.Language.Component.csproj">
+      <Project>{12E3C635-7451-4243-B6AB-1CCAAB645EF5}</Project>
+      <Name>SparkiyEngine.Bindings.Language.Component</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SparkiyEngine.Bindings.Language\SparkiyEngine.Bindings.Language.csproj">
       <Project>{ffb9832f-3a5e-445c-af38-b5a990b6ca52}</Project>
       <Name>SparkiyEngine.Bindings.Language</Name>

@@ -75,3 +75,8 @@ void LanguageBindings::StartScript(Platform::String ^id)
 	script->Start();
 }
 
+void LanguageBindings::RaiseMethodRequestedEvent(SparkiyEngine::Bindings::Language::Component::MethodRequestEventArguments^ args)
+{
+	// Raise event with arguments
+	this->OnMethodRequested::raise(this, args);
+}

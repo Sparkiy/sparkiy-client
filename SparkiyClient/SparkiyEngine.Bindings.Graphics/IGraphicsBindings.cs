@@ -39,7 +39,7 @@ namespace SparkiyEngine.Bindings.Graphics
 		/// Stroke is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
 		/// </remarks>
 		[MethodDeclaration(SupportedLanguages.Lua, "stroke", MethodTypes.Set)]
-		void SetStrokeColor(float red, float green, float blue);
+		void SetStrokeColor(double red, double green, double blue);
 
 
 		//float GetStrokeThickness();
@@ -49,8 +49,9 @@ namespace SparkiyEngine.Bindings.Graphics
 
 	public interface IGraphicsBindings : IGraphicsStyleBindings
 	{
-		void SetBackground(float red, float green, float blue);
+		[MethodDeclaration(SupportedLanguages.Lua, "background", MethodTypes.Set)]
+		void SetBackground(double red, double green, double blue);
 
-		void DrawRectangle(float x, float y, float width, float height);
+		void DrawRectangle(double x, double y, double width, double height);
 	}
 }

@@ -1,8 +1,11 @@
-﻿using Microsoft.Practices.Prism.StoreApps;
+﻿using System.Reflection;
+using Microsoft.Practices.Prism.StoreApps;
 using SparkiyEngine.Bindings.Common;
 using SparkiyEngine.Bindings.Common.Attributes;
 using SparkiyEngine.Bindings.Graphics;
 using SparkiyEngine.Bindings.Language;
+//using SparkiyEngine.Bindings.Language.Component;
+using SparkiyEngine.Bindings.Language.Component;
 using SparkiyEngine.Graphics.DirectX;
 using SparkiyEngine_Language_LuaImplementation;
 using System;
@@ -56,21 +59,26 @@ namespace SparkiyClient.Views
 			this.lua = new LuaImplementation();
 			this.languageBindings = this.lua.GetLanguageBindings();
 			this.languageBindings.MapToGraphicsMethods(this.methodDeclarationResolver.AvailableMethods);
+			this.languageBindings.OnMethodRequested += LanguageBindingsOnOnMethodRequested;
 
 			// Initialize graphics implementation and retrieve graphics bindings
 			this.renderer = new Renderer(this.SwapChainPanel);
 			this.graphicsBindings = this.renderer.GraphicsBindings;
 
 
-			this.languageBindings.LoadScript("001", "stroke(1, 1, 0)");
+			this.languageBindings.LoadScript("001", "background(1, 1, 1) stroke(0, 0.8, 1)");
 			this.languageBindings.StartScript("001");
 
-			this.graphicsBindings.SetBackground(0.18f, 0.28f, 0.31f);
-			this.graphicsBindings.SetStrokeColor(1f, 0f, 0f);
 			this.graphicsBindings.DrawRectangle(100, 100, 50, 50);
         }
 
-		protected override void OnNavigatedFrom(NavigationEventArgs e)
+		private void LanguageBindingsOnOnMethodRequested(object sender, MethodRequestEventArguments args)
+		{
+			var method = (MethodInfo)args.Overload.Method;
+			method.Invoke(this.graphicsBindings, args.InputValues);
+		}
+
+	    protected override void OnNavigatedFrom(NavigationEventArgs e)
 		{
 			this.renderer.Dispose();
 

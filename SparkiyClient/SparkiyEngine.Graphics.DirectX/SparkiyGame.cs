@@ -21,16 +21,16 @@ namespace SparkiyEngine.Graphics.DirectX
 		}
 
 
-		public void SetBackground(float red, float green, float blue)
+		public void SetBackground(double red, double green, double blue)
 		{
-			this.game.BackgroundColor = new Color4(red, green, blue, 1f);
+			this.game.BackgroundColor = new Color4((float)red, (float)green, (float)blue, 1f);
 		}
 
-		public void DrawRectangle(float x, float y, float width, float height)
+		public void DrawRectangle(double x, double y, double width, double height)
 		{
 			this.game.Canvas.PushObject(
 				new CanvasRectangle(
-					new RectangleF(x, y, width, height),
+					new RectangleF((float)x, (float)y, (float)width, (float)height),
 					new SolidColorBrush(this.game.Canvas.DeviceContext, this.game.StrokeColor),
 					false,
 					4f));
@@ -46,9 +46,9 @@ namespace SparkiyEngine.Graphics.DirectX
 			};
 		}
 
-		public void SetStrokeColor(float red, float green, float blue)
+		public void SetStrokeColor(double red, double green, double blue)
 		{
-			this.game.StrokeColor = new Color4(red, green, blue, 1f);
+			this.game.StrokeColor = new Color4((float)red, (float)green, (float)blue, 1f);
 		}
 	}
 

@@ -17,6 +17,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		void AddScript(const char *id, LuaScript *script);
 		LuaScript* GetScript(const char *id);
 
+		void RaiseMethodRequestedEvent(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails^ declaration, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ overload, Platform::Array<Platform::Object^>^ inputValues);
+
 		std::map<const char *, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^, StrCompare>				 m_declarations;
 
 	private:

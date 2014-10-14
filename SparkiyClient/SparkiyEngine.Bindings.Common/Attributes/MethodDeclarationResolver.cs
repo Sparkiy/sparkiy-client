@@ -82,7 +82,9 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 				{
 					Type = attribute.Type,
 					Input = parameters,
-					Return = returnTypes
+					Return = returnTypes,
+					Uid = Guid.NewGuid().ToString(),
+					Method = method
 				});
 			}
 

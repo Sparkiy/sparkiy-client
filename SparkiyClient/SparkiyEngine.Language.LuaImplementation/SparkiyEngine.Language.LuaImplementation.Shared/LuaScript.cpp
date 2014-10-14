@@ -142,7 +142,50 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 	auto functionName = GetFunctionName(luaState);
 	auto declaration = callerScript->m_luaImpl->m_declarations[functionName];
 
+	// Match number of arguments with overload declaration
+	SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ matchedOverload;
 	int numberOfArguments = lua_gettop(luaState);
+	for (auto index = begin(declaration->Overloads); index != end(declaration->Overloads); index++)
+	{
+		if ((*index)->Input->Length == numberOfArguments)
+		{
+			matchedOverload = *index;
+			break;
+		}
+	}
+
+	// Check if declaration was matched
+	if (matchedOverload == nullptr)
+	{
+		throw;
+	}
+
+	// Create input values array
+	auto inputValues = ref new Platform::Array<Platform::Object^>(numberOfArguments);
+	
+	// Retrieve all arguments
+	for (int index = 0, argIndex = -numberOfArguments; index < numberOfArguments; index++, argIndex++)
+	{
+		auto requiredType = matchedOverload->Input[index];
+		switch (requiredType)
+		{
+		case SparkiyEngine::Bindings::Common::Component::DataTypes::Number:
+			if (!lua_isnumber(luaState, argIndex))
+				throw;
+			inputValues[index] = lua_tonumber(luaState, argIndex);
+			break;
+		case SparkiyEngine::Bindings::Common::Component::DataTypes::String:
+			if (!lua_isstring(luaState, argIndex))
+				throw;
+			inputValues[index] = GetPString(lua_tostring(luaState, argIndex));
+			break;
+		default:
+			throw;
+			break;
+		}
+	}
+
+	callerScript->m_luaImpl->RaiseMethodRequestedEvent(declaration, matchedOverload, inputValues);
 
 	OutputDebugStringW(GetWString("Called function \"" + GetString(functionName) + "\"\n").c_str());
 

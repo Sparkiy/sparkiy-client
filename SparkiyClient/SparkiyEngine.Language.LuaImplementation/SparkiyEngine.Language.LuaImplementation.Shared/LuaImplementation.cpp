@@ -45,3 +45,13 @@ LuaScript* LuaImplementation::GetScript(const char * id)
 {
 	return this->m_scripts[id];
 }
+
+void LuaImplementation::RaiseMethodRequestedEvent(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails^ declaration, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ overload, Platform::Array<Platform::Object^>^ inputValues)
+{
+	auto args = ref new SparkiyEngine::Bindings::Language::Component::MethodRequestEventArguments();
+	args->Declaration = declaration;
+	args->Overload = overload;
+	args->InputValues = inputValues;
+
+	this->m_languageBindings->RaiseMethodRequestedEvent(args);
+}
