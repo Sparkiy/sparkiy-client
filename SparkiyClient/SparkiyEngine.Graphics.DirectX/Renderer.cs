@@ -18,9 +18,18 @@ namespace SparkiyEngine.Graphics.DirectX
 		private SparkiyGame game;
 
 
-		public Renderer(SwapChainPanel panel)
+		public Renderer()
 		{
 			this.game = new SparkiyGame();
+		}
+
+		public Renderer(SwapChainPanel panel) : this()
+		{
+			this.AssignPanel(panel);
+		}
+
+		public void AssignPanel(Panel panel)
+		{
 			this.game.Run(panel);
 		}
 

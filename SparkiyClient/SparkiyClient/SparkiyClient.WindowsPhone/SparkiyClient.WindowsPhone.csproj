@@ -178,6 +178,14 @@
       <Project>{ffb9832f-3a5e-445c-af38-b5a990b6ca52}</Project>
       <Name>SparkiyEngine.Bindings.Language</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SparkiyEngine.Engine.Implementation\SparkiyEngine.Engine.Implementation.csproj">
+      <Project>{698D2C1E-D6BC-4EB8-9188-072CB2790530}</Project>
+      <Name>SparkiyEngine.Engine.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SparkiyEngine.Engine\SparkiyEngine.Engine.csproj">
+      <Project>{79259DB5-4D17-450E-9861-09FA93BFF6FD}</Project>
+      <Name>SparkiyEngine.Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.csproj">
       <Project>{e9172dfa-125c-4c68-8df8-ef88e36ab410}</Project>
       <Name>SparkiyEngine.Graphics.DirectX</Name>

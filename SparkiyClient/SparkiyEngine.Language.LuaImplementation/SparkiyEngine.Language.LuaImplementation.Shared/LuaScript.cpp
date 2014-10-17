@@ -2,6 +2,7 @@
 #include "LuaScript.h"
 
 using namespace SparkiyEngine_Language_LuaImplementation;
+using namespace SparkiyEngine::Bindings::Common::Component;
 
 
 // Constructor
@@ -41,10 +42,9 @@ LuaScript::~LuaScript()
 //
 // RegisterMethod
 //
-void LuaScript::RegisterMethod(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^declaration)
+void LuaScript::RegisterMethod(MethodDeclarationDetails ^declaration)
 {
 	OutputDebugStringW(GetWString("Registering method \"" + GetString(declaration->Name) + "\"\n").c_str());
-	OutputDebugStringW(L"Warning: Not implemented function\n");
 
 	// Register function with lua VM
 	auto cName = GetCString(declaration->Name);
@@ -57,7 +57,6 @@ void LuaScript::RegisterMethod(SparkiyEngine::Bindings::Common::Component::Metho
 void LuaScript::Start()
 {
 	OutputDebugStringW(GetWString("Starting script with id(" + GetString(this->m_id) + ")\n").c_str());
-	OutputDebugStringW(L"Warning: Not implemented function\n");
 
 	this->m_isRunning = true;
 
@@ -119,8 +118,9 @@ bool LuaScript::HandleResult(int status)
 		else msg = "(error object is not a string)";
 
 		// Build final message
-		Platform::String^ message = GetPString(this->m_id) + ": " + GetPString(msg);
+		//Platform::String^ message = GetPString(this->m_id) + ": " + GetPString(msg);
 
+		luaL_error(this->m_luaState, msg);
 		// Display the error message
 		//if (m_engineValues->m_userService != nullptr)
 		//	m_engineValues->m_userService->WriteMessage(message, MessageTypes::Debug);
@@ -138,12 +138,15 @@ bool LuaScript::HandleResult(int status)
 //
 int LuaScript::UniversalFunction(lua_State* luaState)
 {
+	auto invalidArgTypeErrorMessage = "Invalid argument type passed to function \"%s\".";
+	auto invalidOverloadErrorMessage = "Invalid argument arangement or unknown function \"%s\".";
+
 	auto callerScript = GetCallerScript(luaState);
 	auto functionName = GetFunctionName(luaState);
 	auto declaration = callerScript->m_luaImpl->m_declarations[functionName];
 
 	// Match number of arguments with overload declaration
-	SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ matchedOverload;
+	MethodDeclarationOverloadDetails^ matchedOverload;
 	int numberOfArguments = lua_gettop(luaState);
 	for (auto index = begin(declaration->Overloads); index != end(declaration->Overloads); index++)
 	{
@@ -156,9 +159,7 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 
 	// Check if declaration was matched
 	if (matchedOverload == nullptr)
-	{
-		throw;
-	}
+		luaL_error(luaState, invalidOverloadErrorMessage, functionName);
 
 	// Create input values array
 	auto inputValues = ref new Platform::Array<Platform::Object^>(numberOfArguments);
@@ -169,18 +170,18 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 		auto requiredType = matchedOverload->Input[index];
 		switch (requiredType)
 		{
-		case SparkiyEngine::Bindings::Common::Component::DataTypes::Number:
+		case DataTypes::Number:
 			if (!lua_isnumber(luaState, argIndex))
-				throw;
+				luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
 			inputValues[index] = lua_tonumber(luaState, argIndex);
 			break;
-		case SparkiyEngine::Bindings::Common::Component::DataTypes::String:
+		case DataTypes::String:
 			if (!lua_isstring(luaState, argIndex))
-				throw;
+				luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
 			inputValues[index] = GetPString(lua_tostring(luaState, argIndex));
 			break;
 		default:
-			throw;
+			luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
 			break;
 		}
 	}

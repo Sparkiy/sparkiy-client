@@ -9,20 +9,9 @@ using SparkiyEngine.Bindings.Common.Component;
 
 namespace SparkiyEngine.Bindings.Common.Attributes
 {
-	public sealed class MethodDeclarationResolver
+	public static class MethodDeclarationResolver
 	{
-		public MethodDeclarationResolver(SupportedLanguages language)
-		{
-			this.Language = language;
-
-			// Create empty dictionary
-			this.AvailableMethods = 
-				new ReadOnlyDictionary<string, MethodDeclarationDetails>(
-					new Dictionary<string, MethodDeclarationDetails>());
-		}
-
-
-		public void ResolveAll(Type target)
+		public static IReadOnlyDictionary<string, MethodDeclarationDetails> ResolveAll(Type target, SupportedLanguages language)
 		{
 			var availableMethods = new Dictionary<string, MethodDeclarationDetails>();
 
@@ -47,7 +36,7 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 				}
 
 				// Skip if language doesn't match
-				if (!attribute.Languages.HasFlag(SupportedLanguages.Lua))
+				if (!attribute.Languages.HasFlag(language))
 				{
 					continue;
 				}
@@ -88,8 +77,7 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 				});
 			}
 
-			// Replace old list with new list
-			this.AvailableMethods = availableMethods;
+			return availableMethods;
 		}
 
 		private static DataTypes[] ResolveDataTypes(Type type)
@@ -129,9 +117,5 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 		{
 			return source.GetTypeInfo().IsAssignableFrom(reference.GetTypeInfo());
 		}
-
-		public SupportedLanguages Language { get; private set; }
-
-		public IReadOnlyDictionary<string, MethodDeclarationDetails> AvailableMethods { get; private set; }  
 	}
 }
