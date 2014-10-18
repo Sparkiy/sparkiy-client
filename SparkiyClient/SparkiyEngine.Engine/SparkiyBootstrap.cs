@@ -29,9 +29,9 @@ namespace SparkiyEngine.Core
 
 			// Initialize bindings container
 			this.Bindings = new BindingsContainer();
-			this.Bindings.Container.RegisterInstance<ILanguageBindings>(language);
-			this.Bindings.Container.RegisterInstance<IGraphicsBindings>(graphics);
-			this.Bindings.Container.RegisterInstance<IEngineBindings>(engine);
+			this.Bindings.Language = language;
+			this.Bindings.Graphics = graphics;
+			this.Bindings.Engine = engine;
 
 			// Map methods Graphics > Language
 			this.Bindings.Language.MapToGraphicsMethods(

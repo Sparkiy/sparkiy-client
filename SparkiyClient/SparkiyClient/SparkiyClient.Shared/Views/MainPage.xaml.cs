@@ -63,8 +63,7 @@ namespace SparkiyClient.Views
 	        this.bootstrap = new SparkiyBootstrap();
 			this.bootstrap.InitializeLua(language.GetLanguageBindings(), renderer.GraphicsBindings, engine);
 
-
-			this.bootstrap.Bindings.Language.LoadScript("001", "baackground(1, 1, 1) stroke(0, 0.8, 1)");
+			this.bootstrap.Bindings.Language.LoadScript("001", "background(1, 1, 1) stroke(0, 0.8, 1)");
 			this.bootstrap.Bindings.Language.StartScript("001");
 
 			this.bootstrap.Bindings.Graphics.DrawRectangle(100, 100, 50, 50);
