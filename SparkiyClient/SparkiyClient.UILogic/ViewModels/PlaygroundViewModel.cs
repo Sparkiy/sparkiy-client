@@ -1,30 +1,29 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Windows.UI.Xaml.Navigation;
+using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.Mvvm.Interfaces;
 using Microsoft.Practices.Prism.StoreApps.Interfaces;
 using SparkiyClient.UILogic.Services;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Navigation;
 
 namespace SparkiyClient.UILogic.ViewModels
 {
-	public class MainPageViewModel : ViewModel
+	public class PlaygroundViewModel : ViewModel
 	{
 		private INavigationService navigationService;
 		private readonly IAlertMessageService alertMessageService;
 		private readonly IResourceLoader resourceLoader;
 		private bool loadingData;
 
-		public MainPageViewModel(INavigationService navigationService, IAlertMessageService alertMessageService, IResourceLoader resourceLoader)
+
+		public PlaygroundViewModel(INavigationService navigationService, IAlertMessageService alertMessageService,
+			IResourceLoader resourceLoader)
 		{
 			this.navigationService = navigationService;
 			this.alertMessageService = alertMessageService;
 			this.resourceLoader = resourceLoader;
-        }
+		}
 
 
 		public async override void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
@@ -35,11 +34,11 @@ namespace SparkiyClient.UILogic.ViewModels
 			{
 				// TODO Retrieve models here
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				errorMessage = string.Format(CultureInfo.CurrentCulture,
-											 this.resourceLoader.GetString("GeneralServiceErrorMessage"),
-											 Environment.NewLine, ex.Message);
+					this.resourceLoader.GetString("GeneralServiceErrorMessage"),
+					Environment.NewLine, ex.Message);
 			}
 			finally
 			{
@@ -61,5 +60,5 @@ namespace SparkiyClient.UILogic.ViewModels
 			get { return this.loadingData; }
 			private set { this.SetProperty(ref this.loadingData, value); }
 		}
-    }
+	}
 }

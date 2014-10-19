@@ -64,7 +64,7 @@ namespace SparkiyClient
 		protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
 		{
 			// Navigate to the initial page
-			this.NavigationService.Navigate("Main", null);
+			this.NavigationService.Navigate("Playground", null);
 
 			// Ensure the current window is active
 			Window.Current.Activate();
