@@ -89,48 +89,41 @@ void LuaScript::RegisterLibrary(const char *name, const luaL_Reg *functions) {
 	lua_setglobal(this->m_luaState, name);
 }
 
+const char* LuaScript::GetErrorMessage() 
+{
+	const char* estr = lua_tostring(this->m_luaState, -1);
+	lua_pop(this->m_luaState, 1);
+	return estr;
+}
+
+void LuaScript::HandleException() 
+{
+	auto errorMessage = this->GetErrorMessage();
+	OutputDebugStringW(GetWString("Error: " + GetString(errorMessage) + "\n").c_str());
+	//Print("Error: " + err);
+}
+
 //
 // Load
 //
 void LuaScript::Load()
 {
-	// Run the script
-	this->m_isValid = HandleResult(luaL_dostring(m_luaState, this->m_content));
+	try 
+	{
+		// Run the script
+		this->m_isValid = luaL_dostring(m_luaState, this->m_content) == LUA_OK;
+
+		if (!this->m_isValid)
+			this->HandleException();
+	}
+	catch (...) 
+	{
+		this->HandleException();
+	}
 
 	// Call loaded function
 	//if (FunctionExist(this->m_luaState, LoadedFunctionName))
 	//	CallFunction(this->m_luaState, LoadedFunctionName, 0, 0);
-}
-
-// 
-// HandleResult
-//
-bool LuaScript::HandleResult(int status)
-{
-	// Check if error occurred
-	if (status != LUA_OK)
-	{
-		// Retrieve error message from native Lua interface
-		int type = lua_type(m_luaState, -1);
-		const char *msg;
-		if (type == LUA_TSTRING)
-			msg = lua_tostring(m_luaState, -1);
-		else msg = "(error object is not a string)";
-
-		// Build final message
-		//Platform::String^ message = GetPString(this->m_id) + ": " + GetPString(msg);
-
-		luaL_error(this->m_luaState, msg);
-		// Display the error message
-		//if (m_engineValues->m_userService != nullptr)
-		//	m_engineValues->m_userService->WriteMessage(message, MessageTypes::Debug);
-
-		// Failed
-		return false;
-	}
-
-	// Confirm successful
-	return true;
 }
 
 // static 
@@ -138,6 +131,7 @@ bool LuaScript::HandleResult(int status)
 //
 int LuaScript::UniversalFunction(lua_State* luaState)
 {
+	auto invalidFunctionNameErrorMessage = "Invalid function name. Requested function name was registered, but not mapped properly.";
 	auto invalidArgTypeErrorMessage = "Invalid argument type passed to function \"%s\".";
 	auto invalidOverloadErrorMessage = "Invalid argument arangement or unknown function \"%s\".";
 
@@ -145,11 +139,16 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 	auto functionName = GetFunctionName(luaState);
 	auto declaration = callerScript->m_luaImpl->m_declarations[functionName];
 
+	// Check if declaration found
+	if (declaration == nullptr)
+		luaL_error(luaState, invalidFunctionNameErrorMessage);
+
 	// Match number of arguments with overload declaration
 	MethodDeclarationOverloadDetails^ matchedOverload;
 	int numberOfArguments = lua_gettop(luaState);
 	for (auto index = begin(declaration->Overloads); index != end(declaration->Overloads); index++)
 	{
+		// Check if current overload accepts passed number of arguments
 		if ((*index)->Input->Length == numberOfArguments)
 		{
 			matchedOverload = *index;
@@ -216,16 +215,8 @@ LuaScript* LuaScript::GetCallerScript(lua_State *luaState) {
 //
 int LuaScript::PanicHandler(lua_State *luaState)
 {
-	LuaScript* callerScript = LuaScript::GetCallerScript(luaState);
+	throw;
 
-	// Construct error message
-	//Platform::String^ message = "Panic in '" + GetPString(callerScript->m_name) + "': " + GetPString(lua_tostring(luaState, -1));
-
-	// Write error message to output
-	//if (callerScript->m_engineValues->m_userService != nullptr)
-	//	callerScript->m_engineValues->m_userService->WriteMessage(message, MessageTypes::Error);
-	OutputDebugStringW(L"Warning: Not implemented function");
-
-	callerScript->m_isValid = false;
+	// This should not be reached
 	return 0;
 }

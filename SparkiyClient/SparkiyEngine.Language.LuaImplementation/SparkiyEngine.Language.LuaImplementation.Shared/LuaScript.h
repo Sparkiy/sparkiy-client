@@ -27,9 +27,10 @@ namespace SparkiyEngine_Language_LuaImplementation
 	protected:
 		void RegisterFunction(const char *name, FunctionPointer pt);
 		void RegisterLibrary(const char *name, const luaL_Reg *functions);
+		const char* GetErrorMessage();
+		void HandleException();
 
 		// Script loading
-		bool HandleResult(int status);
 
 		// Helper methods
 		static int UniversalFunction(lua_State* luaState);
