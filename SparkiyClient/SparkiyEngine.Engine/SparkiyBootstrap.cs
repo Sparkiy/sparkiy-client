@@ -3,6 +3,7 @@ using System.Reflection;
 using Microsoft.Practices.Unity;
 using SparkiyEngine.Bindings.Common;
 using SparkiyEngine.Bindings.Common.Attributes;
+using SparkiyEngine.Bindings.Common.Component;
 using SparkiyEngine.Bindings.Engine;
 using SparkiyEngine.Bindings.Graphics;
 using SparkiyEngine.Bindings.Language;
@@ -44,6 +45,19 @@ namespace SparkiyEngine.Core
 			{
 				var method = (MethodInfo) args.Overload.Method;
 				method.Invoke(this.Bindings.Graphics, args.InputValues);
+			};
+
+			// Catch messsage creating
+			this.Bindings.Language.OnMessageCreated += (sender, args) =>
+			{
+				var message = new EngineMessage()
+				{
+					Message = args.Message,
+					Source = sender as ILanguageBindings,
+					SourceType = BindingTypes.Language
+				};
+
+				this.Bindings.Engine.HandleMessageCreated(message);
 			};
 		}
 

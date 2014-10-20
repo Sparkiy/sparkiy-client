@@ -18,9 +18,6 @@ namespace SparkiyEngine.Bindings.Common.Test.Windows
 		{
 			// Major version cant be 0
 			LatestBindingsVersion.Version.Major.Should().NotBe(0);
-
-			// Date must be filled
-			LatestBindingsVersion.Version.Date.Should().NotBe(new DateTime());
 		}
 	}
 }

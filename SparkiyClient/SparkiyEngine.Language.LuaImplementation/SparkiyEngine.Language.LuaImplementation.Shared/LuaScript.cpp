@@ -89,6 +89,9 @@ void LuaScript::RegisterLibrary(const char *name, const luaL_Reg *functions) {
 	lua_setglobal(this->m_luaState, name);
 }
 
+//
+// GetErrorMessage
+//
 const char* LuaScript::GetErrorMessage() 
 {
 	const char* estr = lua_tostring(this->m_luaState, -1);
@@ -96,11 +99,13 @@ const char* LuaScript::GetErrorMessage()
 	return estr;
 }
 
+//
+// HandleException
+//
 void LuaScript::HandleException() 
 {
 	auto errorMessage = this->GetErrorMessage();
-	OutputDebugStringW(GetWString("Error: " + GetString(errorMessage) + "\n").c_str());
-	//Print("Error: " + err);
+	this->m_luaImpl->RaiseMessageCreatedEvent("Error: " + GetString(errorMessage) + "\n");
 }
 
 //

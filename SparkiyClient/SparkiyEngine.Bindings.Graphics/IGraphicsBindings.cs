@@ -8,7 +8,7 @@ using SparkiyEngine.Bindings.Common.Component;
 
 namespace SparkiyEngine.Bindings.Graphics
 {
-	public interface IGraphicsStyleBindings
+	public interface IGraphicsStyleBindings : IBindingsBase
 	{
 		/// <summary>
 		/// Gets the color of the stroke.

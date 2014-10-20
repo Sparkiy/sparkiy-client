@@ -12,21 +12,18 @@ namespace SparkiyEngine.Bindings.Common.Test.Windows
 		{
 			var versionA1 = new BindingsVersion()
 			{
-				Date = DateTime.Now,
 				Major = 1,
 				Minor = 84,
 				Revision = 3
 			};
 			var versionB1 = new BindingsVersion()
 			{
-				Date = DateTime.MaxValue,
 				Major = 3,
 				Minor = 84,
 				Revision = 3
 			};
 			var versionB2 = new BindingsVersion()
 			{
-				Date = DateTime.MinValue,
 				Major = 1,
 				Minor = 84,
 				Revision = 3
@@ -41,14 +38,12 @@ namespace SparkiyEngine.Bindings.Common.Test.Windows
 		{
 			var versionA1 = new BindingsVersion()
 			{
-				Date = DateTime.Now,
 				Major = 1,
 				Minor = 84,
 				Revision = 3
 			};
 			var versionB1 = new BindingsVersion()
 			{
-				Date = DateTime.MaxValue,
 				Major = 0,
 				Minor = 0,
 				Revision = 0

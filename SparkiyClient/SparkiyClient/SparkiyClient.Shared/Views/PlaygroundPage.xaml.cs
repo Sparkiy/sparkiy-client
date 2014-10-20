@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Practices.ObjectBuilder2;
 using SparkiyEngine.Core;
 using SparkiyEngine.Engine.Implementation;
 using SparkiyEngine.Graphics.DirectX;
@@ -80,6 +81,9 @@ namespace SparkiyClient.Views
 			this.bootstrap = new SparkiyBootstrap();
 			this.bootstrap.InitializeLua(language.GetLanguageBindings(), renderer.GraphicsBindings, engine);
 
+			// Attach to engine messaging changes
+			this.bootstrap.Bindings.Engine.OnMessageCreated += EngineOnOnMessageCreated;
+
 			// Retrieve script code
 		    string playgroundCode;
 		    this.RichEditBox.Document.GetText(TextGetOptions.NoHidden, out playgroundCode);
@@ -87,6 +91,12 @@ namespace SparkiyClient.Views
 			// Run script
 			this.bootstrap.Bindings.Language.LoadScript("playground", playgroundCode);
 			this.bootstrap.Bindings.Language.StartScript("playground");
+	    }
+
+	    private void EngineOnOnMessageCreated(object sender)
+	    {
+		    this.bootstrap.Bindings.Engine.GetMessages().ForEach(msg => System.Diagnostics.Debug.WriteLine(msg.Message));
+			this.bootstrap.Bindings.Engine.ClearMessages();
 	    }
     }
 }
