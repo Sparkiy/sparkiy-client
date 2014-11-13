@@ -13,14 +13,23 @@ using SparkiyEngine.Bindings.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
-	public class Renderer : IDisposable
+	public class Renderer : IDisposable, IGraphicsSettings
 	{
 		private SparkiyGame game;
 
 
-		public Renderer(SwapChainPanel panel)
+		public Renderer()
 		{
 			this.game = new SparkiyGame();
+		}
+
+		public Renderer(SwapChainPanel panel) : this()
+		{
+			this.AssignPanel(panel);
+		}
+
+		public void AssignPanel(object panel)
+		{
 			this.game.Run(panel);
 		}
 

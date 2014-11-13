@@ -26,8 +26,16 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using SparkiyEngine.Bindings.Engine;
+using SparkiyEngine.Bindings.Graphics;
+using SparkiyEngine.Bindings.Language;
+using SparkiyEngine.Engine.Implementation;
+using SparkiyEngine.Graphics.DirectX;
 #if WINDOWS_APP
 using Windows.UI.ApplicationSettings;
+using Microsoft.Practices.ServiceLocation;
+using SparkiyClient.UILogic.ViewModels;
+using SparkiyEngine_Language_LuaImplementation;
 #endif
 
 namespace SparkiyClient
@@ -37,13 +45,10 @@ namespace SparkiyClient
 	/// </summary>
 	public sealed partial class App : Microsoft.Practices.Prism.Mvvm.MvvmAppBase
 	{
-		// Create the singleton container that will be used for type resolution in the app
-		private readonly IUnityContainer container = new UnityContainer();
+		private readonly IUnityContainer container = null;
 
 		//Bootstrap: App singleton service declarations
 		private TileUpdater tileUpdater;
-
-		public IEventAggregator EventAggregator { get; set; }
 
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
@@ -53,6 +58,25 @@ namespace SparkiyClient
 		{
 			this.InitializeComponent();
 			this.RequestedTheme = ApplicationTheme.Light;
+
+			// Create container and register itself
+			this.container = new UnityContainer();
+			this.container.RegisterInstance(this.container);
+
+			// Set up the global locator service
+			ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(this.container));
+
+			// Allow the implementation class the opportunity to register
+			// types early in the process. Do not allow exceptions to abort
+			// the object creation.
+			try
+			{
+				this.OnEarlyContainerRegistration(this.container);
+			}
+			catch (Exception ex)
+			{
+				this.OnUnhandledRegistrationException(ex);
+			}
 		}
 
 		/// <summary>
@@ -64,7 +88,7 @@ namespace SparkiyClient
 		protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
 		{
 			// Navigate to the initial page
-			this.NavigationService.Navigate("Main", null);
+			this.NavigationService.Navigate("Playground", null);
 
 			// Ensure the current window is active
 			Window.Current.Activate();
@@ -79,53 +103,67 @@ namespace SparkiyClient
 
 		protected override Task OnInitializeAsync(IActivatedEventArgs args)
 		{
-			// Initialize Event Aggregator
-			this.EventAggregator = new EventAggregator();
-
-			// Register PRISM service instances
-			this.container.RegisterInstance<INavigationService>(NavigationService);
-			this.container.RegisterInstance<ISessionStateService>(SessionStateService);
-			this.container.RegisterInstance<IEventAggregator>(EventAggregator);
-			this.container.RegisterInstance<IResourceLoader>(
-				new Microsoft.Practices.Prism.StoreApps.ResourceLoaderAdapter(
-					new ResourceLoader()));
-
-			// Register global services
-			this.container.RegisterType<IAlertMessageService, AlertMessageService>(new ContainerControlledLifetimeManager());
-
-			// Set auto-wire between view and view models
-			ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
+			try
+			{
+				// Allow the implementing class the opportunity to
+				// register types. DO not allow exceptions to abort
+				// the initialization process.
+				try
 				{
-					var viewModelTypeName = string.Format(
-						CultureInfo.InvariantCulture,
-						"SparkiyClient.UILogic.ViewModels.{0}ViewModel, SparkiyClient.UILogic, Version=1.0.0.0, Culture=neutral", 
-						viewType.Name);
-					var viewModelType = Type.GetType(viewModelTypeName);
-					if (viewModelType == null)
-					{
-						viewModelTypeName = string.Format(
-							CultureInfo.InvariantCulture,
-							"SparkiyClient.UILogic.ViewModels.{0}ViewModel, SparkiyClient.UILogic.Windows, Version=1.0.0.0, Culture=neutral", 
-							viewType.Name);
-						viewModelType = Type.GetType(viewModelTypeName);
-					}
+					this.OnContainerRegistration((UnityContainer)this.container);
+				}
+				catch (Exception ex)
+				{
+					this.OnUnhandledRegistrationException(ex);
+				}
 
-					return viewModelType;
+				// Set the ViewModel Locator service to resolve View to ViewModel Types
+				SparkiyClient.Common.ViewModelLocator.SetDefaultViewTypeToViewModelTypeResolver(ResolveViewViewModelConnection);
+
+				// Set the ViewModel Locator service to use the Unity Container
+				SparkiyClient.Common.ViewModelLocator.SetDefaultViewModelFactory((viewModelType) =>
+				{
+					return ServiceLocator.Current.GetInstance(viewModelType);
 				});
-
-			// TODO Implement Live Tiles
-			// Documentation on working with tiles can be found at http://go.microsoft.com/fwlink/?LinkID=288821&clcid=0x409
-			//tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
-			//tileUpdater.StartPeriodicUpdate(new Uri(Constants.ServerAddress + "/api/TileNotification"), PeriodicUpdateRecurrence.HalfHour);
+			}
+			finally
+			{
+				this.OnApplicationInitialize(args);
+			}
 
 			return base.OnInitializeAsync(args);
 		}
 
-		protected override object Resolve(Type type)
+		/// <summary>
+		/// Override this method with the initialization logic of your application. Here you can initialize 
+		/// services, repositories, and so on.
+		/// </summary>
+		/// <param name="args">The <see cref="IActivatedEventArgs"/> instance containing the event data.</param>
+		private void OnApplicationInitialize(IActivatedEventArgs args)
 		{
-			// Use the container to resolve types (e.g. ViewModels and Flyouts)
-			// so their dependencies get injected
-			return this.container.Resolve(type);
+			// TODO Implement Live Tiles
+			// Documentation on working with tiles can be found at http://go.microsoft.com/fwlink/?LinkID=288821&clcid=0x409
+			//tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
+			//tileUpdater.StartPeriodicUpdate(new Uri(Constants.ServerAddress + "/api/TileNotification"), PeriodicUpdateRecurrence.HalfHour);
+		}
+
+		private static Type ResolveViewViewModelConnection(Type viewType)
+		{
+			var viewModelTypeName = string.Format(
+								CultureInfo.InvariantCulture,
+								"SparkiyClient.UILogic.ViewModels.{0}ViewModel, SparkiyClient.UILogic, Version=1.0.0.0",
+								viewType.Name);
+			var viewModelType = Type.GetType(viewModelTypeName);
+			if (viewModelType == null)
+			{
+				viewModelTypeName = string.Format(
+					CultureInfo.InvariantCulture,
+					"SparkiyClient.UILogic.ViewModels.{0}ViewModel, SparkiyClient.UILogic.Windows, Version=1.0.0.0",
+					viewType.Name);
+				viewModelType = Type.GetType(viewModelTypeName);
+			}
+
+			return viewModelType;
 		}
 
 #if WINDOWS_APP
@@ -155,5 +193,90 @@ namespace SparkiyClient
 			return settingsCommands;
 		}
 #endif
+
+		/// <summary>
+		/// Implements and seals the Resolves method to be handled by the Unity Container.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>A concrete instance of the specified type.</returns>
+		protected sealed override object Resolve(Type type)
+		{
+			// 
+			// Use the container to resolve types (e.g. ViewModels and Flyouts)
+			// so their dependencies get injected
+			// 
+			return ServiceLocator.Current.GetInstance<IUnityContainer>().Resolve(type);
+		}
+
+		/// <summary>
+		/// Override this method with code to initialize your container. This method will contain calls
+		/// to the Unity container's RegisterType and RegisterInstance methods for example.
+		/// </summary>
+		/// <param name="container">The instance of the unity container that should be used for registering types.</param>
+		private void OnContainerRegistration(IUnityContainer container)
+		{
+			// Instantiate ResourceLoader
+			var resourceLoader = new Microsoft.Practices.Prism.StoreApps.ResourceLoaderAdapter(new ResourceLoader());
+
+			// Register instances
+			this.container.RegisterInstance<IUnityContainer>(this.container);
+			this.container.RegisterInstance<INavigationService>(this.NavigationService);
+			this.container.RegisterInstance<ISessionStateService>(this.SessionStateService);
+			this.container.RegisterInstance<IResourceLoader>(resourceLoader);
+
+			// Register services
+			this.container.RegisterType<IAlertMessageService, AlertMessageService>(new ContainerControlledLifetimeManager());
+
+			// Register engine implementations
+			this.container.RegisterInstance<IGraphicsSettings>(new Renderer());
+
+			//// Register engine bindings
+			this.container.RegisterInstance<ILanguageBindings>((new LuaImplementation()).GetLanguageBindings());
+			this.container.RegisterInstance<IGraphicsBindings>(this.container.Resolve<IGraphicsSettings>().GraphicsBindings);
+			this.container.RegisterInstance<IEngineBindings>(new Sparkiy());
+
+			// Register ViewModels as Singeltons
+			this.container.RegisterType<MainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<PlaygroundPageViewModel, PlaygroundPageViewModel>(new ContainerControlledLifetimeManager());
+		}
+
+		/// <summary>
+		/// Override this method to register types in the container prior to any other code
+		/// being run. This is especially useful when types need to be registered for application
+		/// session state to be restored. Certain types may not be available or should not be registered
+		/// in this method. For example, registering the Pub/Sub 
+		/// </summary>
+		/// <param name="container">The instance of the unity container that should be used for registering types.</param>
+		private void OnEarlyContainerRegistration(IUnityContainer container)
+		{
+		}
+
+		/// <summary>
+		/// Override this method to catch any unhandled exceptions that occur during the registration process.
+		/// </summary>
+		/// <param name="ex">The exception that was thrown.</param>
+		private void OnUnhandledRegistrationException(Exception ex)
+		{
+		}
+
+		/// <summary>
+		/// Get an reference to the current Application instance
+		/// as an MvvmAppBase object.
+		/// </summary>
+		public static new MvvmAppBase Current
+		{
+			get { return (MvvmAppBase)Application.Current; }
+		}
+
+		/// <summary>
+		/// Get the IoC Unity Container 
+		/// </summary>
+		public IUnityContainer Container
+		{
+			get
+			{
+				return this.container;
+			}
+		}
 	}
 }

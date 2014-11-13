@@ -2,8 +2,11 @@
 #include "LuaImplementation.h"
 #include "LanguageBindings.h"
 
+using namespace Platform;
 using namespace SparkiyEngine_Language_LuaImplementation;
-
+using namespace SparkiyEngine::Bindings::Language;
+using namespace SparkiyEngine::Bindings::Language::Component;
+using namespace SparkiyEngine::Bindings::Common::Component;
 
 // Constructor
 LuaImplementation::LuaImplementation()
@@ -23,7 +26,7 @@ void LuaImplementation::Initialize()
 // 
 // GetLanguageBindings
 //
-SparkiyEngine::Bindings::Language::ILanguageBindings^ LuaImplementation::GetLanguageBindings()
+ILanguageBindings^ LuaImplementation::GetLanguageBindings()
 {
 	return this->m_languageBindings;
 }
@@ -46,12 +49,26 @@ LuaScript* LuaImplementation::GetScript(const char * id)
 	return this->m_scripts[id];
 }
 
-void LuaImplementation::RaiseMethodRequestedEvent(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails^ declaration, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ overload, Platform::Array<Platform::Object^>^ inputValues)
+//
+// RaiseMethodRequestedEvent
+//
+void LuaImplementation::RaiseMethodRequestedEvent(MethodDeclarationDetails^ declaration, MethodDeclarationOverloadDetails^ overload, Platform::Array<Platform::Object^>^ inputValues)
 {
-	auto args = ref new SparkiyEngine::Bindings::Language::Component::MethodRequestEventArguments();
+	auto args = ref new MethodRequestEventArguments();
 	args->Declaration = declaration;
 	args->Overload = overload;
 	args->InputValues = inputValues;
 
 	this->m_languageBindings->RaiseMethodRequestedEvent(args);
+}
+
+//
+// RaiseMessageCreatedEvent
+//
+void LuaImplementation::RaiseMessageCreatedEvent(std::string message) 
+{
+	auto args = ref new MessagingRequestEventArgs();
+	args->Message = GetPString(message);
+
+	this->m_languageBindings->RaiseMessageCreatedEvent(args);
 }

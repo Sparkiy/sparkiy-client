@@ -22,15 +22,10 @@ namespace SparkiyClient.UILogic.ViewModels
 		public MainPageViewModel(INavigationService navigationService, IAlertMessageService alertMessageService, IResourceLoader resourceLoader)
 		{
 			this.navigationService = navigationService;
+			this.alertMessageService = alertMessageService;
 			this.resourceLoader = resourceLoader;
         }
 
-
-		public bool LoadingData
-		{
-			get { return this.loadingData; }
-			private set { this.SetProperty(ref this.loadingData, value); }
-		}
 
 		public async override void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
 		{
@@ -58,6 +53,13 @@ namespace SparkiyClient.UILogic.ViewModels
 			}
 
 			// TODO Fill view model with models
+		}
+
+
+		public bool LoadingData
+		{
+			get { return this.loadingData; }
+			private set { this.SetProperty(ref this.loadingData, value); }
 		}
     }
 }

@@ -50,6 +50,11 @@ namespace SparkiyEngine.Graphics.DirectX
 		{
 			this.game.StrokeColor = new Color4((float)red, (float)green, (float)blue, 1f);
 		}
+
+		public void Reset()
+		{
+			this.game.Reset();
+		}
 	}
 
 	public class SparkiyGame : Game
@@ -129,6 +134,16 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.GraphicsDevice.Clear(this.BackgroundColor);
 
 			this.Canvas.Render();
+		}
+
+		public void Reset()
+		{
+			// Clear the canvas
+			this.Canvas.Clear();
+
+			// Clear all properties
+			this.BackgroundColor = new Color4();
+			this.StrokeColor = new Color4();
 		}
 
 		public SharpDX.Toolkit.Direct2D.Canvas Canvas { get; set; }

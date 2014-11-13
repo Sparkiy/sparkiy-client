@@ -1,4 +1,5 @@
-﻿using SparkiyEngine.Bindings.Language;
+﻿using System;
+using SparkiyEngine.Bindings.Language;
 
 namespace SparkiyEngine.Bindings.Language.Component
 {

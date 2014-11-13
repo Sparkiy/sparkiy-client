@@ -41,6 +41,8 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingTypes.cs" />
+    <Compile Include="IBindingsBase.cs" />
     <Compile Include="NumberGroup2.cs" />
     <Compile Include="NumberGroup3.cs" />
     <Compile Include="DataTypes.cs" />

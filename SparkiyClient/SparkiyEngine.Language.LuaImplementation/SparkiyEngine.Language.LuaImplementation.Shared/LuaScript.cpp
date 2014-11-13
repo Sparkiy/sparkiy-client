@@ -2,6 +2,7 @@
 #include "LuaScript.h"
 
 using namespace SparkiyEngine_Language_LuaImplementation;
+using namespace SparkiyEngine::Bindings::Common::Component;
 
 
 // Constructor
@@ -41,10 +42,9 @@ LuaScript::~LuaScript()
 //
 // RegisterMethod
 //
-void LuaScript::RegisterMethod(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^declaration)
+void LuaScript::RegisterMethod(MethodDeclarationDetails ^declaration)
 {
 	OutputDebugStringW(GetWString("Registering method \"" + GetString(declaration->Name) + "\"\n").c_str());
-	OutputDebugStringW(L"Warning: Not implemented function\n");
 
 	// Register function with lua VM
 	auto cName = GetCString(declaration->Name);
@@ -57,7 +57,6 @@ void LuaScript::RegisterMethod(SparkiyEngine::Bindings::Common::Component::Metho
 void LuaScript::Start()
 {
 	OutputDebugStringW(GetWString("Starting script with id(" + GetString(this->m_id) + ")\n").c_str());
-	OutputDebugStringW(L"Warning: Not implemented function\n");
 
 	this->m_isRunning = true;
 
@@ -91,46 +90,45 @@ void LuaScript::RegisterLibrary(const char *name, const luaL_Reg *functions) {
 }
 
 //
+// GetErrorMessage
+//
+const char* LuaScript::GetErrorMessage() 
+{
+	const char* estr = lua_tostring(this->m_luaState, -1);
+	lua_pop(this->m_luaState, 1);
+	return estr;
+}
+
+//
+// HandleException
+//
+void LuaScript::HandleException() 
+{
+	auto errorMessage = this->GetErrorMessage();
+	this->m_luaImpl->RaiseMessageCreatedEvent("Error: " + GetString(errorMessage) + "\n");
+}
+
+//
 // Load
 //
 void LuaScript::Load()
 {
-	// Run the script
-	this->m_isValid = HandleResult(luaL_dostring(m_luaState, this->m_content));
+	try 
+	{
+		// Run the script
+		this->m_isValid = luaL_dostring(m_luaState, this->m_content) == LUA_OK;
+
+		if (!this->m_isValid)
+			this->HandleException();
+	}
+	catch (...) 
+	{
+		this->HandleException();
+	}
 
 	// Call loaded function
 	//if (FunctionExist(this->m_luaState, LoadedFunctionName))
 	//	CallFunction(this->m_luaState, LoadedFunctionName, 0, 0);
-}
-
-// 
-// HandleResult
-//
-bool LuaScript::HandleResult(int status)
-{
-	// Check if error occurred
-	if (status != LUA_OK)
-	{
-		// Retrieve error message from native Lua interface
-		int type = lua_type(m_luaState, -1);
-		const char *msg;
-		if (type == LUA_TSTRING)
-			msg = lua_tostring(m_luaState, -1);
-		else msg = "(error object is not a string)";
-
-		// Build final message
-		Platform::String^ message = GetPString(this->m_id) + ": " + GetPString(msg);
-
-		// Display the error message
-		//if (m_engineValues->m_userService != nullptr)
-		//	m_engineValues->m_userService->WriteMessage(message, MessageTypes::Debug);
-
-		// Failed
-		return false;
-	}
-
-	// Confirm successful
-	return true;
 }
 
 // static 
@@ -138,15 +136,24 @@ bool LuaScript::HandleResult(int status)
 //
 int LuaScript::UniversalFunction(lua_State* luaState)
 {
+	auto invalidFunctionNameErrorMessage = "Invalid function name. Requested function name was registered, but not mapped properly.";
+	auto invalidArgTypeErrorMessage = "Invalid argument type passed to function \"%s\".";
+	auto invalidOverloadErrorMessage = "Invalid argument arangement or unknown function \"%s\".";
+
 	auto callerScript = GetCallerScript(luaState);
 	auto functionName = GetFunctionName(luaState);
 	auto declaration = callerScript->m_luaImpl->m_declarations[functionName];
 
+	// Check if declaration found
+	if (declaration == nullptr)
+		luaL_error(luaState, invalidFunctionNameErrorMessage);
+
 	// Match number of arguments with overload declaration
-	SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ matchedOverload;
+	MethodDeclarationOverloadDetails^ matchedOverload;
 	int numberOfArguments = lua_gettop(luaState);
 	for (auto index = begin(declaration->Overloads); index != end(declaration->Overloads); index++)
 	{
+		// Check if current overload accepts passed number of arguments
 		if ((*index)->Input->Length == numberOfArguments)
 		{
 			matchedOverload = *index;
@@ -156,9 +163,7 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 
 	// Check if declaration was matched
 	if (matchedOverload == nullptr)
-	{
-		throw;
-	}
+		luaL_error(luaState, invalidOverloadErrorMessage, functionName);
 
 	// Create input values array
 	auto inputValues = ref new Platform::Array<Platform::Object^>(numberOfArguments);
@@ -169,18 +174,18 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 		auto requiredType = matchedOverload->Input[index];
 		switch (requiredType)
 		{
-		case SparkiyEngine::Bindings::Common::Component::DataTypes::Number:
+		case DataTypes::Number:
 			if (!lua_isnumber(luaState, argIndex))
-				throw;
+				luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
 			inputValues[index] = lua_tonumber(luaState, argIndex);
 			break;
-		case SparkiyEngine::Bindings::Common::Component::DataTypes::String:
+		case DataTypes::String:
 			if (!lua_isstring(luaState, argIndex))
-				throw;
+				luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
 			inputValues[index] = GetPString(lua_tostring(luaState, argIndex));
 			break;
 		default:
-			throw;
+			luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
 			break;
 		}
 	}
@@ -215,16 +220,8 @@ LuaScript* LuaScript::GetCallerScript(lua_State *luaState) {
 //
 int LuaScript::PanicHandler(lua_State *luaState)
 {
-	LuaScript* callerScript = LuaScript::GetCallerScript(luaState);
+	throw;
 
-	// Construct error message
-	//Platform::String^ message = "Panic in '" + GetPString(callerScript->m_name) + "': " + GetPString(lua_tostring(luaState, -1));
-
-	// Write error message to output
-	//if (callerScript->m_engineValues->m_userService != nullptr)
-	//	callerScript->m_engineValues->m_userService->WriteMessage(message, MessageTypes::Error);
-	OutputDebugStringW(L"Warning: Not implemented function");
-
-	callerScript->m_isValid = false;
+	// This should not be reached
 	return 0;
 }

@@ -4,13 +4,17 @@ namespace SparkiyEngine.Bindings.Common
 {
 	public static class LatestBindingsVersion
 	{
-		public static readonly BindingsVersion Version = new BindingsVersion()
+		static LatestBindingsVersion()
 		{
-			Date = new DateTime(2014, 10, 10),
+			LatestBindingsVersion.Version = new BindingsVersion()
+			{
+				Major = 1,
+				Minor = 0,
+				Revision = 0
+			};
+		}
 
-			Major = 1,
-			Minor = 0,
-			Revision = 0
-		};
+
+		public static BindingsVersion Version { get; private set; }
 	}
 }
