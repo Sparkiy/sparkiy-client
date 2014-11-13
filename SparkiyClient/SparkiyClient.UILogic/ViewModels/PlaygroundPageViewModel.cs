@@ -164,7 +164,7 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		public bool IsAutoRerunEnabled
 		{
-			get { return this.GetProperty<bool>(); }
+			get { return this.GetProperty<bool>(defaultValue: true); }
 			set { this.SetProperty(value); }
 		}
 

@@ -17,10 +17,10 @@ namespace SparkiyClient.Common
 			this.propertyValues[propertyName] = value;
 		}
 
-		public T GetProperty<T>([CallerMemberName] string propertyName = "")
+		public T GetProperty<T>([CallerMemberName] string propertyName = "", T defaultValue = default(T))
 		{
 			if (!this.propertyValues.ContainsKey(propertyName))
-				return default(T);
+				return defaultValue;
 			return (T)this.propertyValues[propertyName];
 		}
 	}
