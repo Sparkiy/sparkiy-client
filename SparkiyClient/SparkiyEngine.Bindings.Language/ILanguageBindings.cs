@@ -23,9 +23,15 @@ namespace SparkiyEngine.Bindings.Language
 		event MessagingRequestEventHandler OnMessageCreated;
 		void RaiseMessageCreatedEvent(MessagingRequestEventArgs args);
 
-
+		//
+		// Scripts
+		// 
 	    void LoadScript(string id, string content);
-
 	    void StartScript(string id);
-    }
+
+		// 
+		// Settings
+		//
+		void Reset();
+	}
 }

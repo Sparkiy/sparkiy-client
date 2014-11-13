@@ -94,3 +94,11 @@ void LanguageBindings::RaiseMessageCreatedEvent(MessagingRequestEventArgs^ args)
 	// Raise event with arguments
 	this->OnMessageCreated::raise(this, args);
 }
+
+//
+// Reset
+//
+void LanguageBindings::Reset()
+{
+	// NOTE nothing to do here right now...
+}

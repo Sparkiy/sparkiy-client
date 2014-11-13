@@ -32,5 +32,10 @@ namespace SparkiyEngine.Engine.Implementation
 		{
 			this.messages.Clear();
 		}
+
+		public void Reset()
+		{
+			this.ClearMessages();
+		}
     }
 }

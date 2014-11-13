@@ -13,7 +13,7 @@ using SparkiyEngine.Bindings.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
-	public class Renderer : IDisposable
+	public class Renderer : IDisposable, IGraphicsSettings
 	{
 		private SparkiyGame game;
 
@@ -28,7 +28,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.AssignPanel(panel);
 		}
 
-		public void AssignPanel(Panel panel)
+		public void AssignPanel(object panel)
 		{
 			this.game.Run(panel);
 		}

@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IGraphicsBindings.cs" />
+    <Compile Include="IGraphicsSettings.cs" />
+    <Compile Include="IGraphicsStyleBindings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,18 @@
     xmlns:local="using:SparkiyClient.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:SparkiyClient.Controls"
+    xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
     mc:Ignorable="d"
 	RequestedTheme="Light">
+	
+	<Page.BottomAppBar>
+		<CommandBar>
+			<CommandBar.PrimaryCommands>
+				<AppBarToggleButton Label="Auto Rerun" Icon="Refresh" IsChecked="{Binding IsAutoRerunEnabled, Mode=TwoWay}" />
+			</CommandBar.PrimaryCommands>
+		</CommandBar>
+	</Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.ColumnDefinitions>
@@ -14,7 +24,7 @@
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 		
-		<RichEditBox x:Name="RichEditBox" IsTextPredictionEnabled="False" IsSpellCheckEnabled="True" Margin="4" Grid.Column="0" />
+		<controls:CodeEditorControl x:Name="CodeEditor" Margin="4" Grid.Column="0" />
 		<SwapChainPanel x:Name="SwapChainPanel" Margin="4 0 0 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" />
     </Grid>
 </Page>

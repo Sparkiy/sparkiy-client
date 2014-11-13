@@ -17,11 +17,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Practices.ObjectBuilder2;
+using Microsoft.Practices.Prism.PubSubEvents;
+using SparkiyClient.UILogic.ViewModels;
 using SparkiyEngine.Core;
 using SparkiyEngine.Engine.Implementation;
 using SparkiyEngine.Graphics.DirectX;
-using SparkiyEngine_Language_LuaImplementation;
-
+using SparkiyClient.Common;
 
 namespace SparkiyClient.Views
 {
@@ -30,18 +31,13 @@ namespace SparkiyClient.Views
     /// </summary>
     public sealed partial class PlaygroundPage : Page
     {
-		// Code editor
-	    private Timer editorTimer;
-
-		private SparkiyBootstrap bootstrap;
-
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PlaygroundPage"/> class.
 		/// </summary>
         public PlaygroundPage()
         {
-            this.InitializeComponent();
+			this.DataContext = ViewModelLocator.GetViewModel(this.GetType());
+			this.InitializeComponent();
         }
 
 		/// <summary>
@@ -51,52 +47,15 @@ namespace SparkiyClient.Views
 		/// This parameter is typically used to configure the page.</param>
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			this.RichEditBox.TextChanged += RichEditBoxOnTextChanged;
-			this.editorTimer = new Timer(this.EditorCallback, null, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(-1));
+			this.ViewModel.AssignGraphicsPanel(this.SwapChainPanel);
+			this.CodeEditor.OnCodeChanged += (sender, args) => 
+				this.ViewModel.AssignCodeEditor(this.CodeEditor);
 		}
 
-	    private void EditorCallback(object state)
+
+	    private IPlaygroundViewModel ViewModel
 	    {
-			System.Diagnostics.Debug.WriteLine("Script restart triggered by editor");
-		    CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, this.RunScript);
-	    }
-
-	    private void RichEditBoxOnTextChanged(object sender, RoutedEventArgs routedEventArgs)
-	    {
-		    this.editorTimer.Change(TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(-1));
-	    }
-
-	    private void RunScript()
-	    {
-			// Initialize rendering using DirectX 
-			var renderer = new Renderer(this.SwapChainPanel);
-
-			// Initialize language using Lua
-			var language = new LuaImplementation();
-
-			// Initialize engine 
-			var engine = new Sparkiy();
-
-			// Connect components using bootstrap
-			this.bootstrap = new SparkiyBootstrap();
-			this.bootstrap.InitializeLua(language.GetLanguageBindings(), renderer.GraphicsBindings, engine);
-
-			// Attach to engine messaging changes
-			this.bootstrap.Bindings.Engine.OnMessageCreated += EngineOnOnMessageCreated;
-
-			// Retrieve script code
-		    string playgroundCode;
-		    this.RichEditBox.Document.GetText(TextGetOptions.NoHidden, out playgroundCode);
-
-			// Run script
-			this.bootstrap.Bindings.Language.LoadScript("playground", playgroundCode);
-			this.bootstrap.Bindings.Language.StartScript("playground");
-	    }
-
-	    private void EngineOnOnMessageCreated(object sender)
-	    {
-		    this.bootstrap.Bindings.Engine.GetMessages().ForEach(msg => System.Diagnostics.Debug.WriteLine(msg.Message));
-			this.bootstrap.Bindings.Engine.ClearMessages();
+			get { return this.DataContext as IPlaygroundViewModel; }
 	    }
     }
 }

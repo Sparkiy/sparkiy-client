@@ -16,5 +16,6 @@ namespace SparkiyEngine.Bindings.Engine
 	    EngineMessage[] GetMessages();
 
 	    void ClearMessages();
+		void Reset();
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22310.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SparkiyClient", "SparkiyClient", "{4953258D-D77C-4D81-8635-E690143BA96C}"
 EndProject
@@ -78,6 +78,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Engine", "SparkiyEngine.Engine\SparkiyEngine.Engine.csproj", "{79259DB5-4D17-450E-9861-09FA93BFF6FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Engine.Implementation", "SparkiyEngine.Engine.Implementation\SparkiyEngine.Engine.Implementation.csproj", "{698D2C1E-D6BC-4EB8-9188-072CB2790530}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyClient.Common", "SparkiyClient.Common\SparkiyClient.Common.csproj", "{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -494,6 +496,22 @@ Global
 		{698D2C1E-D6BC-4EB8-9188-072CB2790530}.Release|Win32.ActiveCfg = Release|Any CPU
 		{698D2C1E-D6BC-4EB8-9188-072CB2790530}.Release|x64.ActiveCfg = Release|Any CPU
 		{698D2C1E-D6BC-4EB8-9188-072CB2790530}.Release|x86.ActiveCfg = Release|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Release|Win32.ActiveCfg = Release|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Release|x64.ActiveCfg = Release|Any CPU
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -529,5 +547,6 @@ Global
 		{1655A4D0-493B-47E5-901B-583354006A55} = {773B2F69-49B8-40F0-BC4C-C9C9EF26FF99}
 		{79259DB5-4D17-450E-9861-09FA93BFF6FD} = {1655A4D0-493B-47E5-901B-583354006A55}
 		{698D2C1E-D6BC-4EB8-9188-072CB2790530} = {1655A4D0-493B-47E5-901B-583354006A55}
+		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B} = {4953258D-D77C-4D81-8635-E690143BA96C}
 	EndGlobalSection
 EndGlobal
