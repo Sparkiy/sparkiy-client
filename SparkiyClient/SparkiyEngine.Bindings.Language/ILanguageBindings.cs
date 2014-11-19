@@ -5,6 +5,7 @@ using System.Text;
 using SparkiyEngine.Bindings.Common;
 using SparkiyEngine.Bindings.Common.Component;
 using SparkiyEngine.Bindings.Language.Component;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace SparkiyEngine.Bindings.Language
 {
@@ -16,6 +17,8 @@ namespace SparkiyEngine.Bindings.Language
 		event MethodRequestEventHandler OnMethodRequested;
 		void RaiseMethodRequestedEvent(MethodRequestEventArguments args);
 		void MapToGraphicsMethods(IReadOnlyDictionary<string, MethodDeclarationDetails> declarations);
+		object CallMethod(string script, string name, MethodDeclarationOverloadDetails declaration, [ReadOnlyArray] object[] paramValues);
+		object CallMethod(string name, MethodDeclarationOverloadDetails declaration, [ReadOnlyArray] object[] paramValues);
 
 		//
 		// Messaging 

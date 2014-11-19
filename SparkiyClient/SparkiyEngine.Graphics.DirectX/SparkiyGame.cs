@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using System;
+using System.IO.Compression;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
@@ -7,6 +8,7 @@ using SharpDX.Toolkit.Direct2D;
 using SharpDX.Toolkit.Graphics;
 using SparkiyEngine.Bindings.Common.Component;
 using SparkiyEngine.Bindings.Graphics;
+using SparkiyEngine.Bindings.Graphics.Component;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
@@ -28,13 +30,10 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		public void DrawRectangle(double x, double y, double width, double height)
 		{
-			this.game.Canvas.PushObject(
-				new CanvasRectangle(
-					new RectangleF((float)x, (float)y, (float)width, (float)height),
-					new SolidColorBrush(this.game.Canvas.DeviceContext, this.game.StrokeColor),
-					false,
-					4f));
+			this.game.DrawRectangle((float)x, (float)y, (float)width, (float)height);
 		}
+
+		#region StrokeColor
 
 		public NumberGroup3 GetStrokeColor()
 		{
@@ -51,9 +50,39 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.game.StrokeColor = new Color4((float)red, (float)green, (float)blue, 1f);
 		}
 
+		#endregion StrokeColor
+
+		#region StrokeThickness
+
+		public float GetStrokeThickness()
+		{
+			return this.game.StrokeThickness;
+		}
+
+		public void SetStrokeThickness(double thickness)
+		{
+			this.game.StrokeThickness = (float)thickness;
+		}
+
+		#endregion StrokeThickness
+
+		public void StrokeDisable()
+		{
+			this.game.IsStrokeEnabled = false;
+		}
+
 		public void Reset()
 		{
 			this.game.Reset();
+		}
+
+
+		public event MethodCallRequestEventHandler Pre2DDraw;
+
+		public void TriggerPre2dDraw()
+		{
+			if (this.Pre2DDraw != null)
+				this.Pre2DDraw(this);
 		}
 	}
 
@@ -61,12 +90,12 @@ namespace SparkiyEngine.Graphics.DirectX
 	{
 		private GraphicsDeviceManager graphicsDeviceManager;
 		private SpriteBatch spriteBatch;
-		private SpriteFont debugFont;
 		private Texture2D logoTexture;
 
-		private Color4 backgroundColor; 
+		private Color4 backgroundColor;
 
 		// Styles
+		private bool isStrokeEnabled;
 		private Color4 strokeColor;
 		private float strokeThickness;
 
@@ -113,8 +142,8 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			// Create 2D Canvas for caching 
 			this.Canvas = new SharpDX.Toolkit.Direct2D.Canvas(this);
-			this.Canvas.Clear();
 			Brushes.Initialize(this.Canvas.DeviceContext);
+			this.Canvas.Clear();
 
 			base.LoadContent();
 		}
@@ -126,6 +155,16 @@ namespace SparkiyEngine.Graphics.DirectX
 			base.UnloadContent();
 		}
 
+		public void DrawRectangle(float x, float y, float width, float height)
+		{
+			this.Canvas.PushObject(
+				new CanvasRectangle(
+					new RectangleF((float)x, (float)y, (float)width, (float)height),
+					new SolidColorBrush(this.Canvas.DeviceContext, this.StrokeColor),
+					false,
+					this.StrokeThickness));
+		}
+
 		protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
@@ -133,6 +172,10 @@ namespace SparkiyEngine.Graphics.DirectX
 			// Clears the screen with the Color.CornflowerBlue
 			this.GraphicsDevice.Clear(this.BackgroundColor);
 
+			// Draw 2D
+			this.Canvas.Clear();
+			this.Canvas.Render();
+			this.GraphicsBindings.TriggerPre2dDraw();
 			this.Canvas.Render();
 		}
 
@@ -144,6 +187,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			// Clear all properties
 			this.BackgroundColor = new Color4();
 			this.StrokeColor = new Color4();
+			this.StrokeThickness = 2f;
 		}
 
 		public SharpDX.Toolkit.Direct2D.Canvas Canvas { get; set; }
@@ -154,10 +198,37 @@ namespace SparkiyEngine.Graphics.DirectX
 			set { this.backgroundColor = value; }
 		}
 
+		public bool IsStrokeEnabled
+		{
+			get { return this.isStrokeEnabled; }
+			set { this.isStrokeEnabled = value; }
+		}
+
 		public Color4 StrokeColor
 		{
 			get { return this.strokeColor; }
-			set { this.strokeColor = value; }
+			set
+			{
+				this.strokeColor = value;
+
+				// Enable stroke if possible
+				if (this.StrokeThickness != 0)
+					this.IsStrokeEnabled = true;
+			}
+		}
+
+		public float StrokeThickness
+		{
+			get { return this.strokeThickness; }
+			set
+			{
+				this.strokeThickness = Math.Max(0, value);
+
+				// Disable/Enable stroke depending on thickness
+				if (this.StrokeThickness == 0)
+					this.IsStrokeEnabled = false;
+				else this.IsStrokeEnabled = true;
+			}
 		}
 
 		public IGraphicsBindings GraphicsBindings

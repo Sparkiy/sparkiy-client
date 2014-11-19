@@ -31,12 +31,16 @@ using SparkiyEngine.Bindings.Graphics;
 using SparkiyEngine.Bindings.Language;
 using SparkiyEngine.Engine.Implementation;
 using SparkiyEngine.Graphics.DirectX;
+using SparkiyEngine_Language_LuaImplementation;
 #if WINDOWS_APP
 using Windows.UI.ApplicationSettings;
+#endif
 using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.UILogic.ViewModels;
-using SparkiyEngine_Language_LuaImplementation;
-#endif
+using MetroLog;
+using MetroLog.Targets;
+using MetroLog.Layouts;
+using MetroLog.Internal;
 
 namespace SparkiyClient
 {
@@ -45,10 +49,11 @@ namespace SparkiyClient
 	/// </summary>
 	public sealed partial class App : Microsoft.Practices.Prism.Mvvm.MvvmAppBase
 	{
+		private static readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<App>();
 		private readonly IUnityContainer container = null;
 
 		//Bootstrap: App singleton service declarations
-		private TileUpdater tileUpdater;
+		//private TileUpdater tileUpdater;
 
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
@@ -77,6 +82,15 @@ namespace SparkiyClient
 			{
 				this.OnUnhandledRegistrationException(ex);
 			}
+
+			// Debug logging option
+#if DEBUG
+			LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Trace, LogLevel.Fatal, new DebugTarget());
+#endif
+
+			// Configure crach handling
+			GlobalCrashHandler.Configure();
+			log.Debug("Global crash handler configured.");
 		}
 
 		/// <summary>
@@ -88,6 +102,7 @@ namespace SparkiyClient
 		protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
 		{
 			// Navigate to the initial page
+			log.Debug("Navigating to Playground page");
 			this.NavigationService.Navigate("Playground", null);
 
 			// Ensure the current window is active
@@ -163,6 +178,7 @@ namespace SparkiyClient
 				viewModelType = Type.GetType(viewModelTypeName);
 			}
 
+			log.Debug("View ({0}) resolved as ({1})", viewType.FullName, viewModelType.FullName);
 			return viewModelType;
 		}
 
@@ -215,6 +231,8 @@ namespace SparkiyClient
 		/// <param name="container">The instance of the unity container that should be used for registering types.</param>
 		private void OnContainerRegistration(IUnityContainer container)
 		{
+			log.Debug("Filling Container...");
+
 			// Instantiate ResourceLoader
 			var resourceLoader = new Microsoft.Practices.Prism.StoreApps.ResourceLoaderAdapter(new ResourceLoader());
 

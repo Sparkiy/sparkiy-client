@@ -59,6 +59,10 @@ namespace SparkiyEngine.Core
 
 				this.Bindings.Engine.HandleMessageCreated(message);
 			};
+
+			// Connect functions
+			this.Bindings.Graphics.Pre2DDraw += s => this.Bindings.Language.CallMethod(
+				"Draw", new MethodDeclarationOverloadDetails() { Type = MethodTypes.Call }, new object[] { });
 		}
 
 		/// <summary>

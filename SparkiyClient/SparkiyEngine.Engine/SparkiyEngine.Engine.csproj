@@ -57,6 +57,10 @@
       <Project>{65DC3E23-563D-4FCF-B81A-FD2B95D49414}</Project>
       <Name>SparkiyEngine.Bindings.Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Graphics.Component\SparkiyEngine.Bindings.Graphics.Component.csproj">
+      <Project>{5BCE5517-7BA6-4C6D-939D-38F2F0A7A9CC}</Project>
+      <Name>SparkiyEngine.Bindings.Graphics.Component</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SparkiyEngine.Bindings.Graphics\SparkiyEngine.Bindings.Graphics.csproj">
       <Project>{F115ED0B-82A4-4877-994A-8C560080A129}</Project>
       <Name>SparkiyEngine.Bindings.Graphics</Name>

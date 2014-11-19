@@ -35,7 +35,7 @@ namespace SparkiyClient.UILogic.ViewModels
 		private readonly IAlertMessageService alertMessageService;
 		private readonly IResourceLoader resourceLoader;
 
-		private const int AutoRerunTimeout = 1000;
+		private const int AutoRerunTimeout = 2000;
 
 		// Code editor
 		private ICodeEditor editor;
@@ -92,9 +92,6 @@ namespace SparkiyClient.UILogic.ViewModels
 			}
 
 
-			// Initialize editor auto-rerun timer
-			this.editorTimer = new Timer(this.EditorCallback, null, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(-1));
-
 			// TODO Fill view model with models
 		}
 
@@ -104,6 +101,9 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.editor = editor;
 
 			this.editor.OnCodeChanged += (sender, eventArgs) => this.RetriggerTimer();
+
+			// Initialize editor auto-rerun timer
+			this.editorTimer = new Timer(this.EditorCallback, null, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(-1));
 		}
 
 		public void AssignGraphicsPanel(object panel)
@@ -111,12 +111,12 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.graphicsSettings.AssignPanel(panel);
 		}
 
-		private void EditorCallback(object state)
+		private async void EditorCallback(object state)
 		{
 			if (!this.IsAutoRerunEnabled) return;
 
 			System.Diagnostics.Debug.WriteLine("Script restart triggered by editor");
-			CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, this.RunScript);
+			await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, this.RunScript);
 		}
 
 		private void RetriggerTimer()

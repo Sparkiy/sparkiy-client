@@ -10,7 +10,7 @@ namespace SparkiyEngine.Bindings.Graphics
 		/// Gets the color of the stroke.
 		/// </summary>
 		/// <returns>
-		/// Returns group of three float numbers cooresponding to the color 
+		/// Returns group of three decimal numbers cooresponding to the color 
 		/// values in this order: red, green, blue
 		/// </returns>
 		/// <remarks>
@@ -37,9 +37,39 @@ namespace SparkiyEngine.Bindings.Graphics
 		[MethodDeclaration(SupportedLanguages.Lua, "stroke", MethodTypes.Set)]
 		void SetStrokeColor(double red, double green, double blue);
 
+		/// <summary>
+		/// Gets the stroke thickness.
+		/// </summary>
+		/// <returns>Returns decimal number cooresponding to set stroke thickness.</returns>
+		/// <remarks>
+		/// Value will not be negative.
+		/// 
+		/// Stroke Thickness is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
+		/// </remarks>
+		[MethodDeclaration(SupportedLanguages.Lua, "strokeSize", MethodTypes.Get)]
+		float GetStrokeThickness();
 
-		//float GetStrokeThickness();
+		/// <summary>
+		/// Gets the stroke thickness.
+		/// </summary>
+		/// <param name="thickness">The stroke thickness value of all following 2D shapes that have borders.</param>
+		/// <remarks>
+		/// Value must not be negative. Zero is valid value.
+		/// 
+		/// Stroke Thickness is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
+		/// </remarks>
+		[MethodDeclaration(SupportedLanguages.Lua, "strokeSize", MethodTypes.Set)]
+		void SetStrokeThickness(double thickness);
 
-		//void SetStrokeThickness(float thickness);
+		/// <summary>
+		/// Disables the stroke of all 2D shaped that have borders.
+		/// </summary>
+		/// <remarks>
+		/// This will be called when stroke thickness is set to zero.
+		/// 
+		/// To enable stroke, set stroke thickness to a value larger than zero or re-set stroke color.
+		/// </remarks>
+		[MethodDeclaration(SupportedLanguages.Lua, "noStroke", MethodTypes.Call)]
+		void StrokeDisable();
 	}
 }

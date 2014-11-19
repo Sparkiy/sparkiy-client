@@ -57,5 +57,5 @@ namespace SparkiyClient.Views
 	    {
 			get { return this.DataContext as IPlaygroundViewModel; }
 	    }
-    }
+	}
 }

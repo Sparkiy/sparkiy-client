@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "LuaScript.h"
 
+using namespace Platform;
 using namespace SparkiyEngine_Language_LuaImplementation;
 using namespace SparkiyEngine::Bindings::Common::Component;
 
@@ -131,6 +132,48 @@ void LuaScript::Load()
 	//	CallFunction(this->m_luaState, LoadedFunctionName, 0, 0);
 }
 
+//
+// CallMethod
+//
+Object^ LuaScript::CallMethod(const char *name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues)
+{
+	auto invalidFunctionNameErrorMessage = "Invalid function name \"%s\". Requeste function name does not exist in users code.";
+	auto invalidNumberOfParametersErrorMessage = "Invalid number of parameters were passed to the function call. Declaration does not match passed values count.";
+	auto invalidArgTypeErrorMessage = "Invalid argument type passed to function \"%s\".";
+	auto invalidArgTypeReturnedErrorMessage = "Invalid argument type returned from function \"%s\".";
+
+	// Check if function with given name exists
+	if (!LuaScript::FunctionExist(this->m_luaState, name))
+		return NULL;
+
+	// Check if correct number of parameters were passed
+	if (paramValues->Length != declaration->Input->Length)
+		luaL_error(this->m_luaState, invalidNumberOfParametersErrorMessage);
+	
+	// Check if there are any parameters to push to the stack
+	if (declaration->Input->Length != 0)
+	{
+		// TODO Implement
+		// TODO Cast parameter and push to stack
+		throw;
+	}
+	
+	// Call the function
+	LuaScript::CallFunction(this->m_luaState, name, declaration->Input->Length, declaration->Return->Length);
+
+	// Check if there are any returned values
+	if (declaration->Return->Length != 0) 
+	{
+		// TODO Implement
+		// TODO Cast returned parameter
+		throw;
+	}
+	else 
+	{
+		return NULL;
+	}
+}
+
 // static 
 // UniversalFunction
 //
@@ -192,8 +235,6 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 
 	callerScript->m_luaImpl->RaiseMethodRequestedEvent(declaration, matchedOverload, inputValues);
 
-	OutputDebugStringW(GetWString("Called function \"" + GetString(functionName) + "\"\n").c_str());
-
 	return 0;
 }
 
@@ -225,3 +266,26 @@ int LuaScript::PanicHandler(lua_State *luaState)
 	// This should not be reached
 	return 0;
 }
+
+// static
+// FunctionExist
+//
+bool LuaScript::FunctionExist(lua_State *luaState, const char *name) {
+	lua_getglobal(luaState, name);
+	return lua_isfunction(luaState, -1);
+}
+
+// static
+// CallFunction
+//
+int LuaScript::CallFunction(lua_State *luaState, const char *name, int numParameters, int numResults) {
+	const char *functionExecutionError = "An error occured while executing function \"%s\"";
+
+	lua_getglobal(luaState, name);
+	int errorCode = lua_pcall(luaState, numParameters, numResults, 0);
+	if (errorCode)
+		luaL_error(luaState, functionExecutionError, name);
+
+	return errorCode;
+}
+

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{12E3C635-7451-4243-B6AB-1CCAAB645EF5}</ProjectGuid>
+    <ProjectGuid>{5BCE5517-7BA6-4C6D-939D-38F2F0A7A9CC}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SparkiyEngine.Bindings.Language.Component</RootNamespace>
-    <AssemblyName>SparkiyEngine.Bindings.Language.Component</AssemblyName>
+    <RootNamespace>SparkiyEngine.Bindings.Graphics.Component</RootNamespace>
+    <AssemblyName>SparkiyEngine.Bindings.Graphics.Component</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,23 +34,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\SparkiyEngine.Bindings.Common.Component\SparkiyEngine.Bindings.Common.Component.csproj">
-      <Project>{6489F783-BF69-4130-98E0-6A92BA8345A1}</Project>
-      <Name>SparkiyEngine.Bindings.Common.Component</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FunctionDoesNotExistError.cs" />
-    <Compile Include="MessagingRequestEventArgs.cs" />
-    <Compile Include="MessagingRequestEventHandler.cs" />
-    <Compile Include="MethodRequestEventArguments.cs" />
-    <Compile Include="MethodRequestEventHandler.cs" />
+    <Compile Include="MethodCallRequestEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Common.Component\SparkiyEngine.Bindings.Common.Component.csproj">
+      <Project>{6489f783-bf69-4130-98e0-6a92ba8345a1}</Project>
+      <Name>SparkiyEngine.Bindings.Common.Component</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Common\SparkiyEngine.Bindings.Common.csproj">
+      <Project>{abe22a03-468e-492b-81ab-99ef0d8e245c}</Project>
+      <Name>SparkiyEngine.Bindings.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -72,3 +72,24 @@ void LuaImplementation::RaiseMessageCreatedEvent(std::string message)
 
 	this->m_languageBindings->RaiseMessageCreatedEvent(args);
 }
+
+// 
+// CallMethod
+// 
+Object^ LuaImplementation::CallMethod(const char *script, const char *name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues)
+{
+	// Check if this call is script wildcard
+	if (script == nullptr) 
+	{
+		for (std::map<const char *, LuaScript *, StrCompare>::iterator iter = this->m_scripts.begin(); iter != this->m_scripts.end(); ++iter)
+		{
+			iter->second->CallMethod(name, declaration, paramValues);
+		}
+		return NULL;
+	}
+	else 
+	{
+		// TODO Check if script exists
+		return this->m_scripts[script]->CallMethod(name, declaration, paramValues);
+	}
+}

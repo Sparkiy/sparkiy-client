@@ -20,6 +20,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 		LuaScript(SparkiyEngine_Language_LuaImplementation::LuaImplementation^ luaImpl, const char *id, const char *content);
 		~LuaScript();
 
+		Platform::Object^ CallMethod(const char *name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Platform::Array<Platform::Object^>^ paramValues);
 		void RegisterMethod(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^declaration);
 		void Load();
 		void Start();
@@ -37,6 +38,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		static const char* GetFunctionName(lua_State *luaState);
 		static LuaScript* GetCallerScript(lua_State *luaState);
 		static int PanicHandler(lua_State *luaState);
+		static bool FunctionExist(lua_State *luaState, const char *name);
+		static int CallFunction(lua_State *luaState, const char *name, int numParameters, int numResults);
 
 	private:
 		// Script info
@@ -49,7 +52,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 		bool																	 m_isValid;
 
 		// The Lua interpreter.
-		lua_State *m_luaState;
+		lua_State																*m_luaState;
 	};
 
 }

@@ -18,7 +18,7 @@ m_didLoadScript(false)
 //
 void LanguageBindings::MapToGraphicsMethods(IMapView<String ^,MethodDeclarationDetails ^> ^declarations)
 {
-	// Check if we didnt already loaded some scripts, in case we did, throw exception
+	// Check if we did already load some scripts throw an exception
 	if (this->m_didLoadScript) 
 	{
 		throw ref new Exception(-1, "Can't map methods, already loaded at least one script. Map methods first before loading scripts.");
@@ -29,6 +29,21 @@ void LanguageBindings::MapToGraphicsMethods(IMapView<String ^,MethodDeclarationD
 		[=](IKeyValuePair<String^, MethodDeclarationDetails ^>^ decl) {
 		this->m_luaImpl->m_declarations[GetCString(decl->Key)] = decl->Value;
 	});
+}
+
+Object^ LanguageBindings::CallMethod(String^ name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues) 
+{
+	const char *cName = GetCString(name);
+
+	return this->m_luaImpl->CallMethod(nullptr, cName, declaration, paramValues);
+}
+
+Object^ LanguageBindings::CallMethod(String^ script, String^ name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues)
+{
+	const char *cScript = GetCString(script);
+	const char *cName = GetCString(name);
+
+	return this->m_luaImpl->CallMethod(cScript, cName, declaration, paramValues);
 }
 
 //

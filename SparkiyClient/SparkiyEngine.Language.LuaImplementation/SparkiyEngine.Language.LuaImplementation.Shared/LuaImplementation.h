@@ -20,6 +20,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		void RaiseMethodRequestedEvent(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails^ declaration, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ overload, Platform::Array<Platform::Object^>^ inputValues);
 		void RaiseMessageCreatedEvent(std::string message);
 
+		Platform::Object^ CallMethod(const char *script, const char *name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Platform::Array<Platform::Object^>^ paramValues);
+
 		std::map<const char *, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^, StrCompare>				 m_declarations;
 
 	private:
