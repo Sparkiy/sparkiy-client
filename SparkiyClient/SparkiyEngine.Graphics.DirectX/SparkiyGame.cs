@@ -12,11 +12,18 @@ using SparkiyEngine.Bindings.Graphics.Component;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
+	/// <summary>
+	/// Graphics Bindings implementation for SparkiyGame game instance
+	/// </summary>
 	public class GraphicsBindings : Component, IGraphicsBindings
 	{
 		private readonly SparkiyGame game;
 
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GraphicsBindings"/> class.
+		/// </summary>
+		/// <param name="game">The game.</param>
 		public GraphicsBindings(SparkiyGame game)
 		{
 			this.game = game;
@@ -35,6 +42,15 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		#region StrokeColor
 
+		/// <summary>
+		/// Gets the color of the stroke.
+		/// </summary>
+		/// <returns>
+		/// Returns group of three decimal numbers cooresponding to the color values in this order: red, green, blue
+		/// </returns>
+		/// <remarks>
+		/// Stroke is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
+		/// </remarks>
 		public NumberGroup3 GetStrokeColor()
 		{
 			return new NumberGroup3()
@@ -45,6 +61,15 @@ namespace SparkiyEngine.Graphics.DirectX
 			};
 		}
 
+		/// <summary>
+		/// Sets the color of the stroke.
+		/// </summary>
+		/// <param name="red">The red. Valid range is from 0 to 1 including those values.</param>
+		/// <param name="green">The green. Valid range is from 0 to 1 including those values.</param>
+		/// <param name="blue">The blue. Valid range is from 0 to 1 including those values.</param>
+		/// <remarks>
+		/// Color values are in range from 0 to 1 which can be directly mapped to hex values 0 to 255. If provided value is out of range, it will be rounded to closest valid value. For example, if provided value for red is 1.2, resulting color will have red of value 1. Another example would be if you provide value for red -0.5, resulting color will have red of value 0. Stroke is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
+		/// </remarks>
 		public void SetStrokeColor(double red, double green, double blue)
 		{
 			this.game.StrokeColor = new Color4((float)red, (float)green, (float)blue, 1f);
@@ -54,11 +79,27 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		#region StrokeThickness
 
+		/// <summary>
+		/// Gets the stroke thickness.
+		/// </summary>
+		/// <returns>
+		/// Returns decimal number cooresponding to set stroke thickness.
+		/// </returns>
+		/// <remarks>
+		/// Value will not be negative. Stroke Thickness is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
+		/// </remarks>
 		public float GetStrokeThickness()
 		{
 			return this.game.StrokeThickness;
 		}
 
+		/// <summary>
+		/// Gets the stroke thickness.
+		/// </summary>
+		/// <param name="thickness">The stroke thickness value of all following 2D shapes that have borders.</param>
+		/// <remarks>
+		/// Value must not be negative. Zero is valid value. Stroke Thickness is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
+		/// </remarks>
 		public void SetStrokeThickness(double thickness)
 		{
 			this.game.StrokeThickness = (float)thickness;
@@ -66,31 +107,47 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		#endregion StrokeThickness
 
+		/// <summary>
+		/// Disables the stroke of all 2D shaped that have borders.
+		/// </summary>
+		/// <remarks>
+		/// This will be called when stroke thickness is set to zero. To enable stroke, set stroke thickness to a value larger than zero or re-set stroke color.
+		/// </remarks>
 		public void StrokeDisable()
 		{
 			this.game.IsStrokeEnabled = false;
 		}
 
+		/// <summary>
+		/// Resets this instance.
+		/// </summary>
 		public void Reset()
 		{
 			this.game.Reset();
 		}
 
+		#region Pre2DDraw
 
+		/// <summary>
+		/// Occurs before 2D draw is called so that user can fill collection with drawable objects
+		/// </summary>
 		public event MethodCallRequestEventHandler Pre2DDraw;
 
-		public void TriggerPre2dDraw()
+		/// <summary>
+		/// Triggers the pre2 d draw.
+		/// </summary>
+		public void TriggerPre2DDraw()
 		{
 			if (this.Pre2DDraw != null)
 				this.Pre2DDraw(this);
 		}
+
+		#endregion Pre2DDraw
 	}
 
 	public class SparkiyGame : Game
 	{
 		private GraphicsDeviceManager graphicsDeviceManager;
-		private SpriteBatch spriteBatch;
-		private Texture2D logoTexture;
 
 		private Color4 backgroundColor;
 
@@ -129,28 +186,21 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		protected override void LoadContent()
 		{
-			// Loads the balls texture (32 textures (32x32) stored vertically => 32 x 1024 ).
-			this.logoTexture = Content.Load<Texture2D>("sparkiy.png");
-
-			// SpriteFont supports the following font file format:
-			// - DirectX Toolkit MakeSpriteFont or SharpDX Toolkit tkfont
-			// - BMFont from Angelcode http://www.angelcode.com/products/bmfont/
-			//this.debugFont = Content.Load<SpriteFont>("DebugFont");
-
-			// Instantiate a SpriteBatch
-			this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-
 			// Create 2D Canvas for caching 
-			this.Canvas = new SharpDX.Toolkit.Direct2D.Canvas(this);
+			this.Canvas = new Canvas(this);
 			Brushes.Initialize(this.Canvas.DeviceContext);
-			this.Canvas.Clear();
+
+			// Reset variables
+			this.Reset();
 
 			base.LoadContent();
 		}
 
 		protected override void UnloadContent()
 		{
-			this.spriteBatch.Dispose();
+			// Clean canvas
+			this.Canvas.Clear();
+			this.Canvas.Dispose();
 
 			base.UnloadContent();
 		}
@@ -175,7 +225,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			// Draw 2D
 			this.Canvas.Clear();
 			this.Canvas.Render();
-			this.GraphicsBindings.TriggerPre2dDraw();
+			this.GraphicsBindings.TriggerPre2DDraw();
 			this.Canvas.Render();
 		}
 
@@ -185,12 +235,10 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.Canvas.Clear();
 
 			// Clear all properties
-			this.BackgroundColor = new Color4();
-			this.StrokeColor = new Color4();
+			this.BackgroundColor = Brushes.Black.Color;
+			this.StrokeColor = Brushes.White.Color;
 			this.StrokeThickness = 2f;
 		}
-
-		public SharpDX.Toolkit.Direct2D.Canvas Canvas { get; set; }
 
 		public Color4 BackgroundColor
 		{
@@ -230,6 +278,8 @@ namespace SparkiyEngine.Graphics.DirectX
 				else this.IsStrokeEnabled = true;
 			}
 		}
+
+		public Canvas Canvas { get; set; }
 
 		public IGraphicsBindings GraphicsBindings
 		{
