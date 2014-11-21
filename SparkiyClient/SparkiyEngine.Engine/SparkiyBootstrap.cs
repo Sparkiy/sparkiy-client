@@ -33,36 +33,6 @@ namespace SparkiyEngine.Core
 			this.Bindings.Language = language;
 			this.Bindings.Graphics = graphics;
 			this.Bindings.Engine = engine;
-
-			// Map methods Graphics > Language
-			this.Bindings.Language.MapToGraphicsMethods(
-				MethodDeclarationResolver.ResolveAll(
-					this.Bindings.Graphics.GetType(), 
-					this.initializationLanguage));
-
-			// Map methods Graphics < Language
-			this.Bindings.Language.OnMethodRequested += (sender, args) =>
-			{
-				var method = (MethodInfo) args.Overload.Method;
-				method.Invoke(this.Bindings.Graphics, args.InputValues);
-			};
-
-			// Catch messsage creating
-			this.Bindings.Language.OnMessageCreated += (sender, args) =>
-			{
-				var message = new EngineMessage()
-				{
-					Message = args.Message,
-					Source = sender as ILanguageBindings,
-					SourceType = BindingTypes.Language
-				};
-
-				this.Bindings.Engine.HandleMessageCreated(message);
-			};
-
-			// Connect functions
-			this.Bindings.Graphics.Pre2DDraw += s => this.Bindings.Language.CallMethod(
-				"Draw", new MethodDeclarationOverloadDetails() { Type = MethodTypes.Call }, new object[] { });
 		}
 
 		/// <summary>

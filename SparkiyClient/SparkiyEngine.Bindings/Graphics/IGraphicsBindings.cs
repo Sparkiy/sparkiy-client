@@ -86,7 +86,7 @@ namespace SparkiyEngine.Bindings.Graphics
 		void SetScale(double scale);
 	}
 
-	public interface IGraphicsBindings : IGraphicsStyleBindings, IGraphicsShapesBindings, IGraphicsSurfaceBindings, IGraphicsTransformBindings
+	public interface IGraphicsBindings : IBindingsBase, IGraphicsStyleBindings, IGraphicsShapesBindings, IGraphicsSurfaceBindings, IGraphicsTransformBindings
 	{
 		/// <summary>
 		/// Resets this instance.

@@ -42,12 +42,7 @@
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\MethodDeclarationAttribute.cs" />
-    <Compile Include="Attributes\MethodDeclarationResolver.cs" />
-    <Compile Include="BindingsVersion.cs" />
-    <Compile Include="LatestBindingsVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SupportedLanguages.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SparkiyEngine.Bindings.Common.Component\SparkiyEngine.Bindings.Common.Component.csproj">

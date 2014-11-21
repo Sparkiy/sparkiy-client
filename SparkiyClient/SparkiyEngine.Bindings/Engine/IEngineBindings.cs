@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using SparkiyEngine.Bindings.Common;
 using SparkiyEngine.Bindings.Common.Component;
+using SparkiyEngine.Bindings.Graphics;
+using SparkiyEngine.Bindings.Language;
 
 namespace SparkiyEngine.Bindings.Engine
 {
@@ -17,5 +19,9 @@ namespace SparkiyEngine.Bindings.Engine
 
 	    void ClearMessages();
 		void Reset();
-    }
+
+		IGraphicsBindings GraphicsBindings { get; }
+
+		ILanguageBindings LanguageBindings { get; }
+	}
 }
