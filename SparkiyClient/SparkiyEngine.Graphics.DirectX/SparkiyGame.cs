@@ -26,8 +26,8 @@ namespace SparkiyEngine.Graphics.DirectX
 		private Color4 fillColor;
 
 		// Text
-		private string fontFamily = "Segoe UI";
-		private float fontSize = 24f;
+		private string fontFamily;
+		private float fontSize;
 		private TextFormat fontFormat;
 		private Color4 fontColor;
 
@@ -94,6 +94,9 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		private void RebuildFontFormat()
 		{
+			if (String.IsNullOrEmpty(this.FontFamily) || this.FontSize == 0)
+				return;
+
 			this.fontFormat = new TextFormat(this.Canvas.DirectWriteFactory, this.FontFamily, this.FontSize);
 		}
 
@@ -216,7 +219,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			get { return this.fontSize; }
 			set
 			{
-				this.fontSize = value;
+				this.fontSize = Math.Max(0, value);
 				this.RebuildFontFormat();
 			}
 		}
