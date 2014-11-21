@@ -12,139 +12,6 @@ using SparkiyEngine.Bindings.Graphics.Component;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
-	/// <summary>
-	/// Graphics Bindings implementation for SparkiyGame game instance
-	/// </summary>
-	public class GraphicsBindings : Component, IGraphicsBindings
-	{
-		private readonly SparkiyGame game;
-
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="GraphicsBindings"/> class.
-		/// </summary>
-		/// <param name="game">The game.</param>
-		public GraphicsBindings(SparkiyGame game)
-		{
-			this.game = game;
-		}
-
-
-		public void SetBackground(double red, double green, double blue)
-		{
-			this.game.BackgroundColor = new Color4((float)red, (float)green, (float)blue, 1f);
-		}
-
-		public void DrawRectangle(double x, double y, double width, double height)
-		{
-			this.game.DrawRectangle((float)x, (float)y, (float)width, (float)height);
-		}
-
-		#region StrokeColor
-
-		/// <summary>
-		/// Gets the color of the stroke.
-		/// </summary>
-		/// <returns>
-		/// Returns group of three decimal numbers cooresponding to the color values in this order: red, green, blue
-		/// </returns>
-		/// <remarks>
-		/// Stroke is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
-		/// </remarks>
-		public NumberGroup3 GetStrokeColor()
-		{
-			return new NumberGroup3()
-			{
-				First = this.game.StrokeColor.Red,
-				Second = this.game.StrokeColor.Green,
-				Third = this.game.StrokeColor.Blue
-			};
-		}
-
-		/// <summary>
-		/// Sets the color of the stroke.
-		/// </summary>
-		/// <param name="red">The red. Valid range is from 0 to 1 including those values.</param>
-		/// <param name="green">The green. Valid range is from 0 to 1 including those values.</param>
-		/// <param name="blue">The blue. Valid range is from 0 to 1 including those values.</param>
-		/// <remarks>
-		/// Color values are in range from 0 to 1 which can be directly mapped to hex values 0 to 255. If provided value is out of range, it will be rounded to closest valid value. For example, if provided value for red is 1.2, resulting color will have red of value 1. Another example would be if you provide value for red -0.5, resulting color will have red of value 0. Stroke is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
-		/// </remarks>
-		public void SetStrokeColor(double red, double green, double blue)
-		{
-			this.game.StrokeColor = new Color4((float)red, (float)green, (float)blue, 1f);
-		}
-
-		#endregion StrokeColor
-
-		#region StrokeThickness
-
-		/// <summary>
-		/// Gets the stroke thickness.
-		/// </summary>
-		/// <returns>
-		/// Returns decimal number cooresponding to set stroke thickness.
-		/// </returns>
-		/// <remarks>
-		/// Value will not be negative. Stroke Thickness is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
-		/// </remarks>
-		public float GetStrokeThickness()
-		{
-			return this.game.StrokeThickness;
-		}
-
-		/// <summary>
-		/// Gets the stroke thickness.
-		/// </summary>
-		/// <param name="thickness">The stroke thickness value of all following 2D shapes that have borders.</param>
-		/// <remarks>
-		/// Value must not be negative. Zero is valid value. Stroke Thickness is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
-		/// </remarks>
-		public void SetStrokeThickness(double thickness)
-		{
-			this.game.StrokeThickness = (float)thickness;
-		}
-
-		#endregion StrokeThickness
-
-		/// <summary>
-		/// Disables the stroke of all 2D shaped that have borders.
-		/// </summary>
-		/// <remarks>
-		/// This will be called when stroke thickness is set to zero. To enable stroke, set stroke thickness to a value larger than zero or re-set stroke color.
-		/// </remarks>
-		public void StrokeDisable()
-		{
-			this.game.IsStrokeEnabled = false;
-		}
-
-		/// <summary>
-		/// Resets this instance.
-		/// </summary>
-		public void Reset()
-		{
-			this.game.Reset();
-		}
-
-		#region Pre2DDraw
-
-		/// <summary>
-		/// Occurs before 2D draw is called so that user can fill collection with drawable objects
-		/// </summary>
-		public event MethodCallRequestEventHandler Pre2DDraw;
-
-		/// <summary>
-		/// Triggers the pre2 d draw.
-		/// </summary>
-		public void TriggerPre2DDraw()
-		{
-			if (this.Pre2DDraw != null)
-				this.Pre2DDraw(this);
-		}
-
-		#endregion Pre2DDraw
-	}
-
 	public class SparkiyGame : Game
 	{
 		private GraphicsDeviceManager graphicsDeviceManager;
@@ -155,6 +22,14 @@ namespace SparkiyEngine.Graphics.DirectX
 		private bool isStrokeEnabled;
 		private Color4 strokeColor;
 		private float strokeThickness;
+		private bool isFillEnabled;
+		private Color4 fillColor;
+
+		// Text
+		private string fontFamily = "Segoe UI";
+		private float fontSize = 24f;
+		private TextFormat fontFormat;
+		private Color4 fontColor;
 
 
 		/// <summary>
@@ -205,14 +80,83 @@ namespace SparkiyEngine.Graphics.DirectX
 			base.UnloadContent();
 		}
 
-		public void DrawRectangle(float x, float y, float width, float height)
+		public void DrawText(string text, float x, float y)
 		{
 			this.Canvas.PushObject(
-				new CanvasRectangle(
-					new RectangleF((float)x, (float)y, (float)width, (float)height),
-					new SolidColorBrush(this.Canvas.DeviceContext, this.StrokeColor),
-					false,
-					this.StrokeThickness));
+				new CanvasText(
+					text,
+					this.fontFormat,
+					new RectangleF(x, y, this.GraphicsDevice.Viewport.Width - x, this.GraphicsDevice.Viewport.Height - y),
+					new SolidColorBrush(this.Canvas.DeviceContext, this.FontColor),
+					DrawTextOptions.NoSnap,
+					MeasuringMode.Natural));
+		}
+
+		private void RebuildFontFormat()
+		{
+			this.fontFormat = new TextFormat(this.Canvas.DirectWriteFactory, this.FontFamily, this.FontSize);
+		}
+
+		public void DrawLine(float x1, float y1, float x2, float y2)
+		{
+			if (this.IsStrokeEnabled)
+			{
+				// Draw outline
+				this.Canvas.PushObject(
+					new CanvasLine(
+						new Vector2(x1, y1), 
+						new Vector2(x2, y2),
+						new SolidColorBrush(this.Canvas.DeviceContext, this.StrokeColor),
+						this.StrokeThickness));
+			}
+		}
+
+		public void DrawEllipse(float x, float y, float radiusX, float radiusY)
+		{
+			if (this.IsFillEnabled)
+			{
+				// Draw fill
+				this.Canvas.PushObject(
+					new CanvasEllipse(
+						new Ellipse() { Point = new Vector2(x, y), RadiusX = radiusX, RadiusY = radiusY },
+						new SolidColorBrush(this.Canvas.DeviceContext, this.FillColor),
+						true));
+			}
+
+			if (this.IsStrokeEnabled)
+			{
+				// Draw outline
+				this.Canvas.PushObject(
+					new CanvasEllipse(
+						new Ellipse() { Point = new Vector2(x, y), RadiusX = radiusX, RadiusY = radiusY },
+						new SolidColorBrush(this.Canvas.DeviceContext, this.StrokeColor),
+						false,
+						this.StrokeThickness));
+			}
+		}
+
+		public void DrawRectangle(float x, float y, float width, float height)
+		{
+			if (this.IsFillEnabled)
+			{
+				// Draw fill
+				this.Canvas.PushObject(
+					new CanvasRectangle(
+						new RectangleF((float)x, (float)y, (float)width, (float)height),
+						new SolidColorBrush(this.Canvas.DeviceContext, this.FillColor),
+						true));
+			}
+
+			if (this.IsStrokeEnabled)
+			{
+				// Draw outline
+				this.Canvas.PushObject(
+					new CanvasRectangle(
+						new RectangleF((float)x, (float)y, (float)width, (float)height),
+						new SolidColorBrush(this.Canvas.DeviceContext, this.StrokeColor),
+						false,
+						this.StrokeThickness));
+			}
 		}
 
 		protected override void Draw(GameTime gameTime)
@@ -223,7 +167,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.GraphicsDevice.Clear(this.BackgroundColor);
 
 			// Draw 2D
-			this.Canvas.Clear();
+			this.Reset();
 			this.Canvas.Render();
 			this.GraphicsBindings.TriggerPre2DDraw();
 			this.Canvas.Render();
@@ -238,13 +182,54 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.BackgroundColor = Brushes.Black.Color;
 			this.StrokeColor = Brushes.White.Color;
 			this.StrokeThickness = 2f;
+			this.IsStrokeEnabled = false;
+			this.FontSize = 24f;
+			this.FillColor = Brushes.White.Color;
+			this.FontFamily = "Segoe UI";
+			this.FontColor = Brushes.White.Color;
 		}
+
+		#region Surface
 
 		public Color4 BackgroundColor
 		{
 			get { return this.backgroundColor; }
 			set { this.backgroundColor = value; }
 		}
+
+		#endregion Surface
+
+		#region Text
+
+		public string FontFamily
+		{
+			get { return this.fontFamily; }
+			set
+			{
+				this.fontFamily = value;
+				this.RebuildFontFormat();
+			}
+		}
+
+		public float FontSize
+		{
+			get { return this.fontSize; }
+			set
+			{
+				this.fontSize = value;
+				this.RebuildFontFormat();
+			}
+		}
+
+		public Color4 FontColor
+		{
+			get { return this.fontColor; }
+			set { this.fontColor = value; }
+		}
+
+		#endregion Text
+
+		#region Styles
 
 		public bool IsStrokeEnabled
 		{
@@ -278,6 +263,26 @@ namespace SparkiyEngine.Graphics.DirectX
 				else this.IsStrokeEnabled = true;
 			}
 		}
+
+		public bool IsFillEnabled
+		{
+			get { return this.isFillEnabled; }
+			set { this.isFillEnabled = value; }
+		}
+
+		public Color4 FillColor
+		{
+			get { return this.fillColor; }
+			set
+			{
+				this.fillColor = value;
+
+				// Enable fill on every fill color set call
+				this.IsFillEnabled = true;
+			}
+		}
+
+		#endregion Styles
 
 		public Canvas Canvas { get; set; }
 

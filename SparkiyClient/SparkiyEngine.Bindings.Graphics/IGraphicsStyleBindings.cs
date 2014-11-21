@@ -71,5 +71,17 @@ namespace SparkiyEngine.Bindings.Graphics
 		/// </remarks>
 		[MethodDeclaration(SupportedLanguages.Lua, "noStroke", MethodTypes.Call)]
 		void StrokeDisable();
+
+		// TODO Comment
+		[MethodDeclaration(SupportedLanguages.Lua, "fill", MethodTypes.Set)]
+		void SetFill(double red, double green, double blue);
+
+		// TODO Comment
+		[MethodDeclaration(SupportedLanguages.Lua, "fill", MethodTypes.Get)]
+		NumberGroup3 GetFill();
+
+		// TODO Comment
+		[MethodDeclaration(SupportedLanguages.Lua, "noFill", MethodTypes.Call)]
+		void FillDisable();
 	}
 }

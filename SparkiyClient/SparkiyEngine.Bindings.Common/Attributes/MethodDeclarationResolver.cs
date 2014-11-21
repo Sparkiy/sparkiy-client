@@ -29,52 +29,56 @@ namespace SparkiyEngine.Bindings.Common.Attributes
 			foreach (var method in methods)
 			{
 				// Retrieve method declaration attribute from method, if not available skip this method
-				var attribute = method.GetCustomAttribute<MethodDeclarationAttribute>();
-				if (attribute == null)
+				var attributes = method.GetCustomAttributes<MethodDeclarationAttribute>();
+				if (attributes == null || attributes.Count() == 0)
 				{
 					continue;
 				}
 
-				// Skip if language doesn't match
-				if (!attribute.Languages.HasFlag(language))
+				foreach (var attribute in attributes)
 				{
-					continue;
-				}
 
-				// Retrieve returning type
-				var returnTypes = ResolveDataTypes(method.ReturnType);
-
-				// Retrieve calling types
-				var parameters = method.GetParameters().Select(pi => pi.ParameterType).SelectMany(ResolveDataTypes).ToArray();
-
-				// Retrieve or create new declaration
-				MethodDeclarationDetails details;
-				if (availableMethods.ContainsKey(attribute.Name))
-				{
-					details = availableMethods[attribute.Name];
-				}
-				else
-				{
-					details = new MethodDeclarationDetails()
+					// Skip if language doesn't match
+					if (!attribute.Languages.HasFlag(language))
 					{
-						Name = attribute.Name,
-					};
+						continue;
+					}
 
-					availableMethods.Add(attribute.Name, details);
+					// Retrieve returning type
+					var returnTypes = ResolveDataTypes(method.ReturnType);
+
+					// Retrieve calling types
+					var parameters = method.GetParameters().Select(pi => pi.ParameterType).SelectMany(ResolveDataTypes).ToArray();
+
+					// Retrieve or create new declaration
+					MethodDeclarationDetails details;
+					if (availableMethods.ContainsKey(attribute.Name))
+					{
+						details = availableMethods[attribute.Name];
+					}
+					else
+					{
+						details = new MethodDeclarationDetails()
+						{
+							Name = attribute.Name,
+						};
+
+						availableMethods.Add(attribute.Name, details);
+					}
+
+					// Add method overload to the declaration
+					var overloadsList = details.Overloads as List<MethodDeclarationOverloadDetails>;
+					if (overloadsList == null)
+						throw new NullReferenceException("Couldn't retrieve list containing method declaration overloads");
+					overloadsList.Add(new MethodDeclarationOverloadDetails()
+					{
+						Type = attribute.Type,
+						Input = parameters,
+						Return = returnTypes,
+						Uid = Guid.NewGuid().ToString(),
+						Method = method
+					});
 				}
-
-				// Add method overload to the declaration
-				var overloadsList = details.Overloads as List<MethodDeclarationOverloadDetails>;
-				if (overloadsList == null) 
-					throw new NullReferenceException("Couldn't retrieve list containing method declaration overloads");
-				overloadsList.Add(new MethodDeclarationOverloadDetails()
-				{
-					Type = attribute.Type,
-					Input = parameters,
-					Return = returnTypes,
-					Uid = Guid.NewGuid().ToString(),
-					Method = method
-				});
 			}
 
 			return availableMethods;

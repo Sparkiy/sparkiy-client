@@ -41,6 +41,11 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphicsBindings Implementation\GraphicsBindings.cs" />
+    <Compile Include="GraphicsBindings Implementation\GraphicsBindingsStyle.cs" />
+    <Compile Include="GraphicsBindings Implementation\GraphicsBindingsShapes.cs" />
+    <Compile Include="GraphicsBindings Implementation\GraphicsBindingsSurface.cs" />
+    <Compile Include="GraphicsBindings Implementation\GraphicsBindingsText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="SparkiyGame.cs" />

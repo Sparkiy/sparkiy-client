@@ -7,7 +7,7 @@ using SparkiyEngine.Bindings.Common.Component;
 
 namespace SparkiyEngine.Bindings.Common.Attributes
 {
-	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 	public class MethodDeclarationAttribute : Attribute
 	{
 		public MethodDeclarationAttribute(SupportedLanguages languages, string name, MethodTypes type)
