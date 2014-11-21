@@ -31,6 +31,9 @@ namespace SparkiyEngine.Graphics.DirectX
 		private TextFormat fontFormat;
 		private Color4 fontColor;
 
+		// Transform
+		private Matrix transformMatrix;
+
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SparkiyGame" /> class.
@@ -78,6 +81,45 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.Canvas.Dispose();
 
 			base.UnloadContent();
+		}
+
+		public void AddTranslate(float x, float y)
+		{
+			var tranalateVector = new Vector3(x, y, 0);
+
+			Matrix tranalateMatrix;
+			Matrix.Translation(ref tranalateVector, out tranalateMatrix);
+
+			this.transformMatrix *= tranalateMatrix;
+
+			this.PushTransform(this.transformMatrix);
+		}
+
+		public void AddRotate(float angle)
+		{
+			Matrix rotateMatrix;
+			Matrix.RotationZ(angle, out rotateMatrix);
+
+			this.transformMatrix *= rotateMatrix;
+
+			this.PushTransform(this.transformMatrix);
+		}
+
+		public void AddScale(float scale)
+		{
+			var scaleVector = new Vector3(scale, scale, 1f);
+
+			Matrix scaleMatrix;
+			Matrix.Scaling(ref scaleVector, out scaleMatrix);
+
+			this.transformMatrix *= scaleMatrix;
+
+			this.PushTransform(this.transformMatrix);
+		}
+
+		private void PushTransform(Matrix transform)
+		{
+			this.Canvas.PushObject(new CanvasTransform(transform));
 		}
 
 		public void DrawText(string text, float x, float y)
@@ -172,7 +214,16 @@ namespace SparkiyEngine.Graphics.DirectX
 			// Draw 2D
 			this.Reset();
 			this.Canvas.Render();
-			this.GraphicsBindings.TriggerPre2DDraw();
+
+			// Execute users draw loop
+			try {
+				this.GraphicsBindings.TriggerPre2DDraw();
+			}
+			catch(Exception ex)
+			{
+				this.StoppedByException(ex);
+			}
+
 			this.Canvas.Render();
 		}
 
@@ -190,6 +241,14 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.FillColor = Brushes.White.Color;
 			this.FontFamily = "Segoe UI";
 			this.FontColor = Brushes.White.Color;
+
+			// Reset transform
+			this.transformMatrix = Matrix.Identity;
+		}
+
+		private void StoppedByException(Exception ex)
+		{
+			this.Exit();
 		}
 
 		#region Surface

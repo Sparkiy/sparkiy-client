@@ -10,7 +10,7 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 - Windows 10 (_x86_, _x64_, _ARM_)
 - Windows 8.1 (_x86_, _x64_, _ARM_)
 - Windows Phone 8.1
-- XBox One
+- Xbox One
 
 ## Third-party tools and code
 ### Libraries

@@ -74,7 +74,19 @@ namespace SparkiyEngine.Bindings.Graphics
 		void DrawText(string text, double x, double y);
 	}
 
-	public interface IGraphicsBindings : IGraphicsStyleBindings, IGraphicsShapesBindings, IGraphicsSurfaceBindings
+	public interface IGraphicsTransformBindings
+	{
+		[MethodDeclaration(SupportedLanguages.Lua, "translate", MethodTypes.Set)]
+		void SetTranslation(double x, double y);
+
+		[MethodDeclaration(SupportedLanguages.Lua, "rotate", MethodTypes.Set)]
+		void SetRotation(double angle);
+
+		[MethodDeclaration(SupportedLanguages.Lua, "scale", MethodTypes.Set)]
+		void SetScale(double scale);
+	}
+
+	public interface IGraphicsBindings : IGraphicsStyleBindings, IGraphicsShapesBindings, IGraphicsSurfaceBindings, IGraphicsTransformBindings
 	{
 		/// <summary>
 		/// Resets this instance.
