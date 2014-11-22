@@ -6,9 +6,8 @@ using SharpDX.DirectWrite;
 using SharpDX.Toolkit;
 using SharpDX.Toolkit.Direct2D;
 using SharpDX.Toolkit.Graphics;
-using SparkiyEngine.Bindings.Common.Component;
-using SparkiyEngine.Bindings.Graphics;
-using SparkiyEngine.Bindings.Graphics.Component;
+using SparkiyEngine.Bindings.Component.Common;
+using SparkiyEngine.Bindings.Component.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
 {

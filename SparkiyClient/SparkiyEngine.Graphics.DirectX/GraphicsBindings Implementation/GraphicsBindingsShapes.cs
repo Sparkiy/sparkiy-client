@@ -1,4 +1,4 @@
-﻿using SparkiyEngine.Bindings.Graphics;
+﻿using SparkiyEngine.Bindings.Component.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;

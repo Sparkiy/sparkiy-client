@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
 using Microsoft.Practices.Prism.StoreApps;
-using SparkiyEngine.Bindings.Common;
-using SparkiyEngine.Bindings.Common.Attributes;
-using SparkiyEngine.Bindings.Graphics;
-using SparkiyEngine.Bindings.Language;
-using SparkiyEngine.Bindings.Language.Component;
+using SparkiyEngine.Bindings.Component.Common;
+using SparkiyEngine.Bindings.Component.Common.Attributes;
+using SparkiyEngine.Bindings.Component.Graphics;
+using SparkiyEngine.Bindings.Component.Language;
 using SparkiyEngine.Core;
 using SparkiyEngine.Engine.Implementation;
 using SparkiyEngine.Graphics.DirectX;

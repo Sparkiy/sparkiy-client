@@ -20,8 +20,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		LuaScript(SparkiyEngine_Language_LuaImplementation::LuaImplementation^ luaImpl, const char *id, const char *content);
 		~LuaScript();
 
-		Platform::Object^ CallMethod(const char *name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Platform::Array<Platform::Object^>^ paramValues);
-		void RegisterMethod(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^declaration);
+		Platform::Object^ CallMethod(const char *name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Platform::Array<Platform::Object^>^ paramValues);
+		void RegisterMethod(SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^declaration);
 		void Load();
 		void Start();
 

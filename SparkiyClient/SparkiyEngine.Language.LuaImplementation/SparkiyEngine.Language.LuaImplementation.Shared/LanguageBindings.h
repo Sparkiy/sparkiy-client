@@ -8,22 +8,22 @@ using namespace Windows::Foundation::Collections;
 
 namespace SparkiyEngine_Language_LuaImplementation
 {
-	public ref class LanguageBindings sealed : SparkiyEngine::Bindings::Language::ILanguageBindings
+	public ref class LanguageBindings sealed : SparkiyEngine::Bindings::Component::Language::ILanguageBindings
 	{
 	public:
-		virtual void MapToGraphicsMethods(IMapView<String ^, SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^> ^declarations);
+		virtual void MapToGraphicsMethods(IMapView<String ^, SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^> ^declarations);
 		virtual void LoadScript(String ^id, String ^content);
 		virtual void StartScript(String ^id);
 
 		// Methods
-		virtual event SparkiyEngine::Bindings::Language::Component::MethodRequestEventHandler^ OnMethodRequested;
-		virtual void RaiseMethodRequestedEvent(SparkiyEngine::Bindings::Language::Component::MethodRequestEventArguments^ args);
-		virtual Object^ CallMethod(String^ script, String^ name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues);
-		virtual Object^ CallMethod(String^ name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues);
+		virtual event SparkiyEngine::Bindings::Component::Language::MethodRequestEventHandler^ OnMethodRequested;
+		virtual void RaiseMethodRequestedEvent(SparkiyEngine::Bindings::Component::Language::MethodRequestEventArguments^ args);
+		virtual Object^ CallMethod(String^ script, String^ name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues);
+		virtual Object^ CallMethod(String^ name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues);
 
 		// Messaging
-		virtual event SparkiyEngine::Bindings::Language::Component::MessagingRequestEventHandler^ OnMessageCreated;
-		virtual void RaiseMessageCreatedEvent(SparkiyEngine::Bindings::Language::Component::MessagingRequestEventArgs^ args);
+		virtual event SparkiyEngine::Bindings::Component::Language::MessagingRequestEventHandler^ OnMessageCreated;
+		virtual void RaiseMessageCreatedEvent(SparkiyEngine::Bindings::Component::Language::MessagingRequestEventArgs^ args);
 
 		// Settings
 		virtual void Reset();

@@ -1,7 +1,7 @@
 using Microsoft.Practices.Unity;
-using SparkiyEngine.Bindings.Engine;
-using SparkiyEngine.Bindings.Graphics;
-using SparkiyEngine.Bindings.Language;
+using SparkiyEngine.Bindings.Component.Engine;
+using SparkiyEngine.Bindings.Component.Graphics;
+using SparkiyEngine.Bindings.Component.Language;
 
 namespace SparkiyEngine.Core
 {

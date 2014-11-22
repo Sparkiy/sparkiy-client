@@ -4,8 +4,8 @@
 using namespace Platform;
 using namespace Windows::Foundation::Collections;
 using namespace SparkiyEngine_Language_LuaImplementation;
-using namespace SparkiyEngine::Bindings::Common::Component;
-using namespace SparkiyEngine::Bindings::Language::Component;
+using namespace SparkiyEngine::Bindings::Component::Common;
+using namespace SparkiyEngine::Bindings::Component::Language;
 
 LanguageBindings::LanguageBindings(LuaImplementation ^impl) :
 m_luaImpl(impl),
@@ -31,14 +31,14 @@ void LanguageBindings::MapToGraphicsMethods(IMapView<String ^, MethodDeclaration
 	});
 }
 
-Object^ LanguageBindings::CallMethod(String^ name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues) 
+Object^ LanguageBindings::CallMethod(String^ name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues) 
 {
 	const char *cName = GetCString(name);
 
 	return this->m_luaImpl->CallMethod(nullptr, cName, declaration, paramValues);
 }
 
-Object^ LanguageBindings::CallMethod(String^ script, String^ name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues)
+Object^ LanguageBindings::CallMethod(String^ script, String^ name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues)
 {
 	const char *cScript = GetCString(script);
 	const char *cName = GetCString(name);

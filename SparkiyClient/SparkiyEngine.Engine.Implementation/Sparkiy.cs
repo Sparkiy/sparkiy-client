@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using SparkiyEngine.Bindings.Engine;
-using SparkiyEngine.Bindings.Language;
-using SparkiyEngine.Bindings.Graphics;
-using SparkiyEngine.Bindings.Common.Attributes;
+using SparkiyEngine.Bindings.Component.Engine;
+using SparkiyEngine.Bindings.Component.Language;
+using SparkiyEngine.Bindings.Component.Graphics;
+using SparkiyEngine.Bindings.Component.Common;
+using SparkiyEngine.Bindings.Component.Common.Attributes;
 using System.Reflection;
-using SparkiyEngine.Bindings.Common.Component;
-using SparkiyEngine.Bindings.Common;
 
 namespace SparkiyEngine.Engine.Implementation
 {

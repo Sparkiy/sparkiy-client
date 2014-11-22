@@ -26,9 +26,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using SparkiyEngine.Bindings.Engine;
-using SparkiyEngine.Bindings.Graphics;
-using SparkiyEngine.Bindings.Language;
+using SparkiyEngine.Bindings.Component.Common;
+using SparkiyEngine.Bindings.Component.Engine;
+using SparkiyEngine.Bindings.Component.Graphics;
+using SparkiyEngine.Bindings.Component.Language;
 using SparkiyEngine.Engine.Implementation;
 using SparkiyEngine.Graphics.DirectX;
 using SparkiyEngine_Language_LuaImplementation;
@@ -251,7 +252,10 @@ namespace SparkiyClient
 			//// Register engine bindings
 			this.container.RegisterInstance<ILanguageBindings>((new LuaImplementation()).GetLanguageBindings());
 			this.container.RegisterInstance<IGraphicsBindings>(this.container.Resolve<IGraphicsSettings>().GraphicsBindings);
-			this.container.RegisterInstance<IEngineBindings>(new Sparkiy());
+			this.container.RegisterInstance<IEngineBindings>(new Sparkiy(
+				SupportedLanguages.Lua,
+				this.container.Resolve<ILanguageBindings>(),
+				this.container.Resolve<IGraphicsBindings>()));
 
 			// Register ViewModels as Singeltons
 			this.container.RegisterType<MainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());

@@ -4,9 +4,8 @@
 
 using namespace Platform;
 using namespace SparkiyEngine_Language_LuaImplementation;
-using namespace SparkiyEngine::Bindings::Language;
-using namespace SparkiyEngine::Bindings::Language::Component;
-using namespace SparkiyEngine::Bindings::Common::Component;
+using namespace SparkiyEngine::Bindings::Component::Common;
+using namespace SparkiyEngine::Bindings::Component::Language;
 
 // Constructor
 LuaImplementation::LuaImplementation()
@@ -76,7 +75,7 @@ void LuaImplementation::RaiseMessageCreatedEvent(std::string message)
 // 
 // CallMethod
 // 
-Object^ LuaImplementation::CallMethod(const char *script, const char *name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues)
+Object^ LuaImplementation::CallMethod(const char *script, const char *name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues)
 {
 	// Check if this call is script wildcard
 	if (script == nullptr) 

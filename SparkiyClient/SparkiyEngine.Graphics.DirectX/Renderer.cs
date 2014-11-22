@@ -9,7 +9,7 @@ using Windows.ApplicationModel;
 using Windows.Graphics.Imaging;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
-using SparkiyEngine.Bindings.Graphics;
+using SparkiyEngine.Bindings.Component.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
 {

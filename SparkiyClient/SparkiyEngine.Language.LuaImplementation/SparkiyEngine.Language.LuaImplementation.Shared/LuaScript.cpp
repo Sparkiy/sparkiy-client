@@ -3,7 +3,7 @@
 
 using namespace Platform;
 using namespace SparkiyEngine_Language_LuaImplementation;
-using namespace SparkiyEngine::Bindings::Common::Component;
+using namespace SparkiyEngine::Bindings::Component::Common;
 
 
 // Constructor
@@ -135,7 +135,7 @@ void LuaScript::Load()
 //
 // CallMethod
 //
-Object^ LuaScript::CallMethod(const char *name, SparkiyEngine::Bindings::Common::Component::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues)
+Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues)
 {
 	auto invalidFunctionNameErrorMessage = "Invalid function name \"%s\". Requeste function name does not exist in users code.";
 	auto invalidNumberOfParametersErrorMessage = "Invalid number of parameters were passed to the function call. Declaration does not match passed values count.";

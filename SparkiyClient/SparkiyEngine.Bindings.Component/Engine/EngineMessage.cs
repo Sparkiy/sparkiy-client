@@ -1,6 +1,6 @@
 ﻿using SparkiyEngine.Bindings.Component.Common;
 
-namespace SparkiyEngine.Bindings.Engine
+namespace SparkiyEngine.Bindings.Component.Engine
 {
 	public sealed class EngineMessage
 	{
