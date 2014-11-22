@@ -1,4 +1,4 @@
-﻿using SparkiyEngine.Bindings.Common.Component;
+﻿using SparkiyEngine.Bindings.Component.Common;
 
 namespace SparkiyEngine.Bindings.Engine
 {

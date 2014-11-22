@@ -1,4 +1,4 @@
-﻿namespace SparkiyEngine.Bindings.Common.Component
+﻿namespace SparkiyEngine.Bindings.Component.Common
 {
 	public struct NumberGroup3
 	{

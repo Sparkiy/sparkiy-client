@@ -1,6 +1,6 @@
 using System;
 
-namespace SparkiyEngine.Bindings.Common.Component
+namespace SparkiyEngine.Bindings.Component.Common
 {
 	public sealed class MethodDeclarationOverloadDetails
 	{

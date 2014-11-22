@@ -1,11 +1,10 @@
-﻿using SparkiyEngine.Bindings.Common.Component;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SparkiyEngine.Bindings.Common.Attributes
+namespace SparkiyEngine.Bindings.Component.Common.Attributes
 {
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 	internal class MethodDeclarationAttribute : Attribute

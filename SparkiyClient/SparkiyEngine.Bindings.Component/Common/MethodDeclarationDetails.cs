@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SparkiyEngine.Bindings.Common.Component
+namespace SparkiyEngine.Bindings.Component.Common
 {
 	public sealed class MethodDeclarationDetails
 	{

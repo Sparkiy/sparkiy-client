@@ -1,13 +1,13 @@
-﻿using System;
+﻿using SparkiyEngine.Bindings.Component.Common;
+using SparkiyEngine.Bindings.Component.Graphics;
+using SparkiyEngine.Bindings.Component.Language;
+using SparkiyEngine.Bindings.Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SparkiyEngine.Bindings.Common;
-using SparkiyEngine.Bindings.Common.Component;
-using SparkiyEngine.Bindings.Graphics;
-using SparkiyEngine.Bindings.Language;
 
-namespace SparkiyEngine.Bindings.Engine
+namespace SparkiyEngine.Bindings.Component.Engine
 {
 	public interface IEngineBindings : IBindingsBase
     {

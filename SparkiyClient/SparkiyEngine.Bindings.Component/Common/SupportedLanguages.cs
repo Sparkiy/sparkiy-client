@@ -1,4 +1,4 @@
-﻿namespace SparkiyEngine.Bindings.Common
+﻿namespace SparkiyEngine.Bindings.Component.Common
 {
 	public enum SupportedLanguages
 	{

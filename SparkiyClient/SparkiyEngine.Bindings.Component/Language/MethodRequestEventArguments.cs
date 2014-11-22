@@ -1,7 +1,7 @@
 using System;
-using SparkiyEngine.Bindings.Common.Component;
+using SparkiyEngine.Bindings.Component.Common;
 
-namespace SparkiyEngine.Bindings.Language.Component
+namespace SparkiyEngine.Bindings.Component.Language
 {
 	public sealed class MethodRequestEventArguments
 	{

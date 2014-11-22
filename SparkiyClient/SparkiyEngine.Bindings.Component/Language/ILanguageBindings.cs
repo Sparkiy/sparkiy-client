@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SparkiyEngine.Bindings.Common;
-using SparkiyEngine.Bindings.Common.Component;
-using SparkiyEngine.Bindings.Language.Component;
 using System.Runtime.InteropServices.WindowsRuntime;
+using SparkiyEngine.Bindings.Component.Common;
 
-namespace SparkiyEngine.Bindings.Language
+namespace SparkiyEngine.Bindings.Component.Language
 {
 	public interface ILanguageBindings : IBindingsBase
 	{

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SparkiyEngine.Bindings.Common.Component;
 
-namespace SparkiyEngine.Bindings.Common.Attributes
+namespace SparkiyEngine.Bindings.Component.Common.Attributes
 {
 	public static class MethodDeclarationResolver
 	{

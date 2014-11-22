@@ -1,4 +1,4 @@
-﻿namespace SparkiyEngine.Bindings.Graphics
+﻿namespace SparkiyEngine.Bindings.Component.Graphics
 {
 	/// <summary>
 	/// Graphics Settings manager should implement this interface

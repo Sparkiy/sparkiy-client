@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SparkiyEngine.Bindings.Common.Component;
+﻿using SparkiyEngine.Bindings.Component.Common;
 
-namespace SparkiyEngine.Bindings.Language.Component
+namespace SparkiyEngine.Bindings.Component.Language
 {
 	public sealed class FunctionDoesNotExistError
 	{

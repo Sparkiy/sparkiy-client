@@ -1,4 +1,4 @@
-﻿namespace SparkiyEngine.Bindings.Language.Component
+﻿namespace SparkiyEngine.Bindings.Component.Language
 {
 	public sealed class MessagingRequestEventArgs
 	{

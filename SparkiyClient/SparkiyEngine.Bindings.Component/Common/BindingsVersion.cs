@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SparkiyEngine.Bindings.Common
+namespace SparkiyEngine.Bindings.Component.Common
 {
 	public struct BindingsVersion
 	{

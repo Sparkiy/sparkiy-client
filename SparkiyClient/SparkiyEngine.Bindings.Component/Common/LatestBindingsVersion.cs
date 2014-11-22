@@ -1,6 +1,6 @@
 using System;
 
-namespace SparkiyEngine.Bindings.Common
+namespace SparkiyEngine.Bindings.Component.Common
 {
 	public static class LatestBindingsVersion
 	{

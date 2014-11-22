@@ -1,8 +1,7 @@
-﻿using SparkiyEngine.Bindings.Common;
-using SparkiyEngine.Bindings.Common.Attributes;
-using SparkiyEngine.Bindings.Common.Component;
+﻿using SparkiyEngine.Bindings.Component.Common;
+using SparkiyEngine.Bindings.Component.Common.Attributes;
 
-namespace SparkiyEngine.Bindings.Graphics
+namespace SparkiyEngine.Bindings.Component.Graphics
 {
 	public interface IGraphicsStyleBindings : IBindingsBase
 	{
