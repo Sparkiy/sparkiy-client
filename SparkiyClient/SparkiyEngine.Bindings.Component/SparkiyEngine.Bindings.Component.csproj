@@ -35,7 +35,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="Engine\" />
   </ItemGroup>
   <ItemGroup>
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
@@ -50,8 +49,15 @@
     <Compile Include="Common\MethodTypes.cs" />
     <Compile Include="Common\NumberGroup2.cs" />
     <Compile Include="Common\NumberGroup3.cs" />
+    <Compile Include="Engine\EngineMessage.cs" />
+    <Compile Include="Engine\EngineMessagingEventHandler.cs" />
+    <Compile Include="Engine\IEngineBindings.cs" />
+    <Compile Include="Graphics\IGraphicsBindings.cs" />
+    <Compile Include="Graphics\IGraphicsSettings.cs" />
+    <Compile Include="Graphics\IGraphicsStyleBindings.cs" />
     <Compile Include="Graphics\MethodCallRequestEventHandler.cs" />
     <Compile Include="Language\FunctionDoesNotExistError.cs" />
+    <Compile Include="Language\ILanguageBindings.cs" />
     <Compile Include="Language\MessagingRequestEventArgs.cs" />
     <Compile Include="Language\MessagingRequestEventHandler.cs" />
     <Compile Include="Language\MethodRequestEventArguments.cs" />

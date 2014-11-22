@@ -38,6 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj">
+      <Project>{b30085fc-1478-496b-b615-0b0fad4aec35}</Project>
+      <Name>SparkiyEngine.Bindings.Component</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
@@ -49,13 +53,6 @@
     <Compile Include="Common\BindingsVersion.cs" />
     <Compile Include="Common\LatestBindingsVersion.cs" />
     <Compile Include="Common\SupportedLanguages.cs" />
-    <Compile Include="Engine\EngineMessage.cs" />
-    <Compile Include="Engine\EngineMessagingEventHandler.cs" />
-    <Compile Include="Engine\IEngineBindings.cs" />
-    <Compile Include="Graphics\IGraphicsBindings.cs" />
-    <Compile Include="Graphics\IGraphicsSettings.cs" />
-    <Compile Include="Graphics\IGraphicsStyleBindings.cs" />
-    <Compile Include="Lenguage\ILanguageBindings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

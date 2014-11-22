@@ -148,6 +148,16 @@
       <HintPath>..\packages\FluentAssertions.3.2.1\lib\win8\FluentAssertions.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj">
+      <Project>{b30085fc-1478-496b-b615-0b0fad4aec35}</Project>
+      <Name>SparkiyEngine.Bindings.Component</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SparkiyEngine.Bindings\SparkiyEngine.Bindings.csproj">
+      <Project>{0de4f5cd-60b3-475e-85a5-2c796e700ce9}</Project>
+      <Name>SparkiyEngine.Bindings</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
