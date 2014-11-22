@@ -41,14 +41,19 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Attributes\MethodDeclarationAttribute.cs" />
+    <Compile Include="Common\Attributes\MethodDeclarationResolver.cs" />
+    <Compile Include="Common\BindingsVersion.cs" />
     <Compile Include="Common\BindingTypes.cs" />
     <Compile Include="Common\DataTypes.cs" />
     <Compile Include="Common\IBindingsBase.cs" />
+    <Compile Include="Common\LatestBindingsVersion.cs" />
     <Compile Include="Common\MethodDeclarationDetails.cs" />
     <Compile Include="Common\MethodDeclarationOverloadDetails.cs" />
     <Compile Include="Common\MethodTypes.cs" />
     <Compile Include="Common\NumberGroup2.cs" />
     <Compile Include="Common\NumberGroup3.cs" />
+    <Compile Include="Common\SupportedLanguages.cs" />
     <Compile Include="Engine\EngineMessage.cs" />
     <Compile Include="Engine\EngineMessagingEventHandler.cs" />
     <Compile Include="Engine\IEngineBindings.cs" />

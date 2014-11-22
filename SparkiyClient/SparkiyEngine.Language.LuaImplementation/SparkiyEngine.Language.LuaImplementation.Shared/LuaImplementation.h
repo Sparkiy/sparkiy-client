@@ -10,7 +10,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 	{
 	public:
 		LuaImplementation();
-
+		
 		SparkiyEngine::Bindings::Language::ILanguageBindings^ GetLanguageBindings();
 
 	internal:

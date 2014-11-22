@@ -4,7 +4,6 @@ using SparkiyEngine.Bindings.Common;
 using SparkiyEngine.Bindings.Common.Attributes;
 using SparkiyEngine.Bindings.Graphics;
 using SparkiyEngine.Bindings.Language;
-//using SparkiyEngine.Bindings.Language.Component;
 using SparkiyEngine.Bindings.Language.Component;
 using SparkiyEngine.Core;
 using SparkiyEngine.Engine.Implementation;
@@ -57,7 +56,7 @@ namespace SparkiyClient.Views
 	        var language = new LuaImplementation();
 
 			// Initialize engine 
-	        var engine = new Sparkiy();
+	        var engine = new Sparkiy(SupportedLanguages.Lua, language.GetLanguageBindings(), renderer.GraphicsBindings);
 
 			// Connect components using bootstrap
 	        this.bootstrap = new SparkiyBootstrap();

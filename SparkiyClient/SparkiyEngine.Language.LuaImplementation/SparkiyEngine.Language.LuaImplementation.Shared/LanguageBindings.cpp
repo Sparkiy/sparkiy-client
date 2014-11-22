@@ -16,7 +16,7 @@ m_didLoadScript(false)
 //
 // MapToGraphicsMethods
 //
-void LanguageBindings::MapToGraphicsMethods(IMapView<String ^,MethodDeclarationDetails ^> ^declarations)
+void LanguageBindings::MapToGraphicsMethods(IMapView<String ^, MethodDeclarationDetails ^> ^declarations)
 {
 	// Check if we did already load some scripts throw an exception
 	if (this->m_didLoadScript) 

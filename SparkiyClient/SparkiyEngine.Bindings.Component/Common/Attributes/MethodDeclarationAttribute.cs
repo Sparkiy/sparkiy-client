@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SparkiyEngine.Bindings.Common.Attributes
 {
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-	public class MethodDeclarationAttribute : Attribute
+	internal class MethodDeclarationAttribute : Attribute
 	{
 		public MethodDeclarationAttribute(SupportedLanguages languages, string name, MethodTypes type)
 		{
