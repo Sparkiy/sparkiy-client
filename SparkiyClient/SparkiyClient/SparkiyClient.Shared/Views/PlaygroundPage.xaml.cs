@@ -19,8 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Prism.PubSubEvents;
 using SparkiyClient.UILogic.ViewModels;
-using SparkiyEngine.Core;
-using SparkiyEngine.Engine.Implementation;
+using SparkiyEngine.Engine;
 using SparkiyEngine.Graphics.DirectX;
 using SparkiyClient.Common;
 

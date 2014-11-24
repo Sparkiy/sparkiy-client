@@ -30,7 +30,7 @@ using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
 using SparkiyEngine.Bindings.Component.Language;
-using SparkiyEngine.Engine.Implementation;
+using SparkiyEngine.Engine;
 using SparkiyEngine.Graphics.DirectX;
 using SparkiyEngine_Language_LuaImplementation;
 #if WINDOWS_APP
@@ -246,16 +246,17 @@ namespace SparkiyClient
 			// Register services
 			this.container.RegisterType<IAlertMessageService, AlertMessageService>(new ContainerControlledLifetimeManager());
 
-			// Register engine implementations
-			this.container.RegisterInstance<IGraphicsSettings>(new Renderer());
+			// Register engine bindings
+			var engine = new Sparkiy();
+			var language = new LuaImplementation(engine);
+			var graphics = new Renderer();
 
-			//// Register engine bindings
-			this.container.RegisterInstance<ILanguageBindings>((new LuaImplementation()).GetLanguageBindings());
-			this.container.RegisterInstance<IGraphicsBindings>(this.container.Resolve<IGraphicsSettings>().GraphicsBindings);
-			this.container.RegisterInstance<IEngineBindings>(new Sparkiy(
-				SupportedLanguages.Lua,
-				this.container.Resolve<ILanguageBindings>(),
-				this.container.Resolve<IGraphicsBindings>()));
+			engine.AssignBindings(SupportedLanguages.Lua, language.GetLanguageBindings(), graphics.GraphicsBindings);
+
+            this.container.RegisterInstance<IEngineBindings>(engine);
+			this.container.RegisterInstance<ILanguageBindings>(language.GetLanguageBindings());
+			this.container.RegisterInstance<IGraphicsSettings>(graphics);
+			this.container.RegisterInstance<IGraphicsBindings>(graphics.GraphicsBindings);
 
 			// Register ViewModels as Singeltons
 			this.container.RegisterType<MainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());

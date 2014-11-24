@@ -19,12 +19,6 @@ namespace SparkiyEngine.Bindings.Component.Language
 		object CallMethod(string name, MethodDeclarationOverloadDetails declaration, [ReadOnlyArray] object[] paramValues);
 
 		//
-		// Messaging 
-		//
-		event MessagingRequestEventHandler OnMessageCreated;
-		void RaiseMessageCreatedEvent(MessagingRequestEventArgs args);
-
-		//
 		// Scripts
 		// 
 	    void LoadScript(string id, string content);

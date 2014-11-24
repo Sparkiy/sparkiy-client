@@ -6,9 +6,11 @@ using namespace Platform;
 using namespace SparkiyEngine_Language_LuaImplementation;
 using namespace SparkiyEngine::Bindings::Component::Common;
 using namespace SparkiyEngine::Bindings::Component::Language;
+using namespace SparkiyEngine::Bindings::Component::Engine;
 
 // Constructor
-LuaImplementation::LuaImplementation()
+LuaImplementation::LuaImplementation(IEngineBindings^ engine) 
+	: m_engine(engine)
 {
 	this->Initialize();
 }
@@ -66,10 +68,12 @@ void LuaImplementation::RaiseMethodRequestedEvent(MethodDeclarationDetails^ decl
 //
 void LuaImplementation::RaiseMessageCreatedEvent(std::string message) 
 {
-	auto args = ref new MessagingRequestEventArgs();
-	args->Message = GetPString(message);
+	auto messageInstance = ref new EngineMessage();
+	messageInstance->Message = GetPString(message);
+	messageInstance->Source = this->GetLanguageBindings();
+	messageInstance->SourceType = BindingTypes::Language;
 
-	this->m_languageBindings->RaiseMessageCreatedEvent(args);
+	this->m_engine->AddMessage(messageInstance);
 }
 
 // 

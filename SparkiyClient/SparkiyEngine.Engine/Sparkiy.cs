@@ -6,23 +6,26 @@ using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Common.Attributes;
 using System.Reflection;
 
-namespace SparkiyEngine.Engine.Implementation
+namespace SparkiyEngine.Engine
 {
 	public class Sparkiy : IEngineBindings
 	{
-		private readonly ILanguageBindings languageBindings;
-		private readonly IGraphicsBindings graphicsBindings;
+		private ILanguageBindings languageBindings;
+		private IGraphicsBindings graphicsBindings;
 
 		public event EngineMessagingEventHandler OnMessageCreated;
 		private readonly List<EngineMessage> messages;
 
 
-		public Sparkiy(SupportedLanguages language, ILanguageBindings languageBindings, IGraphicsBindings graphicsBindings)
+		public Sparkiy()
+		{
+			this.messages = new List<EngineMessage>();
+		}
+
+		public void AssignBindings(SupportedLanguages language, ILanguageBindings languageBindings, IGraphicsBindings graphicsBindings)
 		{
 			this.languageBindings = languageBindings;
 			this.graphicsBindings = graphicsBindings;
-
-			this.messages = new List<EngineMessage>();
 
 			// Map methods Graphics > Language
 			this.LanguageBindings.MapToGraphicsMethods(
@@ -37,26 +40,15 @@ namespace SparkiyEngine.Engine.Implementation
 				method.Invoke(this.GraphicsBindings, args.InputValues);
 			};
 
-			// Catch messsage creating
-			this.LanguageBindings.OnMessageCreated += (sender, args) =>
-			{
-				var message = new EngineMessage()
-				{
-					Message = args.Message,
-					Source = sender as ILanguageBindings,
-					SourceType = BindingTypes.Language
-				};
-
-				this.HandleMessageCreated(message);
-			};
-
 			// Connect functions
 			this.GraphicsBindings.Pre2DDraw += s => this.LanguageBindings.CallMethod(
 				"Draw", new MethodDeclarationOverloadDetails() { Type = MethodTypes.Call }, new object[] { });
 		}
 
 
-		public void HandleMessageCreated(EngineMessage message)
+		#region Messages
+
+		public void AddMessage(EngineMessage message)
 		{
 			this.messages.Add(message);
 
@@ -74,8 +66,15 @@ namespace SparkiyEngine.Engine.Implementation
 			this.messages.Clear();
 		}
 
+		#endregion
+
 		public void Reset()
 		{
+			// Clear subsystems
+			this.LanguageBindings.Reset();
+			this.GraphicsBindings.Reset();
+
+			// Clear engine
 			this.ClearMessages();
 		}
 

@@ -90,10 +90,6 @@
       <Project>{b30085fc-1478-496b-b615-0b0fad4aec35}</Project>
       <Name>SparkiyEngine.Bindings.Component</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SparkiyEngine.Engine.Implementation\SparkiyEngine.Engine.Implementation.csproj">
-      <Project>{698D2C1E-D6BC-4EB8-9188-072CB2790530}</Project>
-      <Name>SparkiyEngine.Engine.Implementation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SparkiyEngine.Engine\SparkiyEngine.Engine.csproj">
       <Project>{79259DB5-4D17-450E-9861-09FA93BFF6FD}</Project>
       <Name>SparkiyEngine.Engine</Name>

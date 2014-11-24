@@ -17,8 +17,7 @@ using SparkiyClient.UILogic.Services;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
 using SparkiyEngine.Bindings.Component.Language;
-using SparkiyEngine.Core;
-using SparkiyEngine.Engine.Implementation;
+using SparkiyEngine.Engine;
 using SparkiyEngine.Graphics.DirectX;
 
 namespace SparkiyClient.UILogic.ViewModels
@@ -41,7 +40,7 @@ namespace SparkiyClient.UILogic.ViewModels
 		private ICodeEditor editor;
 		private Timer editorTimer;
 
-		private SparkiyBootstrap bootstrap;
+		private IEngineBindings engine;
 		private IGraphicsSettings graphicsSettings;
 
 
@@ -51,18 +50,13 @@ namespace SparkiyClient.UILogic.ViewModels
 			IResourceLoader resourceLoader,
 			IEngineBindings engineBindings, 
 			ILanguageBindings languageBindings,
-			IGraphicsSettings graphicsSettings,
-			IGraphicsBindings graphicsBindings)
+			IGraphicsSettings graphicsSettings)
 		{
 			this.navigationService = navigationService;
 			this.alertMessageService = alertMessageService;
 			this.resourceLoader = resourceLoader;
 			this.graphicsSettings = graphicsSettings;
-
-			// Bootstrap the engine
-			this.bootstrap = new SparkiyBootstrap();
-			this.bootstrap.InitializeLua(languageBindings, graphicsBindings, engineBindings);
-			this.bootstrap.Bindings.Engine.OnMessageCreated += this.EngineOnOnMessageCreated;
+			this.engine = engineBindings;
 		}
 
 
@@ -140,25 +134,23 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		private void LoadScript(string name, string code)
 		{
-			this.bootstrap.Bindings.Language.LoadScript(name, code);
+			this.engine.LanguageBindings.LoadScript(name, code);
 		}
 
 		private void RunScript(string name)
 		{
-			this.bootstrap.Bindings.Language.StartScript(name);
+			this.engine.LanguageBindings.StartScript(name);
 		}
 
 		private void SetupPlayground()
 		{
-			this.bootstrap.Bindings.Engine.Reset();
-			this.bootstrap.Bindings.Graphics.Reset();
-			this.bootstrap.Bindings.Language.Reset();
+			this.engine.Reset();
 		}
 
 		private void EngineOnOnMessageCreated(object sender)
 		{
-			this.bootstrap.Bindings.Engine.GetMessages().ForEach(msg => System.Diagnostics.Debug.WriteLine(msg.Message));
-			this.bootstrap.Bindings.Engine.ClearMessages();
+			this.engine.GetMessages().ForEach(msg => System.Diagnostics.Debug.WriteLine(msg.Message));
+			this.engine.ClearMessages();
 		}
 
 

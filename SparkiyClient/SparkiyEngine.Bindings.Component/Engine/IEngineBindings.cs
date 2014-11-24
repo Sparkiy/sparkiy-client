@@ -12,7 +12,7 @@ namespace SparkiyEngine.Bindings.Component.Engine
     {
 	    event EngineMessagingEventHandler OnMessageCreated;
 
-	    void HandleMessageCreated(EngineMessage message);
+	    void AddMessage(EngineMessage message);
 
 	    EngineMessage[] GetMessages();
 

@@ -102,15 +102,6 @@ void LanguageBindings::RaiseMethodRequestedEvent(MethodRequestEventArguments^ ar
 }
 
 //
-// RaiseMethodRequestedEvent
-//
-void LanguageBindings::RaiseMessageCreatedEvent(MessagingRequestEventArgs^ args)
-{
-	// Raise event with arguments
-	this->OnMessageCreated::raise(this, args);
-}
-
-//
 // Reset
 //
 void LanguageBindings::Reset()

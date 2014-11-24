@@ -9,7 +9,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 	public ref class LuaImplementation sealed
 	{
 	public:
-		LuaImplementation();
+		LuaImplementation(SparkiyEngine::Bindings::Component::Engine::IEngineBindings^ engine);
 		
 		SparkiyEngine::Bindings::Component::Language::ILanguageBindings^ GetLanguageBindings();
 
@@ -28,6 +28,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 		void Initialize();
 
 	private:
+		SparkiyEngine::Bindings::Component::Engine::IEngineBindings													^m_engine;
 		SparkiyEngine::Bindings::Component::Language::ILanguageBindings												^m_languageBindings;
 		std::map<const char *, LuaScript *, StrCompare>																 m_scripts;
 	};

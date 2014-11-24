@@ -63,8 +63,6 @@
     <Compile Include="Graphics\MethodCallRequestEventHandler.cs" />
     <Compile Include="Language\FunctionDoesNotExistError.cs" />
     <Compile Include="Language\ILanguageBindings.cs" />
-    <Compile Include="Language\MessagingRequestEventArgs.cs" />
-    <Compile Include="Language\MessagingRequestEventHandler.cs" />
     <Compile Include="Language\MethodRequestEventArguments.cs" />
     <Compile Include="Language\MethodRequestEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

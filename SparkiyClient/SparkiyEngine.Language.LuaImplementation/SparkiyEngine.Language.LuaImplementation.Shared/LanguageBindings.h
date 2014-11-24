@@ -21,10 +21,6 @@ namespace SparkiyEngine_Language_LuaImplementation
 		virtual Object^ CallMethod(String^ script, String^ name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues);
 		virtual Object^ CallMethod(String^ name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues);
 
-		// Messaging
-		virtual event SparkiyEngine::Bindings::Component::Language::MessagingRequestEventHandler^ OnMessageCreated;
-		virtual void RaiseMessageCreatedEvent(SparkiyEngine::Bindings::Component::Language::MessagingRequestEventArgs^ args);
-
 		// Settings
 		virtual void Reset();
 
