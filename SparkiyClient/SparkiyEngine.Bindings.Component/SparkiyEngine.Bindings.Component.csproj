@@ -61,10 +61,7 @@
     <Compile Include="Graphics\IGraphicsSettings.cs" />
     <Compile Include="Graphics\IGraphicsStyleBindings.cs" />
     <Compile Include="Graphics\MethodCallRequestEventHandler.cs" />
-    <Compile Include="Language\FunctionDoesNotExistError.cs" />
     <Compile Include="Language\ILanguageBindings.cs" />
-    <Compile Include="Language\MethodRequestEventArguments.cs" />
-    <Compile Include="Language\MethodRequestEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

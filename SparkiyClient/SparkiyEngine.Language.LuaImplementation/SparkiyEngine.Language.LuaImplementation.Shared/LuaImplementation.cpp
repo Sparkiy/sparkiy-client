@@ -51,22 +51,18 @@ LuaScript* LuaImplementation::GetScript(const char * id)
 }
 
 //
-// RaiseMethodRequestedEvent
+// MethodRequest
 //
-void LuaImplementation::RaiseMethodRequestedEvent(MethodDeclarationDetails^ declaration, MethodDeclarationOverloadDetails^ overload, Platform::Array<Platform::Object^>^ inputValues)
+void LuaImplementation::MethodRequest(MethodDeclarationDetails^ declaration, MethodDeclarationOverloadDetails^ overload, const Array<Object^>^ inputValues)
 {
-	auto args = ref new MethodRequestEventArguments();
-	args->Declaration = declaration;
-	args->Overload = overload;
-	args->InputValues = inputValues;
-
-	this->m_languageBindings->RaiseMethodRequestedEvent(args);
+	Object^ returnValue = this->m_engine->MethodRequested(declaration, overload, inputValues);
+	// TODO Implement return value
 }
 
 //
 // RaiseMessageCreatedEvent
 //
-void LuaImplementation::RaiseMessageCreatedEvent(std::string message) 
+void LuaImplementation::CreateMessage(std::string message)
 {
 	auto messageInstance = ref new EngineMessage();
 	messageInstance->Message = GetPString(message);

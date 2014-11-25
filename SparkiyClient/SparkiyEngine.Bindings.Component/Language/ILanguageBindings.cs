@@ -12,8 +12,6 @@ namespace SparkiyEngine.Bindings.Component.Language
 		//
 		// Methods
 		//
-		event MethodRequestEventHandler OnMethodRequested;
-		void RaiseMethodRequestedEvent(MethodRequestEventArguments args);
 		void MapToGraphicsMethods(IReadOnlyDictionary<string, MethodDeclarationDetails> declarations);
 		object CallMethod(string script, string name, MethodDeclarationOverloadDetails declaration, [ReadOnlyArray] object[] paramValues);
 		object CallMethod(string name, MethodDeclarationOverloadDetails declaration, [ReadOnlyArray] object[] paramValues);

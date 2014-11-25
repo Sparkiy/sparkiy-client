@@ -93,15 +93,6 @@ void LanguageBindings::StartScript(String ^id)
 }
 
 //
-// RaiseMethodRequestedEvent
-//
-void LanguageBindings::RaiseMethodRequestedEvent(MethodRequestEventArguments^ args)
-{
-	// Raise event with arguments
-	this->OnMethodRequested::raise(this, args);
-}
-
-//
 // Reset
 //
 void LanguageBindings::Reset()

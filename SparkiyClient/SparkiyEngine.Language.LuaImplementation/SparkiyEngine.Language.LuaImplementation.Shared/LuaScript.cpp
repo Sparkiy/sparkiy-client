@@ -106,7 +106,7 @@ const char* LuaScript::GetErrorMessage()
 void LuaScript::HandleException() 
 {
 	auto errorMessage = this->GetErrorMessage();
-	this->m_luaImpl->RaiseMessageCreatedEvent("Error: " + GetString(errorMessage) + "\n");
+	this->m_luaImpl->CreateMessage("Error: " + GetString(errorMessage) + "\n");
 }
 
 //
@@ -233,7 +233,7 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 		}
 	}
 
-	callerScript->m_luaImpl->RaiseMethodRequestedEvent(declaration, matchedOverload, inputValues);
+	callerScript->m_luaImpl->MethodRequest(declaration, matchedOverload, inputValues);
 
 	return 0;
 }

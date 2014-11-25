@@ -280,6 +280,7 @@ namespace SparkiyClient
 		/// <param name="ex">The exception that was thrown.</param>
 		private void OnUnhandledRegistrationException(Exception ex)
 		{
+			throw new Exception();
 		}
 
 		/// <summary>

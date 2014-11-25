@@ -5,6 +5,7 @@ using SparkiyEngine.Bindings.Component.Graphics;
 using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Common.Attributes;
 using System.Reflection;
+using System;
 
 namespace SparkiyEngine.Engine
 {
@@ -13,15 +14,21 @@ namespace SparkiyEngine.Engine
 		private ILanguageBindings languageBindings;
 		private IGraphicsBindings graphicsBindings;
 
-		public event EngineMessagingEventHandler OnMessageCreated;
-		private readonly List<EngineMessage> messages;
 
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Sparkiy"/> class.
+		/// </summary>
 		public Sparkiy()
 		{
-			this.messages = new List<EngineMessage>();
 		}
 
+
+		/// <summary>
+		/// Assigns the bindings (sub-systems).
+		/// </summary>
+		/// <param name="language">The language that language binding represents.</param>
+		/// <param name="languageBindings">The language bindings.</param>
+		/// <param name="graphicsBindings">The graphics bindings.</param>
 		public void AssignBindings(SupportedLanguages language, ILanguageBindings languageBindings, IGraphicsBindings graphicsBindings)
 		{
 			this.languageBindings = languageBindings;
@@ -33,13 +40,6 @@ namespace SparkiyEngine.Engine
 					this.GraphicsBindings.GetType(),
 					language));
 
-			// Map methods Graphics < Language
-			this.LanguageBindings.OnMethodRequested += (sender, args) =>
-			{
-				var method = (MethodInfo)args.Overload.Method;
-				method.Invoke(this.GraphicsBindings, args.InputValues);
-			};
-
 			// Connect functions
 			this.GraphicsBindings.Pre2DDraw += s => this.LanguageBindings.CallMethod(
 				"Draw", new MethodDeclarationOverloadDetails() { Type = MethodTypes.Call }, new object[] { });
@@ -48,6 +48,20 @@ namespace SparkiyEngine.Engine
 
 		#region Messages
 
+		/// <summary>
+		/// The messages queue.
+		/// </summary>
+		private readonly List<EngineMessage> messages = new List<EngineMessage>();
+
+		/// <summary>
+		/// Occurs when message was created.
+		/// </summary>
+		public event EngineMessagingEventHandler OnMessageCreated;
+
+		/// <summary>
+		/// Adds the message to the list of received messages.
+		/// </summary>
+		/// <param name="message">The message to add.</param>
 		public void AddMessage(EngineMessage message)
 		{
 			this.messages.Add(message);
@@ -56,11 +70,20 @@ namespace SparkiyEngine.Engine
 				this.OnMessageCreated(this);
 		}
 
+		/// <summary>
+		/// Gets the messages that are currently on queue.
+		/// </summary>
+		/// <returns>
+		/// Returns array of messages that are cached.
+		/// </returns>
 		public EngineMessage[] GetMessages()
 		{
 			return this.messages.ToArray();
 		}
 
+		/// <summary>
+		/// Clears the messages queue.
+		/// </summary>
 		public void ClearMessages()
 		{
 			this.messages.Clear();
@@ -68,6 +91,26 @@ namespace SparkiyEngine.Engine
 
 		#endregion
 
+		#region Methods
+
+		/// <summary>
+		/// Handles method requests from sub-systems.
+		/// </summary>
+		/// <param name="declaration">The method declaration.</param>
+		/// <param name="overload">The selected method overload. Must be one from declaration.</param>
+		/// <param name="inputValues">The input values.</param>
+		/// <returns>Returns object with return value.</returns>
+		public object MethodRequested(MethodDeclarationDetails declaration, MethodDeclarationOverloadDetails overload, Object[] inputValues)
+		{
+			var method = (MethodInfo)overload.Method;
+			return method.Invoke(this.GraphicsBindings, inputValues);
+		}
+
+		#endregion Methods
+
+		/// <summary>
+		/// Resets this instance and all sub-systems.
+		/// </summary>
 		public void Reset()
 		{
 			// Clear subsystems
@@ -78,11 +121,23 @@ namespace SparkiyEngine.Engine
 			this.ClearMessages();
 		}
 
+		/// <summary>
+		/// Gets the language bindings.
+		/// </summary>
+		/// <value>
+		/// The language bindings.
+		/// </value>
 		public ILanguageBindings LanguageBindings
 		{
 			get { return this.languageBindings; }
 		}
 
+		/// <summary>
+		/// Gets the graphics bindings.
+		/// </summary>
+		/// <value>
+		/// The graphics bindings.
+		/// </value>
 		public IGraphicsBindings GraphicsBindings
 		{
 			get { return this.graphicsBindings; }
