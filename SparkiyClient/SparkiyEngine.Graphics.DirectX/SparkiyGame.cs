@@ -97,7 +97,7 @@ namespace SparkiyEngine.Graphics.DirectX
 		public void AddRotate(float angle)
 		{
 			Matrix rotateMatrix;
-			Matrix.RotationZ(angle, out rotateMatrix);
+			Matrix.RotationZ(MathUtil.DegreesToRadians(angle), out rotateMatrix);
 
 			this.transformMatrix *= rotateMatrix;
 
