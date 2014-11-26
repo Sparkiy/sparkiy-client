@@ -1,6 +1,7 @@
 using System;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using SparkiyEngine.Bindings.Component.Common;
 
 namespace SparkiyEngine.Bindings.Common.Test.Windows
 {

@@ -74,14 +74,37 @@ namespace SparkiyEngine.Bindings.Component.Graphics
 
 	public interface IGraphicsTransformBindings
 	{
+		// TODO Comment
 		[MethodDeclaration(SupportedLanguages.Lua, "translate", MethodTypes.Set)]
 		void SetTranslation(double x, double y);
 
+		// TODO Comment
 		[MethodDeclaration(SupportedLanguages.Lua, "rotate", MethodTypes.Set)]
 		void SetRotation(double angle);
 
+		// TODO Comment
 		[MethodDeclaration(SupportedLanguages.Lua, "scale", MethodTypes.Set)]
 		void SetScale(double scale);
+
+		// TODO Comment
+		[MethodDeclaration(SupportedLanguages.Lua, "pushTransform", MethodTypes.Set)]
+		void PushTransform();
+
+		// TODO Comment
+		[MethodDeclaration(SupportedLanguages.Lua, "popTransform", MethodTypes.Set)]
+		void PopTransform();
+
+		// TODO Comment
+		[MethodDeclaration(SupportedLanguages.Lua, "saveTransform", MethodTypes.Set)]
+		void SaveTransform(string key);
+
+		// TODO Comment
+		[MethodDeclaration(SupportedLanguages.Lua, "loadTransform", MethodTypes.Set)]
+		void LoadTransform(string key);
+
+		// TODO Comment
+		[MethodDeclaration(SupportedLanguages.Lua, "resetTransform", MethodTypes.Set)]
+		void ResetTransform();
 	}
 
 	public interface IGraphicsBindings : IBindingsBase, IGraphicsStyleBindings, IGraphicsShapesBindings, IGraphicsSurfaceBindings, IGraphicsTransformBindings

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Compression;
+using System.Linq;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
@@ -11,6 +13,43 @@ using SparkiyEngine.Bindings.Component.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
+	internal class PushPopManagement<T>
+	{
+		private readonly Stack<T> stack = new Stack<T>();
+		private readonly Dictionary<string, T> map = new Dictionary<string, T>();
+
+		public void Push(T item)
+		{
+			this.stack.Push(item);
+		}
+
+		public T Pop()
+		{
+		    if (this.stack.Count == 0)
+		        return default(T);
+			return this.stack.Pop();
+		}
+
+		public void Save(string key, T item)
+		{
+			this.map[key] = item;
+			this.Push(item);
+		}
+
+		public T Load(string key)
+		{
+		    if (!this.map.ContainsKey(key))
+		        return default(T);
+			return this.map[key];
+		}
+
+		public void Clear()
+		{
+			this.stack.Clear();
+			this.map.Clear();
+		}
+	}
+
 	public class SparkiyGame : Game
 	{
 		private GraphicsDeviceManager graphicsDeviceManager;
@@ -32,6 +71,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		// Transform
 		private Matrix transformMatrix;
+		private PushPopManagement<Matrix> transformPushPopManagement = new PushPopManagement<Matrix>();
 
 
 		/// <summary>
@@ -91,7 +131,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			this.transformMatrix *= tranalateMatrix;
 
-			this.PushTransform(this.transformMatrix);
+			this.SetTransform(this.transformMatrix);
 		}
 
 		public void AddRotate(float angle)
@@ -101,7 +141,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			this.transformMatrix *= rotateMatrix;
 
-			this.PushTransform(this.transformMatrix);
+			this.SetTransform(this.transformMatrix);
 		}
 
 		public void AddScale(float scale)
@@ -113,10 +153,37 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			this.transformMatrix *= scaleMatrix;
 
-			this.PushTransform(this.transformMatrix);
+			this.SetTransform(this.transformMatrix);
 		}
 
-		private void PushTransform(Matrix transform)
+		public void PushTransform()
+		{
+			this.transformPushPopManagement.Push(this.transformMatrix);
+		}
+
+		public void PopTransform()
+		{
+		    this.transformMatrix = this.transformPushPopManagement.Pop();
+            this.SetTransform(this.transformMatrix);
+		}
+
+		public void SaveTransform(string key)
+		{
+			this.transformPushPopManagement.Save(key, this.transformMatrix);
+		}
+
+		public void LoadTransform(string key)
+		{
+			this.SetTransform(this.transformPushPopManagement.Load(key));
+		}
+
+		public void ResetTransform()
+		{
+			this.transformMatrix = Matrix.Identity;
+			this.SetTransform(this.transformMatrix);
+		}
+
+		private void SetTransform(Matrix transform)
 		{
 			this.Canvas.PushObject(new CanvasTransform(transform));
 		}
@@ -243,6 +310,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			// Reset transform
 			this.transformMatrix = Matrix.Identity;
+			this.transformPushPopManagement.Clear();
 		}
 
 		private void StoppedByException(Exception ex)
