@@ -82,5 +82,25 @@ namespace SparkiyEngine.Bindings.Component.Graphics
 		// TODO Comment
 		[MethodDeclaration(SupportedLanguages.Lua, "noFill", MethodTypes.Call)]
 		void FillDisable();
+
+        // TODO Comment
+        [MethodDeclaration(SupportedLanguages.Lua, "pushStyle", MethodTypes.Call)]
+        void PushStyle();
+
+        // TODO Comment
+        [MethodDeclaration(SupportedLanguages.Lua, "popStyle", MethodTypes.Call)]
+        void PopStyle();
+
+        // TODO Comment
+        [MethodDeclaration(SupportedLanguages.Lua, "saveStyle", MethodTypes.Set)]
+        void SaveStyle(string key);
+
+        // TODO Comment
+        [MethodDeclaration(SupportedLanguages.Lua, "loadStyle", MethodTypes.Set)]
+        void LoadStyle(string key);
+
+        // TODO Comment
+        [MethodDeclaration(SupportedLanguages.Lua, "resetStyle", MethodTypes.Call)]
+        void ResetStyle();
 	}
 }

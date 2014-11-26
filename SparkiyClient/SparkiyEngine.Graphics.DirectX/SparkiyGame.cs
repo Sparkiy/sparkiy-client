@@ -50,18 +50,66 @@ namespace SparkiyEngine.Graphics.DirectX
 		}
 	}
 
-	public class SparkiyGame : Game
+    internal struct Style2D
+    {
+        private Color4 strokeColor;
+        private float strokeThickness;
+        private bool isStrokeEnabled;
+        private Color4 fillColor;
+        private bool isFillEnabled;
+
+
+        public Style2D()
+        {
+            this.strokeColor = Brushes.White.Color;
+            this.strokeThickness = 2f;
+            this.isStrokeEnabled = false;
+
+            this.fillColor = Brushes.White.Color;
+            this.isFillEnabled = true;
+        }
+
+
+        public Color4 StrokeColor
+        {
+            get { return strokeColor; }
+            set { strokeColor = value; }
+        }
+
+        public float StrokeThickness
+        {
+            get { return strokeThickness; }
+            set { strokeThickness = value; }
+        }
+
+        public bool IsStrokeEnabled
+        {
+            get { return isStrokeEnabled; }
+            set { isStrokeEnabled = value; }
+        }
+
+        public Color4 FillColor
+        {
+            get { return fillColor; }
+            set { fillColor = value; }
+        }
+
+        public bool IsFillEnabled
+        {
+            get { return isFillEnabled; }
+            set { isFillEnabled = value; }
+        }
+    }
+
+    public class SparkiyGame : Game
 	{
 		private GraphicsDeviceManager graphicsDeviceManager;
 
 		private Color4 backgroundColor;
 
 		// Styles
-		private bool isStrokeEnabled;
-		private Color4 strokeColor;
-		private float strokeThickness;
-		private bool isFillEnabled;
-		private Color4 fillColor;
+        private Style2D style2D;
+        private readonly PushPopManagement<Style2D> stylePushPopManagement = new PushPopManagement<Style2D>(); 
 
 		// Text
 		private string fontFamily;
@@ -71,7 +119,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		// Transform
 		private Matrix transformMatrix;
-		private PushPopManagement<Matrix> transformPushPopManagement = new PushPopManagement<Matrix>();
+		private readonly PushPopManagement<Matrix> transformPushPopManagement = new PushPopManagement<Matrix>();
 
 
 		/// <summary>
@@ -360,18 +408,44 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		#region Styles
 
+        public void PushStyle2D()
+        {
+            this.stylePushPopManagement.Push(this.style2D);
+        }
+
+        public void PopStyle2D()
+        {
+            this.style2D = this.stylePushPopManagement.Pop();
+        }
+
+        public void SaveStyle2D(string key)
+        {
+            this.stylePushPopManagement.Save(key, this.style2D);
+        }
+
+        public void LoadStyle2D(string key)
+        {
+            this.style2D = this.stylePushPopManagement.Load(key);
+        }
+
+        public void ResetStyle2D()
+        {
+            this.style2D = new Style2D();
+        }
+
+
 		public bool IsStrokeEnabled
 		{
-			get { return this.isStrokeEnabled; }
-			set { this.isStrokeEnabled = value; }
+			get { return this.style2D.IsStrokeEnabled; }
+			set { this.style2D.IsStrokeEnabled = value; }
 		}
 
 		public Color4 StrokeColor
 		{
-			get { return this.strokeColor; }
+			get { return this.style2D.StrokeColor; }
 			set
 			{
-				this.strokeColor = value;
+				this.style2D.StrokeColor = value;
 
 				// Enable stroke if possible
 				if (this.StrokeThickness != 0)
@@ -381,10 +455,10 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		public float StrokeThickness
 		{
-			get { return this.strokeThickness; }
+			get { return this.style2D.StrokeThickness; }
 			set
 			{
-				this.strokeThickness = Math.Max(0, value);
+				this.style2D.StrokeThickness = Math.Max(0, value);
 
 				// Disable/Enable stroke depending on thickness
 				if (this.StrokeThickness == 0)
@@ -395,16 +469,16 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		public bool IsFillEnabled
 		{
-			get { return this.isFillEnabled; }
-			set { this.isFillEnabled = value; }
+			get { return this.style2D.IsFillEnabled; }
+			set { this.style2D.IsFillEnabled = value; }
 		}
 
 		public Color4 FillColor
 		{
-			get { return this.fillColor; }
+			get { return this.style2D.FillColor; }
 			set
 			{
-				this.fillColor = value;
+				this.style2D.FillColor = value;
 
 				// Enable fill on every fill color set call
 				this.IsFillEnabled = true;

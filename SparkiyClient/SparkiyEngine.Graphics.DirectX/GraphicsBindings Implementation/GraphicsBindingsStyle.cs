@@ -112,5 +112,30 @@ namespace SparkiyEngine.Graphics.DirectX
 		{
 			this.game.IsFillEnabled = false;
 		}
+
+	    public void PushStyle()
+	    {
+	        this.game.PushStyle2D();
+	    }
+
+	    public void PopStyle()
+	    {
+	        this.game.PopStyle2D();
+	    }
+
+	    public void SaveStyle(string key)
+	    {
+	        this.game.SaveStyle2D(key);
+	    }
+
+	    public void LoadStyle(string key)
+	    {
+	        this.game.LoadStyle2D(key);
+	    }
+
+	    public void ResetStyle()
+	    {
+	        this.game.ResetStyle2D();
+	    }
 	}
 }
