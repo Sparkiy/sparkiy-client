@@ -4,8 +4,8 @@
 using namespace Platform;
 using namespace Windows::Foundation::Collections;
 using namespace SparkiyEngine_Language_LuaImplementation;
-using namespace SparkiyEngine::Bindings::Common::Component;
-using namespace SparkiyEngine::Bindings::Language::Component;
+using namespace SparkiyEngine::Bindings::Component::Common;
+using namespace SparkiyEngine::Bindings::Component::Language;
 
 LanguageBindings::LanguageBindings(LuaImplementation ^impl) :
 m_luaImpl(impl),
@@ -16,9 +16,9 @@ m_didLoadScript(false)
 //
 // MapToGraphicsMethods
 //
-void LanguageBindings::MapToGraphicsMethods(IMapView<String ^,MethodDeclarationDetails ^> ^declarations)
+void LanguageBindings::MapToGraphicsMethods(IMapView<String ^, MethodDeclarationDetails ^> ^declarations)
 {
-	// Check if we didnt already loaded some scripts, in case we did, throw exception
+	// Check if we did already load some scripts throw an exception
 	if (this->m_didLoadScript) 
 	{
 		throw ref new Exception(-1, "Can't map methods, already loaded at least one script. Map methods first before loading scripts.");
@@ -29,6 +29,47 @@ void LanguageBindings::MapToGraphicsMethods(IMapView<String ^,MethodDeclarationD
 		[=](IKeyValuePair<String^, MethodDeclarationDetails ^>^ decl) {
 		this->m_luaImpl->m_declarations[GetCString(decl->Key)] = decl->Value;
 	});
+}
+
+//
+// CallMethod wildcard script
+//
+Object^ LanguageBindings::CallMethod(String^ name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues) 
+{
+	const char *cName = GetCString(name);
+
+	return this->m_luaImpl->CallMethod(nullptr, cName, declaration, paramValues);
+}
+
+//
+// CallMethod
+//
+Object^ LanguageBindings::CallMethod(String^ script, String^ name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues)
+{
+	const char *cScript = GetCString(script);
+	const char *cName = GetCString(name);
+
+	return this->m_luaImpl->CallMethod(cScript, cName, declaration, paramValues);
+}
+
+//
+// SetConstant
+//
+void LanguageBindings::SetConstant(String^ name, Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType)
+{
+	const char *cName = GetCString(name);
+
+	this->m_luaImpl->SetConstant(cName, value, dataType);
+}
+
+//
+// SetVariable
+//
+void LanguageBindings::SetVariable(String^ name, Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType)
+{
+	const char *cName = GetCString(name);
+
+	this->m_luaImpl->SetVariable(cName, value, dataType);
 }
 
 //
@@ -75,24 +116,6 @@ void LanguageBindings::StartScript(String ^id)
 
 	// Start script
 	script->Start();
-}
-
-//
-// RaiseMethodRequestedEvent
-//
-void LanguageBindings::RaiseMethodRequestedEvent(MethodRequestEventArguments^ args)
-{
-	// Raise event with arguments
-	this->OnMethodRequested::raise(this, args);
-}
-
-//
-// RaiseMethodRequestedEvent
-//
-void LanguageBindings::RaiseMessageCreatedEvent(MessagingRequestEventArgs^ args)
-{
-	// Raise event with arguments
-	this->OnMessageCreated::raise(this, args);
 }
 
 //

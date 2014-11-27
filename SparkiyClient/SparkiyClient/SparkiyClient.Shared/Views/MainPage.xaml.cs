@@ -1,13 +1,10 @@
 ﻿using System.Reflection;
 using Microsoft.Practices.Prism.StoreApps;
-using SparkiyEngine.Bindings.Common;
-using SparkiyEngine.Bindings.Common.Attributes;
-using SparkiyEngine.Bindings.Graphics;
-using SparkiyEngine.Bindings.Language;
-//using SparkiyEngine.Bindings.Language.Component;
-using SparkiyEngine.Bindings.Language.Component;
-using SparkiyEngine.Core;
-using SparkiyEngine.Engine.Implementation;
+using SparkiyEngine.Bindings.Component.Common;
+using SparkiyEngine.Bindings.Component.Common.Attributes;
+using SparkiyEngine.Bindings.Component.Graphics;
+using SparkiyEngine.Bindings.Component.Language;
+using SparkiyEngine.Engine;
 using SparkiyEngine.Graphics.DirectX;
 using SparkiyEngine_Language_LuaImplementation;
 using System;
@@ -34,8 +31,6 @@ namespace SparkiyClient.Views
     /// </summary>
     public sealed partial class MainPage : VisualStateAwarePage
     {
-	    private SparkiyBootstrap bootstrap;
-
 
         public MainPage()
         {
@@ -50,23 +45,7 @@ namespace SparkiyClient.Views
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-			// Initialize rendering using DirectX 
-	        var renderer = new Renderer(this.SwapChainPanel);
 
-			// Initialize language using Lua
-	        var language = new LuaImplementation();
-
-			// Initialize engine 
-	        var engine = new Sparkiy();
-
-			// Connect components using bootstrap
-	        this.bootstrap = new SparkiyBootstrap();
-			this.bootstrap.InitializeLua(language.GetLanguageBindings(), renderer.GraphicsBindings, engine);
-
-			this.bootstrap.Bindings.Language.LoadScript("001", "background(1, 1, 1) stroke(0, 0.8, 1)");
-			this.bootstrap.Bindings.Language.StartScript("001");
-
-			this.bootstrap.Bindings.Graphics.DrawRectangle(100, 100, 50, 50);
         }
 
 	    protected override void OnNavigatedFrom(NavigationEventArgs e)

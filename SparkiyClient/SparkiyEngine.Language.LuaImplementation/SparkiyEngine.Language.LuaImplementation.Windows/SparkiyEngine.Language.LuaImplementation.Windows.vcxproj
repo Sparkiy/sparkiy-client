@@ -27,14 +27,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Common.Component\SparkiyEngine.Bindings.Common.Component.csproj">
-      <Project>{6489f783-bf69-4130-98e0-6a92ba8345a1}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Language.Component\SparkiyEngine.Bindings.Language.Component.csproj">
-      <Project>{12e3c635-7451-4243-b6ab-1ccaab645ef5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Language\SparkiyEngine.Bindings.Language.csproj">
-      <Project>{ffb9832f-3a5e-445c-af38-b5a990b6ca52}</Project>
+    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj">
+      <Project>{b30085fc-1478-496b-b615-0b0fad4aec35}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\SparkiyEngine.Language.Lua\SparkiyEngine.Language.Lua.Windows\SparkiyEngine.Language.Lua.Windows.vcxproj">
       <Project>{3d1ab151-fb20-4b5c-9acc-03be5cdfe8a0}</Project>

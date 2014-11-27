@@ -141,18 +141,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SparkiyEngine.Bindings.Common\SparkiyEngine.Bindings.Common.csproj">
-      <Project>{abe22a03-468e-492b-81ab-99ef0d8e245c}</Project>
-      <Name>SparkiyEngine.Bindings.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.3.2.1\lib\win8\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\packages\FluentAssertions.3.2.1\lib\win8\FluentAssertions.Core.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj">
+      <Project>{b30085fc-1478-496b-b615-0b0fad4aec35}</Project>
+      <Name>SparkiyEngine.Bindings.Component</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

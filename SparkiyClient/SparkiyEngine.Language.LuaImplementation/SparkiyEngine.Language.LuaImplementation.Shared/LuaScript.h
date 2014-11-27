@@ -20,9 +20,14 @@ namespace SparkiyEngine_Language_LuaImplementation
 		LuaScript(SparkiyEngine_Language_LuaImplementation::LuaImplementation^ luaImpl, const char *id, const char *content);
 		~LuaScript();
 
-		void RegisterMethod(SparkiyEngine::Bindings::Common::Component::MethodDeclarationDetails ^declaration);
+		Platform::Object^ CallMethod(const char *name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Platform::Array<Platform::Object^>^ paramValues);
+		void RegisterMethod(SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^declaration);
 		void Load();
 		void Start();
+
+		// Variables and Constants
+		void SetConstant(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
+		void SetVariable(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
 
 	protected:
 		void RegisterFunction(const char *name, FunctionPointer pt);
@@ -30,13 +35,15 @@ namespace SparkiyEngine_Language_LuaImplementation
 		const char* GetErrorMessage();
 		void HandleException();
 
-		// Script loading
-
 		// Helper methods
+		static Platform::Object^ PopLuaStack(lua_State* luaState, SparkiyEngine::Bindings::Component::Common::DataTypes dataType, int index);
+		static void PushLuaStack(lua_State* luaState, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
 		static int UniversalFunction(lua_State* luaState);
 		static const char* GetFunctionName(lua_State *luaState);
 		static LuaScript* GetCallerScript(lua_State *luaState);
 		static int PanicHandler(lua_State *luaState);
+		static bool FunctionExist(lua_State *luaState, const char *name);
+		static int CallFunction(lua_State *luaState, const char *name, int numParameters, int numResults);
 
 	private:
 		// Script info
@@ -49,7 +56,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 		bool																	 m_isValid;
 
 		// The Lua interpreter.
-		lua_State *m_luaState;
+		lua_State																*m_luaState;
 	};
 
 }

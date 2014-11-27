@@ -99,6 +99,15 @@
     <Content Include="Assets\WideLogo.scale-240.png" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MetroLog">
+      <HintPath>..\..\packages\MetroLog.0.8.6.1\lib\wpa81\MetroLog.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroLog.Platform">
+      <HintPath>..\..\packages\MetroLog.0.8.6.1\lib\wpa81\MetroLog.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroLog.Targets">
+      <HintPath>..\..\packages\MetroLog.Targets.1.0.0.0\lib\portable-win81+wpa81\MetroLog.Targets.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism.Mvvm">
       <HintPath>..\..\packages\Prism.Mvvm.1.1.1\lib\wpa81\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
     </Reference>
@@ -161,33 +170,9 @@
       <Project>{f911b0b9-7c40-4a76-b8e8-48fac2341f4f}</Project>
       <Name>SparkiyClient.UILogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Common.Component\SparkiyEngine.Bindings.Common.Component.csproj">
-      <Project>{6489f783-bf69-4130-98e0-6a92ba8345a1}</Project>
-      <Name>SparkiyEngine.Bindings.Common.Component</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Common\SparkiyEngine.Bindings.Common.csproj">
-      <Project>{ABE22A03-468E-492B-81AB-99EF0D8E245C}</Project>
-      <Name>SparkiyEngine.Bindings.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Engine\SparkiyEngine.Bindings.Engine.csproj">
-      <Project>{65dc3e23-563d-4fcf-b81a-fd2b95d49414}</Project>
-      <Name>SparkiyEngine.Bindings.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Graphics\SparkiyEngine.Bindings.Graphics.csproj">
-      <Project>{f115ed0b-82a4-4877-994a-8c560080a129}</Project>
-      <Name>SparkiyEngine.Bindings.Graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Language.Component\SparkiyEngine.Bindings.Language.Component.csproj">
-      <Project>{12E3C635-7451-4243-B6AB-1CCAAB645EF5}</Project>
-      <Name>SparkiyEngine.Bindings.Language.Component</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Language\SparkiyEngine.Bindings.Language.csproj">
-      <Project>{ffb9832f-3a5e-445c-af38-b5a990b6ca52}</Project>
-      <Name>SparkiyEngine.Bindings.Language</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Engine.Implementation\SparkiyEngine.Engine.Implementation.csproj">
-      <Project>{698D2C1E-D6BC-4EB8-9188-072CB2790530}</Project>
-      <Name>SparkiyEngine.Engine.Implementation</Name>
+    <ProjectReference Include="..\..\SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj">
+      <Project>{b30085fc-1478-496b-b615-0b0fad4aec35}</Project>
+      <Name>SparkiyEngine.Bindings.Component</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SparkiyEngine.Engine\SparkiyEngine.Engine.csproj">
       <Project>{79259DB5-4D17-450E-9861-09FA93BFF6FD}</Project>

@@ -14,11 +14,10 @@ using Microsoft.Practices.Prism.StoreApps.Interfaces;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Services;
-using SparkiyEngine.Bindings.Engine;
-using SparkiyEngine.Bindings.Graphics;
-using SparkiyEngine.Bindings.Language;
-using SparkiyEngine.Core;
-using SparkiyEngine.Engine.Implementation;
+using SparkiyEngine.Bindings.Component.Engine;
+using SparkiyEngine.Bindings.Component.Graphics;
+using SparkiyEngine.Bindings.Component.Language;
+using SparkiyEngine.Engine;
 using SparkiyEngine.Graphics.DirectX;
 
 namespace SparkiyClient.UILogic.ViewModels
@@ -35,13 +34,13 @@ namespace SparkiyClient.UILogic.ViewModels
 		private readonly IAlertMessageService alertMessageService;
 		private readonly IResourceLoader resourceLoader;
 
-		private const int AutoRerunTimeout = 1000;
+		private const int AutoRerunTimeout = 2000;
 
 		// Code editor
 		private ICodeEditor editor;
 		private Timer editorTimer;
 
-		private SparkiyBootstrap bootstrap;
+		private IEngineBindings engine;
 		private IGraphicsSettings graphicsSettings;
 
 
@@ -51,18 +50,13 @@ namespace SparkiyClient.UILogic.ViewModels
 			IResourceLoader resourceLoader,
 			IEngineBindings engineBindings, 
 			ILanguageBindings languageBindings,
-			IGraphicsSettings graphicsSettings,
-			IGraphicsBindings graphicsBindings)
+			IGraphicsSettings graphicsSettings)
 		{
 			this.navigationService = navigationService;
 			this.alertMessageService = alertMessageService;
 			this.resourceLoader = resourceLoader;
 			this.graphicsSettings = graphicsSettings;
-
-			// Bootstrap the engine
-			this.bootstrap = new SparkiyBootstrap();
-			this.bootstrap.InitializeLua(languageBindings, graphicsBindings, engineBindings);
-			this.bootstrap.Bindings.Engine.OnMessageCreated += this.EngineOnOnMessageCreated;
+			this.engine = engineBindings;
 		}
 
 
@@ -92,9 +86,6 @@ namespace SparkiyClient.UILogic.ViewModels
 			}
 
 
-			// Initialize editor auto-rerun timer
-			this.editorTimer = new Timer(this.EditorCallback, null, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(-1));
-
 			// TODO Fill view model with models
 		}
 
@@ -104,6 +95,9 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.editor = editor;
 
 			this.editor.OnCodeChanged += (sender, eventArgs) => this.RetriggerTimer();
+
+			// Initialize editor auto-rerun timer
+			this.editorTimer = new Timer(this.EditorCallback, null, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(-1));
 		}
 
 		public void AssignGraphicsPanel(object panel)
@@ -111,12 +105,12 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.graphicsSettings.AssignPanel(panel);
 		}
 
-		private void EditorCallback(object state)
+		private async void EditorCallback(object state)
 		{
 			if (!this.IsAutoRerunEnabled) return;
 
 			System.Diagnostics.Debug.WriteLine("Script restart triggered by editor");
-			CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, this.RunScript);
+			await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, this.RunScript);
 		}
 
 		private void RetriggerTimer()
@@ -140,25 +134,23 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		private void LoadScript(string name, string code)
 		{
-			this.bootstrap.Bindings.Language.LoadScript(name, code);
+			this.engine.LanguageBindings.LoadScript(name, code);
 		}
 
 		private void RunScript(string name)
 		{
-			this.bootstrap.Bindings.Language.StartScript(name);
+			this.engine.LanguageBindings.StartScript(name);
 		}
 
 		private void SetupPlayground()
 		{
-			this.bootstrap.Bindings.Engine.Reset();
-			this.bootstrap.Bindings.Graphics.Reset();
-			this.bootstrap.Bindings.Language.Reset();
+			this.engine.Reset();
 		}
 
 		private void EngineOnOnMessageCreated(object sender)
 		{
-			this.bootstrap.Bindings.Engine.GetMessages().ForEach(msg => System.Diagnostics.Debug.WriteLine(msg.Message));
-			this.bootstrap.Bindings.Engine.ClearMessages();
+			this.engine.GetMessages().ForEach(msg => System.Diagnostics.Debug.WriteLine(msg.Message));
+			this.engine.ClearMessages();
 		}
 
 

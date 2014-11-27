@@ -4,12 +4,13 @@
 
 using namespace Platform;
 using namespace SparkiyEngine_Language_LuaImplementation;
-using namespace SparkiyEngine::Bindings::Language;
-using namespace SparkiyEngine::Bindings::Language::Component;
-using namespace SparkiyEngine::Bindings::Common::Component;
+using namespace SparkiyEngine::Bindings::Component::Common;
+using namespace SparkiyEngine::Bindings::Component::Language;
+using namespace SparkiyEngine::Bindings::Component::Engine;
 
 // Constructor
-LuaImplementation::LuaImplementation()
+LuaImplementation::LuaImplementation(IEngineBindings^ engine) 
+	: m_engine(engine)
 {
 	this->Initialize();
 }
@@ -50,25 +51,68 @@ LuaScript* LuaImplementation::GetScript(const char * id)
 }
 
 //
-// RaiseMethodRequestedEvent
+// MethodRequest
 //
-void LuaImplementation::RaiseMethodRequestedEvent(MethodDeclarationDetails^ declaration, MethodDeclarationOverloadDetails^ overload, Platform::Array<Platform::Object^>^ inputValues)
+void LuaImplementation::MethodRequest(MethodDeclarationDetails^ declaration, MethodDeclarationOverloadDetails^ overload, const Array<Object^>^ inputValues)
 {
-	auto args = ref new MethodRequestEventArguments();
-	args->Declaration = declaration;
-	args->Overload = overload;
-	args->InputValues = inputValues;
-
-	this->m_languageBindings->RaiseMethodRequestedEvent(args);
+	Object^ returnValue = this->m_engine->MethodRequested(declaration, overload, inputValues);
+	// TODO Implement return value
 }
 
 //
 // RaiseMessageCreatedEvent
 //
-void LuaImplementation::RaiseMessageCreatedEvent(std::string message) 
+void LuaImplementation::CreateMessage(std::string message)
 {
-	auto args = ref new MessagingRequestEventArgs();
-	args->Message = GetPString(message);
+	auto messageInstance = ref new EngineMessage();
+	messageInstance->Message = GetPString(message);
+	messageInstance->Source = this->GetLanguageBindings();
+	messageInstance->SourceType = BindingTypes::Language;
 
-	this->m_languageBindings->RaiseMessageCreatedEvent(args);
+	this->m_engine->AddMessage(messageInstance);
+}
+
+// 
+// CallMethod
+// 
+Object^ LuaImplementation::CallMethod(const char *script, const char *name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues)
+{
+	// Check if this call is script wildcard
+	if (script == nullptr) 
+	{
+		for (std::map<const char *, LuaScript *, StrCompare>::iterator iter = this->m_scripts.begin(); iter != this->m_scripts.end(); ++iter)
+		{
+			iter->second->CallMethod(name, declaration, paramValues);
+		}
+		return NULL;
+	}
+	else 
+	{
+		// TODO Check if script exists
+		return this->m_scripts[script]->CallMethod(name, declaration, paramValues);
+	}
+}
+
+//
+// SetConstant
+//
+void LuaImplementation::SetConstant(const char *name, Object^ value, DataTypes dataType)
+{
+	// Set constant to all scripts
+	for (std::map<const char *, LuaScript *, StrCompare>::iterator iter = this->m_scripts.begin(); iter != this->m_scripts.end(); ++iter)
+	{
+		iter->second->SetConstant(name, value, dataType);
+	}
+}
+
+//
+// SetVariable
+//
+void LuaImplementation::SetVariable(const char *name, Object^ value, DataTypes dataType)
+{
+	// Set variables to all scripts
+	for (std::map<const char *, LuaScript *, StrCompare>::iterator iter = this->m_scripts.begin(); iter != this->m_scripts.end(); ++iter)
+	{
+		iter->second->SetVariable(name, value, dataType);
+	}
 }
