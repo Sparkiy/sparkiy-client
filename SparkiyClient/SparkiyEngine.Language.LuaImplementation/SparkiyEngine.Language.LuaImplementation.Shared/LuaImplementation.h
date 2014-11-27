@@ -13,6 +13,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		
 		SparkiyEngine::Bindings::Component::Language::ILanguageBindings^ GetLanguageBindings();
 
+		static LuaImplementation^ Instantiate(SparkiyEngine::Bindings::Component::Engine::IEngineBindings^ engine);
+
 	internal:
 		void AddScript(const char *id, LuaScript *script);
 		LuaScript* GetScript(const char *id);

@@ -69,12 +69,20 @@ namespace SparkiyEngine.Bindings.Component.Engine
 		/// </value>
 		IGraphicsBindings GraphicsBindings { get; }
 
-		/// <summary>
-		/// Gets the language bindings.
-		/// </summary>
-		/// <value>
-		/// The language bindings.
-		/// </value>
-		ILanguageBindings LanguageBindings { get; }
+        /// <summary>
+        /// Gets the graphics settings.
+        /// </summary>
+        /// <value>
+        /// The graphics settings.
+        /// </value>
+        IGraphicsSettings GraphicsSettings { get; }
+
+        /// <summary>
+        /// Gets the language bindings.
+        /// </summary>
+        /// <value>
+        /// The language bindings.
+        /// </value>
+        ILanguageBindings LanguageBindings { get; }
 	}
 }

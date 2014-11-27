@@ -15,6 +15,14 @@ LuaImplementation::LuaImplementation(IEngineBindings^ engine)
 	this->Initialize();
 }
 
+// static
+// Instantiate
+//
+LuaImplementation^ LuaImplementation::Instantiate(SparkiyEngine::Bindings::Component::Engine::IEngineBindings^ engine)
+{
+	return ref new LuaImplementation(engine);
+}
+
 //
 // Initialize
 //

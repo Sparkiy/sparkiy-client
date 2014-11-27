@@ -169,9 +169,11 @@ Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails
 	// Check if there are any parameters to push to the stack
 	if (declaration->Input->Length != 0)
 	{
-		// TODO Implement
-		// TODO Cast parameter and push to stack
-		throw;
+		// Cast parameter and push to stack
+		for (int index = 0; index < declaration->Input->Length; index++)
+		{
+			LuaScript::PushLuaStack(this->m_luaState, paramValues[index], declaration->Input[index]);
+		}
 	}
 	
 	// Call the function
@@ -353,6 +355,7 @@ int LuaScript::CallFunction(lua_State *luaState, const char *name, int numParame
 	const char *functionExecutionError = "An error occured while executing function \"%s\"";
 
 	lua_getglobal(luaState, name);
+	lua_insert(luaState, numParameters);
 	int errorCode = lua_pcall(luaState, numParameters, numResults, 0);
 	if (errorCode)
 		luaL_error(luaState, functionExecutionError, name);

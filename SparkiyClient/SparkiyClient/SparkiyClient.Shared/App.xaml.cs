@@ -246,22 +246,22 @@ namespace SparkiyClient
 			// Register services
 			this.container.RegisterType<IAlertMessageService, AlertMessageService>(new ContainerControlledLifetimeManager());
 
-			// Register engine bindings
-			var engine = new Sparkiy();
-			var language = new LuaImplementation(engine);
-			var graphics = new Renderer(engine);
-
-			engine.AssignBindings(SupportedLanguages.Lua, language.GetLanguageBindings(), graphics.GraphicsBindings);
-
-            this.container.RegisterInstance<IEngineBindings>(engine);
-			this.container.RegisterInstance<ILanguageBindings>(language.GetLanguageBindings());
-			this.container.RegisterInstance<IGraphicsSettings>(graphics);
-			this.container.RegisterInstance<IGraphicsBindings>(graphics.GraphicsBindings);
-
 			// Register ViewModels as Singeltons
 			this.container.RegisterType<MainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<PlaygroundPageViewModel, PlaygroundPageViewModel>(new ContainerControlledLifetimeManager());
 		}
+
+	    public static IEngineBindings InstantiateEngine(SupportedLanguages codeLanguage, object panel)
+	    {
+            var engine = new Sparkiy();
+            var language = LuaImplementation.Instantiate(engine);
+            var graphics = new Renderer(engine);
+
+            engine.AssignBindings(codeLanguage, language.GetLanguageBindings(), graphics);
+            engine.AssignPanel(panel);
+
+	        return engine;
+	    } 
 
 		/// <summary>
 		/// Override this method to register types in the container prior to any other code

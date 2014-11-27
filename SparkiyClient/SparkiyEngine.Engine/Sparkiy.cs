@@ -6,6 +6,9 @@ using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Common.Attributes;
 using System.Reflection;
 using System;
+using System.Diagnostics.Contracts;
+using Windows.UI.Xaml;
+using SparkiyEngine.Input;
 
 namespace SparkiyEngine.Engine
 {
@@ -13,6 +16,9 @@ namespace SparkiyEngine.Engine
 	{
 		private ILanguageBindings languageBindings;
 		private IGraphicsBindings graphicsBindings;
+	    private IGraphicsSettings graphicsSettings;
+
+	    private PointerManager pointerManager;
 
 
 		/// <summary>
@@ -20,6 +26,7 @@ namespace SparkiyEngine.Engine
 		/// </summary>
 		public Sparkiy()
 		{
+            
 		}
 
 
@@ -29,10 +36,16 @@ namespace SparkiyEngine.Engine
 		/// <param name="language">The language that language binding represents.</param>
 		/// <param name="languageBindings">The language bindings.</param>
 		/// <param name="graphicsBindings">The graphics bindings.</param>
-		public void AssignBindings(SupportedLanguages language, ILanguageBindings languageBindings, IGraphicsBindings graphicsBindings)
+		public void AssignBindings(SupportedLanguages language, ILanguageBindings languageBindings, IGraphicsSettings graphicsSettings)
 		{
-			this.languageBindings = languageBindings;
-			this.graphicsBindings = graphicsBindings;
+            Contract.Requires(languageBindings != null);
+            Contract.Requires(graphicsSettings != null);
+            Contract.Requires(graphicsSettings.GraphicsBindings != null);
+            Contract.Requires(graphicsSettings.Panel != null);
+
+            this.languageBindings = languageBindings;
+		    this.graphicsSettings = graphicsSettings;
+			this.graphicsBindings = this.graphicsSettings.GraphicsBindings;
 
 			// Map methods Graphics > Language
 			this.LanguageBindings.MapToGraphicsMethods(
@@ -41,10 +54,46 @@ namespace SparkiyEngine.Engine
 					language));
 		}
 
+	    public void AssignPanel(object panel)
+	    {
+            this.graphicsSettings.AssignPanel(panel);
+
+            // Instantiate pointer manager
+            if (!(this.graphicsSettings.Panel is UIElement))
+                throw new InvalidCastException("Panel must be of type UIElement in order to use PointerManager");
+            this.pointerManager = new PointerManager((UIElement)this.graphicsSettings.Panel, this);
+        }
+
 	    public void CallDrawFunction()
 	    {
+            // Call touched method if there are any pointers active
+	        if (this.pointerManager.PrimaryPointer != null)
+	        {
+	            if (this.pointerManager.PrimaryPointer.InGameType != InputTypes.NotTracked)
+	                this.LanguageBindings.CallMethod("Touched",
+	                    new MethodDeclarationOverloadDetails()
+	                    {
+	                        Type = MethodTypes.Set,
+	                        Input = new[]
+	                        {
+	                            DataTypes.Number,
+                                DataTypes.Number,
+                                DataTypes.Number
+	                        }
+	                    }, new object[]
+	                    {
+	                        (double)this.pointerManager.PrimaryPointer.InGameType,
+	                        (double)this.pointerManager.PrimaryPointer.X,
+                            (double)this.pointerManager.PrimaryPointer.Y
+	                    });
+
+	            this.pointerManager.PrimaryPointer.UpdateType();
+	        }
+
+	        //if (this.pointerManager.PrimaryPointer.)
+
             // Call use draw method
-	        this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+            this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
 	    }
 
 	    #region Messages
@@ -143,5 +192,16 @@ namespace SparkiyEngine.Engine
 		{
 			get { return this.graphicsBindings; }
 		}
+
+        /// <summary>
+        /// Gets the graphics settings.
+        /// </summary>
+        /// <value>
+        /// The graphics settings.
+        /// </value>
+        public IGraphicsSettings GraphicsSettings
+	    {
+	        get { return this.graphicsSettings; }
+	    }
     }
 }

@@ -221,6 +221,10 @@
       <Project>{e9172dfa-125c-4c68-8df8-ef88e36ab410}</Project>
       <Name>SparkiyEngine.Graphics.DirectX</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SparkiyEngine.Input\SparkiyEngine.Input.csproj">
+      <Project>{5de243fe-e7ba-425e-9125-b469d195131a}</Project>
+      <Name>SparkiyEngine.Input</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SparkiyEngine.Language.LuaImplementation\SparkiyEngine.Language.LuaImplementation.Windows\SparkiyEngine.Language.LuaImplementation.Windows.vcxproj">
       <Project>{3f5b304e-68be-4674-aa73-c9dec0dea6f1}</Project>
       <Name>SparkiyEngine.Language.LuaImplementation.Windows</Name>

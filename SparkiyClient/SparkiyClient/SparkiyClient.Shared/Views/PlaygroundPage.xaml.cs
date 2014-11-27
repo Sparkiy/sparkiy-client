@@ -22,6 +22,7 @@ using SparkiyClient.UILogic.ViewModels;
 using SparkiyEngine.Engine;
 using SparkiyEngine.Graphics.DirectX;
 using SparkiyClient.Common;
+using SparkiyEngine.Bindings.Component.Common;
 
 namespace SparkiyClient.Views
 {
@@ -46,13 +47,14 @@ namespace SparkiyClient.Views
 		/// This parameter is typically used to configure the page.</param>
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			this.ViewModel.AssignGraphicsPanel(this.SwapChainPanel);
+		    this.ViewModel.AssignEngine(App.InstantiateEngine(SupportedLanguages.Lua, this.SwapChainPanel));
+
 			this.CodeEditor.OnCodeChanged += (sender, args) => 
 				this.ViewModel.AssignCodeEditor(this.CodeEditor);
 		}
 
 
-	    private IPlaygroundViewModel ViewModel
+        private IPlaygroundViewModel ViewModel
 	    {
 			get { return this.DataContext as IPlaygroundViewModel; }
 	    }

@@ -25,7 +25,7 @@ namespace SparkiyClient.UILogic.ViewModels
 	public interface IPlaygroundViewModel
 	{
 		void AssignCodeEditor(ICodeEditor editor);
-		void AssignGraphicsPanel(object panel);
+	    void AssignEngine(IEngineBindings engineBindings);
 	}
 
 	public class PlaygroundPageViewModel : ExtendedViewModel, IPlaygroundViewModel
@@ -41,22 +41,16 @@ namespace SparkiyClient.UILogic.ViewModels
 		private Timer editorTimer;
 
 		private IEngineBindings engine;
-		private IGraphicsSettings graphicsSettings;
 
 
 		public PlaygroundPageViewModel(
 			INavigationService navigationService, 
 			IAlertMessageService alertMessageService,
-			IResourceLoader resourceLoader,
-			IEngineBindings engineBindings, 
-			ILanguageBindings languageBindings,
-			IGraphicsSettings graphicsSettings)
+			IResourceLoader resourceLoader)
 		{
 			this.navigationService = navigationService;
 			this.alertMessageService = alertMessageService;
 			this.resourceLoader = resourceLoader;
-			this.graphicsSettings = graphicsSettings;
-			this.engine = engineBindings;
 		}
 
 
@@ -95,19 +89,20 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.editor = editor;
 
 			this.editor.OnCodeChanged += (sender, eventArgs) => this.RetriggerTimer();
+        }
 
-			// Initialize editor auto-rerun timer
-			this.editorTimer = new Timer(this.EditorCallback, null, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(-1));
-		}
+	    public void AssignEngine(IEngineBindings engineBindings)
+	    {
+	        this.engine = engineBindings;
+	    }
 
-		public void AssignGraphicsPanel(object panel)
-		{
-			this.graphicsSettings.AssignPanel(panel);
-		}
-
+	    private DateTime sinceLastRerun;
 		private async void EditorCallback(object state)
 		{
 			if (!this.IsAutoRerunEnabled) return;
+
+            System.Diagnostics.Debug.WriteLine(DateTime.Now - this.sinceLastRerun);
+		    this.sinceLastRerun = DateTime.Now;
 
 			System.Diagnostics.Debug.WriteLine("Script restart triggered by editor");
 			await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, this.RunScript);
@@ -115,8 +110,9 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		private void RetriggerTimer()
 		{
-			this.editorTimer.Change(TimeSpan.FromMilliseconds(AutoRerunTimeout), TimeSpan.FromMilliseconds(-1));
-		}
+		    this.editorTimer?.Dispose();
+		    this.editorTimer = new Timer(this.EditorCallback, null, TimeSpan.FromMilliseconds(AutoRerunTimeout), TimeSpan.FromMilliseconds(-1));
+        }
 
 		private void RunScript()
 		{
