@@ -35,11 +35,9 @@ namespace SparkiyEngine_Language_LuaImplementation
 		const char* GetErrorMessage();
 		void HandleException();
 
-		// Script loading
-
 		// Helper methods
-		static Object^ PopLuaStack(lua_State* luaState, DataTypes dataType, int index);
-		static void PushLuaStack(lua_State* luaState, Object^ value, DataTypes dataType);
+		static Platform::Object^ PopLuaStack(lua_State* luaState, SparkiyEngine::Bindings::Component::Common::DataTypes dataType, int index);
+		static void PushLuaStack(lua_State* luaState, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
 		static int UniversalFunction(lua_State* luaState);
 		static const char* GetFunctionName(lua_State *luaState);
 		static LuaScript* GetCallerScript(lua_State *luaState);

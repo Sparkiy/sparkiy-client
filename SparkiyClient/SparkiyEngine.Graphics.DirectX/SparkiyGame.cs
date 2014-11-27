@@ -366,13 +366,14 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.transformPushPopManagement.Clear();
 
             // Set variables
-            this.engine.LanguageBindings.SetVariable("WIDTH", this.GraphicsDevice.Viewport.Width, DataTypes.Number);
-            this.engine.LanguageBindings.SetVariable("HEIGHT", this.GraphicsDevice.Viewport.Height, DataTypes.Number);
+            this.engine.LanguageBindings.SetVariable("WIDTH", (double)this.GraphicsDevice.Viewport.Width, DataTypes.Number);
+            this.engine.LanguageBindings.SetVariable("HEIGHT", (double)this.GraphicsDevice.Viewport.Height, DataTypes.Number);
         }
 
 		private void StoppedByException(Exception ex)
 		{
-			this.Exit();
+			//this.Exit();
+            this.Reset();
 		}
 
 		#region Surface

@@ -248,7 +248,7 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 	for (int index = 0, argIndex = -numberOfArguments; index < numberOfArguments; index++, argIndex++)
 	{
 		auto requiredType = matchedOverload->Input[index];
-		inputValues[index] = PopLuaStack(luaState, requiredType, index);
+		inputValues[index] = LuaScript::PopLuaStack(luaState, requiredType, argIndex);
 	}
 
 	callerScript->m_luaImpl->MethodRequest(declaration, matchedOverload, inputValues);
@@ -279,6 +279,8 @@ Object^ LuaScript::PopLuaStack(lua_State* luaState, DataTypes dataType, int inde
 		luaL_error(luaState, invalidArgTypeErrorMessage, dataType);
 		break;
 	}
+
+	return nullptr;
 }
 
 // static
@@ -291,11 +293,16 @@ void LuaScript::PushLuaStack(lua_State* luaState, Object^ value, DataTypes dataT
 	switch (dataType)
 	{
 	case DataTypes::Number:
-		lua_pushnumber(luaState, (lua_Number)value);
-		break;
+		{
+			auto numValue = static_cast<lua_Number>(value);
+			lua_pushnumber(luaState, numValue);
+			break; 
+		}
 	case DataTypes::String:
-		lua_pushstring(luaState, GetCString((String^)value));
-		break;
+		{
+			lua_pushstring(luaState, GetCString(static_cast<String^>(value)));
+			break;
+		}
 	default:
 		luaL_error(luaState, invalidArgTypeErrorMessage, dataType);
 		break;
