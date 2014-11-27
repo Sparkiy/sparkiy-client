@@ -129,6 +129,8 @@ namespace SparkiyEngine.Graphics.DirectX
 		/// </summary>
 		public SparkiyGame(IEngineBindings engine)
 		{
+		    this.engine = engine;
+
 			// Creates a graphics manager. This is mandatory.
 			this.graphicsDeviceManager = new GraphicsDeviceManager(this);
 
@@ -332,8 +334,9 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.Canvas.Render();
 
 			// Execute users draw loop
-			try {
-				this.GraphicsBindings.TriggerPre2DDraw();
+			try
+			{
+			    this.engine.CallDrawFunction();
 			}
 			catch(Exception ex)
 			{
@@ -361,7 +364,11 @@ namespace SparkiyEngine.Graphics.DirectX
 			// Reset transform
 			this.transformMatrix = Matrix.Identity;
 			this.transformPushPopManagement.Clear();
-		}
+
+            // Set variables
+            this.engine.LanguageBindings.SetVariable("WIDTH", this.GraphicsDevice.Viewport.Width, DataTypes.Number);
+            this.engine.LanguageBindings.SetVariable("HEIGHT", this.GraphicsDevice.Viewport.Height, DataTypes.Number);
+        }
 
 		private void StoppedByException(Exception ex)
 		{

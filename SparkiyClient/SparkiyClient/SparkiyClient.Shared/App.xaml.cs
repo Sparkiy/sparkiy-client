@@ -249,7 +249,7 @@ namespace SparkiyClient
 			// Register engine bindings
 			var engine = new Sparkiy();
 			var language = new LuaImplementation(engine);
-			var graphics = new Renderer();
+			var graphics = new Renderer(engine);
 
 			engine.AssignBindings(SupportedLanguages.Lua, language.GetLanguageBindings(), graphics.GraphicsBindings);
 

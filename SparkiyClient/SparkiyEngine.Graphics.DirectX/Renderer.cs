@@ -9,6 +9,7 @@ using Windows.ApplicationModel;
 using Windows.Graphics.Imaging;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
@@ -24,16 +25,16 @@ namespace SparkiyEngine.Graphics.DirectX
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Renderer"/> class.
 		/// </summary>
-		public Renderer()
+		public Renderer(IEngineBindings engine)
 		{
-			this.game = new SparkiyGame();
+			this.game = new SparkiyGame(engine);
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Renderer"/> class.
 		/// </summary>
 		/// <param name="panel">The panel to assign as drawing surface.</param>
-		public Renderer(SwapChainPanel panel) : this()
+		public Renderer(IEngineBindings engine, SwapChainPanel panel) : this(engine)
 		{
 			this.AssignPanel(panel);
 		}

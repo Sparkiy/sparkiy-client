@@ -48,12 +48,18 @@ namespace SparkiyEngine.Bindings.Component.Engine
 		/// <returns>Returns object with return value.</returns>
  		object MethodRequested(MethodDeclarationDetails declaration, MethodDeclarationOverloadDetails overload, [ReadOnlyArray] Object[] inputValues);
 
-		#endregion Methods
+        #endregion Methods
 
-		/// <summary>
-		/// Resets this instance and all sub-systems.
-		/// </summary>
-		void Reset();
+        #region Functions
+
+	    void CallDrawFunction();
+
+        #endregion
+
+        /// <summary>
+        /// Resets this instance and all sub-systems.
+        /// </summary>
+        void Reset();
 
 		/// <summary>
 		/// Gets the graphics bindings.
