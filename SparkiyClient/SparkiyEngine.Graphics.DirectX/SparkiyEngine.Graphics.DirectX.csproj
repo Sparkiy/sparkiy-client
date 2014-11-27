@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GraphicsBindings Implementation\GraphicsBindings.cs" />
+    <Compile Include="GraphicsBindings Implementation\GraphicsBindings2D.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindingsStyle.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindingsShapes.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindingsSurface.cs" />

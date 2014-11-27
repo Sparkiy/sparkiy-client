@@ -102,6 +102,36 @@ namespace SparkiyEngine.Graphics.DirectX
         }
     }
 
+    public interface ITextureProvider
+    {
+        Texture2D GetTexture(string assetName);
+    }
+
+    public class BasicTextureProvider : ITextureProvider
+    {
+        private readonly Game game;
+        private readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+
+
+        public BasicTextureProvider(Game game)
+        {
+            this.game = game;
+        }
+
+
+        public Texture2D GetTexture(string assetName)
+        {
+            if (!this.textures.ContainsKey(assetName))
+                this.LoadTexture(assetName);
+            return this.textures[assetName];
+        }
+
+        private void LoadTexture(string assetName)
+        {
+            this.textures[assetName] = this.game.Content.Load<Texture2D>(assetName);
+        }
+    }
+
     public class SparkiyGame : Game
     {
         private readonly IEngineBindings engine;
@@ -146,6 +176,9 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			// Add Bindings service
 			this.Services.AddService(typeof(IGraphicsBindings), new GraphicsBindings(this));
+
+            // Add Texture provider
+            this.Services.AddService(typeof(ITextureProvider), new BasicTextureProvider(this));
 		}
 
 		protected override void Initialize()
@@ -321,6 +354,19 @@ namespace SparkiyEngine.Graphics.DirectX
 						this.StrokeThickness));
 			}
 		}
+
+        public void DrawTexture(string assetName, float x, float y, float width, float height)
+        {
+            var texture = this.Services.GetService<ITextureProvider>().GetTexture(assetName);
+            this.Canvas.PushObject(
+                new CanvasBitmap(
+                    texture, 
+                    new RectangleF(
+                        x, 
+                        y, 
+                        width < 0 ? texture.Width : width,
+                        height < 0 ? texture.Height : height)));
+        }
 
 		protected override void Draw(GameTime gameTime)
 		{

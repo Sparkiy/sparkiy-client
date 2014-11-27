@@ -7,6 +7,15 @@ using System.Text;
 
 namespace SparkiyEngine.Bindings.Component.Graphics
 {
+    public interface IGraphics2DBindings
+    {
+        [MethodDeclaration(SupportedLanguages.Lua, "texture", MethodTypes.Set)]
+        void DrawTexture(string assetName, double x, double y);
+
+        [MethodDeclaration(SupportedLanguages.Lua, "texture", MethodTypes.Set)]
+        void DrawTexture(string assetName, double x, double y, double width, double height);
+    }
+
 	public interface IGraphicsShapesBindings
 	{
 		// TODO Comment
@@ -107,7 +116,7 @@ namespace SparkiyEngine.Bindings.Component.Graphics
 		void ResetTransform();
 	}
 
-	public interface IGraphicsBindings : IBindingsBase, IGraphicsStyleBindings, IGraphicsShapesBindings, IGraphicsSurfaceBindings, IGraphicsTransformBindings
+	public interface IGraphicsBindings : IBindingsBase, IGraphicsStyleBindings, IGraphicsShapesBindings, IGraphics2DBindings, IGraphicsSurfaceBindings, IGraphicsTransformBindings
 	{
 		/// <summary>
 		/// Resets this instance.

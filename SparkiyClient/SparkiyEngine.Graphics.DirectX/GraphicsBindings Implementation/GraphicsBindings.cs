@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
-	/// <summary>
-	/// Graphics Bindings implementation for SparkiyGame game instance
-	/// </summary>
-	public partial class GraphicsBindings : Component, IGraphicsBindings
+    /// <summary>
+    /// Graphics Bindings implementation for SparkiyGame game instance
+    /// </summary>
+    public partial class GraphicsBindings : Component, IGraphicsBindings
 	{
 		private readonly SparkiyGame game;
 
