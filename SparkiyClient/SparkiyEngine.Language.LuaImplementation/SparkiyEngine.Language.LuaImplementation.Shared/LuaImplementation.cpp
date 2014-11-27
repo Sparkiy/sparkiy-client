@@ -92,3 +92,27 @@ Object^ LuaImplementation::CallMethod(const char *script, const char *name, Meth
 		return this->m_scripts[script]->CallMethod(name, declaration, paramValues);
 	}
 }
+
+//
+// SetConstant
+//
+void LuaImplementation::SetConstant(const char *name, Object^ value, DataTypes dataType)
+{
+	// Set constant to all scripts
+	for (std::map<const char *, LuaScript *, StrCompare>::iterator iter = this->m_scripts.begin(); iter != this->m_scripts.end(); ++iter)
+	{
+		iter->second->SetConstant(name, value, dataType);
+	}
+}
+
+//
+// SetVariable
+//
+void LuaImplementation::SetVariable(const char *name, Object^ value, DataTypes dataType)
+{
+	// Set variables to all scripts
+	for (std::map<const char *, LuaScript *, StrCompare>::iterator iter = this->m_scripts.begin(); iter != this->m_scripts.end(); ++iter)
+	{
+		iter->second->SetVariable(name, value, dataType);
+	}
+}

@@ -72,6 +72,22 @@ void LuaScript::Start()
 	//}
 }
 
+//
+// SetConstant
+//
+void SetConstant(const char *name, Object^ value, DataTypes dataType)
+{
+
+}
+
+// 
+// SetVariable
+//
+void SetVariable(const char *name, Object^ value, DataTypes dataType)
+{
+
+}
+
 // 
 // RegisterFunction
 //
@@ -174,13 +190,30 @@ Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails
 	}
 }
 
+// 
+// SetConstant
+//
+void LuaScript::SetConstant(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType)
+{
+	LuaScript::PushLuaStack(this->m_luaState, value, dataType);
+	lua_setglobal(this->m_luaState, name);
+}
+
+//
+// SetVariable
+//
+void LuaScript::SetVariable(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType)
+{
+	LuaScript::PushLuaStack(this->m_luaState, value, dataType);
+	lua_setglobal(this->m_luaState, name);
+}
+
 // static 
 // UniversalFunction
 //
 int LuaScript::UniversalFunction(lua_State* luaState)
 {
 	auto invalidFunctionNameErrorMessage = "Invalid function name. Requested function name was registered, but not mapped properly.";
-	auto invalidArgTypeErrorMessage = "Invalid argument type passed to function \"%s\".";
 	auto invalidOverloadErrorMessage = "Invalid argument arangement or unknown function \"%s\".";
 
 	auto callerScript = GetCallerScript(luaState);
@@ -209,33 +242,64 @@ int LuaScript::UniversalFunction(lua_State* luaState)
 		luaL_error(luaState, invalidOverloadErrorMessage, functionName);
 
 	// Create input values array
-	auto inputValues = ref new Platform::Array<Platform::Object^>(numberOfArguments);
+	auto inputValues = ref new Array<Object^>(numberOfArguments);
 	
 	// Retrieve all arguments
 	for (int index = 0, argIndex = -numberOfArguments; index < numberOfArguments; index++, argIndex++)
 	{
 		auto requiredType = matchedOverload->Input[index];
-		switch (requiredType)
-		{
-		case DataTypes::Number:
-			if (!lua_isnumber(luaState, argIndex))
-				luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
-			inputValues[index] = lua_tonumber(luaState, argIndex);
-			break;
-		case DataTypes::String:
-			if (!lua_isstring(luaState, argIndex))
-				luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
-			inputValues[index] = GetPString(lua_tostring(luaState, argIndex));
-			break;
-		default:
-			luaL_error(luaState, invalidArgTypeErrorMessage, functionName);
-			break;
-		}
+		inputValues[index] = PopLuaStack(luaState, requiredType, index);
 	}
 
 	callerScript->m_luaImpl->MethodRequest(declaration, matchedOverload, inputValues);
 
 	return 0;
+}
+
+// static
+// PopLuaStack
+//
+Object^ LuaScript::PopLuaStack(lua_State* luaState, DataTypes dataType, int index)
+{
+	auto invalidArgTypeErrorMessage = "Invalid argument type passed. Can't parse to \"%s\"";
+
+	switch (dataType)
+	{
+	case DataTypes::Number:
+		if (!lua_isnumber(luaState, index))
+			luaL_error(luaState, invalidArgTypeErrorMessage, dataType);
+		return lua_tonumber(luaState, index);
+		break;
+	case DataTypes::String:
+		if (!lua_isstring(luaState, index))
+			luaL_error(luaState, invalidArgTypeErrorMessage, dataType);
+		return GetPString(lua_tostring(luaState, index));
+		break;
+	default:
+		luaL_error(luaState, invalidArgTypeErrorMessage, dataType);
+		break;
+	}
+}
+
+// static
+// PushLuaStack
+//
+void LuaScript::PushLuaStack(lua_State* luaState, Object^ value, DataTypes dataType)
+{
+	auto invalidArgTypeErrorMessage = "Invalid argument type passed. Can't parse to \"%s\"";
+
+	switch (dataType)
+	{
+	case DataTypes::Number:
+		lua_pushnumber(luaState, (lua_Number)value);
+		break;
+	case DataTypes::String:
+		lua_pushstring(luaState, GetCString((String^)value));
+		break;
+	default:
+		luaL_error(luaState, invalidArgTypeErrorMessage, dataType);
+		break;
+	}
 }
 
 // static

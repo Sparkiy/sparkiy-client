@@ -16,6 +16,12 @@ namespace SparkiyEngine.Bindings.Component.Language
 		object CallMethod(string script, string name, MethodDeclarationOverloadDetails declaration, [ReadOnlyArray] object[] paramValues);
 		object CallMethod(string name, MethodDeclarationOverloadDetails declaration, [ReadOnlyArray] object[] paramValues);
 
+        //
+        // Variables and Constants
+        //
+	    void SetConstant(string name, object value, DataTypes dataType);
+	    void SetVariable(string name, object value, DataTypes dataType);
+
 		//
 		// Scripts
 		// 

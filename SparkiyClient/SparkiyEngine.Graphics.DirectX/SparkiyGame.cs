@@ -9,6 +9,7 @@ using SharpDX.Toolkit;
 using SharpDX.Toolkit.Direct2D;
 using SharpDX.Toolkit.Graphics;
 using SparkiyEngine.Bindings.Component.Common;
+using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
@@ -102,11 +103,12 @@ namespace SparkiyEngine.Graphics.DirectX
     }
 
     public class SparkiyGame : Game
-	{
+    {
+        private readonly IEngineBindings engine;
 		private GraphicsDeviceManager graphicsDeviceManager;
 
 		private Color4 backgroundColor;
-
+        
 		// Styles
         private Style2D style2D;
         private readonly PushPopManagement<Style2D> stylePushPopManagement = new PushPopManagement<Style2D>(); 
@@ -125,7 +127,7 @@ namespace SparkiyEngine.Graphics.DirectX
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SparkiyGame" /> class.
 		/// </summary>
-		public SparkiyGame()
+		public SparkiyGame(IEngineBindings engine)
 		{
 			// Creates a graphics manager. This is mandatory.
 			this.graphicsDeviceManager = new GraphicsDeviceManager(this);

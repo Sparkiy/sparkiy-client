@@ -19,6 +19,10 @@ namespace SparkiyEngine_Language_LuaImplementation
 		virtual Object^ CallMethod(String^ script, String^ name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues);
 		virtual Object^ CallMethod(String^ name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Array<Object^>^ paramValues);
 
+		// Variables and Constants
+		virtual void SetConstant(String^ name, Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
+		virtual void SetVariable(String^ name, Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
+
 		// Settings
 		virtual void Reset();
 

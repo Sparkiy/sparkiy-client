@@ -41,12 +41,16 @@ namespace SparkiyEngine.Engine
 					language));
 
 			// Connect functions
-			this.GraphicsBindings.Pre2DDraw += s => this.LanguageBindings.CallMethod(
-				"Draw", new MethodDeclarationOverloadDetails() { Type = MethodTypes.Call }, new object[] { });
+			this.GraphicsBindings.Pre2DDraw += OnGraphicsBindingsOnPre2DDraw;
 		}
 
+	    private void OnGraphicsBindingsOnPre2DDraw(object s)
+	    {
+            // Call use draw method
+	        this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+	    }
 
-		#region Messages
+	    #region Messages
 
 		/// <summary>
 		/// The messages queue.

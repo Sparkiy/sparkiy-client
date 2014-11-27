@@ -113,15 +113,5 @@ namespace SparkiyEngine.Bindings.Component.Graphics
 		/// Resets this instance.
 		/// </summary>
 		void Reset();
-
-		/// <summary>
-		/// Occurs before 2D draw is called so that user can fill collection with drawable objects
-		/// </summary>
-		event MethodCallRequestEventHandler Pre2DDraw;
-
-		/// <summary>
-		/// Triggers the Pre2DDraw event.
-		/// </summary>
-		void TriggerPre2DDraw();
 	}
 }

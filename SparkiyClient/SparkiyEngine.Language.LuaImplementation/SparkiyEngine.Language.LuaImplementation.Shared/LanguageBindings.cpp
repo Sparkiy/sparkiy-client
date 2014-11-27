@@ -31,6 +31,9 @@ void LanguageBindings::MapToGraphicsMethods(IMapView<String ^, MethodDeclaration
 	});
 }
 
+//
+// CallMethod wildcard script
+//
 Object^ LanguageBindings::CallMethod(String^ name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues) 
 {
 	const char *cName = GetCString(name);
@@ -38,12 +41,35 @@ Object^ LanguageBindings::CallMethod(String^ name, MethodDeclarationOverloadDeta
 	return this->m_luaImpl->CallMethod(nullptr, cName, declaration, paramValues);
 }
 
+//
+// CallMethod
+//
 Object^ LanguageBindings::CallMethod(String^ script, String^ name, MethodDeclarationOverloadDetails^ declaration, const Array<Object^> ^paramValues)
 {
 	const char *cScript = GetCString(script);
 	const char *cName = GetCString(name);
 
 	return this->m_luaImpl->CallMethod(cScript, cName, declaration, paramValues);
+}
+
+//
+// SetConstant
+//
+void LanguageBindings::SetConstant(String^ name, Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType)
+{
+	const char *cName = GetCString(name);
+
+	this->m_luaImpl->SetConstant(cName, value, dataType);
+}
+
+//
+// SetVariable
+//
+void LanguageBindings::SetVariable(String^ name, Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType)
+{
+	const char *cName = GetCString(name);
+
+	this->m_luaImpl->SetVariable(cName, value, dataType);
 }
 
 //

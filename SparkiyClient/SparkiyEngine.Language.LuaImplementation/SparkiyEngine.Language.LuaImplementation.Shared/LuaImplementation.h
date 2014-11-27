@@ -22,6 +22,9 @@ namespace SparkiyEngine_Language_LuaImplementation
 
 		Platform::Object^ CallMethod(const char *script, const char *name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Platform::Array<Platform::Object^>^ paramValues);
 
+		void SetConstant(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
+		void SetVariable(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
+
 		std::map<const char *, SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^, StrCompare>				 m_declarations;
 
 	private:

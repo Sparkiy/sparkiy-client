@@ -25,6 +25,10 @@ namespace SparkiyEngine_Language_LuaImplementation
 		void Load();
 		void Start();
 
+		// Variables and Constants
+		void SetConstant(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
+		void SetVariable(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
+
 	protected:
 		void RegisterFunction(const char *name, FunctionPointer pt);
 		void RegisterLibrary(const char *name, const luaL_Reg *functions);
@@ -34,6 +38,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		// Script loading
 
 		// Helper methods
+		static Object^ PopLuaStack(lua_State* luaState, DataTypes dataType, int index);
+		static void PushLuaStack(lua_State* luaState, Object^ value, DataTypes dataType);
 		static int UniversalFunction(lua_State* luaState);
 		static const char* GetFunctionName(lua_State *luaState);
 		static LuaScript* GetCallerScript(lua_State *luaState);
