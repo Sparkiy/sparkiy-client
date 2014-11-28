@@ -271,7 +271,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			// Draw 2D
 			this.Reset();
-			this.Canvas.Render();
+			//this.Canvas.Render();
 
 			// Execute users draw loop
 			try

@@ -45,6 +45,9 @@ namespace SparkiyEngine.Engine
 	    private PointerManager pointerManager;
 
 	    private bool isInitialized;
+	    private bool isReset;
+
+	    private DateTime startedTime;
 
 
 		/// <summary>
@@ -52,7 +55,7 @@ namespace SparkiyEngine.Engine
 		/// </summary>
 		public Sparkiy()
 		{
-            
+		    
 		}
 
 
@@ -82,8 +85,6 @@ namespace SparkiyEngine.Engine
         }
 	    public void Initialize()
 	    {
-            this.isInitialized = true;
-
             // Map methods Graphics > Language
             this.LanguageBindings.MapToGraphicsMethods(
                 MethodDeclarationResolver.ResolveAll(
@@ -97,12 +98,18 @@ namespace SparkiyEngine.Engine
 
             // Instantiate script manager
             this.scriptManager = new ScriptManager();
+
+            this.isReset = true;
+            this.isInitialized = true;
         }
 
 	    public void Play()
 	    {
 	        if (!this.isInitialized)
                 throw new InvalidOperationException("Initialize engine before calling play.");
+
+	        if (this.isReset)
+	            this.startedTime = DateTime.Now;
 
 	        this.GraphicsBindings.Play();
 
@@ -133,6 +140,8 @@ namespace SparkiyEngine.Engine
 	    {
             if (this.scriptManager.HasInactiveScripts)
                 throw new NotImplementedException();
+
+            this.LanguageBindings.SetVariable("DELTA", (double)(DateTime.Now - this.startedTime).TotalMilliseconds, DataTypes.Number);
 
             // Call touched method if there are any pointers active
 	        if (this.pointerManager.PrimaryPointer != null)
@@ -275,6 +284,8 @@ namespace SparkiyEngine.Engine
 
             // Clear scripts
 		    this.scriptManager.Reset();
+
+		    this.isReset = true;
 		}
 
 		/// <summary>
