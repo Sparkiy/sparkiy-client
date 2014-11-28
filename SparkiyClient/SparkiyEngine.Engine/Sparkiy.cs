@@ -13,12 +13,35 @@ using SparkiyEngine.Input;
 
 namespace SparkiyEngine.Engine
 {
+    internal class ScriptManager
+    {
+        private readonly List<string> activeScripts = new List<string>(); 
+        private readonly List<string> inactiveScripts = new List<string>();
+
+        public bool HasInactiveScripts => this.inactiveScripts.Any();
+
+        public void AddScript(string name)
+        {
+            if (this.activeScripts.Contains(name))
+                throw new InvalidOperationException("Script already added.");
+
+            this.activeScripts.Add(name);
+        }
+
+        public void Reset()
+        {
+            this.activeScripts.Clear();
+            this.inactiveScripts.Clear();
+        }
+    }
+
 	public class Sparkiy : IEngineBindings
 	{
 		private ILanguageBindings languageBindings;
 		private IGraphicsBindings graphicsBindings;
 	    private IGraphicsSettings graphicsSettings;
 
+	    private ScriptManager scriptManager;
 	    private PointerManager pointerManager;
 
 	    private bool isInitialized;
@@ -71,6 +94,9 @@ namespace SparkiyEngine.Engine
             if (!(this.graphicsSettings.Panel is UIElement))
                 throw new InvalidCastException("Panel must be of type UIElement in order to use PointerManager");
             this.pointerManager = new PointerManager((UIElement)this.graphicsSettings.Panel, this);
+
+            // Instantiate script manager
+            this.scriptManager = new ScriptManager();
         }
 
 	    public void Play()
@@ -80,20 +106,34 @@ namespace SparkiyEngine.Engine
 
 	        this.GraphicsBindings.Play();
 
+            if (this.scriptManager.HasInactiveScripts)
+                throw new NotImplementedException();
+
             this.CallStarted();
 	    }
-
-
-
+        
 	    public void Pause()
 	    {
             this.GraphicsBindings.Pause();
 
+            if (this.scriptManager.HasInactiveScripts)
+                throw new NotImplementedException();
+
             this.CallStopped();
+	    }
+
+	    public void AddScript(string name, string code)
+	    {
+	        this.scriptManager.AddScript(name);
+	        this.LanguageBindings.LoadScript(name, code);
+            this.CallCreated(name);
 	    }
 
 	    public void CallDrawFunction()
 	    {
+            if (this.scriptManager.HasInactiveScripts)
+                throw new NotImplementedException();
+
             // Call touched method if there are any pointers active
 	        if (this.pointerManager.PrimaryPointer != null)
 	        {
@@ -106,10 +146,8 @@ namespace SparkiyEngine.Engine
 	            this.pointerManager.PrimaryPointer.UpdateType();
 	        }
 
-	        //if (this.pointerManager.PrimaryPointer.)
-
             // Call use draw method
-            this.LanguageBindings.CallMethod(null, "Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+            this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
 	    }
 
 	    private void CallCreated(string script = null)
@@ -234,6 +272,9 @@ namespace SparkiyEngine.Engine
 
 			// Clear engine
 			this.ClearMessages();
+
+            // Clear scripts
+		    this.scriptManager.Reset();
 		}
 
 		/// <summary>

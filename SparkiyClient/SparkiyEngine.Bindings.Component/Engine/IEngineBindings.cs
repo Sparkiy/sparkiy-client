@@ -71,6 +71,12 @@ namespace SparkiyEngine.Bindings.Component.Engine
 
         #endregion
 
+        #region Scripts
+
+	    void AddScript(string name, string code);
+
+        #endregion Scripts
+
         /// <summary>
         /// Resets this instance and all sub-systems.
         /// </summary>

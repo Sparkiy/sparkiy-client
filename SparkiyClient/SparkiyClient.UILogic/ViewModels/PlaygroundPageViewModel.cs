@@ -120,11 +120,7 @@ namespace SparkiyClient.UILogic.ViewModels
 		{
             this.engine.Pause();
             this.engine.Reset();
-
-            // Run script
-            this.engine.LanguageBindings.LoadScript("playground", this.GetPlaygroundCode());
-            this.engine.LanguageBindings.StartScript("playground");
-
+            this.engine.AddScript("playground", this.GetPlaygroundCode());
             this.engine.Play();
 		}
 
