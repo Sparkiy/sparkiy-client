@@ -32,5 +32,13 @@ namespace SparkiyEngine.Bindings.Component.Language
 		// Settings
 		//
 		void Reset();
+
+        /// <summary>
+        /// Gets the language that is implemented with this instance of bindings.
+        /// </summary>
+        /// <value>
+        /// The language.
+        /// </value>
+        SupportedLanguages Language { get; }
 	}
 }

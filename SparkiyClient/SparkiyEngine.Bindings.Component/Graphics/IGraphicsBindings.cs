@@ -122,5 +122,15 @@ namespace SparkiyEngine.Bindings.Component.Graphics
 		/// Resets this instance.
 		/// </summary>
 		void Reset();
+
+        /// <summary>
+        /// Plays this instance.
+        /// </summary>
+        void Play();
+
+        /// <summary>
+        /// Pauses this instance.
+        /// </summary>
+        void Pause();
 	}
 }

@@ -7,6 +7,7 @@ using SparkiyEngine.Bindings.Component.Common.Attributes;
 using System.Reflection;
 using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using Windows.UI.Xaml;
 using SparkiyEngine.Input;
 
@@ -19,6 +20,8 @@ namespace SparkiyEngine.Engine
 	    private IGraphicsSettings graphicsSettings;
 
 	    private PointerManager pointerManager;
+
+	    private bool isInitialized;
 
 
 		/// <summary>
@@ -36,7 +39,7 @@ namespace SparkiyEngine.Engine
 		/// <param name="language">The language that language binding represents.</param>
 		/// <param name="languageBindings">The language bindings.</param>
 		/// <param name="graphicsBindings">The graphics bindings.</param>
-		public void AssignBindings(SupportedLanguages language, ILanguageBindings languageBindings, IGraphicsSettings graphicsSettings)
+		public void AssignBindings(ILanguageBindings languageBindings, IGraphicsSettings graphicsSettings)
 		{
             Contract.Requires(languageBindings != null);
             Contract.Requires(graphicsSettings != null);
@@ -46,17 +49,23 @@ namespace SparkiyEngine.Engine
             this.languageBindings = languageBindings;
 		    this.graphicsSettings = graphicsSettings;
 			this.graphicsBindings = this.graphicsSettings.GraphicsBindings;
-
-			// Map methods Graphics > Language
-			this.LanguageBindings.MapToGraphicsMethods(
-				MethodDeclarationResolver.ResolveAll(
-					this.GraphicsBindings.GetType(),
-					language));
 		}
 
 	    public void AssignPanel(object panel)
 	    {
+            Contract.Requires(panel != null);
+
             this.graphicsSettings.AssignPanel(panel);
+        }
+	    public void Initialize()
+	    {
+            this.isInitialized = true;
+
+            // Map methods Graphics > Language
+            this.LanguageBindings.MapToGraphicsMethods(
+                MethodDeclarationResolver.ResolveAll(
+                    this.GraphicsBindings.GetType(),
+                    this.LanguageBindings.Language));
 
             // Instantiate pointer manager
             if (!(this.graphicsSettings.Panel is UIElement))
@@ -64,28 +73,35 @@ namespace SparkiyEngine.Engine
             this.pointerManager = new PointerManager((UIElement)this.graphicsSettings.Panel, this);
         }
 
+	    public void Play()
+	    {
+	        if (!this.isInitialized)
+                throw new InvalidOperationException("Initialize engine before calling play.");
+
+	        this.GraphicsBindings.Play();
+
+            this.CallStarted();
+	    }
+
+
+
+	    public void Pause()
+	    {
+            this.GraphicsBindings.Pause();
+
+            this.CallStopped();
+	    }
+
 	    public void CallDrawFunction()
 	    {
             // Call touched method if there are any pointers active
 	        if (this.pointerManager.PrimaryPointer != null)
 	        {
 	            if (this.pointerManager.PrimaryPointer.InGameType != InputTypes.NotTracked)
-	                this.LanguageBindings.CallMethod("Touched",
-	                    new MethodDeclarationOverloadDetails()
-	                    {
-	                        Type = MethodTypes.Set,
-	                        Input = new[]
-	                        {
-	                            DataTypes.Number,
-                                DataTypes.Number,
-                                DataTypes.Number
-	                        }
-	                    }, new object[]
-	                    {
-	                        (double)this.pointerManager.PrimaryPointer.InGameType,
-	                        (double)this.pointerManager.PrimaryPointer.X,
-                            (double)this.pointerManager.PrimaryPointer.Y
-	                    });
+	                this.CallTouched(
+                        this.pointerManager.PrimaryPointer.InGameType,
+	                    this.pointerManager.PrimaryPointer.X,
+	                    this.pointerManager.PrimaryPointer.Y);
 
 	            this.pointerManager.PrimaryPointer.UpdateType();
 	        }
@@ -93,7 +109,56 @@ namespace SparkiyEngine.Engine
 	        //if (this.pointerManager.PrimaryPointer.)
 
             // Call use draw method
-            this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+            this.LanguageBindings.CallMethod(null, "Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+	    }
+
+	    private void CallCreated(string script = null)
+	    {
+	        this.CallFunction(script, "Created", MethodTypes.Call);
+	    }
+
+	    private void CallStarted(string script = null)
+	    {
+	        this.CallFunction(script, "Started", MethodTypes.Call);
+	    }
+
+        private void CallTouched(InputTypes type, float x, float y, string script = null)
+	    {
+	        this.CallFunction(script, "Touched", MethodTypes.Set, new Dictionary<DataTypes, object>
+	        {
+	            {DataTypes.Number, (double) type},
+                {DataTypes.Number, (double) x},
+                {DataTypes.Number, (double) y}
+            });
+        }
+
+	    private void CallStopped(string script = null)
+	    {
+	        this.CallFunction(script, "Stopped", MethodTypes.Call);
+	    }
+
+	    private object CallFunction(string script, string name, MethodTypes type, Dictionary<DataTypes, object> inputParameters = null)
+	    {
+	        if (script != null)
+	        {
+                return this.LanguageBindings.CallMethod(script, name,
+                    new MethodDeclarationOverloadDetails()
+                    {
+                        Type = type,
+                        Input = inputParameters?.Keys.ToArray() ?? new DataTypes[0]
+                    },
+                    inputParameters?.Values.ToArray() ?? new object[0]);
+            }
+	        else
+	        {
+	            return this.LanguageBindings.CallMethod(name,
+	                new MethodDeclarationOverloadDetails()
+	                {
+	                    Type = type,
+	                    Input = inputParameters?.Keys.ToArray() ?? new DataTypes[0]
+	                },
+	                inputParameters?.Values.ToArray() ?? new object[0]);
+	        }
 	    }
 
 	    #region Messages

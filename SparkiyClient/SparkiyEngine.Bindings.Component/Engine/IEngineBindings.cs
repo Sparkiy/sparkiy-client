@@ -54,6 +54,21 @@ namespace SparkiyEngine.Bindings.Component.Engine
 
 	    void CallDrawFunction();
 
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
+        void Initialize();
+
+        /// <summary>
+        /// Plays this instance.
+        /// </summary>
+        void Play();
+
+        /// <summary>
+        /// Pauses this instance.
+        /// </summary>
+        void Pause();
+
         #endregion
 
         /// <summary>
@@ -84,5 +99,5 @@ namespace SparkiyEngine.Bindings.Component.Engine
         /// The language bindings.
         /// </value>
         ILanguageBindings LanguageBindings { get; }
-	}
+    }
 }

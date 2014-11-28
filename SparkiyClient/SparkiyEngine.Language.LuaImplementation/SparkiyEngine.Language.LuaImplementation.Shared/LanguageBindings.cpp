@@ -125,3 +125,8 @@ void LanguageBindings::Reset()
 {
 	// NOTE nothing to do here right now...
 }
+
+SupportedLanguages LanguageBindings::Language::get()
+{
+	return SupportedLanguages::Lua;
+}

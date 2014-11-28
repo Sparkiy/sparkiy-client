@@ -94,6 +94,8 @@ namespace SparkiyClient.UILogic.ViewModels
 	    public void AssignEngine(IEngineBindings engineBindings)
 	    {
 	        this.engine = engineBindings;
+	        this.engine.OnMessageCreated += this.EngineOnOnMessageCreated;
+	        this.engine.Initialize();
 	    }
 
 	    private DateTime sinceLastRerun;
@@ -116,31 +118,19 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		private void RunScript()
 		{
-			this.SetupPlayground();
+            this.engine.Pause();
+            this.engine.Reset();
 
-			// Run script
-			this.LoadScript("playground", this.GetPlaygroundCode());
-			this.RunScript("playground");
+            // Run script
+            this.engine.LanguageBindings.LoadScript("playground", this.GetPlaygroundCode());
+            this.engine.LanguageBindings.StartScript("playground");
+
+            this.engine.Play();
 		}
 
 		private string GetPlaygroundCode()
 		{
 			return this.editor.Code;
-		}
-
-		private void LoadScript(string name, string code)
-		{
-			this.engine.LanguageBindings.LoadScript(name, code);
-		}
-
-		private void RunScript(string name)
-		{
-			this.engine.LanguageBindings.StartScript(name);
-		}
-
-		private void SetupPlayground()
-		{
-			this.engine.Reset();
 		}
 
 		private void EngineOnOnMessageCreated(object sender)

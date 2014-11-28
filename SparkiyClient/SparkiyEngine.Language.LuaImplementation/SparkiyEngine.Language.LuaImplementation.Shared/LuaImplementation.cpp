@@ -92,7 +92,7 @@ Object^ LuaImplementation::CallMethod(const char *script, const char *name, Meth
 		{
 			iter->second->CallMethod(name, declaration, paramValues);
 		}
-		return NULL;
+		return nullptr;
 	}
 	else 
 	{

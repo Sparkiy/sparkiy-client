@@ -34,7 +34,17 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.game.Reset();
 		}
 
-		#region Pre2DDraw
+        public void Play()
+        {
+            this.game.Play();
+        }
+
+        public void Pause()
+        {
+            this.game.Pause();
+        }
+
+        #region Pre2DDraw
 
 		/// <summary>
 		/// Occurs before 2D draw is called so that user can fill collection with drawable objects

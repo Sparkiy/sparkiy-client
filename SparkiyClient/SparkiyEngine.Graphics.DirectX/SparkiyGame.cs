@@ -17,6 +17,8 @@ namespace SparkiyEngine.Graphics.DirectX
         private readonly IEngineBindings engine;
 		private GraphicsDeviceManager graphicsDeviceManager;
 
+        private bool isPlaying = false;
+
 		private Color4 backgroundColor;
         
 		// Styles
@@ -86,6 +88,16 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			base.UnloadContent();
 		}
+
+        public void Play()
+        {
+            this.isPlaying = true;
+        }
+
+        public void Pause()
+        {
+            this.isPlaying = false;
+        }
 
 		public void AddTranslate(float x, float y)
 		{
@@ -250,6 +262,8 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		protected override void Draw(GameTime gameTime)
 		{
+		    if (!isPlaying) return;
+
 			base.Draw(gameTime);
 
 			// Clears the screen with the Color.CornflowerBlue
@@ -298,8 +312,9 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		private void StoppedByException(Exception ex)
 		{
-			this.Reset();
-		}
+			this.Pause();
+            this.Reset();
+        }
 
 		#region Surface
 

@@ -160,7 +160,7 @@ Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails
 
 	// Check if function with given name exists
 	if (!LuaScript::FunctionExist(this->m_luaState, name))
-		return NULL;
+		return nullptr;
 
 	// Check if correct number of parameters were passed
 	if (paramValues->Length != declaration->Input->Length)
@@ -170,7 +170,7 @@ Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails
 	if (declaration->Input->Length != 0)
 	{
 		// Cast parameter and push to stack
-		for (int index = 0; index < declaration->Input->Length; index++)
+		for (unsigned int index = 0; index < declaration->Input->Length; index++)
 		{
 			LuaScript::PushLuaStack(this->m_luaState, paramValues[index], declaration->Input[index]);
 		}
@@ -188,7 +188,7 @@ Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails
 	}
 	else 
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 

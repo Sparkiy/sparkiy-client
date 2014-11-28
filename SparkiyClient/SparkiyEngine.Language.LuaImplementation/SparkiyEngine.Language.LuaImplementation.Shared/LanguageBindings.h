@@ -26,6 +26,11 @@ namespace SparkiyEngine_Language_LuaImplementation
 		// Settings
 		virtual void Reset();
 
+		virtual property SparkiyEngine::Bindings::Component::Common::SupportedLanguages Language
+		{
+			SparkiyEngine::Bindings::Component::Common::SupportedLanguages get();
+		};
+
 	internal:
 		LanguageBindings(LuaImplementation ^impl);
 

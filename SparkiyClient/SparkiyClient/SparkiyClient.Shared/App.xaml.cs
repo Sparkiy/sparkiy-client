@@ -251,13 +251,13 @@ namespace SparkiyClient
 			this.container.RegisterType<PlaygroundPageViewModel, PlaygroundPageViewModel>(new ContainerControlledLifetimeManager());
 		}
 
-	    public static IEngineBindings InstantiateEngine(SupportedLanguages codeLanguage, object panel)
+	    public static IEngineBindings InstantiateEngine(object panel)
 	    {
             var engine = new Sparkiy();
             var language = LuaImplementation.Instantiate(engine);
             var graphics = new Renderer(engine);
 
-            engine.AssignBindings(codeLanguage, language.GetLanguageBindings(), graphics);
+            engine.AssignBindings(language.GetLanguageBindings(), graphics);
             engine.AssignPanel(panel);
 
 	        return engine;

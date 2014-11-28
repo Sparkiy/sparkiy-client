@@ -47,7 +47,7 @@ namespace SparkiyClient.Views
 		/// This parameter is typically used to configure the page.</param>
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-		    this.ViewModel.AssignEngine(App.InstantiateEngine(SupportedLanguages.Lua, this.SwapChainPanel));
+		    this.ViewModel.AssignEngine(App.InstantiateEngine(this.SwapChainPanel));
 
 			this.CodeEditor.OnCodeChanged += (sender, args) => 
 				this.ViewModel.AssignCodeEditor(this.CodeEditor);
