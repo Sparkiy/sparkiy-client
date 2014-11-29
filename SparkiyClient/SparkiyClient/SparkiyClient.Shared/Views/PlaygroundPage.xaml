@@ -26,5 +26,6 @@
 		
 		<controls:CodeEditorControl x:Name="CodeEditor" Margin="4" Grid.Column="0" />
 		<SwapChainPanel x:Name="SwapChainPanel" Margin="4 0 0 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" />
+        <controls:MessagesPopupControl x:Name="MessagesPopup" Margin="4 0 0 0" VerticalAlignment="Bottom" Grid.Column="1" />
     </Grid>
 </Page>

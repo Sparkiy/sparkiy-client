@@ -48,9 +48,8 @@ namespace SparkiyClient.Views
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 		    this.ViewModel.AssignEngine(App.InstantiateEngine(this.SwapChainPanel));
-
-			this.CodeEditor.OnCodeChanged += (sender, args) => 
-				this.ViewModel.AssignCodeEditor(this.CodeEditor);
+			this.ViewModel.AssignCodeEditor(this.CodeEditor);
+		    this.ViewModel.AssignMessagesPopup(this.MessagesPopup);
 		}
 
 

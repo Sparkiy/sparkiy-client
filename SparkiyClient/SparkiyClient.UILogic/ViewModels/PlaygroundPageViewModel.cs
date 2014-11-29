@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.Devices.Enumeration;
@@ -26,9 +27,11 @@ namespace SparkiyClient.UILogic.ViewModels
 	{
 		void AssignCodeEditor(ICodeEditor editor);
 	    void AssignEngine(IEngineBindings engineBindings);
+	    void AssignMessagesPopup(IMessagesPopup messagesPopup);
 	}
 
-	public class PlaygroundPageViewModel : ExtendedViewModel, IPlaygroundViewModel
+    [ComVisible(false)]
+    public class PlaygroundPageViewModel : ExtendedViewModel, IPlaygroundViewModel, IDisposable
 	{
 		private readonly INavigationService navigationService;
 		private readonly IAlertMessageService alertMessageService;
@@ -39,6 +42,9 @@ namespace SparkiyClient.UILogic.ViewModels
 		// Code editor
 		private ICodeEditor editor;
 		private Timer editorTimer;
+
+        // Mesages
+        private IMessagesPopup messagesPopup;
 
 		private IEngineBindings engine;
 
@@ -98,7 +104,12 @@ namespace SparkiyClient.UILogic.ViewModels
 	        this.engine.Initialize();
 	    }
 
-	    private DateTime sinceLastRerun;
+        public void AssignMessagesPopup(IMessagesPopup messagesPopup)
+        {
+            this.messagesPopup = messagesPopup;
+        }
+
+        private DateTime sinceLastRerun;
 		private async void EditorCallback(object state)
 		{
 			if (!this.IsAutoRerunEnabled) return;
@@ -131,7 +142,7 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		private void EngineOnOnMessageCreated(object sender)
 		{
-			this.engine.GetMessages().ForEach(msg => System.Diagnostics.Debug.WriteLine(msg.Message));
+			this.engine.GetMessages().ForEach(async msg => await this.messagesPopup.AddTemporaryMessageAsync(msg.Message.Trim()));
 			this.engine.ClearMessages();
 		}
 
@@ -147,5 +158,40 @@ namespace SparkiyClient.UILogic.ViewModels
 			get { return this.GetProperty<bool>(); }
 			private set { this.SetProperty(value); }
 		}
-	}
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this.editorTimer?.Dispose();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources. 
+        // ~PlaygroundPageViewModel() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
 }

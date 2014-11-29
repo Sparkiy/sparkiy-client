@@ -11,12 +11,13 @@ namespace SparkiyEngine.Bindings.Component.Engine
 {
 	public interface IEngineBindings : IBindingsBase
     {
-		#region Messages
+        #region Messages
 
-		/// <summary>
-		/// Occurs when message was created.
-		/// </summary>
-		event EngineMessagingEventHandler OnMessageCreated;
+        /// <summary>
+        /// Occurs when message was created.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
+        event EngineMessagingEventHandler OnMessageCreated;
 
 		/// <summary>
 		/// Adds the message to the list of received messages.

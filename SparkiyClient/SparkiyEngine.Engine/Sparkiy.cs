@@ -248,7 +248,7 @@ namespace SparkiyEngine.Engine
 		/// </summary>
 		public void ClearMessages()
 		{
-			this.messages.Clear();
+		    this.messages.Clear();
 		}
 
 		#endregion

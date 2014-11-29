@@ -72,22 +72,6 @@ void LuaScript::Start()
 	//}
 }
 
-//
-// SetConstant
-//
-void SetConstant(const char *name, Object^ value, DataTypes dataType)
-{
-
-}
-
-// 
-// SetVariable
-//
-void SetVariable(const char *name, Object^ value, DataTypes dataType)
-{
-
-}
-
 // 
 // RegisterFunction
 //

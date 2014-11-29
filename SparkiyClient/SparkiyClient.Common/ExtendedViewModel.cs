@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Practices.Prism.Mvvm;
 
 namespace SparkiyClient.Common
 {
+    [ComVisible(false)]
 	public class ExtendedViewModel : ViewModel
 	{
 		private Dictionary<string, object> propertyValues = new Dictionary<string, object>(); 

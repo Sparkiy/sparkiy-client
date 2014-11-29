@@ -17,7 +17,7 @@ namespace SparkiyEngine.Graphics.DirectX
 	/// <summary>
 	/// Renderer handles Graphics Settings and manages Graphics Bindings implementation
 	/// </summary>
-	public class Renderer : IDisposable, IGraphicsSettings
+	public sealed class Renderer : IDisposable, IGraphicsSettings
 	{
 		private SparkiyGame game;
 

@@ -6,13 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
 namespace SparkiyClient.UILogic.ViewModels
 {
-	public class MainPageViewModel : ViewModel
+    [ComVisible(false)]
+    public class MainPageViewModel : ViewModel
 	{
 		private INavigationService navigationService;
 		private readonly IAlertMessageService alertMessageService;

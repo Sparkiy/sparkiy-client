@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.InteropServices;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
@@ -12,6 +13,7 @@ using SparkiyEngine.Bindings.Component.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
+    [ComVisible(false)]
     public class SparkiyGame : Game
     {
         private readonly IEngineBindings engine;
