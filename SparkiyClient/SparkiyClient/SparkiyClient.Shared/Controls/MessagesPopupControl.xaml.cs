@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,7 +25,27 @@ namespace SparkiyClient.Controls
 {
     public sealed partial class MessagesPopupControl : UserControl, IMessagesPopup
     {
+        private static readonly Brush MessageBackgroundBrushDefault =
+            new SolidColorBrush(new Color() {R = 0x42, G = 0x98, B = 0xED, A = 255});
+
         public ObservableCollection<string> Messages { get; } = new ObservableCollection<string>();
+
+        public Brush MessageBackgroundBrush { get; set; } = MessageBackgroundBrushDefault;
+
+        public Brush ErrorBackgroundBrush { get; set; } = new SolidColorBrush(Colors.OrangeRed);
+
+        public int TemporaryMessageDisplayTime { get; set; } = 5000;
+
+
+        public Brush CurrentBackgroundBrush
+        {
+            get { return (Brush)GetValue(CurrentBackgroundBrushProperty); }
+            set { SetValue(CurrentBackgroundBrushProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentBackgroundBrushProperty =
+            DependencyProperty.Register("CurrentBackgroundBrush", typeof(Brush), typeof(MessagesPopupControl), new PropertyMetadata(MessageBackgroundBrushDefault));
+
 
         public bool IsVisible
         {
@@ -65,7 +86,7 @@ namespace SparkiyClient.Controls
 
         private async void Messages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.IsVisible = this.Messages.Any());
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.IsVisible = this.Messages.Count != 0);
         }
 
         public async Task AddTemporaryMessageAsync(string message)
@@ -73,7 +94,25 @@ namespace SparkiyClient.Controls
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 this.Messages.Add(message);
-                this.RemoveMessageAfter(TimeSpan.FromMilliseconds(3000));
+                this.RemoveMessageAfter(TimeSpan.FromMilliseconds(this.TemporaryMessageDisplayTime));
+            });
+        }
+
+        public async Task AddErrorMessageAsync(string message)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                this.Messages.Add(message);
+                this.CurrentBackgroundBrush = ErrorBackgroundBrush;
+            });
+        }
+
+        public async Task ClearAsync()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                this.Messages.Clear();
+                this.CurrentBackgroundBrush = MessageBackgroundBrush;
             });
         }
 

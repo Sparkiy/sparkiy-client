@@ -226,10 +226,9 @@ namespace SparkiyEngine.Engine
 		/// <param name="message">The message to add.</param>
 		public void AddMessage(EngineMessage message)
 		{
-			this.messages.Add(message);
+		    this.messages.Add(message);
 
-			if (this.OnMessageCreated != null)
-				this.OnMessageCreated(this);
+		    this.OnMessageCreated?.Invoke(this);
 		}
 
 		/// <summary>

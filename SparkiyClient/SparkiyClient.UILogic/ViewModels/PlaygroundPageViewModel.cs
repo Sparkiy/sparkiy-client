@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Devices.Enumeration;
 using Windows.UI.Core;
@@ -109,16 +110,11 @@ namespace SparkiyClient.UILogic.ViewModels
             this.messagesPopup = messagesPopup;
         }
 
-        private DateTime sinceLastRerun;
 		private async void EditorCallback(object state)
 		{
 			if (!this.IsAutoRerunEnabled) return;
 
-            System.Diagnostics.Debug.WriteLine(DateTime.Now - this.sinceLastRerun);
-		    this.sinceLastRerun = DateTime.Now;
-
-			System.Diagnostics.Debug.WriteLine("Script restart triggered by editor");
-			await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, this.RunScript);
+			await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await this.RunScriptAsync());
 		}
 
 		private void RetriggerTimer()
@@ -127,10 +123,11 @@ namespace SparkiyClient.UILogic.ViewModels
 		    this.editorTimer = new Timer(this.EditorCallback, null, TimeSpan.FromMilliseconds(AutoRerunTimeout), TimeSpan.FromMilliseconds(-1));
         }
 
-		private void RunScript()
+		private async Task RunScriptAsync()
 		{
             this.engine.Pause();
             this.engine.Reset();
+		    await this.messagesPopup.ClearAsync();
             this.engine.AddScript("playground", this.GetPlaygroundCode());
             this.engine.Play();
 		}
@@ -142,8 +139,13 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		private void EngineOnOnMessageCreated(object sender)
 		{
-			this.engine.GetMessages().ForEach(async msg => await this.messagesPopup.AddTemporaryMessageAsync(msg.Message.Trim()));
-			this.engine.ClearMessages();
+            this.engine.GetMessages().ForEach(async msg =>
+            {
+                if (msg.Message.StartsWith("Error"))
+                    await this.messagesPopup.AddErrorMessageAsync(msg.Message.Trim());
+                else await this.messagesPopup.AddTemporaryMessageAsync(msg.Message.Trim());
+            });
+            this.engine.ClearMessages();
 		}
 
 

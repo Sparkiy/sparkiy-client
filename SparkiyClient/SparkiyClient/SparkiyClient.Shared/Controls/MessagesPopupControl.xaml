@@ -19,7 +19,7 @@
                 <PopOutThemeAnimation Storyboard.TargetName="ItemsControl" />
             </Storyboard>
         </Grid.Resources>
-        <Border x:Name="ItemsControl" Background="OrangeRed"  Padding="14 8">
+        <Border x:Name="ItemsControl" Background="{Binding CurrentBackgroundBrush}"  Padding="14 8">
             <ItemsControl ItemsSource="{Binding Messages}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
