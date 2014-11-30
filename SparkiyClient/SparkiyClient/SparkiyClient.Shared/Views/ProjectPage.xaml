@@ -1,17 +1,355 @@
-﻿<prism:VisualStateAwarePage
-    x:Class="SparkiyClient.Views.ProjectPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SparkiyClient.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:prism="using:Microsoft.Practices.Prism.StoreApps"
-    xmlns:prismmvvm="using:Microsoft.Practices.Prism.Mvvm"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    prismmvvm:ViewModelLocator.AutoWireViewModel="true">
+﻿<Page x:Name="pageRoot"
+	  x:Class="SparkiyClient.Views.ProjectPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:local="using:SparkiyClient.Views"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  mc:Ignorable="d"
+	  RequestedTheme="Light"
+	  DataContext="{Binding ElementName=pageRoot, Path=DefaultViewModel}">
+	
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        
+        <Hub>
+			<Hub.Header>
+				<!-- Back button and page title -->
+				<Grid Grid.Row="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="81"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Button Margin="0,0,39,0" 
+							Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+							Style="{StaticResource NavigationBackButtonNormalStyle}"
+							VerticalAlignment="Top"/>
+					<TextBlock Text="{Binding Title}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+							   IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+				</Grid>
+			</Hub.Header>
 
-    <Grid>
+			<!--
+				General
+			-->
+			<HubSection>
+				<DataTemplate>
+					<Grid Width="480">
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						
+						<!-- Rating -->
+						<!-- TODO -->
+						
+						<!-- Description -->
+						<StackPanel Orientation="Vertical">
+							<TextBlock Text="Description" 
+									   Style="{StaticResource SubtitleTextBlockStyle}" 
+									   FontWeight="Bold" />
+							<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,12">
+								<Grid>
+									<TextBlock Text="{Binding Description}" Foreground="#333333" Style="{StaticResource BodyTextBlockStyle}"
+											   VerticalAlignment="Center"
+											   Visibility="{Binding IsViewMode, Converter={StaticResource BooleanToVisibilityConverter}}" />
+									<TextBox Text="{Binding Description, Mode=TwoWay}" 
+											 Visibility="{Binding IsEditMode, Converter={StaticResource BooleanToVisibilityConverter}}" AcceptsReturn="True" />
+								</Grid>
+							</ScrollViewer>
+						</StackPanel>
+						
+						<!-- Author -->
+						<Grid Grid.Row="1">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+							<TextBlock Text="Author" 
+									   Style="{StaticResource SubtitleTextBlockStyle}"
+									   FontWeight="Bold"
+									   Margin="0,8,8,8" Width="80"
+									   VerticalAlignment="Center" />
+							<TextBlock Text="{Binding Author}" 
+									   Style="{StaticResource SubtitleTextBlockStyle}"
+									   Margin="8" Foreground="#666666" Grid.Column="1"
+									   Visibility="{Binding IsViewMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+							<TextBox Text="{Binding Author, Mode=TwoWay}" Margin="8" Grid.Column="1"
+									 Visibility="{Binding IsEditMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+						</Grid>
 
+						<!-- Category -->
+						<Grid Grid.Row="2">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+							<TextBlock Text="Category" 
+									   Style="{StaticResource SubtitleTextBlockStyle}"
+									   FontWeight="Bold"
+									   Margin="0,8,8,8" Width="80"
+									   VerticalAlignment="Center" />
+							<TextBlock Text="{Binding Category}" 
+									   Style="{StaticResource SubtitleTextBlockStyle}"
+									   Margin="8" Foreground="#666666" Grid.Column="1"
+									   Visibility="{Binding IsViewMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+							<TextBox Text="{Binding Category, Mode=TwoWay}" Margin="8" Grid.Column="1"
+									 Visibility="{Binding IsEditMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+						</Grid>
+						
+					</Grid>
+				</DataTemplate>
+			</HubSection>
+			
+			<!-- 
+				Screenshots
+			-->
+			<HubSection>
+				<DataTemplate>
+					<Grid Width="720" Margin="0,4,14,0">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						
+						<!-- Image -->
+						<Border Background="{StaticResource AccentColorBrush}" MinHeight="405" Grid.Column="1">
+							<FlipView ItemsSource="{Binding Images}" 
+									  SelectedValue="{Binding SelectedImage, Mode=TwoWay}">
+								<FlipView.ItemsPanel>
+									<ItemsPanelTemplate>
+										<StackPanel Orientation="Horizontal" />
+									</ItemsPanelTemplate>
+								</FlipView.ItemsPanel>
+								<FlipView.ItemTemplate>
+									<DataTemplate>
+										<Image Source="{Binding}" Height="405" />
+									</DataTemplate>
+								</FlipView.ItemTemplate>
+							</FlipView>
+						</Border>
+						
+						<!-- No images message -->
+						<Grid Visibility="{Binding NoImagesAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1">
+							<Path Data="M31.478432,15.239C36.687607,15.239 40.906941,19.457997 40.906941,24.661992 40.906941,29.865988 36.687607,34.085986 31.478432,34.085986 26.279251,34.085986 22.059918,29.865988 22.059918,24.661992 22.059918,19.457997 26.279251,15.239 31.478432,15.239z M31.425879,9.8389888C23.416933,9.8389888 16.88777,16.362975 16.88777,24.379973 16.88777,32.394988 23.416933,38.916991 31.425879,38.916991 39.444832,38.916991 45.963986,32.394988 45.963986,24.379973 45.963986,16.362975 39.444832,9.8389888 31.425879,9.8389888z M43.904202,0C45.124008,-2.9131115E-08,46.113869,0.98797598,46.113869,2.205993L46.113869,4.8519898C46.113869,4.9059749,46.103981,4.9589839,46.103981,5.013L49.523449,5.013C51.613137,5.013,53.333,6.7279964,53.333,8.8219905L53.333,39.297972C53.333,41.392973,51.613137,43.108,49.523449,43.108L3.8095522,43.108C1.7198642,43.108,0,41.392973,0,39.297972L0,8.8219905C0,6.7279964,1.7198642,5.013,3.8095522,5.013L5.6292574,5.013C5.6192486,4.9459834,5.6192486,4.8799739,5.6192486,4.8109741L5.6192486,3.6089783C5.6192486,1.836975,7.0491121,0.40100091,8.8188965,0.40100085L22.057127,0.40100085C23.826912,0.40100091,25.266663,1.836975,25.266663,3.6089783L25.266663,4.8109741C25.266663,4.8799739,25.256653,4.9459834,25.246645,5.013L41.71455,5.013C41.70454,4.9589839,41.70454,4.9059749,41.70454,4.8519898L41.70454,2.205993C41.70454,1.8799743,41.774479,1.5699767,41.904465,1.2909849L41.904465,1.2019956 41.9445,1.2019956C42.314446,0.48999017,43.054337,-2.9131115E-08,43.904202,0z"
+									  Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
+							<TextBlock Text="No images available" 
+									   FontSize="16" FontWeight="Light" Foreground="White"
+									   VerticalAlignment="Center" HorizontalAlignment="Center"
+									   Margin="0,90,0,0" />
+						</Grid>
+						
+						<!-- Image scroller -->
+						<ListBox ItemsSource="{Binding Images}" 
+								 SelectedValue="{Binding SelectedImage, Mode=TwoWay}"
+								 BorderThickness="0" 
+								 Margin="0,-10,0,0"
+								 SelectionMode="Single"
+								 VerticalAlignment="Top" Grid.Column="0">
+							<ListBox.ItemContainerStyle>
+								<!-- Default style for Windows.UI.Xaml.Controls.ListBoxItem -->
+								<Style TargetType="ListBoxItem">
+									<Setter Property="Background" Value="Transparent" />
+									<Setter Property="TabNavigation" Value="Local" />
+									<Setter Property="Padding" Value="8,10" />
+									<Setter Property="HorizontalContentAlignment" Value="Left" />
+									<Setter Property="Template">
+										<Setter.Value>
+											<ControlTemplate TargetType="ListBoxItem">
+												<Border x:Name="LayoutRoot"
+														Background="{TemplateBinding Background}"
+														BorderBrush="{TemplateBinding BorderBrush}"
+														BorderThickness="{TemplateBinding BorderThickness}">
+													<VisualStateManager.VisualStateGroups>
+														<VisualStateGroup x:Name="CommonStates">
+															<VisualState x:Name="Normal" />
+															<!--<VisualState x:Name="PointerOver">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
+                                                                   Storyboard.TargetProperty="Background">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPointerOverForegroundThemeBrush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>-->
+															<VisualState x:Name="Disabled">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
+                                                                   Storyboard.TargetProperty="Background">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemDisabledForegroundThemeBrush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<!--<VisualState x:Name="Pressed">
+																<Storyboard>
+																	<DoubleAnimation Storyboard.TargetName="PressedBackground"
+																					 Storyboard.TargetProperty="Opacity"
+																					 To="1"
+																					 Duration="0" />
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPressedForegroundThemeBrush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>-->
+														</VisualStateGroup>
+														<VisualStateGroup x:Name="SelectionStates">
+															<VisualState x:Name="Unselected" />
+															<VisualState x:Name="Selected">
+																<Storyboard>
+																	<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
+																								   Storyboard.TargetProperty="Background">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentColorLighter80Brush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+																									Storyboard.TargetProperty="Foreground">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentColorLighter80Brush}" />
+																	</ObjectAnimationUsingKeyFrames>-->
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectedVisualWhite"
+																								   Storyboard.TargetProperty="Opacity">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="0.4" />
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="SelectedUnfocused">
+																<Storyboard>
+																	<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
+																									Storyboard.TargetProperty="Background">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentColorLighter80Brush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+																								   Storyboard.TargetProperty="Foreground">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentColorLighter80Brush}" />
+																	</ObjectAnimationUsingKeyFrames>-->
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectedVisualWhite"
+																								   Storyboard.TargetProperty="Opacity">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="0.4" />
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="SelectedDisabled">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
+                                                                   Storyboard.TargetProperty="Background">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemSelectedDisabledBackgroundThemeBrush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemSelectedDisabledForegroundThemeBrush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="SelectedPointerOver">
+																<Storyboard>
+																	<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
+                                                                   Storyboard.TargetProperty="Background">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentColorLighter70Brush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentColorLighter80Brush}" />
+																	</ObjectAnimationUsingKeyFrames>-->
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectedVisualWhite"
+																								   Storyboard.TargetProperty="Opacity">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="0.3" />
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="SelectedPressed">
+																<Storyboard>
+																	<!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
+                                                                   Storyboard.TargetProperty="Background">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentColorLighter80Brush}" />
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentColorLighter80Brush}" />
+																	</ObjectAnimationUsingKeyFrames>-->
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectedVisualWhite"
+																								   Storyboard.TargetProperty="Opacity">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="0.4" />
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+														</VisualStateGroup>
+														<VisualStateGroup x:Name="FocusStates">
+															<VisualState x:Name="Focused">
+																<Storyboard>
+																	<DoubleAnimation Storyboard.TargetName="FocusVisualWhite"
+																					 Storyboard.TargetProperty="Opacity"
+																					 To="1"
+																					 Duration="0" />
+																	<DoubleAnimation Storyboard.TargetName="FocusVisualBlack"
+																					 Storyboard.TargetProperty="Opacity"
+																					 To="1"
+																					 Duration="0" />
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="Unfocused" />
+															<VisualState x:Name="PointerFocused" />
+														</VisualStateGroup>
+													</VisualStateManager.VisualStateGroups>
+													<Grid x:Name="InnerGrid"
+														  Background="Transparent">
+														<Rectangle x:Name="PressedBackground"
+																   Fill="{ThemeResource ListBoxItemPressedBackgroundThemeBrush}"
+																   Opacity="0" />
+														<ContentPresenter x:Name="ContentPresenter"
+																		  Content="{TemplateBinding Content}"
+																		  ContentTransitions="{TemplateBinding ContentTransitions}"
+																		  ContentTemplate="{TemplateBinding ContentTemplate}"
+																		  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+																		  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+																		  Margin="{TemplateBinding Padding}" />
+														<Rectangle x:Name="FocusVisualWhite"
+																   Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}"
+																   StrokeEndLineCap="Square"
+																   StrokeDashArray="1,1"
+																   Opacity="0"
+																   StrokeDashOffset=".5" />
+														<Rectangle x:Name="FocusVisualBlack"
+																   Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}"
+																   StrokeEndLineCap="Square"
+																   StrokeDashArray="1,1"
+																   Opacity="0"
+																   StrokeDashOffset="1.5" />
+														<Rectangle x:Name="SelectedVisualWhite"
+																   StrokeThickness="0"
+																   Fill="White"
+																   Opacity="0" />
+													</Grid>
+												</Border>
+											</ControlTemplate>
+										</Setter.Value>
+									</Setter>
+								</Style>
+							</ListBox.ItemContainerStyle>
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<Border Width="71" Height="40"
+											Background="{StaticResource AccentColorBrush}">
+										<Image Source="{Binding}" 
+											   Stretch="Uniform" />
+									</Border>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+					</Grid>
+				</DataTemplate>
+			</HubSection>
+		</Hub>
     </Grid>
-</prism:VisualStateAwarePage>
+</Page>

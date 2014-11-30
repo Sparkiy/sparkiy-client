@@ -5,22 +5,13 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.Devices.Enumeration;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.Mvvm.Interfaces;
-using Microsoft.Practices.Prism.StoreApps.Interfaces;
+using GalaSoft.MvvmLight.Views;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Services;
 using SparkiyEngine.Bindings.Component.Engine;
-using SparkiyEngine.Bindings.Component.Graphics;
-using SparkiyEngine.Bindings.Component.Language;
-using SparkiyEngine.Engine;
-using SparkiyEngine.Graphics.DirectX;
 
 namespace SparkiyClient.UILogic.ViewModels
 {
@@ -36,7 +27,6 @@ namespace SparkiyClient.UILogic.ViewModels
 	{
 		private readonly INavigationService navigationService;
 		private readonly IAlertMessageService alertMessageService;
-		private readonly IResourceLoader resourceLoader;
 
 		private const int AutoRerunTimeout = 2000;
 
@@ -52,42 +42,10 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		public PlaygroundPageViewModel(
 			INavigationService navigationService, 
-			IAlertMessageService alertMessageService,
-			IResourceLoader resourceLoader)
+			IAlertMessageService alertMessageService)
 		{
 			this.navigationService = navigationService;
 			this.alertMessageService = alertMessageService;
-			this.resourceLoader = resourceLoader;
-		}
-
-
-		public async override void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
-		{
-			string errorMessage = string.Empty;
-			//ICollection<SOME_MODEL> rootCategories = null;
-			try
-			{
-				// TODO Retrieve models here
-			}
-			catch (Exception ex)
-			{
-				errorMessage = string.Format(CultureInfo.CurrentCulture,
-					this.resourceLoader.GetString("GeneralServiceErrorMessage"),
-					Environment.NewLine, ex.Message);
-			}
-			finally
-			{
-				this.LoadingData = false;
-			}
-
-			if (!String.IsNullOrWhiteSpace(errorMessage))
-			{
-				await this.alertMessageService.ShowAsync(errorMessage, this.resourceLoader.GetString("ErrorServiceUnreachable"));
-				return;
-			}
-
-
-			// TODO Fill view model with models
 		}
 
 
@@ -137,14 +95,14 @@ namespace SparkiyClient.UILogic.ViewModels
 			return this.editor.Code;
 		}
 
-		private void EngineOnOnMessageCreated(object sender)
+		private async void EngineOnOnMessageCreated(object sender)
 		{
-            this.engine.GetMessages().ForEach(async msg =>
-            {
-                if (msg.Message.StartsWith("Error"))
-                    await this.messagesPopup.AddErrorMessageAsync(msg.Message.Trim());
-                else await this.messagesPopup.AddTemporaryMessageAsync(msg.Message.Trim());
-            });
+			foreach (var msg in this.engine.GetMessages())
+			{
+				if (msg.Message.StartsWith("Error"))
+					await this.messagesPopup.AddErrorMessageAsync(msg.Message.Trim());
+				else await this.messagesPopup.AddTemporaryMessageAsync(msg.Message.Trim());
+			}
             this.engine.ClearMessages();
 		}
 

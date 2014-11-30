@@ -1,8 +1,4 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.Mvvm.Interfaces;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.StoreApps.Interfaces;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using SparkiyClient.Services;
 using SparkiyClient.UILogic.Services;
 using System;
@@ -17,6 +13,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,6 +23,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using GalaSoft.MvvmLight.Threading;
 using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
@@ -42,13 +40,14 @@ using MetroLog;
 using MetroLog.Targets;
 using MetroLog.Layouts;
 using MetroLog.Internal;
+using SparkiyClient.Views;
 
 namespace SparkiyClient
 {
 	/// <summary>
 	/// Provides application-specific behavior to supplement the default Application class.
 	/// </summary>
-	public sealed partial class App : Microsoft.Practices.Prism.Mvvm.MvvmAppBase, IDisposable
+	public sealed partial class App : Application, IDisposable
 	{
 		private static readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<App>();
 		private readonly IUnityContainer container = null;
@@ -63,7 +62,7 @@ namespace SparkiyClient
 		public App()
 		{
 			this.InitializeComponent();
-			this.RequestedTheme = ApplicationTheme.Light;
+			this.Suspending += OnSuspending;
 
 			// Create container and register itself
 			this.container = new UnityContainer();
@@ -84,11 +83,6 @@ namespace SparkiyClient
 				this.OnUnhandledRegistrationException(ex);
 			}
 
-			// Debug logging option
-#if DEBUG
-			LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Trace, LogLevel.Fatal, new DebugTarget());
-#endif
-
 			// Configure crach handling
 			GlobalCrashHandler.Configure();
 			log.Debug("Global crash handler configured.");
@@ -96,72 +90,91 @@ namespace SparkiyClient
 
 		/// <summary>
 		/// Invoked when the application is launched normally by the end user.  Other entry points
-		/// will be used when the application is launched to open a specific file, to display
-		/// search results, and so forth.
+		/// will be used such as when the application is launched to open a specific file.
 		/// </summary>
 		/// <param name="e">Details about the launch request and process.</param>
-		protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
+		protected async override void OnLaunched(LaunchActivatedEventArgs e)
 		{
-			// Navigate to the initial page
-			log.Debug("Navigating to Playground page");
-			this.NavigationService.Navigate("Playground", null);
+			Frame rootFrame = Window.Current.Content as Frame;
 
-			// Ensure the current window is active
-			Window.Current.Activate();
-			return Task.FromResult<object>(null);
-		}
+			// Do not repeat app initialization when the Window already has content,
+			// just ensure that the window is active
+			if (rootFrame == null)
+			{
+				// Create a Frame to act as the navigation context and navigate to the first page
+				rootFrame = new Frame();
+				// Set the default language
+				rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
 
-		protected override void OnRegisterKnownTypesForSerialization()
-		{
-			// Set up the list of known types for the SuspensionManager
-			//SessionStateService.RegisterKnownType(typeof(SOME_MODEL));
-		}
+				rootFrame.NavigationFailed += OnNavigationFailed;
 
-		protected override Task OnInitializeAsync(IActivatedEventArgs args)
-		{
+				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+				{
+					//TODO: Load state from previously suspended application
+				}
+
+				// Place the frame in the current Window
+				Window.Current.Content = rootFrame;
+			}
+
+			// Initialize navigation helper
+			DispatcherHelper.Initialize();
+
+			// Initialize container
 			try
 			{
-				// Allow the implementing class the opportunity to
-				// register types. DO not allow exceptions to abort
-				// the initialization process.
-				try
-				{
-					this.OnContainerRegistration((UnityContainer)this.container);
-				}
-				catch (Exception ex)
-				{
-					this.OnUnhandledRegistrationException(ex);
-				}
-
-				// Set the ViewModel Locator service to resolve View to ViewModel Types
-				SparkiyClient.Common.ViewModelLocator.SetDefaultViewTypeToViewModelTypeResolver(ResolveViewViewModelConnection);
-
-				// Set the ViewModel Locator service to use the Unity Container
-				SparkiyClient.Common.ViewModelLocator.SetDefaultViewModelFactory((viewModelType) =>
-				{
-					return ServiceLocator.Current.GetInstance(viewModelType);
-				});
+				this.OnContainerRegistration((UnityContainer)this.container);
 			}
-			finally
+			catch (Exception ex)
 			{
-				this.OnApplicationInitialize(args);
+				this.OnUnhandledRegistrationException(ex);
 			}
 
-			return base.OnInitializeAsync(args);
+			// Set the ViewModel Locator service to resolve View to ViewModel Types
+			SparkiyClient.Common.ViewModelLocator.SetDefaultViewTypeToViewModelTypeResolver(ResolveViewViewModelConnection);
+
+			// Set the ViewModel Locator service to use the Unity Container
+			SparkiyClient.Common.ViewModelLocator.SetDefaultViewModelFactory((viewModelType) =>
+			{
+				return ServiceLocator.Current.GetInstance(viewModelType);
+			});
+
+			// Navigate to home page
+			if (rootFrame.Content == null)
+			{
+				// When the navigation stack isn't restored navigate to the first page,
+				// configuring the new page by passing required information as a navigation
+				// parameter
+				rootFrame.Navigate(typeof(MainPage), e.Arguments);
+			}
+			// Ensure the current window is active
+			Window.Current.Activate();
 		}
 
 		/// <summary>
-		/// Override this method with the initialization logic of your application. Here you can initialize 
-		/// services, repositories, and so on.
+		/// Invoked when Navigation to a certain page fails
 		/// </summary>
-		/// <param name="args">The <see cref="IActivatedEventArgs"/> instance containing the event data.</param>
-		private void OnApplicationInitialize(IActivatedEventArgs args)
+		/// <param name="sender">The Frame which failed navigation</param>
+		/// <param name="e">Details about the navigation failure</param>
+		void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
 		{
-			// TODO Implement Live Tiles
-			// Documentation on working with tiles can be found at http://go.microsoft.com/fwlink/?LinkID=288821&clcid=0x409
-			//tileUpdater = TileUpdateManager.CreateTileUpdaterForApplication();
-			//tileUpdater.StartPeriodicUpdate(new Uri(Constants.ServerAddress + "/api/TileNotification"), PeriodicUpdateRecurrence.HalfHour);
+			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 		}
+
+		/// <summary>
+		/// Invoked when application execution is being suspended.  Application state is saved
+		/// without knowing whether the application will be terminated or resumed with the contents
+		/// of memory still intact.
+		/// </summary>
+		/// <param name="sender">The source of the suspend request.</param>
+		/// <param name="e">Details about the suspend request.</param>
+		private void OnSuspending(object sender, SuspendingEventArgs e)
+		{
+			var deferral = e.SuspendingOperation.GetDeferral();
+			//TODO: Save application state and stop any background activity
+			deferral.Complete();
+		}
+
 
 		private static Type ResolveViewViewModelConnection(Type viewType)
 		{
@@ -183,48 +196,6 @@ namespace SparkiyClient
 			return viewModelType;
 		}
 
-#if WINDOWS_APP
-		protected override IList<SettingsCommand> GetSettingsCommands()
-		{
-			var settingsCommands = new List<SettingsCommand>();
-
-			//var accountService = _container.Resolve<IAccountService>();
-			//var resourceLoader = _container.Resolve<IResourceLoader>();
-			//var eventAggregator = _container.Resolve<IEventAggregator>();
-
-			//if (accountService.SignedInUser == null)
-			//{
-			//	settingsCommands.Add(new SettingsCommand(Guid.NewGuid().ToString(), resourceLoader.GetString("LoginText"), (c) => new SignInFlyout(eventAggregator).Show()));
-			//}
-			//else
-			//{
-			//	settingsCommands.Add(new SettingsCommand(Guid.NewGuid().ToString(), resourceLoader.GetString("LogoutText"), (c) => new SignOutFlyout().Show()));
-			//	settingsCommands.Add(new SettingsCommand(Guid.NewGuid().ToString(), resourceLoader.GetString("AddShippingAddressTitle"), (c) => NavigationService.Navigate("ShippingAddress", null)));
-			//	settingsCommands.Add(new SettingsCommand(Guid.NewGuid().ToString(), resourceLoader.GetString("AddBillingAddressTitle"), (c) => NavigationService.Navigate("BillingAddress", null)));
-			//	settingsCommands.Add(new SettingsCommand(Guid.NewGuid().ToString(), resourceLoader.GetString("AddPaymentMethodTitle"), (c) => NavigationService.Navigate("PaymentMethod", null)));
-			//	settingsCommands.Add(new SettingsCommand(Guid.NewGuid().ToString(), resourceLoader.GetString("ChangeDefaults"), (c) => new ChangeDefaultsFlyout().Show()));
-			//}
-			//settingsCommands.Add(new SettingsCommand(Guid.NewGuid().ToString(), resourceLoader.GetString("PrivacyPolicy"), async (c) => await Launcher.LaunchUriAsync(new Uri(resourceLoader.GetString("PrivacyPolicyUrl")))));
-			//settingsCommands.Add(new SettingsCommand(Guid.NewGuid().ToString(), resourceLoader.GetString("Help"), async (c) => await Launcher.LaunchUriAsync(new Uri(resourceLoader.GetString("HelpUrl")))));
-
-			return settingsCommands;
-		}
-#endif
-
-		/// <summary>
-		/// Implements and seals the Resolves method to be handled by the Unity Container.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <returns>A concrete instance of the specified type.</returns>
-		protected sealed override object Resolve(Type type)
-		{
-			// 
-			// Use the container to resolve types (e.g. ViewModels and Flyouts)
-			// so their dependencies get injected
-			// 
-			return ServiceLocator.Current.GetInstance<IUnityContainer>().Resolve(type);
-		}
-
 		/// <summary>
 		/// Override this method with code to initialize your container. This method will contain calls
 		/// to the Unity container's RegisterType and RegisterInstance methods for example.
@@ -234,14 +205,8 @@ namespace SparkiyClient
 		{
 			log.Debug("Filling Container...");
 
-			// Instantiate ResourceLoader
-			var resourceLoader = new Microsoft.Practices.Prism.StoreApps.ResourceLoaderAdapter(new ResourceLoader());
-
 			// Register instances
 			this.container.RegisterInstance<IUnityContainer>(this.container);
-			this.container.RegisterInstance<INavigationService>(this.NavigationService);
-			this.container.RegisterInstance<ISessionStateService>(this.SessionStateService);
-			this.container.RegisterInstance<IResourceLoader>(resourceLoader);
 
 			// Register services
 			this.container.RegisterType<IAlertMessageService, AlertMessageService>(new ContainerControlledLifetimeManager());
@@ -288,10 +253,7 @@ namespace SparkiyClient
 		/// Get an reference to the current Application instance
 		/// as an MvvmAppBase object.
 		/// </summary>
-		public static new MvvmAppBase Current
-		{
-			get { return (MvvmAppBase)Application.Current; }
-		}
+		public static new App Current => (App)Application.Current;
 
 		/// <summary>
 		/// Get the IoC Unity Container 
