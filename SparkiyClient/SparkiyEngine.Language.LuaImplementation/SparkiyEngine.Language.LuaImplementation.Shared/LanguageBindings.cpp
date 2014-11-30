@@ -123,7 +123,7 @@ void LanguageBindings::StartScript(String ^id)
 //
 void LanguageBindings::Reset()
 {
-	// NOTE nothing to do here right now...
+	this->m_luaImpl->Reset();
 }
 
 SupportedLanguages LanguageBindings::Language::get()

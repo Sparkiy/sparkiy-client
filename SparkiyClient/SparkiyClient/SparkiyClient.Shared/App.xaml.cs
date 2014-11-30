@@ -249,7 +249,8 @@ namespace SparkiyClient
 			// Register ViewModels as Singeltons
 			this.container.RegisterType<MainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<PlaygroundPageViewModel, PlaygroundPageViewModel>(new ContainerControlledLifetimeManager());
-		}
+            this.container.RegisterType<ProjectPageViewModel, ProjectPageViewModel>(new ContainerControlledLifetimeManager());
+        }
 
 	    public static IEngineBindings InstantiateEngine(object panel)
 	    {

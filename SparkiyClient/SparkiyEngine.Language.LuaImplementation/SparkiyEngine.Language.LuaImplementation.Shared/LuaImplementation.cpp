@@ -124,3 +124,16 @@ void LuaImplementation::SetVariable(const char *name, Object^ value, DataTypes d
 		iter->second->SetVariable(name, value, dataType);
 	}
 }
+
+//
+// Reset
+//
+void LuaImplementation::Reset() 
+{
+	for (std::map<const char *, LuaScript *, StrCompare>::iterator iter = this->m_scripts.begin(); iter != this->m_scripts.end(); ++iter)
+	{
+		delete(iter->second);
+	}
+
+	this->m_scripts.clear();
+}

@@ -29,6 +29,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 
 		std::map<const char *, SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^, StrCompare>				 m_declarations;
 
+		void Reset();
+
 	private:
 		void Initialize();
 

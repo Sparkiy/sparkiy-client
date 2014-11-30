@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
+using SharpDX.DXGI;
 using SharpDX.Toolkit;
 using SharpDX.Toolkit.Direct2D;
 using SparkiyEngine.Bindings.Component.Common;

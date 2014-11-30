@@ -45,6 +45,7 @@
     <Compile Include="Services\IAlertMessageService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlaygroundPageViewModel.cs" />
+    <Compile Include="ViewModels\ProjectPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-US\Resources.resw" />
