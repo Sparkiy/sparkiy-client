@@ -28,7 +28,13 @@ namespace SparkiyClient.UILogic.ViewModels
         }
 
 
-        public bool LoadingData
+	    public bool IsEditMode
+	    {
+		    get { return this.GetProperty<bool>(); }
+			set { this.SetProperty(value); }
+	    }
+
+		public bool LoadingData
         {
             get { return this.GetProperty<bool>(); }
             private set { this.SetProperty(value); }

@@ -12,28 +12,29 @@ namespace SparkiyClient.Converters
 	/// </summary>
 	public class BooleanToVisibilityConverter : IValueConverter
 	{
-		//Set to true if you want to show control when boolean value is true
-		//Set to false if you want to hide/collapse control when value is true
-		private bool triggerValue = false;
-		public bool TriggerValue
-		{
-			get { return triggerValue; }
-			set { triggerValue = value; }
-		}
-		//Set to true if you just want to hide the control
-		//else set to false if you want to collapse the control
-		private bool isHidden;
-		public bool IsHidden
-		{
-			get { return isHidden; }
-			set { isHidden = value; }
-		}
+		/// <summary>
+		/// Set to true if you want to show control when boolean value is true. Set to false if you want to hide/collapse control when value is true
+		/// </summary>
+		public bool TriggerValue { get; set; } = false;
+
+		/// <summary>
+		/// Set to true if you just want to hide the control else set to false if you want to collapse the control
+		/// </summary>
+		public bool IsHidden { get; set; }
+
+		/// <summary>
+		/// Set to true if you want result to be inverted.
+		/// </summary>
+		public bool IsNegated { get; set; }
 
 		private object GetVisibility(object value)
 		{
 			if (!(value is bool))
 				return DependencyProperty.UnsetValue;
 			bool objValue = (bool)value;
+			if (this.IsNegated)
+				objValue = !objValue;
+
 			if ((objValue && TriggerValue && IsHidden) || (!objValue && !TriggerValue && IsHidden))
 			{
 				return Visibility.Collapsed;

@@ -5,5 +5,8 @@
 			 xmlns:converters="using:SparkiyClient.Converters">
 	<Application.Resources>
 		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+		<converters:BooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter" IsNegated="True" />
+		
+		<SolidColorBrush x:Key="AccentColorBrush" Color="Red" />		
 	</Application.Resources>
 </Application>

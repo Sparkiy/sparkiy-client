@@ -14,12 +14,9 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 
 ## Third-party tools and code
 ### Libraries
-- [Prism.MVVM](https://pnpmvvm.codeplex.com/)
-- [Prism.PubSubEvents](http://pnppubsub.codeplex.com/)
-- [Prism.StoreApps](http://prismwindowsruntime.codeplex.com/)
-- [CommonServiceLocator](http://commonservicelocator.codeplex.com/)
+- [MVVMLight](http://www.mvvmlight.net)
+- [Nito AsyncEx](https://github.com/StephenCleary/AsyncEx)
 - [Unity](http://unity.codeplex.com/)
-- [Prism.Unity.Bootstrapper](http://unityapp.codeplex.com)
 - [Lua](http://lua.org/) (_Version 5.2.3_)
 - [SharpDX](http://sharpdx.org/)
     - SharpDX.Direct2D1
@@ -31,3 +28,4 @@ Sparkiy is fully-featured platform for game and application development. Touch f
     - SharpDX.Toolkit.Input
     - [SharpDX.Toolkit.Direct2D](https://github.com/Sparkiy/SharpDX.Toolkit.Game.Direct2D) (_external_)
 - [Fluent Assertions](https://github.com/dennisdoomen/fluentassertions)
+- [MetroLog](https://github.com/mbrit/MetroLog)
