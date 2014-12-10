@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight;
 
 namespace SparkiyClient.Common
 {
     [ComVisible(false)]
-	public class ExtendedViewModel : ViewModelBase, IPropertyManagerImplementer, INotifyPropertyChangedTrigger
-    {
+	public class ExtendedViewModel : ViewModelBase, IPropertyManagerImplementer, INotifyPropertyChangedTrigger, INavigationHandling
+	{
 	    private readonly PropertyManager propertyManager;
 
 
@@ -19,7 +21,7 @@ namespace SparkiyClient.Common
 		}
 
 
-		public void SetProperty<T>(T value = default(T), string propertyName = "")
+		public void SetProperty<T>(T value = default(T), [CallerMemberName] string propertyName = "")
 		{
 			// ReSharper disable once ExplicitCallerInfoArgument
 			this.propertyManager.SetProperty(value, propertyName);
@@ -36,10 +38,18 @@ namespace SparkiyClient.Common
 			// ReSharper disable once ExplicitCallerInfoArgument
 			base.RaisePropertyChanged(propertyName);
 		}
+
+	    public virtual void OnNavigatedTo(NavigationEventArgs e)
+	    {
+	    }
+
+	    public virtual void OnNavigatedFrom(NavigationEventArgs e)
+	    {
+	    }
 	}
 
 	[ComVisible(false)]
-	public class ExtendedObservableObject : ObservableObject, IPropertyManagerImplementer, INotifyPropertyChangedTrigger
+	public class ExtendedObservableObject : ObservableObject, IPropertyManagerImplementer, INotifyPropertyChangedTrigger, IPropertyDirtyManager
 	{
 		private readonly PropertyManager propertyManager;
 
@@ -50,7 +60,7 @@ namespace SparkiyClient.Common
 		}
 
 
-		public void SetProperty<T>(T value = default(T), string propertyName = "")
+		public void SetProperty<T>(T value = default(T), [CallerMemberName] string propertyName = "")
 		{
 			// ReSharper disable once ExplicitCallerInfoArgument
 			this.propertyManager.SetProperty(value, propertyName);
@@ -67,6 +77,21 @@ namespace SparkiyClient.Common
 			// ReSharper disable once ExplicitCallerInfoArgument
 			base.RaisePropertyChanged(propertyName);
 		}
+
+		public bool IsDirty => this.propertyManager.IsDirty;
+
+		public void MarkAsClean()
+		{
+			this.propertyManager.MarkAsClean();
+		}
+	}
+
+	[ComVisible(false)]
+	internal interface INavigationHandling
+	{
+		void OnNavigatedTo(NavigationEventArgs e);
+
+		void OnNavigatedFrom(NavigationEventArgs e);
 	}
 
 	[ComVisible(false)]

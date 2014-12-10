@@ -44,7 +44,6 @@
     <Compile Include="Controls\IMessagesPopup.cs" />
     <Compile Include="ExtendedViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight">

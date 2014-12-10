@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.UILogic.ViewModels;
 using SparkiyEngine.Engine;
 using SparkiyEngine.Graphics.DirectX;
@@ -34,7 +35,6 @@ namespace SparkiyClient.Views
 		/// </summary>
         public PlaygroundPage()
         {
-			this.DataContext = ViewModelLocator.GetViewModel(this.GetType());
 			this.InitializeComponent();
         }
 
@@ -51,9 +51,6 @@ namespace SparkiyClient.Views
 		}
 
 
-        private IPlaygroundViewModel ViewModel
-	    {
-			get { return this.DataContext as IPlaygroundViewModel; }
-	    }
-	}
+        public IPlaygroundPageViewModel ViewModel => ServiceLocator.Current.GetInstance<IPlaygroundPageViewModel>();
+    }
 }

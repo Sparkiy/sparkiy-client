@@ -24,6 +24,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Threading;
+using GalaSoft.MvvmLight.Views;
 using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
@@ -34,12 +35,12 @@ using SparkiyEngine_Language_LuaImplementation;
 #if WINDOWS_APP
 using Windows.UI.ApplicationSettings;
 #endif
-using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.UILogic.ViewModels;
 using MetroLog;
 using MetroLog.Targets;
 using MetroLog.Layouts;
 using MetroLog.Internal;
+using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.Views;
 
 namespace SparkiyClient
@@ -49,7 +50,7 @@ namespace SparkiyClient
 	/// </summary>
 	public sealed partial class App : Application, IDisposable
 	{
-		private static readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<App>();
+		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<App>();
 		private readonly IUnityContainer container = null;
 
 		//Bootstrap: App singleton service declarations
@@ -83,9 +84,9 @@ namespace SparkiyClient
 				this.OnUnhandledRegistrationException(ex);
 			}
 
-			// Configure crach handling
+			// Configure crash handling
 			GlobalCrashHandler.Configure();
-			log.Debug("Global crash handler configured.");
+			Log.Debug("Global crash handler configured.");
 		}
 
 		/// <summary>
@@ -103,9 +104,7 @@ namespace SparkiyClient
 			{
 				// Create a Frame to act as the navigation context and navigate to the first page
 				rootFrame = new Frame();
-				// Set the default language
 				rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
-
 				rootFrame.NavigationFailed += OnNavigationFailed;
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
@@ -123,30 +122,17 @@ namespace SparkiyClient
 			// Initialize container
 			try
 			{
-				this.OnContainerRegistration((UnityContainer)this.container);
+				this.OnContainerRegistration(this.container as UnityContainer);
 			}
 			catch (Exception ex)
 			{
 				this.OnUnhandledRegistrationException(ex);
 			}
 
-			// Set the ViewModel Locator service to resolve View to ViewModel Types
-			SparkiyClient.Common.ViewModelLocator.SetDefaultViewTypeToViewModelTypeResolver(ResolveViewViewModelConnection);
-
-			// Set the ViewModel Locator service to use the Unity Container
-			SparkiyClient.Common.ViewModelLocator.SetDefaultViewModelFactory((viewModelType) =>
-			{
-				return ServiceLocator.Current.GetInstance(viewModelType);
-			});
-
-			// Navigate to home page
+			// Navigate to home page if navigation stack isn't restored
 			if (rootFrame.Content == null)
-			{
-				// When the navigation stack isn't restored navigate to the first page,
-				// configuring the new page by passing required information as a navigation
-				// parameter
 				rootFrame.Navigate(typeof(MainPage), e.Arguments);
-			}
+			
 			// Ensure the current window is active
 			Window.Current.Activate();
 		}
@@ -175,27 +161,6 @@ namespace SparkiyClient
 			deferral.Complete();
 		}
 
-
-		private static Type ResolveViewViewModelConnection(Type viewType)
-		{
-			var viewModelTypeName = string.Format(
-								CultureInfo.InvariantCulture,
-								"SparkiyClient.UILogic.ViewModels.{0}ViewModel, SparkiyClient.UILogic, Version=1.0.0.0",
-								viewType.Name);
-			var viewModelType = Type.GetType(viewModelTypeName);
-			if (viewModelType == null)
-			{
-				viewModelTypeName = string.Format(
-					CultureInfo.InvariantCulture,
-					"SparkiyClient.UILogic.ViewModels.{0}ViewModel, SparkiyClient.UILogic.Windows, Version=1.0.0.0",
-					viewType.Name);
-				viewModelType = Type.GetType(viewModelTypeName);
-			}
-
-			log.Debug("View ({0}) resolved as ({1})", viewType.FullName, viewModelType.FullName);
-			return viewModelType;
-		}
-
 		/// <summary>
 		/// Override this method with code to initialize your container. This method will contain calls
 		/// to the Unity container's RegisterType and RegisterInstance methods for example.
@@ -203,19 +168,21 @@ namespace SparkiyClient
 		/// <param name="container">The instance of the unity container that should be used for registering types.</param>
 		private void OnContainerRegistration(IUnityContainer container)
 		{
-			log.Debug("Filling Container...");
+			Log.Debug("Filling Container...");
 
 			// Register instances
 			this.container.RegisterInstance<IUnityContainer>(this.container);
 
 			// Register services
 			this.container.RegisterType<IAlertMessageService, AlertMessageService>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<INavigationService, NavigationService>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
 
 			// Register ViewModels as Singeltons
-			this.container.RegisterType<MainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<PlaygroundPageViewModel, PlaygroundPageViewModel>(new ContainerControlledLifetimeManager());
-            this.container.RegisterType<ProjectPageViewModel, ProjectPageViewModel>(new ContainerControlledLifetimeManager());
-        }
+			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IPlaygroundPageViewModel, PlaygroundPagePageViewModel>(new ContainerControlledLifetimeManager());
+		}
 
 	    public static IEngineBindings InstantiateEngine(object panel)
 	    {
@@ -246,7 +213,7 @@ namespace SparkiyClient
 		/// <param name="ex">The exception that was thrown.</param>
 		private void OnUnhandledRegistrationException(Exception ex)
 		{
-			throw new Exception();
+			throw new Exception("Failed to load container: " + ex.Message);
 		}
 
 		/// <summary>
@@ -258,15 +225,9 @@ namespace SparkiyClient
 		/// <summary>
 		/// Get the IoC Unity Container 
 		/// </summary>
-		public IUnityContainer Container
-		{
-			get
-			{
-				return this.container;
-			}
-		}
+		public IUnityContainer Container => this.container;
 
-        #region IDisposable Support
+		#region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
         void Dispose(bool disposing)

@@ -2,11 +2,19 @@
 			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 			 xmlns:local="using:SparkiyClient"
-			 xmlns:converters="using:SparkiyClient.Converters">
+			 xmlns:converters="using:SparkiyClient.Converters"
+			 xmlns:viewModels="using:SparkiyClient.UILogic.ViewModels"
+			 xmlns:services="using:SparkiyClient.Services">
 	<Application.Resources>
-		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-		<converters:BooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter" IsNegated="True" />
-		
-		<SolidColorBrush x:Key="AccentColorBrush" Color="Red" />		
+		<ResourceDictionary>
+			<services:ViewModelProviderService x:Key="Locator" />
+			
+			<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+			<converters:BooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter" IsNegated="True" />
+			
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Themes/ColorsDictionary.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
 	</Application.Resources>
 </Application>

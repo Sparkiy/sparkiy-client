@@ -118,7 +118,7 @@
 						</Grid.ColumnDefinitions>
 						
 						<!-- Image -->
-						<Border Background="{StaticResource AccentColorBrush}" MinHeight="405" Grid.Column="1">
+						<Border Background="{StaticResource AccentBrushDark}" MinHeight="405" Grid.Column="1">
 							<FlipView ItemsSource="{Binding Screenshots.Images}" 
 									  SelectedValue="{Binding Screenshots.SelectedImage, Mode=TwoWay}">
 								<FlipView.ItemsPanel>
@@ -339,7 +339,7 @@
 							<ListBox.ItemTemplate>
 								<DataTemplate>
 									<Border Width="71" Height="40"
-											Background="{StaticResource AccentColorBrush}">
+											Background="{StaticResource AccentBrushDark}">
 										<Image Source="{Binding}" 
 											   Stretch="Uniform" />
 									</Border>

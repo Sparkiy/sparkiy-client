@@ -11,6 +11,7 @@ using SparkiyClient.Common;
 namespace SparkiyClient.UILogic.Models
 {
 	[ComVisible(false)]
+	[DataContract]
 	public class Script : ExtendedObservableObject
 	{
 		/// <summary>
@@ -23,9 +24,9 @@ namespace SparkiyClient.UILogic.Models
 
 
 		/// <summary>
-		/// Gets the code asynchronously.
+		/// Gets the code asynchronously from given path.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>Returns the code</returns>
 		private async Task<string> GetCodeAsync()
 		{
 			return await PathIO.ReadTextAsync(this.Path);
@@ -37,6 +38,7 @@ namespace SparkiyClient.UILogic.Models
 		/// <value>
 		/// The name.
 		/// </value>
+		[DataMember]
 		public string Name
 		{
 			get { return this.GetProperty<string>(); }
@@ -49,6 +51,7 @@ namespace SparkiyClient.UILogic.Models
 		/// <value>
 		/// The path.
 		/// </value>
+		[DataMember]
 		public string Path
 		{
 			get { return this.GetProperty<string>(); }

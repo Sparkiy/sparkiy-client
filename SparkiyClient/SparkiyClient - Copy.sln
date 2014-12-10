@@ -59,6 +59,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D97C23A-C8EA-4FB0-926C-8AC949286866}"
 	ProjectSection(SolutionItems) = preProject
 		Graph.dgml = Graph.dgml
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{1655A4D0-493B-47E5-901B-583354006A55}"

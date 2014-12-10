@@ -15,7 +15,8 @@ using SparkiyEngine.Bindings.Component.Engine;
 
 namespace SparkiyClient.UILogic.ViewModels
 {
-	public interface IPlaygroundViewModel
+	[ComVisible(false)]
+	public interface IPlaygroundPageViewModel : IViewModelBase
 	{
 		void AssignCodeEditor(ICodeEditor editor);
 	    void AssignEngine(IEngineBindings engineBindings);
@@ -23,7 +24,7 @@ namespace SparkiyClient.UILogic.ViewModels
 	}
 
     [ComVisible(false)]
-    public class PlaygroundPageViewModel : ExtendedViewModel, IPlaygroundViewModel, IDisposable
+    public class PlaygroundPagePageViewModel : ExtendedViewModel, IPlaygroundPageViewModel, IDisposable
 	{
 		private readonly INavigationService navigationService;
 		private readonly IAlertMessageService alertMessageService;
@@ -40,7 +41,7 @@ namespace SparkiyClient.UILogic.ViewModels
 		private IEngineBindings engine;
 
 
-		public PlaygroundPageViewModel(
+		public PlaygroundPagePageViewModel(
 			INavigationService navigationService, 
 			IAlertMessageService alertMessageService)
 		{
@@ -139,7 +140,7 @@ namespace SparkiyClient.UILogic.ViewModels
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources. 
-        // ~PlaygroundPageViewModel() {
+        // ~PlaygroundPagePageViewModel() {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
         // }
