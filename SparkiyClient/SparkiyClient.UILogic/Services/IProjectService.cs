@@ -18,10 +18,25 @@ namespace SparkiyClient.UILogic.Services
 {
 	public interface IStorageService
 	{
+		/// <summary>
+		/// Initializes the storage.
+		/// This will trigger hard initialization if access token is not available.
+		/// </summary>
 		Task InitializeStorageAsync();
 
-		bool RequiresStorageInitialization();
+		/// <summary>
+		/// Requireses the hard storage initialization.
+		/// Hard initialization means that user needs to interact with the component to initialize.
+		/// </summary>
+		/// <returns>Returns <c>true</c> if storage requires hard initialization; false otherwise.</returns>
+		bool RequiresHardStorageInitialization();
 
+		/// <summary>
+		/// Gets the workspace folder.
+		/// </summary>
+		/// <value>
+		/// The workspace folder.
+		/// </value>
 		StorageFolder WorkspaceFolder { get; }
 	}
 
@@ -38,11 +53,14 @@ namespace SparkiyClient.UILogic.Services
 	{
 		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<StorageService>();
 		private const string WorkspaceFolderTokenKey = "WorkspaceFolderToken";
-		private bool isInitialized;
 
 		private StorageFolder workspaceFolder;
 
 
+		/// <summary>
+		/// Initializes the storage.
+		/// This will trigger hard initialization if access token is not available.
+		/// </summary>
 		public async Task InitializeStorageAsync()
 		{
 			Log.Debug("Initializing storage...");
@@ -69,15 +87,24 @@ namespace SparkiyClient.UILogic.Services
 			}
 			this.workspaceFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(workspaceFolderToken.ToString());
 
-			this.isInitialized = true;
 			Log.Debug("Storage successfully initialized.");
 		}
 
-		public bool RequiresStorageInitialization()
+		/// <summary>
+		/// Requireses the hard storage initialization.
+		/// Hard initialization means that user needs to interact with the component to initialize.
+		/// </summary>
+		/// <returns>
+		/// Returns <c>true</c> if storage requires hard initialization; false otherwise.
+		/// </returns>
+		public bool RequiresHardStorageInitialization()
 		{
 			return ApplicationData.Current.LocalSettings.Values[WorkspaceFolderTokenKey] == null;
 		}
 
+		/// <summary>
+		/// The workspace folder
+		/// </summary>
 		public StorageFolder WorkspaceFolder => this.workspaceFolder;
 
 		/// <summary>

@@ -129,6 +129,11 @@ namespace SparkiyClient
 				this.OnUnhandledRegistrationException(ex);
 			}
 
+			// Initialize storage if it doesn't require hard initialization
+			var storageService = this.Container.Resolve<IStorageService>();
+			if (!storageService.RequiresHardStorageInitialization())
+				await storageService.InitializeStorageAsync();
+
 			// Navigate to home page if navigation stack isn't restored
 			if (rootFrame.Content == null)
 				rootFrame.Navigate(typeof(MainPage), e.Arguments);

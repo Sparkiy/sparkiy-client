@@ -38,8 +38,8 @@ namespace SparkiyClient.UILogic.ViewModels
 		    this.alertMessageService = alertMessageService;
 		    this.storageService = storageService;
 
-		    this.RequiresWorkspaceInitialization = this.storageService.RequiresStorageInitialization();
-			
+		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
+
 			this.InitializeWorkspaceCommand = new RelayCommand(this.InitializeWorkspaceCommandExecuteAsync);
 			this.ProjectSelectedCommand = new RelayCommand<Project>(this.ProjectSelectedCommandExecuteAsync);
 	    }
@@ -53,7 +53,7 @@ namespace SparkiyClient.UILogic.ViewModels
 	    protected async void InitializeWorkspaceCommandExecuteAsync()
 	    {
 		    await this.storageService.InitializeStorageAsync();
-		    this.RequiresWorkspaceInitialization = this.storageService.RequiresStorageInitialization();
+		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
 	    }
 
 	    public bool LoadingData
