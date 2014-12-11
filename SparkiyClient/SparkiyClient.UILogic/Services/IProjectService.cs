@@ -12,6 +12,7 @@ using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.Storage.Search;
 using MetroLog;
+using SparkiyClient.Common.Helpers;
 using SparkiyClient.UILogic.Models;
 
 namespace SparkiyClient.UILogic.Services
@@ -44,9 +45,11 @@ namespace SparkiyClient.UILogic.Services
 	{
 		Task<IEnumerable<Project>> GetAvailableProjectsAsync();
 
-		void Save();
+		Task SaveAsync();
 
 		Task<IEnumerable<Script>> GetScriptsAsync(Project project);
+
+		Task CreateProjectAsync(Project project);
 	}
 
 	public class StorageService : IStorageService
@@ -69,6 +72,7 @@ namespace SparkiyClient.UILogic.Services
 			var workspaceFolderToken = ApplicationData.Current.LocalSettings.Values[WorkspaceFolderTokenKey];
 			if (workspaceFolderToken == null)
 			{
+				Log.Debug("Storage initialization requires user interaction.");
 				var picker = new FolderPicker
 				{
 					SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
@@ -106,33 +110,6 @@ namespace SparkiyClient.UILogic.Services
 		/// The workspace folder
 		/// </summary>
 		public StorageFolder WorkspaceFolder => this.workspaceFolder;
-
-		/// <summary>
-		/// Returns true if a folder contains another folder with the given name
-		/// </summary>
-		/// <param name="folder"></param>
-		/// <param name="name"></param>
-		/// <returns>True if the folder contains the folder with given name. False - otherwise</returns>
-		public static async Task<bool> ContainsFolderAsync(StorageFolder folder, string name)
-		{
-			return (await folder.GetFoldersAsync()).Any(l => l.Name == name);
-		}
-
-		/// <summary>
-		/// Ensures that a folder with given name exists in given folder
-		/// </summary>
-		/// <param name="folder"></param>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		public static async Task EnsureFolderExistsAsync(StorageFolder folder, string name)
-		{
-			if (await ContainsFolderAsync(folder, name))
-			{
-				return;
-			}
-
-			await folder.CreateFolderAsync(name);
-		}
 	}
 
 	public class ProjectService : IProjectService
@@ -142,6 +119,8 @@ namespace SparkiyClient.UILogic.Services
 		private const string ProjectScreenshotsPath = "Screenshots";
 		private const string ProjectAssetsPath = "Assets";
 		private const string ProjectFilesScriptsPath = "Scripts";
+		private const string ProjectFilesScriptExtension = ".lua";
+		private const string TempExtensions = ".temp";
 
 		private readonly IStorageService storageService;
 
@@ -161,38 +140,104 @@ namespace SparkiyClient.UILogic.Services
 
 		public async Task<IEnumerable<Project>> GetAvailableProjectsAsync()
 		{
-			// Get project folders
-			var folders = await this.storageService.WorkspaceFolder.GetFoldersAsync();
-			
-			// Get project files
-			var projectFiles = new List<StorageFile>();
-			foreach (var projectFolder in folders)
-			{
-				// Retrieve project files
-				var projectFileQueryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string> {ProjectFileExtension});
-				var projectFileResult = projectFolder.CreateFileQueryWithOptions(projectFileQueryOptions);
-				var projectFileResultsFiles = await projectFileResult.GetFilesAsync();
-				projectFiles.AddRange(projectFileResultsFiles);
-            }
+			// Retrieve projects
+			var projectFiles = await this.GetProjectsAsync();
 
 			// Load project files
 			var loadedProjects = new List<Project>();
 			var serializer = new DataContractSerializer(typeof (Project));
-			foreach (var projectFile in projectFiles)
+			foreach (var projectFile in projectFiles.Values)
 				using (var projectFileStream = await projectFile.OpenStreamForReadAsync())
 					loadedProjects.Add(serializer.ReadObject(projectFileStream) as Project);
 
 			return loadedProjects;
 		}
 
-		public void Save()
+		public async Task SaveAsync()
 		{
-			foreach (var dirtyProject in this.projects.Where(p => p.IsDirty))
+			// Retrieve projects
+			var projectFiles = await this.GetProjectsAsync();
+
+			// Retrieve all dirty projects
+			var dirtyProjects = this.projects.Where(p => p.IsDirty || p.Scripts.Result.Any(s => s.IsDirty));
+            foreach (var dirtyProject in dirtyProjects)
 			{
+				// Create project folder if it doesnt exist or retrieve one from project files path
+				StorageFolder projectFolder;
+				if (!projectFiles.ContainsKey(dirtyProject.Name))
+					projectFolder = await this.storageService.WorkspaceFolder.CreateFolderAsync(dirtyProject.Name);
+				else projectFolder = await StorageFolder.GetFolderFromPathAsync(projectFiles[dirtyProject.Name].Path);
+				
 				// Ensure folders
+				Task.WaitAll(
+					projectFolder.EnsureFolderExistsAsync(ProjectScreenshotsPath),
+					projectFolder.EnsureFolderExistsAsync(ProjectAssetsPath),
+					projectFolder.EnsureFolderExistsAsync(ProjectFilesScriptsPath));
+
+				// Save project file if it changed
+				if (dirtyProject.IsDirty)
+					await SaveProjectFileSafeAsync(projectFolder, dirtyProject);
+
+				// Save all dirty scripts
+				var scriptsFolder = await projectFolder.GetFolderAsync(ProjectFilesScriptsPath);
+				foreach (var script in dirtyProject.Scripts.Result.Where(s => s.IsDirty))
+				{
+					await SaveScriptSafeAsync(scriptsFolder, script.Name, script.Code.Result);
+					script.MarkAsClean();
+				}
 
 				dirtyProject.MarkAsClean();
 			}
+		}
+
+		private static async Task SaveProjectFileSafeAsync(StorageFolder projectFolder, Project project)
+		{
+			var projectFileName = project.Name + ProjectFileExtension;
+			var tempProjectFileName = projectFileName + TempExtensions;
+
+			// Project file serializer
+			var serializer = new DataContractSerializer(typeof(Project));
+
+			// Create temp project file and write serialized data
+			var temporaryProjectFile = await projectFolder.CreateFileAsync(tempProjectFileName);
+			using (var projectFileTempStream = await temporaryProjectFile.OpenStreamForWriteAsync())
+				serializer.WriteObject(projectFileTempStream, project);
+
+			// Rename temp file
+			await temporaryProjectFile.RenameAsync(projectFileName, NameCollisionOption.ReplaceExisting);
+		}
+
+		private static async Task SaveScriptSafeAsync(StorageFolder scriptFolder, string name, string code)
+		{
+			var scriptFileName = name + ProjectFilesScriptExtension;
+            var tempScriptFileName = scriptFileName + TempExtensions;
+
+			// Write to temp file
+			var tempScriptFile = await scriptFolder.CreateFileAsync(tempScriptFileName, CreationCollisionOption.ReplaceExisting);
+			await FileIO.WriteTextAsync(tempScriptFile, code);
+
+			// Rename temp file
+			await tempScriptFile.RenameAsync(scriptFileName, NameCollisionOption.ReplaceExisting);
+		}
+
+		private async Task<Dictionary<string, StorageFile>> GetProjectsAsync()
+		{
+			// Get project folders
+			var folders = await this.storageService.WorkspaceFolder.GetFoldersAsync();
+
+			// Get project files
+			var projectFiles = new Dictionary<string, StorageFile>();
+            foreach (var projectFolder in folders)
+			{
+				// Retrieve project files
+				var projectFileQueryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string> { ProjectFileExtension });
+				var projectFileResult = projectFolder.CreateFileQueryWithOptions(projectFileQueryOptions);
+				var projectFileResultsFiles = await projectFileResult.GetFilesAsync();
+				var projectFileKVPs = projectFileResultsFiles.Select(f => new KeyValuePair<string, StorageFile>(f.DisplayName, f));
+				projectFiles.AddRange(projectFileKVPs);
+			}
+
+			return projectFiles;
 		}
 
 		public async Task<IEnumerable<Script>> GetScriptsAsync(Project project)
