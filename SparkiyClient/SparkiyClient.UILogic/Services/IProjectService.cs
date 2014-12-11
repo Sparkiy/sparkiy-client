@@ -136,7 +136,8 @@ namespace SparkiyClient.UILogic.Services
 		public async Task CreateProjectAsync(Project project)
 		{
 			this.projects.Add(project);
-        }
+			await this.SaveAsync();
+		}
 
 		public async Task<IEnumerable<Project>> GetAvailableProjectsAsync()
 		{
@@ -159,20 +160,16 @@ namespace SparkiyClient.UILogic.Services
 			var projectFiles = await this.GetProjectsAsync();
 
 			// Retrieve all dirty projects
-			var dirtyProjects = this.projects.Where(p => p.IsDirty || p.Scripts.Result.Any(s => s.IsDirty));
+			var dirtyProjects = this.projects.Where(p => p.IsDirty || (p.Scripts?.Result?.Any(s => s.IsDirty) ?? false));
             foreach (var dirtyProject in dirtyProjects)
 			{
 				// Create project folder if it doesnt exist or retrieve one from project files path
-				StorageFolder projectFolder;
-				if (!projectFiles.ContainsKey(dirtyProject.Name))
-					projectFolder = await this.storageService.WorkspaceFolder.CreateFolderAsync(dirtyProject.Name);
-				else projectFolder = await StorageFolder.GetFolderFromPathAsync(projectFiles[dirtyProject.Name].Path);
+				var projectFolder = await this.storageService.WorkspaceFolder.CreateFolderAsync(dirtyProject.Name, CreationCollisionOption.OpenIfExists);
 				
 				// Ensure folders
-				Task.WaitAll(
-					projectFolder.EnsureFolderExistsAsync(ProjectScreenshotsPath),
-					projectFolder.EnsureFolderExistsAsync(ProjectAssetsPath),
-					projectFolder.EnsureFolderExistsAsync(ProjectFilesScriptsPath));
+				await projectFolder.EnsureFolderExistsAsync(ProjectScreenshotsPath);
+				await projectFolder.EnsureFolderExistsAsync(ProjectAssetsPath);
+				await projectFolder.EnsureFolderExistsAsync(ProjectFilesScriptsPath);
 
 				// Save project file if it changed
 				if (dirtyProject.IsDirty)
@@ -180,11 +177,13 @@ namespace SparkiyClient.UILogic.Services
 
 				// Save all dirty scripts
 				var scriptsFolder = await projectFolder.GetFolderAsync(ProjectFilesScriptsPath);
-				foreach (var script in dirtyProject.Scripts.Result.Where(s => s.IsDirty))
-				{
-					await SaveScriptSafeAsync(scriptsFolder, script.Name, script.Code.Result);
-					script.MarkAsClean();
-				}
+				var dirtyScripts = dirtyProject.Scripts?.Result?.Where(s => s.IsDirty);
+				if (dirtyScripts != null)
+					foreach (var script in dirtyScripts)
+					{
+						await SaveScriptSafeAsync(scriptsFolder, script.Name, script.Code.Result);
+						script.MarkAsClean();
+					}
 
 				dirtyProject.MarkAsClean();
 			}

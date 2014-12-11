@@ -1,4 +1,6 @@
-namespace SparkiyClient.Views
+using SparkiyClient.Views;
+
+namespace SparkiyClient.Common
 {
 	public interface IPageBase
 	{

@@ -15,10 +15,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\IPageBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LoadStateEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\LoadStateEventHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\PageBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SaveStateEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SaveStateEventHandler.cs" />
@@ -33,11 +35,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AlertMessageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ViewModelProviderService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\IPageBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CreateProjectPage.xaml.cs">
+      <DependentUpon>CreateProjectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\PageBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PlaygroundPage.xaml.cs">
       <DependentUpon>PlaygroundPage.xaml</DependentUpon>
     </Compile>
@@ -58,6 +61,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Themes\ColorsDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CreateProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

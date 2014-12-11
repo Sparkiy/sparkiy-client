@@ -41,6 +41,7 @@ using MetroLog.Targets;
 using MetroLog.Layouts;
 using MetroLog.Internal;
 using Microsoft.Practices.ServiceLocation;
+using SparkiyClient.Common;
 using SparkiyClient.Views;
 
 namespace SparkiyClient
@@ -129,6 +130,14 @@ namespace SparkiyClient
 				this.OnUnhandledRegistrationException(ex);
 			}
 
+			// Initialize navigation
+			var navigationService = this.Container.Resolve<INavigationService>() as NavigationService;
+			if (navigationService == null)
+				throw new InvalidOperationException("Couldn't configure navigation service. Navigation service not registered properly.");
+			navigationService.Configure(typeof(MainPage).Name, typeof(MainPage));
+			navigationService.Configure(typeof(CreateProjectPage).Name, typeof(CreateProjectPage));
+			navigationService.Configure(typeof(ProjectPage).Name, typeof(ProjectPage));
+
 			// Initialize storage if it doesn't require hard initialization
 			var storageService = this.Container.Resolve<IStorageService>();
 			if (!storageService.RequiresHardStorageInitialization())
@@ -182,9 +191,11 @@ namespace SparkiyClient
 			this.container.RegisterType<IAlertMessageService, AlertMessageService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<INavigationService, NavigationService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IProjectService, ProjectService>(new ContainerControlledLifetimeManager());
 
 			// Register ViewModels as Singeltons
 			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<ICreateProjectPageViewModel, CreateProjectPageViewModel>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IPlaygroundPageViewModel, PlaygroundPagePageViewModel>(new ContainerControlledLifetimeManager());
 		}

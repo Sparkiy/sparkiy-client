@@ -151,6 +151,9 @@ namespace SparkiyClient.Common
 			// Set value
 			this.propertyValues[propertyName] = value;
 
+			// Mark as dirty
+			this.isDirty = true;
+
 			// ReSharper disable once ExplicitCallerInfoArgument
 			this.trigger.RaisePropertyChanged(propertyName);
 		}

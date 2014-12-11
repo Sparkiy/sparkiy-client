@@ -48,6 +48,7 @@
     <Compile Include="Services\DialogCommand.cs" />
     <Compile Include="Services\IAlertMessageService.cs" />
     <Compile Include="Services\IProjectService.cs" />
+    <Compile Include="ViewModels\CreateProjectPageViewModel.cs" />
     <Compile Include="ViewModels\IViewModelBase.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlaygroundPageViewModel.cs" />

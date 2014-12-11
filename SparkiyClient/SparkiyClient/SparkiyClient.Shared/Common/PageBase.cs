@@ -1,9 +1,9 @@
 using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using SparkiyClient.Common;
+using SparkiyClient.Views;
 
-namespace SparkiyClient.Views
+namespace SparkiyClient.Common
 {
 	public class PageBase : Page, IPageBase
 	{

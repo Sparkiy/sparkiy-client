@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -22,6 +23,8 @@ namespace SparkiyClient.UILogic.ViewModels
 		RelayCommand InitializeWorkspaceCommand { get; }
 
 		RelayCommand<Project> ProjectSelectedCommand { get; } 
+
+		RelayCommand NewProjectCommand { get; }
     }
 
     [ComVisible(false)]
@@ -30,20 +33,42 @@ namespace SparkiyClient.UILogic.ViewModels
 		private readonly INavigationService navigationService;
 		private readonly IAlertMessageService alertMessageService;
 	    private readonly IStorageService storageService;
+	    private readonly IProjectService projectService;
 
 
-	    public MainPageViewModel(INavigationService navigationService, IAlertMessageService alertMessageService, IStorageService storageService)
+	    public MainPageViewModel(INavigationService navigationService, IAlertMessageService alertMessageService, IStorageService storageService, IProjectService projectService)
 	    {
 		    this.navigationService = navigationService;
 		    this.alertMessageService = alertMessageService;
 		    this.storageService = storageService;
+		    this.projectService = projectService;
 
 		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
 
 			this.InitializeWorkspaceCommand = new RelayCommand(this.InitializeWorkspaceCommandExecuteAsync);
 			this.ProjectSelectedCommand = new RelayCommand<Project>(this.ProjectSelectedCommandExecuteAsync);
+			this.NewProjectCommand = new RelayCommand(this.NewProjectCommandExecuteAsync);
 	    }
 
+
+	    public override async void OnNavigatedTo(NavigationEventArgs e)
+	    {
+		    base.OnNavigatedTo(e);
+
+		    if (this.LoadingData)
+		    {
+			    // Load available projects
+			    foreach (var project in await this.projectService.GetAvailableProjectsAsync())
+				    this.Projects.Add(project);
+
+			    this.LoadingData = false;
+		    }
+	    }
+
+	    private async void NewProjectCommandExecuteAsync()
+	    {
+			this.navigationService.NavigateTo("CreateProjectPage");
+		}
 
 	    protected async void ProjectSelectedCommandExecuteAsync(Project project)
 	    {
@@ -58,7 +83,7 @@ namespace SparkiyClient.UILogic.ViewModels
 
 	    public bool LoadingData
 		{
-			get { return this.GetProperty<bool>(); }
+			get { return this.GetProperty<bool>(defaultValue: true); }
 			protected set { this.SetProperty(value); }
 		}
 
@@ -73,33 +98,15 @@ namespace SparkiyClient.UILogic.ViewModels
 		public RelayCommand<Project> ProjectSelectedCommand { get; }
 
 		public ObservableCollection<Project> Projects { get; } = new ObservableCollection<Project>();
+
+		public RelayCommand NewProjectCommand { get; }
 	}
 
 	[ComVisible(false)]
 	public class MainPageViewModelDesignTime : MainPageViewModel
 	{
-		public MainPageViewModelDesignTime() : base(null, null, null)
+		public MainPageViewModelDesignTime() : base(null, null, new StorageService(), new ProjectService(new StorageService()))
 		{
-			this.Projects.Add(new Project() { Name = "Project One" });
-			this.Projects.Add(new Project() { Name = "Project Two" });
-			this.Projects.Add(new Project() { Name = "Project Three" });
-			this.Projects.Add(new Project() { Name = "Project Four" });
-			this.Projects.Add(new Project() { Name = "Project Five" });
-			this.Projects.Add(new Project() { Name = "Project One" });
-			this.Projects.Add(new Project() { Name = "Project Two" });
-			this.Projects.Add(new Project() { Name = "Project Three" });
-			this.Projects.Add(new Project() { Name = "Project Four" });
-			this.Projects.Add(new Project() { Name = "Project Five" });
-			this.Projects.Add(new Project() { Name = "Project One" });
-			this.Projects.Add(new Project() { Name = "Project Two" });
-			this.Projects.Add(new Project() { Name = "Project Three" });
-			this.Projects.Add(new Project() { Name = "Project Four" });
-			this.Projects.Add(new Project() { Name = "Project Five" });
-			this.Projects.Add(new Project() { Name = "Project One" });
-			this.Projects.Add(new Project() { Name = "Project Two" });
-			this.Projects.Add(new Project() { Name = "Project Three" });
-			this.Projects.Add(new Project() { Name = "Project Four" });
-			this.Projects.Add(new Project() { Name = "Project Five" });
 			this.Projects.Add(new Project() { Name = "Project One" });
 			this.Projects.Add(new Project() { Name = "Project Two" });
 			this.Projects.Add(new Project() { Name = "Project Three" });

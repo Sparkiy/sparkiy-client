@@ -8,6 +8,8 @@ namespace SparkiyClient.Services
 	{
 		public IMainPageViewModel MainPage => DesignMode.DesignModeEnabled ? new MainPageViewModelDesignTime() : ServiceLocator.Current.GetInstance<IMainPageViewModel>();
 
+		public ICreateProjectPageViewModel CreateProjectPage => ServiceLocator.Current?.GetInstance<ICreateProjectPageViewModel>();
+
 		public IProjectPageViewModel ProjectPage => ServiceLocator.Current?.GetInstance<IProjectPageViewModel>();
 	}
 }

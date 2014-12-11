@@ -92,7 +92,7 @@
 							<TextBlock Text="Author" 
 									   Style="{StaticResource SubtitleTextBlockStyle}"
 									   FontWeight="Bold"
-									   Margin="0,8,8,8" Width="80"
+									   Margin="0,8,8,8" 
 									   VerticalAlignment="Center" />
 							<TextBlock Text="{Binding Project.Model.Author}" 
 									   Style="{StaticResource SubtitleTextBlockStyle}"

@@ -1,0 +1,59 @@
+﻿<common:PageBase
+    x:Class="SparkiyClient.Views.CreateProjectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:views="using:SparkiyClient.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:common="using:SparkiyClient.Common"
+    mc:Ignorable="d"
+	RequestedTheme="Light"
+	DataContext="{Binding Source={StaticResource Locator}, Path=CreateProjectPage}">
+
+	<common:PageBase.BottomAppBar>
+		<AppBar IsOpen="True" IsSticky="True">
+			<AppBarButton Icon="Accept" Label="Create" Command="{Binding CreateProjectCommand}" HorizontalAlignment="Right" />
+		</AppBar>
+	</common:PageBase.BottomAppBar>
+	
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+		
+		<Hub>
+			<Hub.Header>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="Create new project" Foreground="{StaticResource AccentBrushDark}" />
+				</StackPanel>
+			</Hub.Header>
+			<HubSection Header="General">
+				<DataTemplate>
+					<Grid Width="480">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						
+						<Grid Grid.Row="0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+							
+							<TextBlock Text="Name" 
+									   Style="{StaticResource SubtitleTextBlockStyle}"
+									   FontWeight="Bold"
+									   Margin="0,0,8,8"
+									   VerticalAlignment="Center"
+									   Grid.Column="0" />
+							<TextBox Text="{Binding ProjectName, Mode=TwoWay}" Margin="8" Grid.Column="1" />
+						</Grid>
+					</Grid>
+				</DataTemplate>
+			</HubSection>
+		</Hub>
+    </Grid>
+</common:PageBase>
