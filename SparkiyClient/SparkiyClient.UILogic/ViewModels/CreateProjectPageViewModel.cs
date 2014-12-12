@@ -13,7 +13,7 @@ namespace SparkiyClient.UILogic.ViewModels
 {
 	public interface ICreateProjectPageViewModel
 	{
-		string ProjectName { get; set; }
+		Project Project { get; set; }
 
 		RelayCommand CreateProjectCommand { get; }
 	}
@@ -35,14 +35,13 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		private async void CreateProjectCommandExecuteAsync()
 		{
-			var project = new Project() {Name = this.ProjectName};
-            await this.projectService.CreateProjectAsync(project);
-			this.navigationService.NavigateTo("ProjectPage", project);
+            await this.projectService.CreateProjectAsync(this.Project);
+			this.navigationService.NavigateTo("ProjectPage", this.Project);
 		}
 
-		public string ProjectName
+		public Project Project
 		{
-			get { return this.GetProperty<string>(); }
+			get { return this.GetProperty<Project>(defaultValue: new Project()); }
 			set { this.SetProperty(value); }
 		}
 

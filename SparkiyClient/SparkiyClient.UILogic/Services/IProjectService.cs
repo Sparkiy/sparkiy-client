@@ -151,6 +151,10 @@ namespace SparkiyClient.UILogic.Services
 				using (var projectFileStream = await projectFile.OpenStreamForReadAsync())
 					loadedProjects.Add(serializer.ReadObject(projectFileStream) as Project);
 
+			// Cache the projects
+			this.projects.Clear();
+			this.projects.AddRange(loadedProjects);
+
 			return loadedProjects;
 		}
 

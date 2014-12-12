@@ -137,6 +137,9 @@ namespace SparkiyClient
 			navigationService.Configure(typeof(MainPage).Name, typeof(MainPage));
 			navigationService.Configure(typeof(CreateProjectPage).Name, typeof(CreateProjectPage));
 			navigationService.Configure(typeof(ProjectPage).Name, typeof(ProjectPage));
+			navigationService.Configure(typeof(EditPage).Name, typeof(EditPage));
+			navigationService.Configure(typeof(PlayPage).Name, typeof(PlayPage));
+			//navigationService.Configure(typeof(DebugPage).Name, typeof(DebugPage));
 
 			// Initialize storage if it doesn't require hard initialization
 			var storageService = this.Container.Resolve<IStorageService>();
@@ -197,7 +200,9 @@ namespace SparkiyClient
 			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<ICreateProjectPageViewModel, CreateProjectPageViewModel>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<IPlaygroundPageViewModel, PlaygroundPagePageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IEditPageViewModel, EditPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IPlayPageViewModel, PlayPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IDebugPageViewModel, DebugPageViewModel>(new ContainerControlledLifetimeManager());
 		}
 
 	    public static IEngineBindings InstantiateEngine(object panel)

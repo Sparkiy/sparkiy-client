@@ -18,12 +18,6 @@ namespace SparkiyClient.Views
 			this.InitializeComponent();
 		}
 
-		protected override void OnNavigatedFrom(NavigationEventArgs e)
-		{
-			
-			base.OnNavigatedFrom(e);
-		}
-
 		private void ProjectOnItemClick(object sender, ItemClickEventArgs e)
 		{
 			this.ViewModel.ProjectSelectedCommand.Execute(e.ClickedItem);

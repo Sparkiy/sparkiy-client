@@ -6,10 +6,14 @@ namespace SparkiyClient.Services
 {
 	public class ViewModelProviderService
 	{
-		public IMainPageViewModel MainPage => DesignMode.DesignModeEnabled ? new MainPageViewModelDesignTime() : ServiceLocator.Current.GetInstance<IMainPageViewModel>();
+		public IMainPageViewModel MainPage => DesignMode.DesignModeEnabled ? new MainPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IMainPageViewModel>();
 
 		public ICreateProjectPageViewModel CreateProjectPage => ServiceLocator.Current?.GetInstance<ICreateProjectPageViewModel>();
 
-		public IProjectPageViewModel ProjectPage => ServiceLocator.Current?.GetInstance<IProjectPageViewModel>();
+		public IProjectPageViewModel ProjectPage => DesignMode.DesignModeEnabled ? new ProjectPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IProjectPageViewModel>();
+
+		public IEditPageViewModel EditPage => ServiceLocator.Current?.GetInstance<IEditPageViewModel>();
+
+		public IPlayPageViewModel PlayPage => ServiceLocator.Current?.GetInstance<IPlayPageViewModel>();
 	}
 }
