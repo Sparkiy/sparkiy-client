@@ -10,17 +10,15 @@
 				 DataContext="{Binding Source={StaticResource Locator}, Path=ProjectPage}">
 	
 	<common:PageBase.BottomAppBar>
-		<AppBar IsOpen="True" IsSticky="True">
-			<Grid>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<AppBarToggleButton Icon="Edit" Label="Edit" IsChecked="{Binding IsEditMode, Mode=TwoWay}" />
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<AppBarButton Icon="More" Label="Code" HorizontalAlignment="Right" Command="{Binding EditCommand}" />
-					<AppBarButton Icon="Play" Label="Play" HorizontalAlignment="Right" Command="{Binding PlayCommand}" />
-				</StackPanel>
-			</Grid>
-		</AppBar>
+		<CommandBar IsOpen="True" IsSticky="True">
+			<CommandBar.PrimaryCommands>
+				<AppBarButton Icon="More" Label="Code" HorizontalAlignment="Right" Command="{Binding EditCommand}" />
+				<AppBarButton Icon="Play" Label="Play" HorizontalAlignment="Right" Command="{Binding PlayCommand}" />
+			</CommandBar.PrimaryCommands>
+			<CommandBar.SecondaryCommands>
+				<AppBarToggleButton Icon="Edit" Label="Edit" IsChecked="{Binding IsEditMode, Mode=TwoWay}" />
+			</CommandBar.SecondaryCommands>
+		</CommandBar>
 	</common:PageBase.BottomAppBar>
 	
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

@@ -11,9 +11,9 @@
 	DataContext="{Binding Source={StaticResource Locator}, Path=CreateProjectPage}">
 
 	<common:PageBase.BottomAppBar>
-		<AppBar IsOpen="True" IsSticky="True">
+		<CommandBar IsOpen="True" IsSticky="True">
 			<AppBarButton Icon="Accept" Label="Create" Command="{Binding CreateProjectCommand}" HorizontalAlignment="Right" />
-		</AppBar>
+		</CommandBar>
 	</common:PageBase.BottomAppBar>
 	
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

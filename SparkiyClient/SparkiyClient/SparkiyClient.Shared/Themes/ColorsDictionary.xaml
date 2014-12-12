@@ -14,5 +14,9 @@
 	<SolidColorBrush x:Key="AccentBrushDark" Color="{StaticResource AccentColorDark}" />
 	<SolidColorBrush x:Key="AccentBrushLight" Color="{StaticResource AccentColorLight}" />
 	
+	<!-- SideBar -->
+	<Color x:Key="SideBarColorLight">#D5DADC</Color>
+	<SolidColorBrush x:Key="SideBarBrushLight" Color="{StaticResource SideBarColorLight}" />
+	
 	
 </ResourceDictionary>

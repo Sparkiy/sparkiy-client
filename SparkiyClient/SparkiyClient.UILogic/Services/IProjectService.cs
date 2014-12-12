@@ -202,7 +202,7 @@ namespace SparkiyClient.UILogic.Services
 			var serializer = new DataContractSerializer(typeof(Project));
 
 			// Create temp project file and write serialized data
-			var temporaryProjectFile = await projectFolder.CreateFileAsync(tempProjectFileName);
+			var temporaryProjectFile = await projectFolder.CreateFileAsync(tempProjectFileName, CreationCollisionOption.ReplaceExisting);
 			using (var projectFileTempStream = await temporaryProjectFile.OpenStreamForWriteAsync())
 				serializer.WriteObject(projectFileTempStream, project);
 
