@@ -31,19 +31,27 @@
 		</Style>
 		
 		<!-- Scripts sidebar animations -->
-		<Storyboard x:Name="SideBarScriptHideStoryboard" TargetProperty="Width" TargetName="SideBarScriptsGrid">
-			<DoubleAnimation To="0" Duration="0:0:0.1" EnableDependentAnimation="True" />
+		<Storyboard x:Name="SideBarScriptHideStoryboard">
+			<DoubleAnimation To="0" Duration="0:0:0.1" EnableDependentAnimation="True" Storyboard.TargetName="SideBarScriptsGrid" Storyboard.TargetProperty="Width" />
+			<DoubleAnimation To="0" Duration="0:0:0.15" EnableDependentAnimation="True" Storyboard.TargetName="SideBarScriptsShadow" Storyboard.TargetProperty="Opacity" />
+			<DoubleAnimation To="0.5" Duration="0:0:0.2" EnableDependentAnimation="True" Storyboard.TargetName="SideBarScriptsToggleButton" Storyboard.TargetProperty="Opacity" />
 		</Storyboard>
-		<Storyboard x:Name="SideBarScriptShowStoryboard" TargetProperty="Width" TargetName="SideBarScriptsGrid">
-			<DoubleAnimation To="320" Duration="0:0:0.1" EnableDependentAnimation="True" />
+		<Storyboard x:Name="SideBarScriptShowStoryboard">
+			<DoubleAnimation To="320" Duration="0:0:0.1" EnableDependentAnimation="True" Storyboard.TargetName="SideBarScriptsGrid" Storyboard.TargetProperty="Width" />
+			<DoubleAnimation To="1" Duration="0:0:0.15" EnableDependentAnimation="True" Storyboard.TargetName="SideBarScriptsShadow" Storyboard.TargetProperty="Opacity" />
+			<DoubleAnimation To="1" Duration="0:0:0.2" EnableDependentAnimation="True" Storyboard.TargetName="SideBarScriptsToggleButton" Storyboard.TargetProperty="Opacity" />
 		</Storyboard>
 		
 		<!-- Assets sidebar animations -->
-		<Storyboard x:Name="SideBarAssetsHideStoryboard" TargetProperty="Width" TargetName="SideBarAssetsGrid">
-			<DoubleAnimation To="0" Duration="0:0:0.1" EnableDependentAnimation="True" />
+		<Storyboard x:Name="SideBarAssetsHideStoryboard">
+			<DoubleAnimation To="0" Duration="0:0:0.1" EnableDependentAnimation="True" Storyboard.TargetName="SideBarAssetsGrid" Storyboard.TargetProperty="Width" />
+			<DoubleAnimation To="0" Duration="0:0:0.15" EnableDependentAnimation="True" Storyboard.TargetName="SideBarAssetsShadow" Storyboard.TargetProperty="Opacity" />
+			<DoubleAnimation To="0.5" Duration="0:0:0.2" EnableDependentAnimation="True" Storyboard.TargetName="SideBarAssetsToggleButton" Storyboard.TargetProperty="Opacity" />
 		</Storyboard>
-		<Storyboard x:Name="SideBarAssetsShowStoryboard" TargetProperty="Width" TargetName="SideBarAssetsGrid">
-			<DoubleAnimation To="320" Duration="0:0:0.1" EnableDependentAnimation="True" />
+		<Storyboard x:Name="SideBarAssetsShowStoryboard">
+			<DoubleAnimation To="320" Duration="0:0:0.1" EnableDependentAnimation="True" Storyboard.TargetName="SideBarAssetsGrid" Storyboard.TargetProperty="Width" />
+			<DoubleAnimation To="1" Duration="0:0:0.15" EnableDependentAnimation="True" Storyboard.TargetName="SideBarAssetsShadow" Storyboard.TargetProperty="Opacity" />
+			<DoubleAnimation To="1" Duration="0:0:0.2" EnableDependentAnimation="True" Storyboard.TargetName="SideBarAssetsToggleButton" Storyboard.TargetProperty="Opacity" />
 		</Storyboard>
 	</common:PageBase.Resources>
 	
@@ -65,23 +73,33 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			
-			<Rectangle Width="24" 
-					   Margin="0 0 -24 0"
+			<!-- Shadow -->
+			<Rectangle x:Name="SideBarScriptsShadow" 
+					   Width="32" 
+					   Margin="0 0 -32 0"
 					   HorizontalAlignment="Right" 
 					   VerticalAlignment="Stretch"
 					   Grid.RowSpan="3">
 				<Rectangle.Fill>
-					<LinearGradientBrush StartPoint="0, 0.5" EndPoint="1, 0.5">
-						<GradientStop Offset="0" Color="#55000000" />
-						<GradientStop Offset="0.2" Color="#22000000" />
+					<LinearGradientBrush StartPoint="0,1" EndPoint="1,0.9998" MappingMode="RelativeToBoundingBox">
+						<GradientStop Offset="0" Color="#33000000" />
+						<GradientStop Offset="0.2" Color="#11000000" />
 						<GradientStop Offset="1" Color="#00FFFFFF" />
 					</LinearGradientBrush>
 				</Rectangle.Fill>
 			</Rectangle>
 			
+			<!-- Toggle Tab -->
+			<Button x:Name="SideBarScriptsToggleButton" 
+					Style="{StaticResource SideBarToggleTabStyle}" 
+					BorderThickness="0 1 1 1"
+					HorizontalAlignment="Right" 
+					Click="SideBarScriptsToggleButtonOnClick"/>
+			
+			
 			<ListView ItemsSource="{Binding Project.Scripts.Result}"
 					  SelectedItem="{Binding SelectedScript}"
-					  SelectionMode="Single" />
+					  SelectionMode="Single" Grid.Row="0" />
 			
 			<StackPanel Orientation="Vertical" Grid.Row="1">
 				<Button Background="Transparent"
@@ -170,19 +188,29 @@
 			  Style="{StaticResource SideBarStyle}"
 			  Grid.Column="2">
 			
-			<Rectangle Width="24" 
-					   Margin="-24 0 0 0"
+			<!-- Shadow -->
+			<Rectangle x:Name="SideBarAssetsShadow"  
+					   Width="32" 
+					   Margin="-32 0 0 0"
 					   HorizontalAlignment="Left" 
 					   VerticalAlignment="Stretch"
 					   Grid.RowSpan="3">
 				<Rectangle.Fill>
-					<LinearGradientBrush StartPoint="1, 0.5" EndPoint="0, 0.5">
-						<GradientStop Offset="0" Color="#55000000" />
-						<GradientStop Offset="0.2" Color="#22000000" />
+					<LinearGradientBrush StartPoint="1,1" EndPoint="0,0.9998" MappingMode="RelativeToBoundingBox">
+						<GradientStop Offset="0" Color="#33040708" />
+						<GradientStop Offset="0.2" Color="#11040708" />
 						<GradientStop Offset="1" Color="#00FFFFFF" />
 					</LinearGradientBrush>
 				</Rectangle.Fill>
 			</Rectangle>
+			
+			<!-- Toggle Tab -->
+			<Button x:Name="SideBarAssetsToggleButton" 
+					Style="{StaticResource SideBarToggleTabStyle}" 
+					BorderThickness="1 1 0 1"
+					HorizontalAlignment="Left"
+					Click="SideBarAssetsToggleButtonOnClick"/>
+			
 		</Grid>
     </Grid>
 </common:PageBase>

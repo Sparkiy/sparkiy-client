@@ -1199,10 +1199,67 @@ namespace SparkiyClient.Views
 
 
 	public sealed partial class EditPage : PageBase
-    {
-        public EditPage()
+	{
+		private bool isScriptsSideBarOpen = true;
+		private double scriptsToggleButtonOpacity;
+		private bool isAssetsSideBarOpen = true;
+		private double assetsToggleButtonOpacity;
+
+		public EditPage()
         {
             this.InitializeComponent();
-        }
-    }
+
+			// Opacity to 1 on pointer hover
+			this.SideBarScriptsToggleButton.PointerEntered += (s, e) =>
+			{
+				this.scriptsToggleButtonOpacity = this.SideBarScriptsToggleButton.Opacity;
+                this.SideBarScriptsToggleButton.Opacity = 1;
+			};
+			this.SideBarAssetsToggleButton.PointerEntered += (s, e) =>
+			{
+				this.assetsToggleButtonOpacity = this.SideBarAssetsToggleButton.Opacity;
+				this.SideBarAssetsToggleButton.Opacity = 1;
+			};
+			this.SideBarScriptsToggleButton.PointerExited += (s, e) =>
+				this.SideBarScriptsToggleButton.Opacity = this.scriptsToggleButtonOpacity;
+			this.SideBarAssetsToggleButton.PointerExited += (s, e) =>
+				this.SideBarAssetsToggleButton.Opacity = this.assetsToggleButtonOpacity;
+
+			// Enable toggle buttons when animation ends
+			this.SideBarScriptHideStoryboard.Completed += SideBarScriptsToggleStoryboardCompleted;
+			this.SideBarScriptShowStoryboard.Completed += SideBarScriptsToggleStoryboardCompleted;
+			this.SideBarAssetsHideStoryboard.Completed += SideBarAssetsToggleStoryboardCompleted;
+			this.SideBarAssetsShowStoryboard.Completed += SideBarAssetsToggleStoryboardCompleted;
+		}
+
+		private void SideBarAssetsToggleStoryboardCompleted(object sender, object e)
+		{
+			this.SideBarAssetsToggleButton.IsEnabled = true;
+		}
+
+		private void SideBarScriptsToggleStoryboardCompleted(object sender, object e)
+		{
+			this.SideBarScriptsToggleButton.IsEnabled = true;
+		}
+
+		private void SideBarScriptsToggleButtonOnClick(object sender, RoutedEventArgs e)
+		{
+			if (this.isScriptsSideBarOpen)
+				this.SideBarScriptHideStoryboard.Begin();
+			else this.SideBarScriptShowStoryboard.Begin();
+
+			this.isScriptsSideBarOpen = !this.isScriptsSideBarOpen;
+			this.SideBarScriptsToggleButton.IsEnabled = false;
+		}
+
+		private void SideBarAssetsToggleButtonOnClick(object sender, RoutedEventArgs e)
+		{
+			if (this.isAssetsSideBarOpen)
+				this.SideBarAssetsHideStoryboard.Begin();
+			else this.SideBarAssetsShowStoryboard.Begin();
+
+			this.isAssetsSideBarOpen = !this.isAssetsSideBarOpen;
+			this.SideBarAssetsToggleButton.IsEnabled = false;
+		}
+	}
 }
