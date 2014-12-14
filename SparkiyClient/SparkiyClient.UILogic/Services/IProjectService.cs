@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace SparkiyClient.UILogic.Services
 
 		Task SaveAsync();
 
-		Task<IEnumerable<Script>> GetScriptsAsync(Project project);
+		Task<ObservableCollection<Script>> GetScriptsAsync(Project project);
 
 		Task CreateProjectAsync(Project project);
 	}
@@ -189,7 +190,7 @@ namespace SparkiyClient.UILogic.Services
 				if (dirtyScripts != null)
 					foreach (var script in dirtyScripts)
 					{
-						await SaveScriptSafeAsync(scriptsFolder, script.Name, script.Code.Result);
+						await SaveScriptSafeAsync(scriptsFolder, script.Name, script.Code ?? String.Empty);
 						script.MarkAsClean();
 					}
 
@@ -247,7 +248,7 @@ namespace SparkiyClient.UILogic.Services
 			return projectFiles;
 		}
 
-		public async Task<IEnumerable<Script>> GetScriptsAsync(Project project)
+		public async Task<ObservableCollection<Script>> GetScriptsAsync(Project project)
 		{
 			var projectFolder = await this.storageService.WorkspaceFolder.GetFolderAsync(project.Name);
 			var scriptsFolder = await projectFolder.GetFolderAsync(ProjectFilesScriptsPath);
@@ -256,9 +257,13 @@ namespace SparkiyClient.UILogic.Services
 			var scriptQueryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string>() {".lua"});
 			var scriptQueryResult = scriptsFolder.CreateFileQueryWithOptions(scriptQueryOptions);
 			var scriptFiles = await scriptQueryResult.GetFilesAsync();
-			var scripts = scriptFiles.Select(sf => new Script() {Name = sf.DisplayName, Path = sf.Path});
+			var scripts = scriptFiles.Select(sf => new Script() {Name = sf.DisplayName, Path = sf.Path}).ToList();
 
-			return scripts;
+			// Mark all scripts as clean
+			foreach (var script in scripts)
+				script.MarkAsClean();
+
+			return new ObservableCollection<Script>(scripts);
 		}
 	}
 }

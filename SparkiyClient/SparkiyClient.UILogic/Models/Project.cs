@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -76,6 +77,9 @@ namespace SparkiyClient.UILogic.Models
 		{
 			this.Scripts = NotifyTaskCompletion.Create(projectService.GetScriptsAsync(this));
 			await this.Scripts.Task;
+
+			foreach (var script in this.Scripts.Result)
+				script.Code = await script.GetCodeAsync();
 		}
 
 
@@ -124,10 +128,10 @@ namespace SparkiyClient.UILogic.Models
 		/// <value>
 		/// The scripts.
 		/// </value>
-		[DataMember]
-		public INotifyTaskCompletion<IEnumerable<Script>> Scripts
+		[IgnoreDataMember]
+		public INotifyTaskCompletion<ObservableCollection<Script>> Scripts
 		{
-			get { return this.GetProperty<INotifyTaskCompletion<IEnumerable<Script>>>(); }
+			get { return this.GetProperty<INotifyTaskCompletion<ObservableCollection<Script>>>(); }
 			set { this.SetProperty(value); }
 		}
 

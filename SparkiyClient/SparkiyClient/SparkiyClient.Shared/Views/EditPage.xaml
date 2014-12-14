@@ -62,7 +62,25 @@
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 		
-		<controls:CodeEditorControl Grid.Column="1" />
+		<!-- Editor -->
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			
+			<Border Background="{StaticResource AccentBrushDark}">
+				<TextBlock Text="{Binding SelectedScript.Name}" 
+						   Foreground="{StaticResource AccentBrushLight}"
+						   Style="{StaticResource SubheaderTextBlockStyle}"
+						   Padding="12 4 6 4"
+						   TextWrapping="NoWrap"
+						   TextTrimming="CharacterEllipsis" />
+			</Border>
+			
+			<controls:CodeEditorControl x:Name="CodeEditor" Grid.Row="1" />
+			
+		</Grid>
 		
 		<Grid x:Name="SideBarScriptsGrid"
 			  Style="{StaticResource SideBarStyle}"
@@ -96,10 +114,24 @@
 					HorizontalAlignment="Right" 
 					Click="SideBarScriptsToggleButtonOnClick"/>
 			
-			
+			<!-- Scripts list -->
 			<ListView ItemsSource="{Binding Project.Scripts.Result}"
-					  SelectedItem="{Binding SelectedScript}"
-					  SelectionMode="Single" Grid.Row="0" />
+					  SelectedItem="{Binding SelectedScript, Mode=TwoWay}"
+					  ItemContainerStyle="{StaticResource SideBarFilesListViewStyle}"
+					  SelectionMode="Single" Grid.Row="0">
+				<ListView.Header>
+					<TextBlock Text="Files" 
+							   Margin="24 12"
+							   Style="{StaticResource SubheaderTextBlockStyle}" />
+				</ListView.Header>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding}"
+								   Margin="16 10" />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			
 			
 			<StackPanel Orientation="Vertical" Grid.Row="1">
 				<Button Background="Transparent"

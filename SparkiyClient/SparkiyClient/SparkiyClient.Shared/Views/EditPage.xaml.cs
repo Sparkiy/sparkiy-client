@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SparkiyClient.Common;
+using SparkiyClient.Common.Controls;
+using SparkiyClient.UILogic.ViewModels;
 
 namespace SparkiyClient.Views
 {
@@ -1209,6 +1211,8 @@ namespace SparkiyClient.Views
         {
             this.InitializeComponent();
 
+			this.ViewModel.AssignEditor(this.CodeEditor);
+
 			// Opacity to 1 on pointer hover
 			this.SideBarScriptsToggleButton.PointerEntered += (s, e) =>
 			{
@@ -1261,5 +1265,7 @@ namespace SparkiyClient.Views
 			this.isAssetsSideBarOpen = !this.isAssetsSideBarOpen;
 			this.SideBarAssetsToggleButton.IsEnabled = false;
 		}
+
+		public IEditPageViewModel ViewModel => this.DataContext as IEditPageViewModel;
 	}
 }

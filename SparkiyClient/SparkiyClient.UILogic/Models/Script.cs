@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -19,7 +20,6 @@ namespace SparkiyClient.UILogic.Models
 		/// </summary>
 		public Script()
 		{
-			this.Code = NotifyTaskCompletion.Create(this.GetCodeAsync);
 		}
 
 
@@ -27,9 +27,18 @@ namespace SparkiyClient.UILogic.Models
 		/// Gets the code asynchronously from given path.
 		/// </summary>
 		/// <returns>Returns the code</returns>
-		private async Task<string> GetCodeAsync()
+		public async Task<string> GetCodeAsync()
 		{
-			return await PathIO.ReadTextAsync(this.Path);
+			// Check if this is new file
+			if (String.IsNullOrEmpty(this.Path))
+				return String.Empty;
+
+			string code;
+			var file = await StorageFile.GetFileFromPathAsync(this.Path);
+			using (var fs = await file.OpenStreamForReadAsync())
+			using (var reader = new StreamReader(fs))
+				code = await reader.ReadToEndAsync();
+			return code;
 		}
 
 		/// <summary>
@@ -65,9 +74,9 @@ namespace SparkiyClient.UILogic.Models
 		/// The code.
 		/// </value>
 		[IgnoreDataMember]
-		public INotifyTaskCompletion<string> Code
+		public string Code
 		{
-			get { return this.GetProperty<INotifyTaskCompletion<string>>(); }
+			get { return this.GetProperty<string>(); }
 			set { this.SetProperty(value); }
 		}
 
