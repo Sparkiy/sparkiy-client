@@ -4,6 +4,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight;
@@ -135,8 +138,11 @@ namespace SparkiyClient.Common
 			// Trigger all properties if null or empty string is passed
 			if (String.IsNullOrEmpty(propertyName))
 			{
-				// ReSharper disable once ExplicitCallerInfoArgument
-				this.trigger.RaisePropertyChanged(String.Empty);
+				CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+				{
+					// ReSharper disable once ExplicitCallerInfoArgument
+					this.trigger.RaisePropertyChanged(String.Empty);
+				});
 				return;
 			}
 
@@ -155,8 +161,11 @@ namespace SparkiyClient.Common
 			// Mark as dirty
 			this.isDirty = true;
 
-			// ReSharper disable once ExplicitCallerInfoArgument
-			this.trigger.RaisePropertyChanged(propertyName);
+			CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			{
+				// ReSharper disable once ExplicitCallerInfoArgument
+				this.trigger.RaisePropertyChanged(propertyName);
+			});
 		}
 
 		public T GetProperty<T>([CallerMemberName] string propertyName = "", T defaultValue = default(T))

@@ -66,15 +66,15 @@ namespace SparkiyClient.Controls
 	    }
 
 
-	    public string Code
-	    {
-		    get
-		    {
-			    string code = String.Empty;
-			    this.RichEditBox.Document.GetText(TextGetOptions.None, out code);
-			    return code;
-		    }
-		    set { this.RichEditBox.Document.SetText(TextSetOptions.None, value ?? String.Empty); }
-	    }
+		public string Code
+		{
+			get
+			{
+				string code = String.Empty;
+				this.RichEditBox.Document.GetText(TextGetOptions.None, out code);
+				return code;
+			}
+			set { this.RichEditBox.Document.SetText(TextSetOptions.None, value ?? String.Empty); }
+		}
     }
 }

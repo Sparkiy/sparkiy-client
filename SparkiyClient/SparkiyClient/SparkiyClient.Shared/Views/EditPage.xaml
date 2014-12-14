@@ -70,7 +70,7 @@
 			</Grid.RowDefinitions>
 			
 			<Border Background="{StaticResource AccentBrushDark}">
-				<TextBlock Text="{Binding SelectedScriptName}" 
+				<TextBlock Text="{Binding SelectedScript.Name}" 
 						   Foreground="{StaticResource AccentBrushLight}"
 						   Style="{StaticResource SubheaderTextBlockStyle}"
 						   Padding="12 4 6 4"
@@ -78,7 +78,7 @@
 						   TextTrimming="CharacterEllipsis" />
 			</Border>
 			
-			<controls:CodeEditorControl Grid.Row="1" />
+			<controls:CodeEditorControl x:Name="CodeEditor" Grid.Row="1" />
 			
 		</Grid>
 		

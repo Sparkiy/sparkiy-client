@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -26,9 +27,18 @@ namespace SparkiyClient.UILogic.Models
 		/// Gets the code asynchronously from given path.
 		/// </summary>
 		/// <returns>Returns the code</returns>
-		public async Task GetCodeAsync()
+		public async Task<string> GetCodeAsync()
 		{
-			this.Code = await PathIO.ReadTextAsync(this.Path);
+			// Check if this is new file
+			if (String.IsNullOrEmpty(this.Path))
+				return String.Empty;
+
+			string code;
+			var file = await StorageFile.GetFileFromPathAsync(this.Path);
+			using (var fs = await file.OpenStreamForReadAsync())
+			using (var reader = new StreamReader(fs))
+				code = await reader.ReadToEndAsync();
+			return code;
 		}
 
 		/// <summary>

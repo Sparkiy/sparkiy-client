@@ -76,7 +76,7 @@
 								ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
 								HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
 								VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-								PointerOverBackgroundMargin="3"
+								PointerOverBackgroundMargin="0"
 								ContentMargin="0" />
 						</ControlTemplate>
 					</Setter.Value>

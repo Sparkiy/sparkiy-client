@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Nito.AsyncEx;
 using SparkiyClient.Common;
+using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
 
@@ -39,14 +40,12 @@ namespace SparkiyClient.UILogic.ViewModels
 
 	public interface IEditPageViewModel
 	{
+		void AssignEditor(ICodeEditor editor);
+
 		Project Project { get; }
 
 		Script SelectedScript { get; set; }
-
-		string SelectedScriptName { get; }
-
-		string SelectedScriptCode { get; set; }
-
+		
 		RelayCommand AddNewFileCommand { get; }
 
 		INewFileViewModel NewFileViewModel { get; }
@@ -56,6 +55,8 @@ namespace SparkiyClient.UILogic.ViewModels
 	{
 		private readonly IProjectService projectService;
 		private readonly INavigationService navigationService;
+
+		private ICodeEditor editor;
 
 
 		public EditPageViewModel(IProjectService projectService, INavigationService navigationService)
@@ -98,6 +99,12 @@ namespace SparkiyClient.UILogic.ViewModels
 				this.NewFileViewModel = null;
 			}
 		}
+		
+		public void AssignEditor(ICodeEditor editor)
+		{
+			this.editor = editor;
+			this.editor.OnCodeChanged += (sender, args) => this.SelectedScript.Code = this.editor.Code;
+		}
 
 
 		public Project Project
@@ -112,17 +119,8 @@ namespace SparkiyClient.UILogic.ViewModels
 			set
 			{
 				this.SetProperty(value);
-				this.RaisePropertyChanged(() => this.SelectedScriptName);
-				this.RaisePropertyChanged(() => this.SelectedScriptCode);
+				this.editor.Code = this.SelectedScript.Code;
 			}
-		}
-
-		public string SelectedScriptName => this.SelectedScript?.Name ?? String.Empty;
-
-		public string SelectedScriptCode
-		{
-			get { return this.SelectedScript?.Code ?? String.Empty; }
-			set { this.SelectedScript.Code = value; }
 		}
 
 		public RelayCommand AddNewFileCommand { get; }

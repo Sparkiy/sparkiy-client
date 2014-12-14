@@ -77,6 +77,9 @@ namespace SparkiyClient.UILogic.Models
 		{
 			this.Scripts = NotifyTaskCompletion.Create(projectService.GetScriptsAsync(this));
 			await this.Scripts.Task;
+
+			foreach (var script in this.Scripts.Result)
+				script.Code = await script.GetCodeAsync();
 		}
 
 
