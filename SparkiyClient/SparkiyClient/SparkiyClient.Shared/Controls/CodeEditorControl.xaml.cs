@@ -74,7 +74,7 @@ namespace SparkiyClient.Controls
 			    this.RichEditBox.Document.GetText(TextGetOptions.None, out code);
 			    return code;
 		    }
-		    set { this.RichEditBox.Document.SetText(TextSetOptions.None, value); }
+		    set { this.RichEditBox.Document.SetText(TextSetOptions.None, value ?? String.Empty); }
 	    }
     }
 }

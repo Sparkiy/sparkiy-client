@@ -190,7 +190,7 @@ namespace SparkiyClient.UILogic.Services
 				if (dirtyScripts != null)
 					foreach (var script in dirtyScripts)
 					{
-						await SaveScriptSafeAsync(scriptsFolder, script.Name, script.Code?.Result ?? String.Empty);
+						await SaveScriptSafeAsync(scriptsFolder, script.Name, script.Code ?? String.Empty);
 						script.MarkAsClean();
 					}
 

@@ -19,7 +19,6 @@ namespace SparkiyClient.UILogic.Models
 		/// </summary>
 		public Script()
 		{
-			this.Code = NotifyTaskCompletion.Create(this.GetCodeAsync);
 		}
 
 
@@ -27,9 +26,9 @@ namespace SparkiyClient.UILogic.Models
 		/// Gets the code asynchronously from given path.
 		/// </summary>
 		/// <returns>Returns the code</returns>
-		private async Task<string> GetCodeAsync()
+		public async Task GetCodeAsync()
 		{
-			return await PathIO.ReadTextAsync(this.Path);
+			this.Code = await PathIO.ReadTextAsync(this.Path);
 		}
 
 		/// <summary>
@@ -65,9 +64,9 @@ namespace SparkiyClient.UILogic.Models
 		/// The code.
 		/// </value>
 		[IgnoreDataMember]
-		public INotifyTaskCompletion<string> Code
+		public string Code
 		{
-			get { return this.GetProperty<INotifyTaskCompletion<string>>(); }
+			get { return this.GetProperty<string>(); }
 			set { this.SetProperty(value); }
 		}
 

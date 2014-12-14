@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Nito.AsyncEx;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
@@ -39,6 +43,10 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		Script SelectedScript { get; set; }
 
+		string SelectedScriptName { get; }
+
+		string SelectedScriptCode { get; set; }
+
 		RelayCommand AddNewFileCommand { get; }
 
 		INewFileViewModel NewFileViewModel { get; }
@@ -70,6 +78,9 @@ namespace SparkiyClient.UILogic.ViewModels
 			// Load scripts and assets list
 			await this.Project.LoadScriptsAsync(this.projectService);
 
+			// Select first script
+			this.SelectedScript = this.Project.Scripts.Result.FirstOrDefault();
+
 			base.OnNavigatedTo(e);
 		}
 
@@ -98,7 +109,20 @@ namespace SparkiyClient.UILogic.ViewModels
 		public Script SelectedScript
 		{
 			get { return this.GetProperty<Script>(); }
-			set { this.SetProperty(value); }
+			set
+			{
+				this.SetProperty(value);
+				this.RaisePropertyChanged(() => this.SelectedScriptName);
+				this.RaisePropertyChanged(() => this.SelectedScriptCode);
+			}
+		}
+
+		public string SelectedScriptName => this.SelectedScript?.Name ?? String.Empty;
+
+		public string SelectedScriptCode
+		{
+			get { return this.SelectedScript?.Code ?? String.Empty; }
+			set { this.SelectedScript.Code = value; }
 		}
 
 		public RelayCommand AddNewFileCommand { get; }
@@ -107,6 +131,26 @@ namespace SparkiyClient.UILogic.ViewModels
 		{
 			get { return this.GetProperty<INewFileViewModel>(); }
 			protected set { this.SetProperty(value); }
+		}
+	}
+
+	public class EditPageViewModelDesignTime : EditPageViewModel
+	{
+		public EditPageViewModelDesignTime() : base(null, null)
+		{
+			this.Project = new Project()
+			{
+				Author = "Aleksandar Toplek",
+				Description = "Sample description",
+				Name = "Sample project",
+				Scripts = NotifyTaskCompletion.Create(Task.Run(() => new ObservableCollection<Script>()
+				{
+					new Script { Code="Sample code", Name = "main"},
+					new Script { Code="Sample code", Name = "script1"},
+					new Script { Code="Sample code", Name = "script2"}
+				}))
+			};
+			this.SelectedScript = this.Project.Scripts.Result.FirstOrDefault();
 		}
 	}
 }

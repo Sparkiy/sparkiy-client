@@ -12,7 +12,7 @@ namespace SparkiyClient.Services
 
 		public IProjectPageViewModel ProjectPage => DesignMode.DesignModeEnabled ? new ProjectPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IProjectPageViewModel>();
 
-		public IEditPageViewModel EditPage => ServiceLocator.Current?.GetInstance<IEditPageViewModel>();
+		public IEditPageViewModel EditPage => DesignMode.DesignModeEnabled ? new EditPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IEditPageViewModel>();
 
 		public IPlayPageViewModel PlayPage => ServiceLocator.Current?.GetInstance<IPlayPageViewModel>();
 	}
