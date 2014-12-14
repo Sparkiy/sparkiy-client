@@ -59,13 +59,16 @@ namespace SparkiyClient.UILogic.ViewModels
 		}
 
 
-		public override void OnNavigatedTo(NavigationEventArgs e)
+		public async override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			var project = e.Parameter as Project;
 			if (project == null)
 				throw new InvalidDataException("Passed project object is not valid or null.");
 
 			this.Project = project;
+
+			// Load scripts and assets list
+			await this.Project.LoadScriptsAsync(this.projectService);
 
 			base.OnNavigatedTo(e);
 		}
@@ -78,6 +81,9 @@ namespace SparkiyClient.UILogic.ViewModels
 			}
 			else
 			{
+				this.Project.Scripts.Result.Add(new Script() {Name = this.NewFileViewModel.Name});
+				await this.projectService.SaveAsync();
+
 				this.NewFileViewModel = null;
 			}
 		}

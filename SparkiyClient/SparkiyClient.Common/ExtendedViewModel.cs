@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight;
@@ -144,7 +145,7 @@ namespace SparkiyClient.Common
 			{
 				// ReSharper disable once ExplicitCallerInfoArgument
 				T oldValue = this.GetProperty<T>(propertyName);
-				if (value.Equals(oldValue))
+				if (value != null && value.Equals(oldValue))
 					return;
 			}
 
