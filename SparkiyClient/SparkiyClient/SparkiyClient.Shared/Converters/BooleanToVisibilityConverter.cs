@@ -27,7 +27,7 @@ namespace SparkiyClient.Converters
 
 		private object GetVisibility(object value)
 		{
-			if (!(value is T))
+			if (value != null && !(value is T))
 				return DependencyProperty.UnsetValue;
 			bool objValue = this.ExpressionFunc.Invoke((T) value);
 
