@@ -24,7 +24,7 @@
         </Grid.ChildrenTransitions>
 		
 		<Hub>
-			<Hub.Header>
+			<Hub.Header >
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="Create new project" Foreground="{StaticResource AccentBrushDark}" />
 				</StackPanel>
@@ -44,12 +44,11 @@
 							</Grid.ColumnDefinitions>
 							
 							<TextBlock Text="Name" 
-									   Style="{StaticResource SubtitleTextBlockStyle}"
-									   FontWeight="Bold"
-									   Margin="0,0,8,8"
+									   Style="{StaticResource BaseTextBlockStyle}"
+									   Margin="0 0 12 0"
 									   VerticalAlignment="Center"
 									   Grid.Column="0" />
-							<TextBox Text="{Binding Project.Name, Mode=TwoWay}" Margin="8" Grid.Column="1" />
+							<TextBox Text="{Binding Project.Name, Mode=TwoWay}" Grid.Column="1" />
 						</Grid>
 					</Grid>
 				</DataTemplate>

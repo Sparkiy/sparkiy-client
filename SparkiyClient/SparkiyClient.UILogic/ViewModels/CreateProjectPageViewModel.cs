@@ -29,6 +29,8 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.navigationService = navigationService;
 			this.projectService = projectService;
 
+			this.Project = new Project();
+
 			this.CreateProjectCommand = new RelayCommand(this.CreateProjectCommandExecuteAsync);
 		}
 
@@ -41,7 +43,7 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		public Project Project
 		{
-			get { return this.GetProperty<Project>(defaultValue: new Project()); }
+			get { return this.GetProperty<Project>(); }
 			set { this.SetProperty(value); }
 		}
 

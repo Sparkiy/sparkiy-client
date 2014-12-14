@@ -10,7 +10,9 @@
 			<services:ViewModelProviderService x:Key="Locator" />
 			
 			<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-			<converters:BooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter" IsNegated="True" />
+			<converters:BooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter" TriggerValue="True" />
+			<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+			<converters:NullToVisibilityConverter x:Key="NegatedNullToVisibilityConverter" TriggerValue="True" />
 			
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Themes/ColorsDictionary.xaml" />

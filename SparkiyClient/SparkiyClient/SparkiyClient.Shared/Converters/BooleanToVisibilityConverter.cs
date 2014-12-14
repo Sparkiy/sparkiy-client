@@ -7,13 +7,10 @@ using Windows.UI.Xaml.Data;
 
 namespace SparkiyClient.Converters
 {
-	/// <summary>
-	/// Converts Boolean Values to Control.Visibility values
-	/// </summary>
-	public class BooleanToVisibilityConverter : IValueConverter
+	public class ToVisibilityConverter<T> : IValueConverter
 	{
 		/// <summary>
-		/// Set to true if you want to show control when boolean value is true. Set to false if you want to hide/collapse control when value is true
+		/// Set to true if you want to show control when expression value is true. Set to false if you want to hide/collapse control when expression value is true.
 		/// </summary>
 		public bool TriggerValue { get; set; } = false;
 
@@ -23,17 +20,16 @@ namespace SparkiyClient.Converters
 		public bool IsHidden { get; set; }
 
 		/// <summary>
-		/// Set to true if you want result to be inverted.
+		/// Expression that is evaluated on passed value.
 		/// </summary>
-		public bool IsNegated { get; set; }
+		public Func<T, bool> ExpressionFunc { get; set; }
+
 
 		private object GetVisibility(object value)
 		{
-			if (!(value is bool))
+			if (!(value is T))
 				return DependencyProperty.UnsetValue;
-			bool objValue = (bool)value;
-			if (this.IsNegated)
-				objValue = !objValue;
+			bool objValue = this.ExpressionFunc.Invoke((T) value);
 
 			if ((objValue && TriggerValue && IsHidden) || (!objValue && !TriggerValue && IsHidden))
 			{
@@ -54,6 +50,28 @@ namespace SparkiyClient.Converters
 		public object ConvertBack(object value, Type targetType, object parameter, string culture)
 		{
 			throw new NotImplementedException();
+		}
+	}
+
+	/// <summary>
+	/// Converts null values to Control.Visibility values
+	/// </summary>
+	public class NullToVisibilityConverter : ToVisibilityConverter<object>
+	{
+		public NullToVisibilityConverter()
+		{
+			this.ExpressionFunc = o => o == null;
+		}
+	}
+
+	/// <summary>
+	/// Converts Boolean Values to Control.Visibility values
+	/// </summary>
+	public class BooleanToVisibilityConverter : ToVisibilityConverter<bool>
+	{
+		public BooleanToVisibilityConverter()
+		{
+			this.ExpressionFunc = b => b;
 		}
 	}
 }

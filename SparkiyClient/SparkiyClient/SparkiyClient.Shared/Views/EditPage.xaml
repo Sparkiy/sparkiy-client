@@ -25,16 +25,25 @@
 	</common:PageBase.BottomAppBar>
 	
 	<common:PageBase.Resources>
-		<system:Double x:Key="SideBarWidth">260</system:Double>
 		<Style x:Key="SideBarStyle" TargetType="Grid">
-			<Setter Property="Width" Value="{StaticResource SideBarWidth}" />
+			<Setter Property="Width" Value="320" />
 			<Setter Property="Background" Value="{StaticResource SideBarBrushLight}" />
 		</Style>
-		<Storyboard x:Name="SideBarHideStoryboard" TargetProperty="Width">
-			<DoubleAnimation From="{StaticResource SideBarWidth}" To="0" Duration="0:0:0.1" EnableDependentAnimation="True" />
+		
+		<!-- Scripts sidebar animations -->
+		<Storyboard x:Name="SideBarScriptHideStoryboard" TargetProperty="Width" TargetName="SideBarScriptsGrid">
+			<DoubleAnimation To="0" Duration="0:0:0.1" EnableDependentAnimation="True" />
 		</Storyboard>
-		<Storyboard x:Name="SideBarShowStoryboard" TargetProperty="Width">
-			<DoubleAnimation To="{StaticResource SideBarWidth}" From="0" Duration="0:0:0.1" EnableDependentAnimation="True" />
+		<Storyboard x:Name="SideBarScriptShowStoryboard" TargetProperty="Width" TargetName="SideBarScriptsGrid">
+			<DoubleAnimation To="320" Duration="0:0:0.1" EnableDependentAnimation="True" />
+		</Storyboard>
+		
+		<!-- Assets sidebar animations -->
+		<Storyboard x:Name="SideBarAssetsHideStoryboard" TargetProperty="Width" TargetName="SideBarAssetsGrid">
+			<DoubleAnimation To="0" Duration="0:0:0.1" EnableDependentAnimation="True" />
+		</Storyboard>
+		<Storyboard x:Name="SideBarAssetsShowStoryboard" TargetProperty="Width" TargetName="SideBarAssetsGrid">
+			<DoubleAnimation To="320" Duration="0:0:0.1" EnableDependentAnimation="True" />
 		</Storyboard>
 	</common:PageBase.Resources>
 	
@@ -46,6 +55,7 @@
 		</Grid.ColumnDefinitions>
 		
 		<controls:CodeEditorControl Grid.Column="1" />
+		
 		<Grid x:Name="SideBarScriptsGrid"
 			  Style="{StaticResource SideBarStyle}"
 			  Grid.Column="0">
@@ -68,7 +78,9 @@
 							   FontFamily="Segoe UI" FontWeight="Light" FontSize="32"
 							   Padding="0,0,0,8" Margin="0" />
 				</Button>
-				<Grid DataContext="{Binding ElementName=pageRoot, Path=DataContext.NewFileViewModel}">
+				<Grid DataContext="{Binding ElementName=pageRoot, Path=DataContext.NewFileViewModel}"
+					  Visibility="{Binding ElementName=pageRoot, Path=DataContext.NewFileViewModel, Converter={StaticResource NullToVisibilityConverter}}"
+					  Margin="18 18 18 0">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
@@ -80,34 +92,38 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<Grid.Resources>
-						<Style TargetType="TextBlock">
+						<Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+							<Setter Property="Margin" Value="0 0 16 0" />
 							<Setter Property="VerticalAlignment" Value="Center" />
-							<Setter Property="Margin" Value="8,3" />
-							<Setter Property="FontSize" Value="14" />
-							<Setter Property="Foreground" Value="#555" />
 						</Style>
 					</Grid.Resources>
 					
+					<!-- File name -->
 					<TextBlock Text="Name" Grid.Row="0" Grid.Column="0" />
 					<TextBox x:Name="NewFileNameTextBox" 
-								Text="{Binding Name, Mode=TwoWay}" 
-								extensions:FieldValidationExtensions.Format="MatchesRegexPattern"
-								extensions:FieldValidationExtensions.Pattern="^(?!(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.[^.]*)?$)[^&lt;&gt;:\&quot;/\\|?*\x00-\x1F]*[^&lt;&gt;:\&quot;/\\|?*\x00-\x1F\ .]$"
-								extensions:FieldValidationExtensions.PatternErrorMessage="Invalid filename.&#13;A filename can't be empty or contain any of the following characters:&#13; \ / * ? : &quot; &lt; &gt; |"
-								Margin="5" 
-								Grid.Row="0" Grid.Column="1" />
+							 Text="{Binding Name, Mode=TwoWay}" 
+							 extensions:FieldValidationExtensions.Format="MatchesRegexPattern"
+							 extensions:FieldValidationExtensions.Pattern="^(?!(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.[^.]*)?$)[^&lt;&gt;:\&quot;/\\|?*\x00-\x1F]*[^&lt;&gt;:\&quot;/\\|?*\x00-\x1F\ .]$"
+							 extensions:FieldValidationExtensions.PatternErrorMessage="Invalid filename.&#13;A filename can't be empty or contain any of the following characters:&#13; \ / * ? : &quot; &lt; &gt; |"
+							 extensions:FieldValidationExtensions.InvalidBrush="{StaticResource SideBarBrushNameInvalid}"
+							 Margin="0 8"
+							 Grid.Row="0" Grid.Column="1" />
 					<TextBlock Text="{Binding (extensions:FieldValidationExtensions.ValidationMessage), ElementName=NewFileNameTextBox}"
-								Visibility="{Binding (extensions:FieldValidationExtensions.ValidationMessageVisibility), ElementName=NewFileNameTextBox}"
-								TextWrapping="Wrap"
-								Foreground="Red"
-								Grid.Row="1" Grid.Column="1"/>
+							   Visibility="{Binding (extensions:FieldValidationExtensions.ValidationMessageVisibility), ElementName=NewFileNameTextBox}"
+							   Padding="0 0 0 12"
+							   TextWrapping="Wrap"
+							   Foreground="{StaticResource AccentBrushRed}"
+							   Grid.Row="1" Grid.Column="1"/>
 
+					<!-- File type -->
 					<TextBlock Text="Type" Grid.Row="2" Grid.Column="0" />
-					<ComboBox SelectedIndex="{Binding TypeIndex, Mode=TwoWay}" Margin="5" Grid.Row="2" Grid.Column="1">
+					<ComboBox SelectedIndex="{Binding TypeIndex, Mode=TwoWay}" 
+							  Margin="0 8" 
+							  Grid.Row="2" Grid.Column="1">
 						<ComboBoxItem>
 							<StackPanel Orientation="Horizontal">
 								<Border Background="DarkViolet">
-									<TextBlock Text="S" Foreground="White" />
+									<TextBlock Text="S" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
 								</Border>
 								<TextBlock Text="Script" />
 							</StackPanel>
@@ -115,7 +131,7 @@
 						<ComboBoxItem>
 							<StackPanel Orientation="Horizontal">
 								<Border Background="ForestGreen">
-									<TextBlock Text="C" Foreground="White" />
+									<TextBlock Text="C" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
 								</Border>
 								<TextBlock Text="Class" />
 							</StackPanel>
@@ -124,6 +140,7 @@
 				</Grid>
 			</StackPanel>
 		</Grid>
+		
 		<Grid x:Name="SideBarAssetsGrid" 
 			  Style="{StaticResource SideBarStyle}"
 			  Grid.Column="2"></Grid>
