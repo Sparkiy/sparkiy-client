@@ -161,7 +161,7 @@ namespace SparkiyClient.Common
 		public T GetProperty<T>([CallerMemberName] string propertyName = "", T defaultValue = default(T))
 		{
 			if (!this.propertyValues.ContainsKey(propertyName))
-				return defaultValue;
+				this.propertyValues[propertyName] = defaultValue;
 			return (T)this.propertyValues[propertyName];
 		}
 		
