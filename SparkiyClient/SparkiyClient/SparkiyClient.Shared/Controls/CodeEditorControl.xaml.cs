@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,6 +24,13 @@ namespace SparkiyClient.Controls
     {
 	    public event EventHandler OnCodeChanged;
 
+	    private string debugTemplate = "function Created()\n\t\nend\n\nfunction Started()\n\t\nend\n\nfunction Draw()\n\t\nend\n\nfunction Touched(state, x, y)\n\t\nend\n\nfunction Stopped()\n\t\nend\n";
+
+	    private string fontFamily = "Consolas";
+	    private double fontSize = 16;
+
+	    private string tabValue = "    ";
+
 
         public CodeEditorControl()
         {
@@ -33,11 +41,28 @@ namespace SparkiyClient.Controls
 
 	    private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 	    {
-		    this.RichEditBox.TextChanged += (o, args) =>
+            // Setup editor style
+            this.RichEditBox.FontFamily = new FontFamily(fontFamily);
+	        this.RichEditBox.FontSize = this.fontSize;
+
+#if DEBUG
+            this.RichEditBox.Document.SetText(TextSetOptions.None, this.debugTemplate.Replace("\t", this.tabValue));
+#endif
+
+            this.RichEditBox.TextChanged += (o, args) =>
 		    {
-				if (this.OnCodeChanged != null)
-					this.OnCodeChanged(this, null);
+		        this.OnCodeChanged?.Invoke(this, null);
 		    };
+            this.RichEditBox.KeyDown += RichEditBoxOnKeyDown;
+	    }
+
+	    private void RichEditBoxOnKeyDown(object sender, KeyRoutedEventArgs e)
+	    {
+	        if (e.Key == VirtualKey.Tab)
+	        {
+	            this.RichEditBox.Document.Selection.TypeText(this.tabValue);
+	            e.Handled = true;
+	        }
 	    }
 
 

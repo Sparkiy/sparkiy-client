@@ -1,141 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.InteropServices;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
+using SharpDX.DXGI;
 using SharpDX.Toolkit;
 using SharpDX.Toolkit.Direct2D;
-using SharpDX.Toolkit.Graphics;
 using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
-	internal class PushPopManagement<T>
-	{
-		private readonly Stack<T> stack = new Stack<T>();
-		private readonly Dictionary<string, T> map = new Dictionary<string, T>();
-
-		public void Push(T item)
-		{
-			this.stack.Push(item);
-		}
-
-		public T Pop()
-		{
-		    if (this.stack.Count == 0)
-		        return default(T);
-			return this.stack.Pop();
-		}
-
-		public void Save(string key, T item)
-		{
-			this.map[key] = item;
-			this.Push(item);
-		}
-
-		public T Load(string key)
-		{
-		    if (!this.map.ContainsKey(key))
-		        return default(T);
-			return this.map[key];
-		}
-
-		public void Clear()
-		{
-			this.stack.Clear();
-			this.map.Clear();
-		}
-	}
-
-    internal struct Style2D
-    {
-        private Color4 strokeColor;
-        private float strokeThickness;
-        private bool isStrokeEnabled;
-        private Color4 fillColor;
-        private bool isFillEnabled;
-
-
-        public Style2D()
-        {
-            this.strokeColor = Brushes.White.Color;
-            this.strokeThickness = 2f;
-            this.isStrokeEnabled = false;
-
-            this.fillColor = Brushes.White.Color;
-            this.isFillEnabled = true;
-        }
-
-
-        public Color4 StrokeColor
-        {
-            get { return strokeColor; }
-            set { strokeColor = value; }
-        }
-
-        public float StrokeThickness
-        {
-            get { return strokeThickness; }
-            set { strokeThickness = value; }
-        }
-
-        public bool IsStrokeEnabled
-        {
-            get { return isStrokeEnabled; }
-            set { isStrokeEnabled = value; }
-        }
-
-        public Color4 FillColor
-        {
-            get { return fillColor; }
-            set { fillColor = value; }
-        }
-
-        public bool IsFillEnabled
-        {
-            get { return isFillEnabled; }
-            set { isFillEnabled = value; }
-        }
-    }
-
-    public interface ITextureProvider
-    {
-        Texture2D GetTexture(string assetName);
-    }
-
-    public class BasicTextureProvider : ITextureProvider
-    {
-        private readonly Game game;
-        private readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-
-
-        public BasicTextureProvider(Game game)
-        {
-            this.game = game;
-        }
-
-
-        public Texture2D GetTexture(string assetName)
-        {
-            if (!this.textures.ContainsKey(assetName))
-                this.LoadTexture(assetName);
-            return this.textures[assetName];
-        }
-
-        private void LoadTexture(string assetName)
-        {
-            this.textures[assetName] = this.game.Content.Load<Texture2D>(assetName);
-        }
-    }
-
+    [ComVisible(false)]
     public class SparkiyGame : Game
     {
         private readonly IEngineBindings engine;
 		private GraphicsDeviceManager graphicsDeviceManager;
+
+        private bool isPlaying = false;
 
 		private Color4 backgroundColor;
         
@@ -206,6 +91,16 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			base.UnloadContent();
 		}
+
+        public void Play()
+        {
+            this.isPlaying = true;
+        }
+
+        public void Pause()
+        {
+            this.isPlaying = false;
+        }
 
 		public void AddTranslate(float x, float y)
 		{
@@ -370,6 +265,8 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		protected override void Draw(GameTime gameTime)
 		{
+		    if (!isPlaying) return;
+
 			base.Draw(gameTime);
 
 			// Clears the screen with the Color.CornflowerBlue
@@ -377,7 +274,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			// Draw 2D
 			this.Reset();
-			this.Canvas.Render();
+			//this.Canvas.Render();
 
 			// Execute users draw loop
 			try
@@ -418,9 +315,9 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		private void StoppedByException(Exception ex)
 		{
-			//this.Exit();
+			this.Pause();
             this.Reset();
-		}
+        }
 
 		#region Surface
 

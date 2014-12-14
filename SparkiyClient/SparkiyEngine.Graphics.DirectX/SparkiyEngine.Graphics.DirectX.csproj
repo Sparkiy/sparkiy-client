@@ -41,6 +41,7 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicTextureProvider.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindings.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindings2D.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindingsStyle.cs" />
@@ -48,9 +49,12 @@
     <Compile Include="GraphicsBindings Implementation\GraphicsBindingsSurface.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindingsText.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindingsTransform.cs" />
+    <Compile Include="ITextureProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PushPopManagement.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="SparkiyGame.cs" />
+    <Compile Include="Style2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpDX.Toolkit.Game.Direct2D\SharpDX.Toolkit.Direct2D\SharpDX.Toolkit.Direct2D.csproj">

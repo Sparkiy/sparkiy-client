@@ -11,12 +11,13 @@ namespace SparkiyEngine.Bindings.Component.Engine
 {
 	public interface IEngineBindings : IBindingsBase
     {
-		#region Messages
+        #region Messages
 
-		/// <summary>
-		/// Occurs when message was created.
-		/// </summary>
-		event EngineMessagingEventHandler OnMessageCreated;
+        /// <summary>
+        /// Occurs when message was created.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
+        event EngineMessagingEventHandler OnMessageCreated;
 
 		/// <summary>
 		/// Adds the message to the list of received messages.
@@ -54,7 +55,28 @@ namespace SparkiyEngine.Bindings.Component.Engine
 
 	    void CallDrawFunction();
 
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
+        void Initialize();
+
+        /// <summary>
+        /// Plays this instance.
+        /// </summary>
+        void Play();
+
+        /// <summary>
+        /// Pauses this instance.
+        /// </summary>
+        void Pause();
+
         #endregion
+
+        #region Scripts
+
+	    void AddScript(string name, string code);
+
+        #endregion Scripts
 
         /// <summary>
         /// Resets this instance and all sub-systems.
@@ -69,12 +91,20 @@ namespace SparkiyEngine.Bindings.Component.Engine
 		/// </value>
 		IGraphicsBindings GraphicsBindings { get; }
 
-		/// <summary>
-		/// Gets the language bindings.
-		/// </summary>
-		/// <value>
-		/// The language bindings.
-		/// </value>
-		ILanguageBindings LanguageBindings { get; }
-	}
+        /// <summary>
+        /// Gets the graphics settings.
+        /// </summary>
+        /// <value>
+        /// The graphics settings.
+        /// </value>
+        IGraphicsSettings GraphicsSettings { get; }
+
+        /// <summary>
+        /// Gets the language bindings.
+        /// </summary>
+        /// <value>
+        /// The language bindings.
+        /// </value>
+        ILanguageBindings LanguageBindings { get; }
+    }
 }

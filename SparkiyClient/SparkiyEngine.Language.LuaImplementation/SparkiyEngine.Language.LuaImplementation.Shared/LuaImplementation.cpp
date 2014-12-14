@@ -15,6 +15,14 @@ LuaImplementation::LuaImplementation(IEngineBindings^ engine)
 	this->Initialize();
 }
 
+// static
+// Instantiate
+//
+LuaImplementation^ LuaImplementation::Instantiate(SparkiyEngine::Bindings::Component::Engine::IEngineBindings^ engine)
+{
+	return ref new LuaImplementation(engine);
+}
+
 //
 // Initialize
 //
@@ -84,7 +92,7 @@ Object^ LuaImplementation::CallMethod(const char *script, const char *name, Meth
 		{
 			iter->second->CallMethod(name, declaration, paramValues);
 		}
-		return NULL;
+		return nullptr;
 	}
 	else 
 	{
@@ -115,4 +123,17 @@ void LuaImplementation::SetVariable(const char *name, Object^ value, DataTypes d
 	{
 		iter->second->SetVariable(name, value, dataType);
 	}
+}
+
+//
+// Reset
+//
+void LuaImplementation::Reset() 
+{
+	for (std::map<const char *, LuaScript *, StrCompare>::iterator iter = this->m_scripts.begin(); iter != this->m_scripts.end(); ++iter)
+	{
+		delete(iter->second);
+	}
+
+	this->m_scripts.clear();
 }

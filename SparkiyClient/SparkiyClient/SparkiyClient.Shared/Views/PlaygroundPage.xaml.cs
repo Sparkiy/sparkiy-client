@@ -16,12 +16,12 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Prism.PubSubEvents;
+using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.UILogic.ViewModels;
 using SparkiyEngine.Engine;
 using SparkiyEngine.Graphics.DirectX;
 using SparkiyClient.Common;
+using SparkiyEngine.Bindings.Component.Common;
 
 namespace SparkiyClient.Views
 {
@@ -35,7 +35,6 @@ namespace SparkiyClient.Views
 		/// </summary>
         public PlaygroundPage()
         {
-			this.DataContext = ViewModelLocator.GetViewModel(this.GetType());
 			this.InitializeComponent();
         }
 
@@ -46,15 +45,12 @@ namespace SparkiyClient.Views
 		/// This parameter is typically used to configure the page.</param>
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			this.ViewModel.AssignGraphicsPanel(this.SwapChainPanel);
-			this.CodeEditor.OnCodeChanged += (sender, args) => 
-				this.ViewModel.AssignCodeEditor(this.CodeEditor);
+		    this.ViewModel.AssignEngine(App.InstantiateEngine(this.SwapChainPanel));
+			this.ViewModel.AssignCodeEditor(this.CodeEditor);
+		    this.ViewModel.AssignMessagesPopup(this.MessagesPopup);
 		}
 
 
-	    private IPlaygroundViewModel ViewModel
-	    {
-			get { return this.DataContext as IPlaygroundViewModel; }
-	    }
-	}
+        public IPlaygroundPageViewModel ViewModel => ServiceLocator.Current.GetInstance<IPlaygroundPageViewModel>();
+    }
 }

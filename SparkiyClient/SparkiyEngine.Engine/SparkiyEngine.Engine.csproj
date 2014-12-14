@@ -56,6 +56,10 @@
       <Project>{b30085fc-1478-496b-b615-0b0fad4aec35}</Project>
       <Name>SparkiyEngine.Bindings.Component</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SparkiyEngine.Input\SparkiyEngine.Input.csproj">
+      <Project>{5DE243FE-E7BA-425E-9125-B469D195131A}</Project>
+      <Name>SparkiyEngine.Input</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

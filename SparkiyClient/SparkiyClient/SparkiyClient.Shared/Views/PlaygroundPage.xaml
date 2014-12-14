@@ -1,14 +1,14 @@
-﻿<Page
-    x:Class="SparkiyClient.Views.PlaygroundPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SparkiyClient.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:SparkiyClient.Controls"
-    xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
-    mc:Ignorable="d"
-	RequestedTheme="Light">
+﻿<Page x:Name="pageRoot"
+	  x:Class="SparkiyClient.Views.PlaygroundPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:local="using:SparkiyClient.Views"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:controls="using:SparkiyClient.Controls"
+	  mc:Ignorable="d"
+	  RequestedTheme="Light"
+	  DataContext="{Binding ElementName=pageRoot, Path=ViewModel}">
 	
 	<Page.BottomAppBar>
 		<CommandBar>
@@ -26,5 +26,6 @@
 		
 		<controls:CodeEditorControl x:Name="CodeEditor" Margin="4" Grid.Column="0" />
 		<SwapChainPanel x:Name="SwapChainPanel" Margin="4 0 0 0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" />
+        <controls:MessagesPopupControl x:Name="MessagesPopup" Margin="4 0 0 0" VerticalAlignment="Bottom" Grid.Column="1" />
     </Grid>
 </Page>

@@ -13,6 +13,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		
 		SparkiyEngine::Bindings::Component::Language::ILanguageBindings^ GetLanguageBindings();
 
+		static LuaImplementation^ Instantiate(SparkiyEngine::Bindings::Component::Engine::IEngineBindings^ engine);
+
 	internal:
 		void AddScript(const char *id, LuaScript *script);
 		LuaScript* GetScript(const char *id);
@@ -26,6 +28,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		void SetVariable(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
 
 		std::map<const char *, SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^, StrCompare>				 m_declarations;
+
+		void Reset();
 
 	private:
 		void Initialize();

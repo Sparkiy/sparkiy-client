@@ -59,6 +59,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D97C23A-C8EA-4FB0-926C-8AC949286866}"
 	ProjectSection(SolutionItems) = preProject
 		Graph.dgml = Graph.dgml
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{1655A4D0-493B-47E5-901B-583354006A55}"
@@ -68,6 +69,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyClient.Common", "SparkiyClient.Common\SparkiyClient.Common.csproj", "{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Bindings.Component", "SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj", "{B30085FC-1478-496B-B615-0B0FAD4AEC35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{A714E91C-E728-4F5F-8832-57527C6CD695}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Input", "SparkiyEngine.Input\SparkiyEngine.Input.csproj", "{5DE243FE-E7BA-425E-9125-B469D195131A}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -412,6 +417,30 @@ Global
 		{B30085FC-1478-496B-B615-0B0FAD4AEC35}.Release|x64.Build.0 = Release|Any CPU
 		{B30085FC-1478-496B-B615-0B0FAD4AEC35}.Release|x86.ActiveCfg = Release|Any CPU
 		{B30085FC-1478-496B-B615-0B0FAD4AEC35}.Release|x86.Build.0 = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|Win32.Build.0 = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|x64.Build.0 = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Debug|x86.Build.0 = Debug|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|ARM.Build.0 = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|Win32.ActiveCfg = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|Win32.Build.0 = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|x64.ActiveCfg = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|x64.Build.0 = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5DE243FE-E7BA-425E-9125-B469D195131A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -442,5 +471,7 @@ Global
 		{79259DB5-4D17-450E-9861-09FA93BFF6FD} = {1655A4D0-493B-47E5-901B-583354006A55}
 		{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B} = {4953258D-D77C-4D81-8635-E690143BA96C}
 		{B30085FC-1478-496B-B615-0B0FAD4AEC35} = {33632E57-519F-4D68-82D6-88690211E54D}
+		{A714E91C-E728-4F5F-8832-57527C6CD695} = {773B2F69-49B8-40F0-BC4C-C9C9EF26FF99}
+		{5DE243FE-E7BA-425E-9125-B469D195131A} = {A714E91C-E728-4F5F-8832-57527C6CD695}
 	EndGlobalSection
 EndGlobal

@@ -1,27 +1,165 @@
-﻿<prism:VisualStateAwarePage
-    x:Class="SparkiyClient.Views.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SparkiyClient"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:prism="using:Microsoft.Practices.Prism.StoreApps"
-	xmlns:prismmvvm="using:Microsoft.Practices.Prism.Mvvm"                            
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-	prismmvvm:ViewModelLocator.AutoWireViewModel="true">
+﻿<common:PageBase x:Name="pageRoot"
+				x:Class="SparkiyClient.Views.MainPage"
+				xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:local="using:SparkiyClient"
+				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:system="using:System"
+				xmlns:common="using:SparkiyClient.Common"
+				mc:Ignorable="d"
+				RequestedTheme="Light"
+				DataContext="{Binding Source={StaticResource Locator}, Path=MainPage}">
 
-    <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition />
-		</Grid.RowDefinitions>
+	<common:PageBase.Resources>
+		
+	</common:PageBase.Resources>
+	
+	<!--
+		Application bar
+	-->
+	<common:PageBase.BottomAppBar>
+		<CommandBar>
+			<CommandBar.PrimaryCommands>
+				<AppBarButton Icon="Add" Label="New project" Command="{Binding NewProjectCommand}" />
+			</CommandBar.PrimaryCommands>
+		</CommandBar>
+	</common:PageBase.BottomAppBar>
+	
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
 
-		<StackPanel Orientation="Horizontal" Grid.Row="0">
-			<TextBlock Text="Sparkiy"  />
-		</StackPanel>
-
-		<SwapChainPanel x:Name="SwapChainPanel" Grid.Row="1" />
-
+		<SemanticZoom>
+			<SemanticZoom.ZoomedOutView>
+				<Hub>
+					<HubSection Header="Projects" Foreground="{StaticResource AccentBrushDark}">
+						<DataTemplate>
+							<GridView ItemsSource="{Binding Projects}"
+									  SelectionMode="Single"
+									  IsItemClickEnabled="True"
+									  IsSwipeEnabled="True">
+								<GridView.ItemTemplate>
+									<DataTemplate>
+										<StackPanel Orientation="Horizontal">
+											<Border Background="{StaticResource AccentBrushDark}">
+												<Image Source="{Binding Image.Source}" 
+													   Width="40" Height="40"
+													   Stretch="Uniform" />
+											</Border>
+											<TextBlock Text="{Binding Name}" 
+													   Foreground="{StaticResource AccentBrushDark}" 
+													   Margin="10 0"
+													   Padding="0 0 20 0"
+													   VerticalAlignment="Center" />
+										</StackPanel>
+									</DataTemplate>
+								</GridView.ItemTemplate>
+							</GridView>
+						</DataTemplate>
+					</HubSection>
+				</Hub>
+			</SemanticZoom.ZoomedOutView>
+			
+			<SemanticZoom.ZoomedInView>
+				<Hub>
+					<Hub.Header>
+						<StackPanel Orientation="Horizontal">
+							<Grid Margin="5 0 20 0">
+								<Path Fill="{StaticResource AccentBrushBlue}" Data="M69.5659790039063,29.0360107421875L70.0789794921875,29.125 68.9556427001953,24.6942749023438 67.2781982421875,20.4656143188477 65.07568359375,16.4926815032959 62.3771209716797,12.8291320800781 59.2115440368652,9.52863025665283 55.6079788208008,6.64483547210693 51.5954551696777,4.23140859603882 47.2030029296875,2.34201049804688 47.97265625,7.17295169830322 49.4233016967773,11.7287158966064 51.5038299560547,15.9334354400635 54.1631317138672,19.7112426757813 57.3501052856445,22.986270904541 61.0136413574219,25.682653427124 65.1026382446289,27.7245216369629 69.5659790039063,29.0360107421875z"/>
+								<Path Fill="{StaticResource AccentBrushBlue}" Data="M14.5479736328125,17.0190124511719L15.9639892578125,17.2659912109375 20.5856800079346,17.588207244873 25.1067237854004,17.1990127563477 29.4745597839355,16.1414051055908 33.6366271972656,14.4583778381348 37.5403671264648,12.192928314209 41.1332206726074,9.38805198669434 44.3626251220703,6.08674383163452 47.176025390625,2.33200073242188 45.4229736328125,1.7659912109375 39.9593925476074,0.615592539310455 34.5269966125488,0.341053485870361 29.2091865539551,0.896858394145966 24.0893630981445,2.23749160766602 19.2509307861328,4.31743764877319 14.777289390564,7.09118032455444 10.7518434524536,10.513204574585 7.25799560546875,14.5379943847656 10.7927322387695,16.0079917907715 14.5479736328125,17.0190124511719z"/>
+								<Path Fill="{StaticResource AccentBrushBlue}" Data="M58.0770263671875,46.7999877929688L57.2881317138672,50.8431663513184 57.0421371459961,54.8423690795898 57.3093299865723,58.7386322021484 58.0599975585938,62.4729919433594 61.6938247680664,58.9670143127441 64.8158798217773,54.9308738708496 67.3534927368164,50.4032974243164 69.2340087890625,45.4230041503906 70.1383972167969,41.5653457641602 70.5981216430664,37.7112503051758 70.6305313110352,33.889778137207 70.2529907226563,30.1300048828125 66.2722015380859,33.0103073120117 62.8183822631836,36.812744140625 60.0378761291504,41.4413070678711 58.0770263671875,46.7999877929688z"/>
+								<Path Fill="{StaticResource AccentBrushBlue}" Data="M50.541015625,58.0570068359375L48.8090209960938,57.6099853515625 45.752124786377,57.3105049133301 42.7320976257324,57.6043243408203 39.8005256652832,58.4562644958496 37.0089950561523,59.8311233520508 34.4090919494629,61.693717956543 32.0524063110352,64.0088500976563 29.9905223846436,66.741340637207 28.2750244140625,69.8559875488281 28.2109985351563,69.8479919433594 27.8828525543213,66.7823181152344 27.1792411804199,63.8598022460938 24.7284927368164,58.6332397460938 23.0227890014648,56.4236946105957 21.0244903564453,54.5463027954102 18.7543106079102,53.0483169555664 16.2329711914063,51.9769897460938 14.6589965820313,51.5719909667969 12.1797561645508,51.3037338256836 9.72386169433594,51.468879699707 7.32328796386719,52.0418357849121 5.010009765625,52.9970092773438 8.78651809692383,58.3599014282227 13.5306243896484,62.9616355895996 19.156177520752,66.6403045654297 25.5770263671875,69.2340087890625 29.9270839691162,70.2225036621094 34.2680168151855,70.6495971679688 38.5577926635742,70.5383377075195 42.7543716430664,69.9117584228516 46.8157196044922,68.7928924560547 50.6997985839844,67.2047882080078 54.3645706176758,65.1704788208008 57.7680053710938,62.7130126953125 54.4526290893555,59.9181251525879 50.541015625,58.0570068359375z"/>
+								<Path Fill="{StaticResource AccentBrushBlue}" Data="M9.31402587890625,38.4500122070313L9.73576068878174,32.577392578125 9.27614593505859,26.8916244506836 7.99620723724365,21.4797916412354 5.95697021484375,16.4289855957031 3.55848693847656,20.7956237792969 1.7659912109375,25.5769958496094 0.458303451538086,32.5096130371094 0.542251586914063,39.3551292419434 1.92407417297363,45.9435844421387 4.510009765625,52.1050109863281 7.52473449707031,45.6386184692383 9.31402587890625,38.4500122070313z"/>
+							</Grid>
+							<TextBlock Text="sparkiy" Foreground="{StaticResource AccentBrushDark}" />
+						</StackPanel>
+					</Hub.Header>
+			
+					<!-- Content -->
+					<HubSection Width="780">
+						<DataTemplate>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition />
+								</Grid.RowDefinitions>
+						
+								<!-- Select workspace folder message -->
+								<Border Visibility="{Binding RequiresWorkspaceInitialization, Converter={StaticResource BooleanToVisibilityConverter}}"
+										BorderBrush="#CCC" 
+										Background="#EDEDED" 
+										BorderThickness="1"
+										HorizontalAlignment="Center">
+									<Grid HorizontalAlignment="Stretch"> 
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="Auto" />
+										</Grid.ColumnDefinitions>
+								
+										<Path Data="F1M950.458,504.864L940.094,504.864 940.094,503.164 940.925,503.164C941.828,503.164 942.434,503.083 942.748,502.922 943.057,502.758 943.276,502.531 943.404,502.231 943.532,501.935 943.597,501.239 943.597,500.148L943.597,488.226 940.094,488.226 940.094,486.547C941.216,486.414 942.153,486.226 942.917,485.987 943.68,485.747 944.546,485.367 945.518,484.846L946.994,484.846 946.994,501.079C946.994,501.646 947.078,502.071 947.24,502.354 947.401,502.635 947.628,502.843 947.917,502.971 948.206,503.099 948.737,503.164 949.505,503.164L950.458,503.164 M943.576,476.395C944.034,475.944 944.589,475.719 945.234,475.719 945.882,475.719 946.437,475.944 946.896,476.395 947.354,476.848 947.584,477.398 947.584,478.046 947.584,478.692 947.354,479.247 946.896,479.704 946.437,480.164 945.882,480.392 945.234,480.392 944.589,480.392 944.034,480.164 943.576,479.704 943.117,479.247 942.888,478.692 942.888,478.046 942.888,477.398 943.117,476.848 943.576,476.395z M945.276,468.91C933.469,468.91 923.896,478.483 923.896,490.29 923.896,502.099 933.469,511.671 945.276,511.671 957.084,511.671 966.656,502.099 966.656,490.29 966.656,478.483 957.084,468.91 945.276,468.91z" 
+											  Stretch="Uniform" Fill="#333" Width="32" Height="32" Margin="20,0" RenderTransformOrigin="0.5,0.5"
+											  VerticalAlignment="Center"
+											  Grid.Column="0" />
+										<TextBlock Text="Before you start, you must tell us where to save your code."
+												   FontSize="16" Foreground="#333"
+												   VerticalAlignment="Center"
+												   Grid.Column="1"/>
+										<Button Content="Select a folder"
+												FontSize="14"
+												Padding="12 8" Margin="20 8"
+												BorderThickness="1"
+												BorderBrush="#333"
+												Background="Transparent"
+												Command="{Binding InitializeWorkspaceCommand}"
+												Grid.Column="2"/>
+									</Grid>
+								</Border>
+							</Grid>
+						</DataTemplate>
+					</HubSection>
+			
+					<!-- Projects -->
+					<HubSection MinWidth="480">
+						<DataTemplate>
+							<GridView ItemsSource="{Binding Projects}"
+									  SelectionMode="Single"
+									  IsItemClickEnabled="True"
+									  IsSwipeEnabled="True"
+									  ItemClick="ProjectOnItemClick">
+								<GridView.ItemContainerTransitions>
+									<TransitionCollection>
+										<AddDeleteThemeTransition />
+										<EntranceThemeTransition />
+									</TransitionCollection>
+								</GridView.ItemContainerTransitions>
+								<GridView.ItemTemplate>
+									<DataTemplate>
+										<Grid HorizontalAlignment="Left" Width="250" Height="250">
+											<Border Background="{StaticResource AccentBrushDark}">
+												<Image Source="{Binding Image.Source}" 
+														Stretch="Uniform" />
+											</Border>
+											<Border VerticalAlignment="Top"
+													Background="#DDFFFFFF">
+												<TextBlock Text="{Binding Name}" 
+															Foreground="{StaticResource AccentBrushDark}" 
+															FontWeight="Medium"
+															Margin="15 0"
+															Padding="0 10" />
+											</Border>
+										</Grid>
+									</DataTemplate>
+								</GridView.ItemTemplate>
+							</GridView>
+						</DataTemplate>
+					</HubSection>
+				</Hub>
+			</SemanticZoom.ZoomedInView>
+		</SemanticZoom>
 	</Grid>
-</prism:VisualStateAwarePage>
+</common:PageBase>

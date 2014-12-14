@@ -14,30 +14,38 @@ m_content(content),
 m_isRunning(false),
 m_isValid(false)
 {
-	// Initialize Lua
-	m_luaState = luaL_newstate();
-	luaL_openlibs(m_luaState);
-
-	// Register custom functions
-	//this->RegisterCustomFunctions();
-	//this->RegisterCustomLibraries();
-
-	// Panic handler
-	lua_atpanic(m_luaState, PanicHandler);
-
-	// Save pointer to this object
-	lua_pushlightuserdata(m_luaState, this);
-	lua_setglobal(m_luaState, ScriptPointerVariableName);
-
-	// Initialize variable monitors
-	//this->m_monitors = ref new Platform::Collections::Vector<IMonitorItem^>();
+	this->Initialize();
 }
 
 // Destructor
 LuaScript::~LuaScript()
 {
+	this->Dispose();
+
+	delete(this->m_luaState);
+	delete(this->m_id);
+	delete(this->m_content);
+}
+
+void LuaScript::Initialize()
+{
+	// Initialize Lua
+	this->m_luaState = luaL_newstate();
+	luaL_openlibs(this->m_luaState);
+
+	// Panic handler
+	lua_atpanic(this->m_luaState, PanicHandler);
+
+	// Save pointer to this object
+	lua_pushlightuserdata(this->m_luaState, this);
+	lua_setglobal(this->m_luaState, ScriptPointerVariableName);
+}
+
+void LuaScript::Dispose()
+{
 	// Cleanup Lua vm
-	lua_close(m_luaState);
+	if (this->m_luaState != nullptr)
+		lua_close(this->m_luaState);
 }
 
 //
@@ -60,32 +68,6 @@ void LuaScript::Start()
 	OutputDebugStringW(GetWString("Starting script with id(" + GetString(this->m_id) + ")\n").c_str());
 
 	this->m_isRunning = true;
-
-	// Check if receiving function exists
-	//if (LuaScript::FunctionExist(this->m_luaState, StartFunctionName))
-	//{
-	//	// Push all arguments
-	//	LuaScript::AddArgumentStringArray(this->m_luaState, parameters);
-
-	//	// Call the function
-	//	int callError = LuaScript::CallFunction(this->m_luaState, StartFunctionName, parameters.size(), 0);
-	//}
-}
-
-//
-// SetConstant
-//
-void SetConstant(const char *name, Object^ value, DataTypes dataType)
-{
-
-}
-
-// 
-// SetVariable
-//
-void SetVariable(const char *name, Object^ value, DataTypes dataType)
-{
-
 }
 
 // 
@@ -142,10 +124,19 @@ void LuaScript::Load()
 	{
 		this->HandleException();
 	}
+}
 
-	// Call loaded function
-	//if (FunctionExist(this->m_luaState, LoadedFunctionName))
-	//	CallFunction(this->m_luaState, LoadedFunctionName, 0, 0);
+//
+// Reset
+//
+void LuaScript::Reset()
+{
+	// Clean and reinitialize lua vm
+	this->Dispose();
+	this->Initialize();
+
+	// Reload script
+	this->Load();
 }
 
 //
@@ -160,7 +151,7 @@ Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails
 
 	// Check if function with given name exists
 	if (!LuaScript::FunctionExist(this->m_luaState, name))
-		return NULL;
+		return nullptr;
 
 	// Check if correct number of parameters were passed
 	if (paramValues->Length != declaration->Input->Length)
@@ -169,9 +160,11 @@ Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails
 	// Check if there are any parameters to push to the stack
 	if (declaration->Input->Length != 0)
 	{
-		// TODO Implement
-		// TODO Cast parameter and push to stack
-		throw;
+		// Cast parameter and push to stack
+		for (unsigned int index = 0; index < declaration->Input->Length; index++)
+		{
+			LuaScript::PushLuaStack(this->m_luaState, paramValues[index], declaration->Input[index]);
+		}
 	}
 	
 	// Call the function
@@ -186,7 +179,7 @@ Object^ LuaScript::CallMethod(const char *name, MethodDeclarationOverloadDetails
 	}
 	else 
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -353,6 +346,7 @@ int LuaScript::CallFunction(lua_State *luaState, const char *name, int numParame
 	const char *functionExecutionError = "An error occured while executing function \"%s\"";
 
 	lua_getglobal(luaState, name);
+	lua_insert(luaState, numParameters);
 	int errorCode = lua_pcall(luaState, numParameters, numResults, 0);
 	if (errorCode)
 		luaL_error(luaState, functionExecutionError, name);

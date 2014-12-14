@@ -34,12 +34,23 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.game.Reset();
 		}
 
-		#region Pre2DDraw
+        public void Play()
+        {
+            this.game.Play();
+        }
 
-		/// <summary>
-		/// Occurs before 2D draw is called so that user can fill collection with drawable objects
-		/// </summary>
-		public event MethodCallRequestEventHandler Pre2DDraw;
+        public void Pause()
+        {
+            this.game.Pause();
+        }
+
+        #region Pre2DDraw
+
+        /// <summary>
+        /// Occurs before 2D draw is called so that user can fill collection with drawable objects
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
+        public event MethodCallRequestEventHandler Pre2DDraw;
 
 		/// <summary>
 		/// Triggers the pre2 d draw.

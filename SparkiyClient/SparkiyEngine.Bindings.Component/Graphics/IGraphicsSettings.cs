@@ -1,4 +1,7 @@
-﻿namespace SparkiyEngine.Bindings.Component.Graphics
+﻿using System.Diagnostics.Contracts;
+using SparkiyEngine.Bindings.Component.Language;
+
+namespace SparkiyEngine.Bindings.Component.Graphics
 {
 	/// <summary>
 	/// Graphics Settings manager should implement this interface
@@ -26,5 +29,13 @@
 		/// The graphics bindings.
 		/// </value>
 		IGraphicsBindings GraphicsBindings { get; }
+
+        /// <summary>
+        /// Gets the panel.
+        /// </summary>
+        /// <value>
+        /// The panel.
+        /// </value>
+        object Panel { get; }
 	}
 }

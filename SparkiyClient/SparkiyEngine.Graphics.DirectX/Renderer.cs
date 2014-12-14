@@ -17,7 +17,7 @@ namespace SparkiyEngine.Graphics.DirectX
 	/// <summary>
 	/// Renderer handles Graphics Settings and manages Graphics Bindings implementation
 	/// </summary>
-	public class Renderer : IDisposable, IGraphicsSettings
+	public sealed class Renderer : IDisposable, IGraphicsSettings
 	{
 		private SparkiyGame game;
 
@@ -36,16 +36,17 @@ namespace SparkiyEngine.Graphics.DirectX
 		/// <param name="panel">The panel to assign as drawing surface.</param>
 		public Renderer(IEngineBindings engine, SwapChainPanel panel) : this(engine)
 		{
-			this.AssignPanel(panel);
+		    this.AssignPanel(panel);
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Assigns the panel as drawing surface.
 		/// </summary>
 		/// <param name="panel">The panel to assign.</param>
 		public void AssignPanel(object panel)
 		{
-			this.game.Run(panel);
+            this.Panel = panel;
+            this.game.Run(panel);
 		}
 
 
@@ -96,17 +97,25 @@ namespace SparkiyEngine.Graphics.DirectX
 			// GC.SuppressFinalize(this);
 		}
 
-		#endregion IDisposable Support
+        #endregion IDisposable Support
 
-		#region Properties
+        #region Properties
 
-		/// <summary>
-		/// Gets the graphics bindings.
-		/// </summary>
-		/// <value>
-		/// The graphics bindings.
-		/// </value>
-		public IGraphicsBindings GraphicsBindings
+        /// <summary>
+        /// Gets or sets the panel.
+        /// </summary>
+        /// <value>
+        /// The panel.
+        /// </value>
+        public object Panel { get; private set; }
+
+        /// <summary>
+        /// Gets the graphics bindings.
+        /// </summary>
+        /// <value>
+        /// The graphics bindings.
+        /// </value>
+        public IGraphicsBindings GraphicsBindings
 		{
 			get { return this.game.GraphicsBindings; }
 		}

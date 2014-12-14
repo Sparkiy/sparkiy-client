@@ -13,6 +13,7 @@
 		<RichEditBox x:Name="RichEditBox" 
 					 IsTextPredictionEnabled="False" 
 					 IsSpellCheckEnabled="False" 
-					 TextWrapping="NoWrap" />
+					 TextWrapping="NoWrap"
+					 BorderThickness="0" />
 	</Grid>
 </UserControl>

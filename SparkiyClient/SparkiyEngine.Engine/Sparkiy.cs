@@ -6,13 +6,48 @@ using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Common.Attributes;
 using System.Reflection;
 using System;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using Windows.UI.Xaml;
+using SparkiyEngine.Input;
 
 namespace SparkiyEngine.Engine
 {
+    internal class ScriptManager
+    {
+        private readonly List<string> activeScripts = new List<string>(); 
+        private readonly List<string> inactiveScripts = new List<string>();
+
+        public bool HasInactiveScripts => this.inactiveScripts.Any();
+
+        public void AddScript(string name)
+        {
+            if (this.activeScripts.Contains(name))
+                throw new InvalidOperationException("Script already added.");
+
+            this.activeScripts.Add(name);
+        }
+
+        public void Reset()
+        {
+            this.activeScripts.Clear();
+            this.inactiveScripts.Clear();
+        }
+    }
+
 	public class Sparkiy : IEngineBindings
 	{
 		private ILanguageBindings languageBindings;
 		private IGraphicsBindings graphicsBindings;
+	    private IGraphicsSettings graphicsSettings;
+
+	    private ScriptManager scriptManager;
+	    private PointerManager pointerManager;
+
+	    private bool isInitialized;
+	    private bool isReset;
+
+	    private DateTime startedTime;
 
 
 		/// <summary>
@@ -20,6 +55,7 @@ namespace SparkiyEngine.Engine
 		/// </summary>
 		public Sparkiy()
 		{
+		    
 		}
 
 
@@ -29,22 +65,147 @@ namespace SparkiyEngine.Engine
 		/// <param name="language">The language that language binding represents.</param>
 		/// <param name="languageBindings">The language bindings.</param>
 		/// <param name="graphicsBindings">The graphics bindings.</param>
-		public void AssignBindings(SupportedLanguages language, ILanguageBindings languageBindings, IGraphicsBindings graphicsBindings)
+		public void AssignBindings(ILanguageBindings languageBindings, IGraphicsSettings graphicsSettings)
 		{
-			this.languageBindings = languageBindings;
-			this.graphicsBindings = graphicsBindings;
+            Contract.Requires(languageBindings != null);
+            Contract.Requires(graphicsSettings != null);
+            Contract.Requires(graphicsSettings.GraphicsBindings != null);
+            Contract.Requires(graphicsSettings.Panel != null);
 
-			// Map methods Graphics > Language
-			this.LanguageBindings.MapToGraphicsMethods(
-				MethodDeclarationResolver.ResolveAll(
-					this.GraphicsBindings.GetType(),
-					language));
+            this.languageBindings = languageBindings;
+		    this.graphicsSettings = graphicsSettings;
+			this.graphicsBindings = this.graphicsSettings.GraphicsBindings;
 		}
+
+	    public void AssignPanel(object panel)
+	    {
+            Contract.Requires(panel != null);
+
+            this.graphicsSettings.AssignPanel(panel);
+        }
+	    public void Initialize()
+	    {
+            // Map methods Graphics > Language
+            this.LanguageBindings.MapToGraphicsMethods(
+                MethodDeclarationResolver.ResolveAll(
+                    this.GraphicsBindings.GetType(),
+                    this.LanguageBindings.Language));
+
+            // Instantiate pointer manager
+            if (!(this.graphicsSettings.Panel is UIElement))
+                throw new InvalidCastException("Panel must be of type UIElement in order to use PointerManager");
+            this.pointerManager = new PointerManager((UIElement)this.graphicsSettings.Panel, this);
+
+            // Instantiate script manager
+            this.scriptManager = new ScriptManager();
+
+            this.isReset = true;
+            this.isInitialized = true;
+        }
+
+	    public void Play()
+	    {
+	        if (!this.isInitialized)
+                throw new InvalidOperationException("Initialize engine before calling play.");
+
+	        if (this.isReset)
+	            this.startedTime = DateTime.Now;
+
+	        this.GraphicsBindings.Play();
+
+            if (this.scriptManager.HasInactiveScripts)
+                throw new NotImplementedException();
+
+            this.CallStarted();
+	    }
+        
+	    public void Pause()
+	    {
+            this.GraphicsBindings.Pause();
+
+            if (this.scriptManager.HasInactiveScripts)
+                throw new NotImplementedException();
+
+            this.CallStopped();
+	    }
+
+	    public void AddScript(string name, string code)
+	    {
+	        this.scriptManager.AddScript(name);
+	        this.LanguageBindings.LoadScript(name, code);
+            this.CallCreated(name);
+	    }
 
 	    public void CallDrawFunction()
 	    {
+            if (this.scriptManager.HasInactiveScripts)
+                throw new NotImplementedException();
+
+            this.LanguageBindings.SetVariable("DELTA", (double)(DateTime.Now - this.startedTime).TotalMilliseconds, DataTypes.Number);
+
+            // Call touched method if there are any pointers active
+	        if (this.pointerManager.PrimaryPointer != null)
+	        {
+	            if (this.pointerManager.PrimaryPointer.InGameType != InputTypes.NotTracked)
+	                this.CallTouched(
+                        this.pointerManager.PrimaryPointer.InGameType,
+	                    this.pointerManager.PrimaryPointer.X,
+	                    this.pointerManager.PrimaryPointer.Y);
+
+	            this.pointerManager.PrimaryPointer.UpdateType();
+	        }
+
             // Call use draw method
-	        this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+            this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+	    }
+
+	    private void CallCreated(string script = null)
+	    {
+	        this.CallFunction(script, "Created", MethodTypes.Call);
+	    }
+
+	    private void CallStarted(string script = null)
+	    {
+	        this.CallFunction(script, "Started", MethodTypes.Call);
+	    }
+
+        private void CallTouched(InputTypes type, float x, float y, string script = null)
+	    {
+	        this.CallFunction(script, "Touched", MethodTypes.Set, new Dictionary<DataTypes, object>
+	        {
+	            {DataTypes.Number, (double) type},
+                {DataTypes.Number, (double) x},
+                {DataTypes.Number, (double) y}
+            });
+        }
+
+	    private void CallStopped(string script = null)
+	    {
+	        this.CallFunction(script, "Stopped", MethodTypes.Call);
+	    }
+
+	    private object CallFunction(string script, string name, MethodTypes type, Dictionary<DataTypes, object> inputParameters = null)
+	    {
+	        if (script != null)
+	        {
+                return this.LanguageBindings.CallMethod(script, name,
+                    new MethodDeclarationOverloadDetails()
+                    {
+                        Type = type,
+                        Input = inputParameters?.Keys.ToArray() ?? new DataTypes[0]
+                    },
+                    inputParameters?.Values.ToArray() ?? new object[0]);
+            }
+	        else
+	        {
+	            return this.LanguageBindings.CallMethod(name,
+	                new MethodDeclarationOverloadDetails()
+	                {
+	                    Type = type,
+	                    Input = inputParameters?.Keys.ToArray() ?? new DataTypes[0]
+	                },
+	                inputParameters?.Values.ToArray() ?? new object[0]);
+	        }
 	    }
 
 	    #region Messages
@@ -65,10 +226,9 @@ namespace SparkiyEngine.Engine
 		/// <param name="message">The message to add.</param>
 		public void AddMessage(EngineMessage message)
 		{
-			this.messages.Add(message);
+		    this.messages.Add(message);
 
-			if (this.OnMessageCreated != null)
-				this.OnMessageCreated(this);
+		    this.OnMessageCreated?.Invoke(this);
 		}
 
 		/// <summary>
@@ -87,7 +247,7 @@ namespace SparkiyEngine.Engine
 		/// </summary>
 		public void ClearMessages()
 		{
-			this.messages.Clear();
+		    this.messages.Clear();
 		}
 
 		#endregion
@@ -120,6 +280,11 @@ namespace SparkiyEngine.Engine
 
 			// Clear engine
 			this.ClearMessages();
+
+            // Clear scripts
+		    this.scriptManager.Reset();
+
+		    this.isReset = true;
 		}
 
 		/// <summary>
@@ -143,5 +308,16 @@ namespace SparkiyEngine.Engine
 		{
 			get { return this.graphicsBindings; }
 		}
+
+        /// <summary>
+        /// Gets the graphics settings.
+        /// </summary>
+        /// <value>
+        /// The graphics settings.
+        /// </value>
+        public IGraphicsSettings GraphicsSettings
+	    {
+	        get { return this.graphicsSettings; }
+	    }
     }
 }
