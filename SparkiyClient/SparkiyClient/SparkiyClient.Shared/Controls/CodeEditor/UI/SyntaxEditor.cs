@@ -29,7 +29,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using SparkiyClient.Controls.CodeEditor.Lexer;
-using TextEditor;
 
 namespace SparkiyClient.Controls.CodeEditor.UI
 {

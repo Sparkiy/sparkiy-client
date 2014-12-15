@@ -26,7 +26,6 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using SparkiyClient.Controls.CodeEditor.Lexer;
-using TextEditor;
 
 namespace SparkiyClient.Controls.CodeEditor.UI
 {

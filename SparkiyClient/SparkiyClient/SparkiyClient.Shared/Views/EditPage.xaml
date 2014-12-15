@@ -226,6 +226,7 @@
 					   Margin="-32 0 0 0"
 					   HorizontalAlignment="Left" 
 					   VerticalAlignment="Stretch"
+					   IsHitTestVisible="False"
 					   Grid.RowSpan="3">
 				<Rectangle.Fill>
 					<LinearGradientBrush StartPoint="1,1" EndPoint="0,0.9998" MappingMode="RelativeToBoundingBox">

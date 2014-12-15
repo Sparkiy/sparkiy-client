@@ -42,39 +42,41 @@ namespace SparkiyClient.Controls
 	    private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 	    {
             // Setup editor style
-            this.RichEditBox.FontFamily = new FontFamily(fontFamily);
-	        this.RichEditBox.FontSize = this.fontSize;
+            //this.CodeEditor.FontFamily = new FontFamily(fontFamily);
+	        //this.CodeEditor.FontSize = this.fontSize;
 
 #if DEBUG
-            this.RichEditBox.Document.SetText(TextSetOptions.None, this.debugTemplate.Replace("\t", this.tabValue));
+            //this.CodeEditor.Document.SetText(TextSetOptions.None, this.debugTemplate.Replace("\t", this.tabValue));
 #endif
 
-            this.RichEditBox.TextChanged += (o, args) =>
-		    {
-		        this.OnCodeChanged?.Invoke(this, null);
-		    };
-            this.RichEditBox.KeyDown += RichEditBoxOnKeyDown;
+      //      this.CodeEditor.TextChanged += (o, args) =>
+		    //{
+		    //    this.OnCodeChanged?.Invoke(this, null);
+		    //};
+      //      this.CodeEditor.KeyDown += RichEditBoxOnKeyDown;
 	    }
 
 	    private void RichEditBoxOnKeyDown(object sender, KeyRoutedEventArgs e)
 	    {
-	        if (e.Key == VirtualKey.Tab)
-	        {
-	            this.RichEditBox.Document.Selection.TypeText(this.tabValue);
-	            e.Handled = true;
-	        }
+	        //if (e.Key == VirtualKey.Tab)
+	        //{
+	        //    this.RichEditBox.Document.Selection.TypeText(this.tabValue);
+	        //    e.Handled = true;
+	        //}
 	    }
 
 
-		public string Code
-		{
-			get
-			{
-				string code = String.Empty;
-				this.RichEditBox.Document.GetText(TextGetOptions.None, out code);
-				return code;
-			}
-			set { this.RichEditBox.Document.SetText(TextSetOptions.None, value ?? String.Empty); }
-		}
+		//public string Code
+		//{
+		//	get
+		//	{
+		//		string code = String.Empty;
+		//		this.RichEditBox.Document.GetText(TextGetOptions.None, out code);
+		//		return code;
+		//	}
+		//	set { this.RichEditBox.Document.SetText(TextSetOptions.None, value ?? String.Empty); }
+		//}
+
+		public string Code { get; set; }
     }
 }
