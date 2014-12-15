@@ -26,9 +26,24 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SaveStateEventHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManagerException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditorControl.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\CodeEditorControl.xaml.cs">
       <DependentUpon>CodeEditorControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\IndentationProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\LuaGrammer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\LuaIndentationProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\LuaSyntaxLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\PythonGrammer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\PythonIndentationProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\PythonSyntaxLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Lexer\GrammerRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Lexer\IGrammer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Lexer\Token.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Lexer\Tokenizer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Lexer\TokenType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\SyntaxLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\UI\SyntaxEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\UI\SyntaxViewer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MessagesPopupControl.xaml.cs">
       <DependentUpon>MessagesPopupControl.xaml</DependentUpon>
     </Compile>
@@ -58,7 +73,7 @@
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)Controls\CodeEditorControl.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\CodeEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -69,6 +84,9 @@
     <Page Include="$(MSBuildThisFileDirectory)Themes\ColorsDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Themes\Generic.xaml">
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\CreateProjectPage.xaml">
       <SubType>Designer</SubType>
@@ -97,5 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\sparkiy.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Yellow.png" />
   </ItemGroup>
 </Project>

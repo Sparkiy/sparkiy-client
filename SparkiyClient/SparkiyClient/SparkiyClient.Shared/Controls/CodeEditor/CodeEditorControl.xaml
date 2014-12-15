@@ -5,15 +5,22 @@
     xmlns:local="using:SparkiyClient.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ui="using:SparkiyClient.Controls.CodeEditor.UI"
+	xmlns:lang="using:SparkiyClient.Controls.CodeEditor.Languages"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
     
     <Grid>
-		<RichEditBox x:Name="RichEditBox" 
-					 IsTextPredictionEnabled="False" 
-					 IsSpellCheckEnabled="False" 
-					 TextWrapping="NoWrap"
-					 BorderThickness="0" />
+		<ui:SyntaxEditor x:Name="CodeEditor"
+						 Margin="16 0 0 0"
+						 FontFamily="Consolas"
+						 FontSize="16"
+						 VerticalAlignment="Stretch"
+						 HorizontalAlignment="Stretch">
+            <ui:SyntaxEditor.SyntaxLanguage>
+                <lang:LuaSyntaxLanguage />
+            </ui:SyntaxEditor.SyntaxLanguage>
+        </ui:SyntaxEditor>
 	</Grid>
 </UserControl>
