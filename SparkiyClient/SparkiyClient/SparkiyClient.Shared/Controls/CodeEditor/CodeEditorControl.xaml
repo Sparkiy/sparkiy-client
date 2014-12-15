@@ -19,7 +19,7 @@
 						 VerticalAlignment="Stretch"
 						 HorizontalAlignment="Stretch">
             <ui:SyntaxEditor.SyntaxLanguage>
-                <lang:PythonSyntaxLanguage />
+                <lang:LuaSyntaxLanguage />
             </ui:SyntaxEditor.SyntaxLanguage>
         </ui:SyntaxEditor>
 	</Grid>

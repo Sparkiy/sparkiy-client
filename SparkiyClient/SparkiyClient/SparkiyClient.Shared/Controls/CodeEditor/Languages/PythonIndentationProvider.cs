@@ -19,7 +19,7 @@
 
 namespace SparkiyClient.Controls.CodeEditor.Languages
 {
-    public class PythonIndentationProvider : IndentationProvider
+	public class PythonIndentationProvider : IndentationProvider
     {
         bool NeedIndentation(string text)
         {

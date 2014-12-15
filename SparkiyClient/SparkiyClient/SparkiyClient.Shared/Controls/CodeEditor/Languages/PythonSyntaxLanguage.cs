@@ -23,7 +23,7 @@ using SparkiyClient.Controls.CodeEditor.Lexer;
 
 namespace SparkiyClient.Controls.CodeEditor.Languages
 {
-    public class PythonSyntaxLanguage : SyntaxLanguage
+	public class PythonSyntaxLanguage : SyntaxLanguage
     {
         public static readonly Color CommentColor = Color.FromArgb(255, 0, 128, 0);
         public static readonly Color StringColor = Color.FromArgb(255, 163, 21, 21);
@@ -34,15 +34,15 @@ namespace SparkiyClient.Controls.CodeEditor.Languages
         {
             this.Grammer = new PythonGrammer();
 
-            HighlightColors = new Dictionary<TokenType, Color>
-            {
-                { TokenType.Comment, CommentColor },
-                { TokenType.String, StringColor },
-                { TokenType.Builtins, BuiltinsColor },
-                { TokenType.Keyword, KeywordsColor },
-            };
+			HighlightColors = new Dictionary<TokenType, Color>
+			{
+				{ TokenType.Comment, CommentColor },
+				{ TokenType.String, StringColor },
+				{ TokenType.Builtins, BuiltinsColor },
+				{ TokenType.Keyword, KeywordsColor },
+			};
 
-            IndentationProvider = new PythonIndentationProvider();            
-        }
+			IndentationProvider = new PythonIndentationProvider();
+		}
     }
 }

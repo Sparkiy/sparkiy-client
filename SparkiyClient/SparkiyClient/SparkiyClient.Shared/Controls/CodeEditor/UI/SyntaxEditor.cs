@@ -21,6 +21,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using Windows.ApplicationModel.Store;
 using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -90,6 +91,7 @@ namespace SparkiyClient.Controls.CodeEditor.UI
         {
             TextView.SetBinding(RichEditBox.FontFamilyProperty, new Binding { Path = new PropertyPath("FontFamily"), Source = this });
             TextView.SetBinding(RichEditBox.FontSizeProperty, new Binding { Path = new PropertyPath("FontSize"), Source = this });
+	        TextView.SetBinding(RichEditBox.TextWrappingProperty, new Binding() {Path = new PropertyPath("TextWrapping"), Source = this});
 
             BindTextViewerScrollViewer();
         }
@@ -278,5 +280,22 @@ namespace SparkiyClient.Controls.CodeEditor.UI
 
             Debug.Assert(scrollViewer != null);
         }
-    }
+
+
+
+		/// <summary>
+		/// Gets or sets the text wrapping.
+		/// </summary>
+		/// <value>
+		/// The text wrapping.
+		/// </value>
+		public TextWrapping TextWrapping
+		{
+			get { return (TextWrapping)GetValue(TextWrappingProperty); }
+			set { SetValue(TextWrappingProperty, value); }
+		}
+
+		public static readonly DependencyProperty TextWrappingProperty =
+			DependencyProperty.Register("TextWrapping", typeof(TextWrapping), typeof(SyntaxEditor), new PropertyMetadata(Windows.UI.Xaml.TextWrapping.NoWrap));
+	}
 }

@@ -100,8 +100,8 @@
 					   Grid.RowSpan="3">
 				<Rectangle.Fill>
 					<LinearGradientBrush StartPoint="0,1" EndPoint="1,0.9998" MappingMode="RelativeToBoundingBox">
-						<GradientStop Offset="0" Color="#33000000" />
-						<GradientStop Offset="0.2" Color="#11000000" />
+						<GradientStop Offset="0" Color="#22000000" />
+						<GradientStop Offset="0.2" Color="#08000000" />
 						<GradientStop Offset="1" Color="#00FFFFFF" />
 					</LinearGradientBrush>
 				</Rectangle.Fill>

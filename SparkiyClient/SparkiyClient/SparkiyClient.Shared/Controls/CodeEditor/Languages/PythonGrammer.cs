@@ -23,7 +23,7 @@ using SparkiyClient.Controls.CodeEditor.Lexer;
 
 namespace SparkiyClient.Controls.CodeEditor.Languages
 {
-    public class PythonGrammer : IGrammer
+	public class PythonGrammer : IGrammer
     {
         public PythonGrammer()
         {

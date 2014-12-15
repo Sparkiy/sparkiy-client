@@ -30,6 +30,9 @@
       <DependentUpon>CodeEditorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\IndentationProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\LuaGrammer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\LuaIndentationProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\LuaSyntaxLanguage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\PythonGrammer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\PythonIndentationProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Languages\PythonSyntaxLanguage.cs" />
