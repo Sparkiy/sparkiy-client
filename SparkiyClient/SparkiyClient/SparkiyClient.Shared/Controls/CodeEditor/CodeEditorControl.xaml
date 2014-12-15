@@ -10,10 +10,6 @@
     d:DesignWidth="400">
     
     <Grid>
-		<RichEditBox x:Name="RichEditBox" 
-					 IsTextPredictionEnabled="False" 
-					 IsSpellCheckEnabled="False" 
-					 TextWrapping="NoWrap"
-					 BorderThickness="0" />
+		<SytnaxEditor />
 	</Grid>
 </UserControl>
