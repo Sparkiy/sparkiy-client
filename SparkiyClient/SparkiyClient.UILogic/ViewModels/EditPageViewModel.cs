@@ -44,7 +44,7 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		Project Project { get; }
 
-		Script SelectedScript { get; set; }
+		CodeFile SelectedFile { get; set; }
 		
 		RelayCommand AddNewFileCommand { get; }
 
@@ -77,10 +77,10 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.Project = project;
 
 			// Load scripts and assets list
-			await this.Project.LoadScriptsAsync(this.projectService);
+			await this.Project.LoadFilesAsync(this.projectService);
 
 			// Select first script
-			this.SelectedScript = this.Project.Scripts.Result.FirstOrDefault();
+			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
 
 			base.OnNavigatedTo(e);
 		}
@@ -93,17 +93,19 @@ namespace SparkiyClient.UILogic.ViewModels
 			}
 			else
 			{
-				this.Project.Scripts.Result.Add(new Script() {Name = this.NewFileViewModel.Name});
+				if (this.NewFileViewModel.TypeIndex == 1)
+					this.Project.Files.Result.Add(new Class {Name = this.NewFileViewModel.Name});
+				else this.Project.Files.Result.Add(new Script {Name = this.NewFileViewModel.Name});
 				await this.projectService.SaveAsync();
 
 				this.NewFileViewModel = null;
 			}
 		}
-		
+
 		public void AssignEditor(ICodeEditor editor)
 		{
 			this.editor = editor;
-			this.editor.OnCodeChanged += (sender, args) => this.SelectedScript.Code = this.editor.Code;
+			this.editor.OnCodeChanged += (sender, args) => this.SelectedFile.Code = this.editor.Code;
 		}
 
 
@@ -113,13 +115,15 @@ namespace SparkiyClient.UILogic.ViewModels
 			protected set { this.SetProperty(value); }
 		}
 
-		public Script SelectedScript
+		public CodeFile SelectedFile
 		{
-			get { return this.GetProperty<Script>(); }
+			get { return this.GetProperty<CodeFile>(); }
 			set
 			{
 				this.SetProperty(value);
-				this.editor.Code = this.SelectedScript.Code;
+
+				if (editor != null)
+					this.editor.Code = this.SelectedFile?.Code;
 			}
 		}
 
@@ -141,14 +145,15 @@ namespace SparkiyClient.UILogic.ViewModels
 				Author = "Aleksandar Toplek",
 				Description = "Sample description",
 				Name = "Sample project",
-				Scripts = NotifyTaskCompletion.Create(Task.Run(() => new ObservableCollection<Script>()
+				Files = NotifyTaskCompletion.Create(Task.Run(() => new ObservableCollection<CodeFile>()
 				{
-					new Script { Code="Sample code", Name = "main"},
-					new Script { Code="Sample code", Name = "script1"},
-					new Script { Code="Sample code", Name = "script2"}
+					new Script {Code = "Sample code", Name = "main"},
+					new Script {Code = "Sample code", Name = "script1"},
+					new Script {Code = "Sample code", Name = "script2"},
+					new Class {Code = "Class sample", Name = "class1"}
 				}))
 			};
-			this.SelectedScript = this.Project.Scripts.Result.FirstOrDefault();
+			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
 		}
 	}
 }

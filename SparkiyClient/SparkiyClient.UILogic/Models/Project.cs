@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.Storage;
-using Windows.UI.Core;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using GalaSoft.MvvmLight;
 using Nito.AsyncEx;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Services;
@@ -20,68 +9,21 @@ using SparkiyClient.UILogic.Services;
 namespace SparkiyClient.UILogic.Models
 {
 	[ComVisible(false)]
-	public class ImageReference : ExtendedObservableObject
-	{
-		public ImageSources Source
-		{
-			get { return this.GetProperty<ImageSources>(); }
-			set { this.SetProperty(value); }
-		}
-
-		public string Path
-		{
-			get { return this.GetProperty<string>(); }
-			set { this.SetProperty(value); }
-		}
-
-
-		public async Task<StorageFile> GetImageAsync()
-		{
-			switch (this.Source)
-			{
-				case ImageSources.PicturesLibrary:
-					return await KnownFolders.PicturesLibrary.GetFileAsync(this.Path);
-				case ImageSources.Package:
-					return await Package.Current.InstalledLocation.GetFileAsync(this.Path);
-				case ImageSources.LocalProject:
-					return await StorageFile.GetFileFromPathAsync(this.Path);
-				default:
-					throw new InvalidOperationException("Requested source is not supported.");
-			}
-		}
-
-		public async Task<ImageSource> GetImageSourceAsync(CoreDispatcher dispatcher)
-		{
-			Contract.Requires(dispatcher != null);
-
-			using (var fs = await (await this.GetImageAsync()).OpenReadAsync())
-			{
-				BitmapImage img = null;
-				await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { img = new BitmapImage(); });
-				await img.SetSourceAsync(fs);
-				return img;
-			}
-		}
-	}
-
-	[ComVisible(false)]
 	public class Project : ExtendedObservableObject
 	{
-		public Project()
+		/// <summary>
+		/// Loads the files and its' content.
+		/// </summary>
+		/// <param name="projectService">The project service.</param>
+		public async Task LoadFilesAsync(IProjectService projectService)
 		{
+			this.Files = NotifyTaskCompletion.Create(async () => new ObservableCollection<CodeFile>(await projectService.GetFilesAsync(this)));
+			await this.Files.Task;
 
+			// Load code to files
+			foreach (var file in this.Files.Result)
+				await file.GetCodeAsync();
 		}
-
-
-		public async Task LoadScriptsAsync(IProjectService projectService)
-		{
-			this.Scripts = NotifyTaskCompletion.Create(projectService.GetScriptsAsync(this));
-			await this.Scripts.Task;
-
-			foreach (var script in this.Scripts.Result)
-				script.Code = await script.GetCodeAsync();
-		}
-
 
 		/// <summary>
 		/// Gets or sets the name.
@@ -129,9 +71,9 @@ namespace SparkiyClient.UILogic.Models
 		/// The scripts.
 		/// </value>
 		[IgnoreDataMember]
-		public INotifyTaskCompletion<ObservableCollection<Script>> Scripts
+		public INotifyTaskCompletion<ObservableCollection<CodeFile>> Files
 		{
-			get { return this.GetProperty<INotifyTaskCompletion<ObservableCollection<Script>>>(); }
+			get { return this.GetProperty<INotifyTaskCompletion<ObservableCollection<CodeFile>>>(); }
 			set { this.SetProperty(value); }
 		}
 

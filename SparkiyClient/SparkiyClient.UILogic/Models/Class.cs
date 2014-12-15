@@ -1,10 +1,8 @@
 using System;
-using System.Runtime.InteropServices;
 
 namespace SparkiyClient.UILogic.Models
 {
-	[ComVisible(false)]
-	public class Script : CodeFile
+	public class Class : CodeFile
 	{
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
@@ -14,7 +12,7 @@ namespace SparkiyClient.UILogic.Models
 		/// </returns>
 		public override string ToString()
 		{
-			return String.Format("Script: {0}", this.Name);
+			return String.Format("Class: {0}", this.Name);
 		}
 	}
 }

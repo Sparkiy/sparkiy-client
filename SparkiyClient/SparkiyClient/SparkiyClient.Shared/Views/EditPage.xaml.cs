@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -1236,6 +1237,22 @@ namespace SparkiyClient.Views
 			this.SideBarAssetsShowStoryboard.Completed += SideBarAssetsToggleStoryboardCompleted;
 		}
 
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+
+			// Hide sidebars
+			var timer = new DispatcherTimer();
+			timer.Interval = TimeSpan.FromMilliseconds(1000);
+			timer.Tick += (sender, o) =>
+			{
+				this.SideBarScriptsToggleButtonOnClick();
+				this.SideBarAssetsToggleButtonOnClick();
+				timer.Stop();
+			};
+			timer.Start();
+		}
+
 		private void SideBarAssetsToggleStoryboardCompleted(object sender, object e)
 		{
 			this.SideBarAssetsToggleButton.IsEnabled = true;
@@ -1246,7 +1263,7 @@ namespace SparkiyClient.Views
 			this.SideBarScriptsToggleButton.IsEnabled = true;
 		}
 
-		private void SideBarScriptsToggleButtonOnClick(object sender, RoutedEventArgs e)
+		private void SideBarScriptsToggleButtonOnClick(object sender = null, RoutedEventArgs e = null)
 		{
 			if (this.isScriptsSideBarOpen)
 				this.SideBarScriptHideStoryboard.Begin();
@@ -1256,7 +1273,7 @@ namespace SparkiyClient.Views
 			this.SideBarScriptsToggleButton.IsEnabled = false;
 		}
 
-		private void SideBarAssetsToggleButtonOnClick(object sender, RoutedEventArgs e)
+		private void SideBarAssetsToggleButtonOnClick(object sender = null, RoutedEventArgs e = null)
 		{
 			if (this.isAssetsSideBarOpen)
 				this.SideBarAssetsHideStoryboard.Begin();

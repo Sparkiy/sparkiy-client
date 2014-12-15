@@ -70,7 +70,7 @@
 			</Grid.RowDefinitions>
 			
 			<Border Background="{StaticResource AccentBrushDark}">
-				<TextBlock Text="{Binding SelectedScript.Name}" 
+				<TextBlock Text="{Binding SelectedFile.Name}" 
 						   Foreground="{StaticResource AccentBrushLight}"
 						   Style="{StaticResource SubheaderTextBlockStyle}"
 						   Padding="12 4 6 4"
@@ -115,8 +115,8 @@
 					Click="SideBarScriptsToggleButtonOnClick"/>
 			
 			<!-- Scripts list -->
-			<ListView ItemsSource="{Binding Project.Scripts.Result}"
-					  SelectedItem="{Binding SelectedScript, Mode=TwoWay}"
+			<ListView ItemsSource="{Binding Project.Files.Result}"
+					  SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
 					  ItemContainerStyle="{StaticResource SideBarFilesListViewStyle}"
 					  SelectionMode="Single" Grid.Row="0">
 				<ListView.Header>
