@@ -104,14 +104,23 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			
-			<Border Background="{StaticResource AccentBrushDark}">
+			<Grid Background="{StaticResource AccentBrushDark}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				
 				<TextBlock Text="{Binding SelectedFile.Name}" 
 						   Foreground="{StaticResource AccentBrushLight}"
 						   Style="{StaticResource SubheaderTextBlockStyle}"
 						   Padding="12 4 6 4"
 						   TextWrapping="NoWrap"
 						   TextTrimming="CharacterEllipsis" />
-			</Border>
+				
+				<Button Content="&#57602;" FontFamily="Segoe UI Symbol" Margin="0 0 4 0" Foreground="LightGreen" Grid.Column="1" />
+				<Button Content="&#57602;" FontFamily="Segoe UI Symbol" Margin="0 0 4 0" Grid.Column="2" />
+			</Grid>
 			
 			<controls:CodeEditorControl x:Name="CodeEditor" Grid.Row="1" />
 			
