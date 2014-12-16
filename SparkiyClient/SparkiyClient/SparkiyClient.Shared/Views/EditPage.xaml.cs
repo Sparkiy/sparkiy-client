@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
+using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.ViewModels;
 
 namespace SparkiyClient.Views
@@ -1200,6 +1201,39 @@ namespace SparkiyClient.Views
 		}
 	}
 
+	public class CodeFileDataTemplateSelector : DataTemplateSelector
+	{
+		/// <summary>
+		/// Gets or sets the script data template.
+		/// </summary>
+		/// <value>
+		/// The script data template.
+		/// </value>
+		public DataTemplate ScriptDataTemplate { get; set; }
+
+		/// <summary>
+		/// Gets or sets the class data template.
+		/// </summary>
+		/// <value>
+		/// The class data template.
+		/// </value>
+		public DataTemplate ClassDataTemplate { get; set; }
+
+		/// <summary>
+		/// Selects the template core.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <returns>DataTemplate cooresponsing to passed CodeFile Type</returns>
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			if (item is Script)
+				return this.ScriptDataTemplate;
+			else if (item is Class)
+				return this.ClassDataTemplate;
+
+			return base.SelectTemplateCore(item);
+		}
+	}
 
 	public sealed partial class EditPage : PageBase
 	{
@@ -1243,7 +1277,7 @@ namespace SparkiyClient.Views
 
 			// Hide sidebars
 			var timer = new DispatcherTimer();
-			timer.Interval = TimeSpan.FromMilliseconds(1000);
+			timer.Interval = TimeSpan.FromMilliseconds(400);
 			timer.Tick += (sender, o) =>
 			{
 				this.SideBarScriptsToggleButtonOnClick();

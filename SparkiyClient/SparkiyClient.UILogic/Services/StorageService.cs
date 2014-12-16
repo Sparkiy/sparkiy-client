@@ -72,6 +72,8 @@ namespace SparkiyClient.UILogic.Services
 			string name, 
 			Func<StorageFile, Task> saveFuncAsync)
 		{
+			Log.Debug("Saving file {0}", name);
+
 			var tempName = String.Format("{0}.temp", name);
 			var tempFile = await folder.CreateFileAsync(tempName, CreationCollisionOption.OpenIfExists);
 			await saveFuncAsync.Invoke(tempFile);

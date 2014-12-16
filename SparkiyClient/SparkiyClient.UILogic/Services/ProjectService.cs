@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Search;
+using MetroLog;
 using SparkiyClient.Common.Helpers;
 using SparkiyClient.UILogic.Models;
 
@@ -14,6 +15,8 @@ namespace SparkiyClient.UILogic.Services
 {
 	public class ProjectService : IProjectService
 	{
+		private ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<ProjectService>();
+
 		// Project 
 		private const string ProjectFileExtension = ".sparkiyproj";
 		private const string ProjectScreenshotsPath = "Screenshots";
@@ -41,6 +44,8 @@ namespace SparkiyClient.UILogic.Services
 
 		public async Task<IEnumerable<Project>> GetAvailableProjectsAsync()
 		{
+			Log.Debug("Retrieving projects...");
+
 			// Retrieve projects
 			var projectFiles = await this.GetProjectsAsync();
 
@@ -59,11 +64,17 @@ namespace SparkiyClient.UILogic.Services
 			this.projects.Clear();
 			this.projects.AddRange(loadedProjects);
 
+			Log.Debug("{0} projects found:{1}", 
+				loadedProjects.Count,
+				loadedProjects.Aggregate(String.Empty, (s, p) => s + "\n\t - " + p.Name ));
+
 			return loadedProjects;
 		}
 
 		public async Task SaveAsync()
 		{
+			Log.Debug("Saving projects...");
+
 			// Retrieve all dirty projects
 			var dirtyProjects = this.projects.Where(p => p.IsDirty || (p.Files?.Result?.Any(s => s.IsDirty) ?? false));
 			foreach (var dirtyProject in dirtyProjects)
@@ -95,6 +106,8 @@ namespace SparkiyClient.UILogic.Services
 					}
 
 				dirtyProject.MarkAsClean();
+
+				Log.Debug("Saved project \"{0}\"", dirtyProject.Name);
 			}
 		}
 

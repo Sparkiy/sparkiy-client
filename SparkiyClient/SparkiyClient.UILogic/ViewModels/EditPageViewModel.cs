@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -145,15 +146,35 @@ namespace SparkiyClient.UILogic.ViewModels
 				Author = "Aleksandar Toplek",
 				Description = "Sample description",
 				Name = "Sample project",
-				Files = NotifyTaskCompletion.Create(Task.Run(() => new ObservableCollection<CodeFile>()
-				{
-					new Script {Code = "Sample code", Name = "main"},
-					new Script {Code = "Sample code", Name = "script1"},
-					new Script {Code = "Sample code", Name = "script2"},
-					new Class {Code = "Class sample", Name = "class1"}
-				}))
+				Files = new DumbINotifyTaskCompletion<ObservableCollection<CodeFile>> () { 
+					Result = new ObservableCollection<CodeFile>()
+					{
+						new Script {Code = "Sample code", Name = "main"},
+						new Script {Code = "Sample code", Name = "script1"},
+						new Script {Code = "Sample code", Name = "script2"},
+						new Class {Code = "Class sample", Name = "class1"}
+					}
+				}
 			};
 			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
+		}
+
+		private class DumbINotifyTaskCompletion<T> : INotifyTaskCompletion<T>
+		{
+			public event PropertyChangedEventHandler PropertyChanged;
+			Task INotifyTaskCompletion.Task => Task;
+			public T Result { get; set; }
+			public Task<T> Task { get; set; }
+			public Task TaskCompleted { get; set; }
+			public TaskStatus Status { get; set; }
+			public bool IsCompleted { get; set; }
+			public bool IsNotCompleted { get; set; }
+			public bool IsSuccessfullyCompleted { get; set; }
+			public bool IsCanceled { get; set; }
+			public bool IsFaulted { get; set; }
+			public AggregateException Exception { get; set; }
+			public Exception InnerException { get; set; }
+			public string ErrorMessage { get; set; }
 		}
 	}
 }

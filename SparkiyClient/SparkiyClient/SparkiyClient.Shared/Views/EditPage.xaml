@@ -124,12 +124,26 @@
 							   Margin="24 12"
 							   Style="{StaticResource SubheaderTextBlockStyle}" />
 				</ListView.Header>
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding}"
-								   Margin="16 10" />
-					</DataTemplate>
-				</ListView.ItemTemplate>
+				<ListView.ItemTemplateSelector>
+					<extensions:CodeFileDataTemplateSelector>
+						<extensions:CodeFileDataTemplateSelector.ClassDataTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="C" Foreground="ForestGreen" Margin="16 3 8 3" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+									<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
+								</StackPanel>
+							</DataTemplate>
+						</extensions:CodeFileDataTemplateSelector.ClassDataTemplate>
+						<extensions:CodeFileDataTemplateSelector.ScriptDataTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="S" Foreground="DarkViolet" Margin="16 3 8 3" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+									<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
+								</StackPanel>
+							</DataTemplate>
+						</extensions:CodeFileDataTemplateSelector.ScriptDataTemplate>
+					</extensions:CodeFileDataTemplateSelector>
+				</ListView.ItemTemplateSelector>
 			</ListView>
 			
 			
