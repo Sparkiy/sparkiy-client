@@ -186,9 +186,11 @@ namespace SparkiyClient.Controls.CodeEditor.UI
             var editor = (RichEditBox)sender;
             string text = Text;
 
+			// Abort if text length hasn't changed
             if (text.Length == textLength) return;
             textLength = text.Length;
 
+			// Reset colors on whole document
             editor.Document.GetRange(0, int.MaxValue).CharacterFormat.ForegroundColor = Colors.Black;
 
             var t = tokenizer.Tokenize(text);
@@ -210,20 +212,16 @@ namespace SparkiyClient.Controls.CodeEditor.UI
         {
             get
             {
-                string text = string.Empty;
-
-                if (TextView != null)                
-                    TextView.Document.GetText(TextGetOptions.None, out text);                
-
-                return text;
+                string text = String.Empty;
+	            this.TextView?.Document.GetText(TextGetOptions.None, out text);
+	            return text;
             }
             set
             {
-                if (TextView != null)
-                {
-                    RefreshLineNumbers(value.Count<char>(c => c == '\r'));
-                    TextView.Document.SetText(TextSetOptions.None, value);
-                }
+	            if (TextView == null) return;
+
+	            this.TextView.Document.SetText(TextSetOptions.None, value);
+				this.RefreshLineNumbers(value.Count(c => c == '\r'));
             }
         }
 

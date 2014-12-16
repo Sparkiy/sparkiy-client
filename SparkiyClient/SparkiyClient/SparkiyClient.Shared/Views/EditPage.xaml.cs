@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -17,7 +18,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
+using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.ViewModels;
+using Image = SparkiyClient.UILogic.Models.Image;
 
 namespace SparkiyClient.Views
 {
@@ -1199,6 +1202,63 @@ namespace SparkiyClient.Views
 		}
 	}
 
+	public class CodeFileDataTemplateSelector : DataTemplateSelector
+	{
+		/// <summary>
+		/// Gets or sets the script data template.
+		/// </summary>
+		/// <value>
+		/// The script data template.
+		/// </value>
+		public DataTemplate ScriptDataTemplate { get; set; }
+
+		/// <summary>
+		/// Gets or sets the class data template.
+		/// </summary>
+		/// <value>
+		/// The class data template.
+		/// </value>
+		public DataTemplate ClassDataTemplate { get; set; }
+
+		/// <summary>
+		/// Selects the template core.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <returns>DataTemplate cooresponsing to passed CodeFile Type</returns>
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			if (item is Script)
+				return this.ScriptDataTemplate;
+			else if (item is Class)
+				return this.ClassDataTemplate;
+
+			return base.SelectTemplateCore(item);
+		}
+	}
+
+	public class AssetDataTemplateSelector : DataTemplateSelector
+	{
+		/// <summary>
+		/// Gets or sets the image data template.
+		/// </summary>
+		/// <value>
+		/// The image data template.
+		/// </value>
+		public DataTemplate ImageDataTemplate { get; set; }
+
+		/// <summary>
+		/// Selects the template core.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <returns>DataTemplate cooresponsing to passed CodeFile Type</returns>
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			if (item is Image)
+				return this.ImageDataTemplate;
+
+			return base.SelectTemplateCore(item);
+		}
+	}
 
 	public sealed partial class EditPage : PageBase
 	{
@@ -1236,6 +1296,22 @@ namespace SparkiyClient.Views
 			this.SideBarAssetsShowStoryboard.Completed += SideBarAssetsToggleStoryboardCompleted;
 		}
 
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+
+			// Hide sidebars
+			var timer = new DispatcherTimer();
+			timer.Interval = TimeSpan.FromMilliseconds(400);
+			timer.Tick += (sender, o) =>
+			{
+				this.SideBarScriptsToggleButtonOnClick();
+				this.SideBarAssetsToggleButtonOnClick();
+				timer.Stop();
+			};
+			timer.Start();
+		}
+
 		private void SideBarAssetsToggleStoryboardCompleted(object sender, object e)
 		{
 			this.SideBarAssetsToggleButton.IsEnabled = true;
@@ -1246,7 +1322,7 @@ namespace SparkiyClient.Views
 			this.SideBarScriptsToggleButton.IsEnabled = true;
 		}
 
-		private void SideBarScriptsToggleButtonOnClick(object sender, RoutedEventArgs e)
+		private void SideBarScriptsToggleButtonOnClick(object sender = null, RoutedEventArgs e = null)
 		{
 			if (this.isScriptsSideBarOpen)
 				this.SideBarScriptHideStoryboard.Begin();
@@ -1256,7 +1332,7 @@ namespace SparkiyClient.Views
 			this.SideBarScriptsToggleButton.IsEnabled = false;
 		}
 
-		private void SideBarAssetsToggleButtonOnClick(object sender, RoutedEventArgs e)
+		private void SideBarAssetsToggleButtonOnClick(object sender = null, RoutedEventArgs e = null)
 		{
 			if (this.isAssetsSideBarOpen)
 				this.SideBarAssetsHideStoryboard.Begin();

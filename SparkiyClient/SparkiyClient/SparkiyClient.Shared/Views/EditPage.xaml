@@ -8,21 +8,56 @@
 				 xmlns:common="using:SparkiyClient.Common"
 				 xmlns:system="using:System"
 				 xmlns:controls="using:SparkiyClient.Controls"
+				 xmlns:models="using:SparkiyClient.UILogic.Models"
 				 mc:Ignorable="d"
 				 RequestedTheme="Light"
 				 DataContext="{Binding Source={StaticResource Locator}, Path=EditPage}">
 
-	<common:PageBase.BottomAppBar>
-		<CommandBar>
-			<CommandBar.PrimaryCommands>
-				<AppBarButton Icon="Play" Label="Debug" Foreground="Green" />
-				<AppBarButton Icon="Play" Label="Play" />
-			</CommandBar.PrimaryCommands>
-			<CommandBar.SecondaryCommands>
-				
-			</CommandBar.SecondaryCommands>
-		</CommandBar>
-	</common:PageBase.BottomAppBar>
+	<common:PageBase.TopAppBar>
+		<AppBar RequestedTheme="Dark" Background="#111">
+			<AppBar.Resources>
+				<Style x:Key="AppBarNavigationTabStyle" TargetType="Button">
+					<Setter Property="Width" Value="156" />
+					<Setter Property="Height" Value="88" />
+					<!--<Setter Property="Height" Value="98" />-->
+					<Setter Property="HorizontalContentAlignment" Value="Left"/>
+					<Setter Property="Margin" Value="16,0,0,0" />
+					<Setter Property="BorderThickness" Value="0" />
+					<Setter Property="Background" Value="#FF333333" />
+				</Style>
+			</AppBar.Resources>
+			
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<StackPanel Orientation="Horizontal">
+					<Button Content="&lt;" Padding="28 0 28 6" BorderThickness="0" FontSize="24" FontWeight="Light" VerticalContentAlignment="Center"
+							Command="{Binding NavigateToProjectCommand}" />
+					<TextBlock Text="{Binding Project.Name}" 
+							   FontSize="{StaticResource ControlContentThemeFontSize}"
+							   Foreground="White"
+							   VerticalAlignment="Center" HorizontalAlignment="Stretch"
+							   Margin="4 0 0 0" />
+				</StackPanel>
+				<Grid Margin="5,13" Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<StackPanel Orientation="Horizontal">
+						<Button Style="{StaticResource AppBarNavigationTabStyle}" Command="{Binding NavigateToHomeCommand}">
+							<StackPanel Orientation="Vertical">
+								<Path Fill="White" Stretch="Uniform" HorizontalAlignment="Left" Width="32" Margin="0 0 0 10" Data="F1 M 24.0033,56.0078L 24.0033,38.0053L 22.0031,40.0056L 19.0027,35.0049L 38.0053,20.0028L 45.0063,25.5299L 45.0063,21.753L 49.0068,21.0029L 49.0068,28.6882L 57.008,35.0049L 54.0075,40.0056L 52.0073,38.0053L 52.0073,56.0078L 24.0033,56.0078 Z M 38.0053,26.9204L 27.0038,36.005L 27.0038,53.0074L 33.0046,53.0074L 33.0046,42.006L 43.006,42.006L 43.006,53.0074L 49.0068,53.0074L 49.0068,36.005L 38.0053,26.9204 Z "/>
+								<TextBlock Text="Home" Margin="4 0 0 0" />
+							</StackPanel>
+						</Button>
+					</StackPanel>
+				</Grid>
+			</Grid>
+		</AppBar>
+	</common:PageBase.TopAppBar>
 	
 	<common:PageBase.Resources>
 		<Style x:Key="SideBarStyle" TargetType="Grid">
@@ -69,14 +104,23 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			
-			<Border Background="{StaticResource AccentBrushDark}">
-				<TextBlock Text="{Binding SelectedScript.Name}" 
+			<Grid Background="{StaticResource AccentBrushDark}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				
+				<TextBlock Text="{Binding SelectedFile.Name}" 
 						   Foreground="{StaticResource AccentBrushLight}"
 						   Style="{StaticResource SubheaderTextBlockStyle}"
 						   Padding="12 4 6 4"
 						   TextWrapping="NoWrap"
 						   TextTrimming="CharacterEllipsis" />
-			</Border>
+				
+				<Button Content="&#57602;" FontFamily="Segoe UI Symbol" Margin="0 0 4 0" Foreground="LightGreen" Command="{Binding DebugProjectCommand}" Grid.Column="1" />
+				<Button Content="&#57602;" FontFamily="Segoe UI Symbol" Margin="0 0 4 0" Command="{Binding PlayProjectCommand}" Grid.Column="2" />
+			</Grid>
 			
 			<controls:CodeEditorControl x:Name="CodeEditor" Grid.Row="1" />
 			
@@ -115,8 +159,8 @@
 					Click="SideBarScriptsToggleButtonOnClick"/>
 			
 			<!-- Scripts list -->
-			<ListView ItemsSource="{Binding Project.Scripts.Result}"
-					  SelectedItem="{Binding SelectedScript, Mode=TwoWay}"
+			<ListView ItemsSource="{Binding Project.Files.Result}"
+					  SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
 					  ItemContainerStyle="{StaticResource SideBarFilesListViewStyle}"
 					  SelectionMode="Single" Grid.Row="0">
 				<ListView.Header>
@@ -124,15 +168,30 @@
 							   Margin="24 12"
 							   Style="{StaticResource SubheaderTextBlockStyle}" />
 				</ListView.Header>
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding}"
-								   Margin="16 10" />
-					</DataTemplate>
-				</ListView.ItemTemplate>
+				<ListView.ItemTemplateSelector>
+					<extensions:CodeFileDataTemplateSelector>
+						<extensions:CodeFileDataTemplateSelector.ClassDataTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:Class, IsDesignTimeCreatable=True}">
+									<TextBlock Text="C" Foreground="ForestGreen" Margin="16 3 8 3" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+									<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
+								</StackPanel>
+							</DataTemplate>
+						</extensions:CodeFileDataTemplateSelector.ClassDataTemplate>
+						<extensions:CodeFileDataTemplateSelector.ScriptDataTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:Script, IsDesignTimeCreatable=True}">
+									<TextBlock Text="S" Foreground="DarkViolet" Margin="16 3 8 3" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+									<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
+								</StackPanel>
+							</DataTemplate>
+						</extensions:CodeFileDataTemplateSelector.ScriptDataTemplate>
+					</extensions:CodeFileDataTemplateSelector>
+				</ListView.ItemTemplateSelector>
 			</ListView>
 			
 			
+			<!-- Add file dilog -->
 			<StackPanel Orientation="Vertical" Grid.Row="1">
 				<Button Background="Transparent"
 						Padding="0" Margin="0"
@@ -219,6 +278,11 @@
 		<Grid x:Name="SideBarAssetsGrid" 
 			  Style="{StaticResource SideBarStyle}"
 			  Grid.Column="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 			
 			<!-- Shadow -->
 			<Rectangle x:Name="SideBarAssetsShadow"  
@@ -244,6 +308,43 @@
 					HorizontalAlignment="Left"
 					Click="SideBarAssetsToggleButtonOnClick"/>
 			
+			<!-- Assets list -->
+			<ListView ItemsSource="{Binding Project.Assets.Result}"
+					  ItemContainerStyle="{StaticResource SideBarFilesListViewStyle}"
+					  SelectionMode="None" Grid.Row="0">
+				<ListView.Header>
+					<TextBlock Text="Assets" 
+							   Margin="24 12"
+							   Style="{StaticResource SubheaderTextBlockStyle}" />
+				</ListView.Header>
+				<ListView.ItemTemplateSelector>
+					<extensions:AssetDataTemplateSelector>
+						<extensions:AssetDataTemplateSelector.ImageDataTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:Image, IsDesignTimeCreatable=True}">
+									<Border Margin="8 3" Background="{StaticResource AccentBrushDark}" VerticalAlignment="Center">
+										<Image Source="{Binding Data.UriSource}" Width="36" Height="36" Stretch="Uniform" />
+									</Border>
+									<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
+								</StackPanel>
+							</DataTemplate>
+						</extensions:AssetDataTemplateSelector.ImageDataTemplate>
+					</extensions:AssetDataTemplateSelector>
+				</ListView.ItemTemplateSelector>
+			</ListView>
+			
+			<!-- Add asset dialog -->
+			<StackPanel Orientation="Vertical" Grid.Row="1">
+				<Button Background="Transparent"
+						Padding="0" Margin="0"
+						VerticalAlignment="Center" HorizontalAlignment="Stretch"
+						VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+						Command="{Binding AddNewAssetCommand}">
+					<TextBlock Text="+"
+							   FontFamily="Segoe UI" FontWeight="Light" FontSize="32"
+							   Padding="0,0,0,8" Margin="0" />
+				</Button>
+			</StackPanel>
 		</Grid>
     </Grid>
 </common:PageBase>
