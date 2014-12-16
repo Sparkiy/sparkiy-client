@@ -118,8 +118,8 @@
 						   TextWrapping="NoWrap"
 						   TextTrimming="CharacterEllipsis" />
 				
-				<Button Content="&#57602;" FontFamily="Segoe UI Symbol" Margin="0 0 4 0" Foreground="LightGreen" Grid.Column="1" />
-				<Button Content="&#57602;" FontFamily="Segoe UI Symbol" Margin="0 0 4 0" Grid.Column="2" />
+				<Button Content="&#57602;" FontFamily="Segoe UI Symbol" Margin="0 0 4 0" Foreground="LightGreen" Command="{Binding DebugProjectCommand}" Grid.Column="1" />
+				<Button Content="&#57602;" FontFamily="Segoe UI Symbol" Margin="0 0 4 0" Command="{Binding PlayProjectCommand}" Grid.Column="2" />
 			</Grid>
 			
 			<controls:CodeEditorControl x:Name="CodeEditor" Grid.Row="1" />
