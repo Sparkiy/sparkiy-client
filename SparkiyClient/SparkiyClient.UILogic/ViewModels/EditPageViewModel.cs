@@ -53,6 +53,10 @@ namespace SparkiyClient.UILogic.ViewModels
 		INewFileViewModel NewFileViewModel { get; }
 
 		RelayCommand AddNewAssetCommand { get; }
+
+		RelayCommand NavigateToHomeCommand { get; }
+
+		RelayCommand NavigateToProjectCommand { get; }
 	}
 
 	public class EditPageViewModel : ExtendedViewModel, IEditPageViewModel
@@ -70,6 +74,8 @@ namespace SparkiyClient.UILogic.ViewModels
 
 			this.AddNewFileCommand = new RelayCommand(this.AddNewFileCommandExecuteAsync);
 			this.AddNewAssetCommand = new RelayCommand(this.AddNewAssetCommandExecuteAsync);
+			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecuteAsync);
+			this.NavigateToProjectCommand = new RelayCommand(this.NavigateToProjectCommandExecuteAsync);
 		}
 
 
@@ -88,6 +94,16 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
 
 			base.OnNavigatedTo(e);
+		}
+
+		private async void NavigateToHomeCommandExecuteAsync()
+		{
+			this.navigationService.NavigateTo("MainPage");
+		}
+
+		private async void NavigateToProjectCommandExecuteAsync()
+		{
+			this.navigationService.NavigateTo("ProjectPage", this.Project);
 		}
 
 		private async void AddNewFileCommandExecuteAsync()
@@ -164,6 +180,10 @@ namespace SparkiyClient.UILogic.ViewModels
 		}
 
 		public RelayCommand AddNewAssetCommand { get; }
+
+		public RelayCommand NavigateToHomeCommand { get; }
+
+		public RelayCommand NavigateToProjectCommand { get; }
 	}
 
 	public class EditPageViewModelDesignTime : EditPageViewModel

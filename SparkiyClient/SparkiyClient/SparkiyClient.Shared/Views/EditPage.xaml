@@ -13,17 +13,51 @@
 				 RequestedTheme="Light"
 				 DataContext="{Binding Source={StaticResource Locator}, Path=EditPage}">
 
-	<common:PageBase.BottomAppBar>
-		<CommandBar>
-			<CommandBar.PrimaryCommands>
-				<AppBarButton Icon="Play" Label="Debug" Foreground="Green" />
-				<AppBarButton Icon="Play" Label="Play" />
-			</CommandBar.PrimaryCommands>
-			<CommandBar.SecondaryCommands>
-				
-			</CommandBar.SecondaryCommands>
-		</CommandBar>
-	</common:PageBase.BottomAppBar>
+	<common:PageBase.TopAppBar>
+		<AppBar RequestedTheme="Dark" Background="#111">
+			<AppBar.Resources>
+				<Style x:Key="AppBarNavigationTabStyle" TargetType="Button">
+					<Setter Property="Width" Value="156" />
+					<Setter Property="Height" Value="88" />
+					<!--<Setter Property="Height" Value="98" />-->
+					<Setter Property="HorizontalContentAlignment" Value="Left"/>
+					<Setter Property="Margin" Value="16,0,0,0" />
+					<Setter Property="BorderThickness" Value="0" />
+					<Setter Property="Background" Value="#FF333333" />
+				</Style>
+			</AppBar.Resources>
+			
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<StackPanel Orientation="Horizontal">
+					<Button Content="&lt;" Padding="28 0 28 6" BorderThickness="0" FontSize="24" FontWeight="Light" VerticalContentAlignment="Center"
+							Command="{Binding NavigateToProjectCommand}" />
+					<TextBlock Text="{Binding Project.Name}" 
+							   FontSize="{StaticResource ControlContentThemeFontSize}"
+							   Foreground="White"
+							   VerticalAlignment="Center" HorizontalAlignment="Stretch"
+							   Margin="4 0 0 0" />
+				</StackPanel>
+				<Grid Margin="5,13" Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<StackPanel Orientation="Horizontal">
+						<Button Style="{StaticResource AppBarNavigationTabStyle}" Command="{Binding NavigateToHomeCommand}">
+							<StackPanel Orientation="Vertical">
+								<Path Fill="White" Stretch="Uniform" HorizontalAlignment="Left" Width="32" Margin="0 0 0 10" Data="F1 M 24.0033,56.0078L 24.0033,38.0053L 22.0031,40.0056L 19.0027,35.0049L 38.0053,20.0028L 45.0063,25.5299L 45.0063,21.753L 49.0068,21.0029L 49.0068,28.6882L 57.008,35.0049L 54.0075,40.0056L 52.0073,38.0053L 52.0073,56.0078L 24.0033,56.0078 Z M 38.0053,26.9204L 27.0038,36.005L 27.0038,53.0074L 33.0046,53.0074L 33.0046,42.006L 43.006,42.006L 43.006,53.0074L 49.0068,53.0074L 49.0068,36.005L 38.0053,26.9204 Z "/>
+								<TextBlock Text="Home" Margin="4 0 0 0" />
+							</StackPanel>
+						</Button>
+					</StackPanel>
+				</Grid>
+			</Grid>
+		</AppBar>
+	</common:PageBase.TopAppBar>
 	
 	<common:PageBase.Resources>
 		<Style x:Key="SideBarStyle" TargetType="Grid">
