@@ -42,14 +42,43 @@ namespace SparkiyClient.UILogic.Services
 			await this.SaveAsync();
 		}
 
+		public async Task ImportAsset(Project project, StorageFile file) 
+		{
+			Log.Debug("Importing asset from: {0}", file.Path);
+
+			var projectFolder = await this.storageService.WorkspaceFolder.GetFolderAsync(project.Name);
+			var assetsFolder = await projectFolder.GetFolderAsync(ProjectAssetsPath);
+
+			var localCopy = await file.CopyAsync(assetsFolder, file.Name, NameCollisionOption.ReplaceExisting);
+
+			var asset = this.ResolveAsset(localCopy);
+			if (asset != null)
+				project.Assets.Result.Add(asset);
+
+			Log.Debug("Asset \"{0}\" imported.", asset?.Name ?? "<INVALID TYPE>");
+		}
+
+		private Asset ResolveAsset(StorageFile file)
+		{
+			if (file.ContentType == "image/png")
+				return new Image()
+				{
+					Name = file.DisplayName,
+					Path = file.Path
+				};
+
+			Log.Debug("Couldn't resolve asset type. Returning null.");
+			return null;
+		}
+
 		public async Task<IEnumerable<Project>> GetAvailableProjectsAsync()
 		{
 			Log.Debug("Retrieving projects...");
 
 			// Retrieve projects
-			var projectFiles = await this.GetProjectsAsync();
+			var projectFiles = await this.GetProjectsFilesAsync();
 
-			// Load project files
+			// Load projects files
 			var loadedProjects = new List<Project>();
 			var serializer = new DataContractSerializer(typeof (Project));
 			foreach (var projectFile in projectFiles.Values)
@@ -132,7 +161,7 @@ namespace SparkiyClient.UILogic.Services
 				async file => await FileIO.WriteTextAsync(file, code));
 		}
 
-		private async Task<Dictionary<string, StorageFile>> GetProjectsAsync()
+		private async Task<Dictionary<string, StorageFile>> GetProjectsFilesAsync()
 		{
 			// Get project folders
 			var folders = await this.storageService.WorkspaceFolder.GetFoldersAsync();
@@ -166,6 +195,18 @@ namespace SparkiyClient.UILogic.Services
 			var codeFiles = Enumerable.Union<CodeFile>(scripts, classes);
 
 			return new ObservableCollection<CodeFile>(codeFiles);
+		}
+
+		public async Task<IEnumerable<Asset>> GetAssetsAsync(Project project)
+		{
+			var projectFolder = await this.storageService.WorkspaceFolder.GetFolderAsync(project.Name);
+			var assetsFolder = await projectFolder.GetFolderAsync(ProjectAssetsPath);
+
+			var assetFiles = await assetsFolder.GetFilesAsync();
+
+			var assets = assetFiles.Select(this.ResolveAsset);
+
+			return new ObservableCollection<Asset>(assets);
 		}
 
 		private async Task<IEnumerable<T>> QueryFiles<T>(StorageFolder folder, string extension)

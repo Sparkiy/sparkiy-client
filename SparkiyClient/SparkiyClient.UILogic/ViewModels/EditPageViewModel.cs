@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -50,6 +51,8 @@ namespace SparkiyClient.UILogic.ViewModels
 		RelayCommand AddNewFileCommand { get; }
 
 		INewFileViewModel NewFileViewModel { get; }
+
+		RelayCommand AddNewAssetCommand { get; }
 	}
 
 	public class EditPageViewModel : ExtendedViewModel, IEditPageViewModel
@@ -66,6 +69,7 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.navigationService = navigationService;
 
 			this.AddNewFileCommand = new RelayCommand(this.AddNewFileCommandExecuteAsync);
+			this.AddNewAssetCommand = new RelayCommand(this.AddNewAssetCommandExecuteAsync);
 		}
 
 
@@ -78,7 +82,7 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.Project = project;
 
 			// Load scripts and assets list
-			await this.Project.LoadFilesAsync(this.projectService);
+			await this.Project.LoadAsync(this.projectService);
 
 			// Select first script
 			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
@@ -101,6 +105,29 @@ namespace SparkiyClient.UILogic.ViewModels
 
 				this.NewFileViewModel = null;
 			}
+		}
+
+		private async void AddNewAssetCommandExecuteAsync()
+		{
+			// Create picker
+			var picker = new FileOpenPicker()
+			{
+				SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
+				ViewMode = PickerViewMode.Thumbnail
+			};
+			picker.FileTypeFilter.Add(".png");
+
+			// Pick files
+			var selectedFiles = await picker.PickMultipleFilesAsync();
+			if (!selectedFiles.Any())
+				return;
+
+			// Import assets
+			foreach (var selectedFile in selectedFiles)
+				await this.projectService.ImportAsset(this.Project, selectedFile);
+
+			var img = new Image();
+			
 		}
 
 		public void AssignEditor(ICodeEditor editor)
@@ -135,6 +162,8 @@ namespace SparkiyClient.UILogic.ViewModels
 			get { return this.GetProperty<INewFileViewModel>(); }
 			protected set { this.SetProperty(value); }
 		}
+
+		public RelayCommand AddNewAssetCommand { get; }
 	}
 
 	public class EditPageViewModelDesignTime : EditPageViewModel

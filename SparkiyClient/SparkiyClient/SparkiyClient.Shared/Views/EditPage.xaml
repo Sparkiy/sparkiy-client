@@ -8,6 +8,7 @@
 				 xmlns:common="using:SparkiyClient.Common"
 				 xmlns:system="using:System"
 				 xmlns:controls="using:SparkiyClient.Controls"
+				 xmlns:models="using:SparkiyClient.UILogic.Models"
 				 mc:Ignorable="d"
 				 RequestedTheme="Light"
 				 DataContext="{Binding Source={StaticResource Locator}, Path=EditPage}">
@@ -128,7 +129,7 @@
 					<extensions:CodeFileDataTemplateSelector>
 						<extensions:CodeFileDataTemplateSelector.ClassDataTemplate>
 							<DataTemplate>
-								<StackPanel Orientation="Horizontal">
+								<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:Class, IsDesignTimeCreatable=True}">
 									<TextBlock Text="C" Foreground="ForestGreen" Margin="16 3 8 3" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
 									<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
 								</StackPanel>
@@ -136,7 +137,7 @@
 						</extensions:CodeFileDataTemplateSelector.ClassDataTemplate>
 						<extensions:CodeFileDataTemplateSelector.ScriptDataTemplate>
 							<DataTemplate>
-								<StackPanel Orientation="Horizontal">
+								<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:Script, IsDesignTimeCreatable=True}">
 									<TextBlock Text="S" Foreground="DarkViolet" Margin="16 3 8 3" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
 									<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
 								</StackPanel>
@@ -147,6 +148,7 @@
 			</ListView>
 			
 			
+			<!-- Add file dilog -->
 			<StackPanel Orientation="Vertical" Grid.Row="1">
 				<Button Background="Transparent"
 						Padding="0" Margin="0"
@@ -233,6 +235,11 @@
 		<Grid x:Name="SideBarAssetsGrid" 
 			  Style="{StaticResource SideBarStyle}"
 			  Grid.Column="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 			
 			<!-- Shadow -->
 			<Rectangle x:Name="SideBarAssetsShadow"  
@@ -258,6 +265,43 @@
 					HorizontalAlignment="Left"
 					Click="SideBarAssetsToggleButtonOnClick"/>
 			
+			<!-- Assets list -->
+			<ListView ItemsSource="{Binding Project.Assets.Result}"
+					  ItemContainerStyle="{StaticResource SideBarFilesListViewStyle}"
+					  SelectionMode="None" Grid.Row="0">
+				<ListView.Header>
+					<TextBlock Text="Assets" 
+							   Margin="24 12"
+							   Style="{StaticResource SubheaderTextBlockStyle}" />
+				</ListView.Header>
+				<ListView.ItemTemplateSelector>
+					<extensions:AssetDataTemplateSelector>
+						<extensions:AssetDataTemplateSelector.ImageDataTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:Image, IsDesignTimeCreatable=True}">
+									<Border Margin="8 3" Background="{StaticResource AccentBrushDark}" VerticalAlignment="Center">
+										<Image Source="{Binding Data.UriSource}" Width="36" Height="36" Stretch="Uniform" />
+									</Border>
+									<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
+								</StackPanel>
+							</DataTemplate>
+						</extensions:AssetDataTemplateSelector.ImageDataTemplate>
+					</extensions:AssetDataTemplateSelector>
+				</ListView.ItemTemplateSelector>
+			</ListView>
+			
+			<!-- Add asset dialog -->
+			<StackPanel Orientation="Vertical" Grid.Row="1">
+				<Button Background="Transparent"
+						Padding="0" Margin="0"
+						VerticalAlignment="Center" HorizontalAlignment="Stretch"
+						VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+						Command="{Binding AddNewAssetCommand}">
+					<TextBlock Text="+"
+							   FontFamily="Segoe UI" FontWeight="Light" FontSize="32"
+							   Padding="0,0,0,8" Margin="0" />
+				</Button>
+			</StackPanel>
 		</Grid>
     </Grid>
 </common:PageBase>

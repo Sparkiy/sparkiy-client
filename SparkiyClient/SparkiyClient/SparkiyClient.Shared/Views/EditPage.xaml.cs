@@ -20,6 +20,7 @@ using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.ViewModels;
+using Image = SparkiyClient.UILogic.Models.Image;
 
 namespace SparkiyClient.Views
 {
@@ -1230,6 +1231,30 @@ namespace SparkiyClient.Views
 				return this.ScriptDataTemplate;
 			else if (item is Class)
 				return this.ClassDataTemplate;
+
+			return base.SelectTemplateCore(item);
+		}
+	}
+
+	public class AssetDataTemplateSelector : DataTemplateSelector
+	{
+		/// <summary>
+		/// Gets or sets the image data template.
+		/// </summary>
+		/// <value>
+		/// The image data template.
+		/// </value>
+		public DataTemplate ImageDataTemplate { get; set; }
+
+		/// <summary>
+		/// Selects the template core.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <returns>DataTemplate cooresponsing to passed CodeFile Type</returns>
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			if (item is Image)
+				return this.ImageDataTemplate;
 
 			return base.SelectTemplateCore(item);
 		}
