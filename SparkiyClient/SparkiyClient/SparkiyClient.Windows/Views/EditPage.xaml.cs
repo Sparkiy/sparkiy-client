@@ -1262,38 +1262,11 @@ namespace SparkiyClient.Views
 
 	public sealed partial class EditPage : PageBase
 	{
-		private bool isScriptsSideBarOpen = true;
-		private double scriptsToggleButtonOpacity;
-		private bool isAssetsSideBarOpen = true;
-		private double assetsToggleButtonOpacity;
-
 		public EditPage()
         {
             this.InitializeComponent();
 
 			this.ViewModel.AssignEditor(this.CodeEditor);
-
-			// Opacity to 1 on pointer hover
-			this.SideBarScriptsToggleButton.PointerEntered += (s, e) =>
-			{
-				this.scriptsToggleButtonOpacity = this.SideBarScriptsToggleButton.Opacity;
-                this.SideBarScriptsToggleButton.Opacity = 1;
-			};
-			this.SideBarAssetsToggleButton.PointerEntered += (s, e) =>
-			{
-				this.assetsToggleButtonOpacity = this.SideBarAssetsToggleButton.Opacity;
-				this.SideBarAssetsToggleButton.Opacity = 1;
-			};
-			this.SideBarScriptsToggleButton.PointerExited += (s, e) =>
-				this.SideBarScriptsToggleButton.Opacity = this.scriptsToggleButtonOpacity;
-			this.SideBarAssetsToggleButton.PointerExited += (s, e) =>
-				this.SideBarAssetsToggleButton.Opacity = this.assetsToggleButtonOpacity;
-
-			// Enable toggle buttons when animation ends
-			this.SideBarScriptHideStoryboard.Completed += SideBarScriptsToggleStoryboardCompleted;
-			this.SideBarScriptShowStoryboard.Completed += SideBarScriptsToggleStoryboardCompleted;
-			this.SideBarAssetsHideStoryboard.Completed += SideBarAssetsToggleStoryboardCompleted;
-			this.SideBarAssetsShowStoryboard.Completed += SideBarAssetsToggleStoryboardCompleted;
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -1305,41 +1278,10 @@ namespace SparkiyClient.Views
 			timer.Interval = TimeSpan.FromMilliseconds(400);
 			timer.Tick += (sender, o) =>
 			{
-				this.SideBarScriptsToggleButtonOnClick();
-				this.SideBarAssetsToggleButtonOnClick();
+
 				timer.Stop();
 			};
 			timer.Start();
-		}
-
-		private void SideBarAssetsToggleStoryboardCompleted(object sender, object e)
-		{
-			this.SideBarAssetsToggleButton.IsEnabled = true;
-		}
-
-		private void SideBarScriptsToggleStoryboardCompleted(object sender, object e)
-		{
-			this.SideBarScriptsToggleButton.IsEnabled = true;
-		}
-
-		private void SideBarScriptsToggleButtonOnClick(object sender = null, RoutedEventArgs e = null)
-		{
-			if (this.isScriptsSideBarOpen)
-				this.SideBarScriptHideStoryboard.Begin();
-			else this.SideBarScriptShowStoryboard.Begin();
-
-			this.isScriptsSideBarOpen = !this.isScriptsSideBarOpen;
-			this.SideBarScriptsToggleButton.IsEnabled = false;
-		}
-
-		private void SideBarAssetsToggleButtonOnClick(object sender = null, RoutedEventArgs e = null)
-		{
-			if (this.isAssetsSideBarOpen)
-				this.SideBarAssetsHideStoryboard.Begin();
-			else this.SideBarAssetsShowStoryboard.Begin();
-
-			this.isAssetsSideBarOpen = !this.isAssetsSideBarOpen;
-			this.SideBarAssetsToggleButton.IsEnabled = false;
 		}
 
 		public IEditPageViewModel ViewModel => this.DataContext as IEditPageViewModel;

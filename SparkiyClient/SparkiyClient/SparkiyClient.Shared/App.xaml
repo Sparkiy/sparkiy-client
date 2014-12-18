@@ -15,75 +15,7 @@
 			<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 			<converters:NullToVisibilityConverter x:Key="NegatedNullToVisibilityConverter" TriggerValue="True" />
 			
-			<Style x:Key="SideBarToggleTabStyle" TargetType="Button">
-				<Setter Property="Width" Value="30" />
-				<Setter Property="Height" Value="80" />
-				<Setter Property="Margin" Value="-27 0 -27 0" />
-				<Setter Property="Padding" Value="0" />
-				<Setter Property="VerticalAlignment" Value="Center" />
-				<Setter Property="Background" Value="{StaticResource SideBarBrushLight}" />
-				<Setter Property="Grid.RowSpan" Value="3" />
-				<Setter Property="Content">
-					<Setter.Value>
-						<Path Data="M0,7 L22,7 22,6 0,6z M0,4 L22,4 22,3 0,3z M0,1 L22,1 22,0 0,0z" 
-								Stretch="None" Width="22" Height="7" Fill="#FF2F4750" RenderTransformOrigin="0.5,0.5"
-								VerticalAlignment="Center" HorizontalAlignment="Center">
-								<Path.RenderTransform>
-							<TransformGroup>
-								<TransformGroup.Children>
-								<RotateTransform Angle="90" />
-								<ScaleTransform ScaleX="1" ScaleY="1" />
-								</TransformGroup.Children>
-							</TransformGroup>
-							</Path.RenderTransform>
-						</Path>
-					</Setter.Value>
-				</Setter>
-			</Style>
 			
-			<Style TargetType="ListViewItem" x:Key="SideBarFilesListViewStyle">
-				<Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-				<Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-				<Setter Property="Background" Value="Transparent"/>
-				<Setter Property="TabNavigation" Value="Local"/>
-				<Setter Property="IsHoldingEnabled" Value="True"/>
-						
-				<Setter Property="Margin" Value="0" />
-				<Setter Property="Padding" Value="0" />
-				<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-				<Setter Property="Template">
-					<Setter.Value>
-						<ControlTemplate TargetType="ListViewItem">
-							<ListViewItemPresenter
-								ContentTransitions="{TemplateBinding ContentTransitions}"
-								Padding="{TemplateBinding Padding}"
-								SelectionCheckMarkVisualEnabled="False"
-								CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}"
-								CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}"
-								CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
-								DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
-								DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
-								FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
-								PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-								PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}"
-								SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}"
-								SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"
-								SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}"
-								SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
-								SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}"
-								DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-								DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-								ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-								HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-								VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-								PointerOverBackgroundMargin="0"
-								ContentMargin="0" />
-						</ControlTemplate>
-					</Setter.Value>
-				</Setter>
-			</Style>
-			
-
 			<SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="{StaticResource AccentColorBlue}" />
 			<SolidColorBrush x:Key="ListViewItemSelectedForegroundThemeBrush" Color="{StaticResource AccentColorLight}" />
 			<SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrush" Color="{StaticResource AccentColorBlue}" />
