@@ -12,24 +12,9 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 - Xbox One
 
 ## Project status
-<table>
-	<thead>
-		<tr>
-			<td>master</td>
-			<td>beta</td>
-			<td>development</td>
-			<td>edge</td>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>[![master build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/master?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/master)</td>
-			<td>[![beta build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/beta?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/beta)</td>
-			<td>[![development build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/development?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/development)</td>
-			<td>[![edge build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/edge?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/edge)</td>
-		<tr>
-	</tbody>
-</table>
+| master | beta | development | edge |
+| ------ | ---- | ----------- | ---- |
+| [![master build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/master?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/master) | [![beta build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/beta?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/beta) | [![development build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/development?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/development) | [![edge build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/edge?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/edge) |
 
 ## Third-party tools and code
 ### Libraries
