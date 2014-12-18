@@ -16,8 +16,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace SparkiyClient.Controls.SideBar
 {
     public sealed partial class SideBarControl : UserControl
@@ -62,14 +60,14 @@ namespace SparkiyClient.Controls.SideBar
 
 	    private Storyboard GetHideStoryboard()
 	    {
-		    if (this.IsLeft == SideBarLocation.Left)
+		    if (this.IsLeft)
 			    return this.SideBarLeftHideStoryboard;
 		    return this.SideBarRightHideStoryboard;
 	    }
 
 		private Storyboard GetShowStoryboard()
 		{
-			if (this.IsLeft == SideBarLocation.Left)
+			if (this.IsLeft)
 				return this.SideBarLeftShowStoryboard;
 			return this.SideBarRightShowStoryboard;
 		}

@@ -135,11 +135,14 @@ namespace SparkiyClient
 			if (navigationService == null)
 				throw new InvalidOperationException("Couldn't configure navigation service. Navigation service not registered properly.");
 			navigationService.Configure(typeof(MainPage).Name, typeof(MainPage));
-			navigationService.Configure(typeof(CreateProjectPage).Name, typeof(CreateProjectPage));
 			navigationService.Configure(typeof(ProjectPage).Name, typeof(ProjectPage));
-			navigationService.Configure(typeof(EditPage).Name, typeof(EditPage));
 			navigationService.Configure(typeof(PlayPage).Name, typeof(PlayPage));
-			//navigationService.Configure(typeof(DebugPage).Name, typeof(DebugPage));
+#if !WINDOWS_PHONE_APP
+			// Register Windows specific views
+			navigationService.Configure(typeof(CreateProjectPage).Name, typeof(CreateProjectPage));
+			navigationService.Configure(typeof(EditPage).Name, typeof(EditPage));
+			navigationService.Configure(typeof(DebugPage).Name, typeof(DebugPage));
+#endif
 
 			// Initialize storage if it doesn't require hard initialization
 			var storageService = this.Container.Resolve<IStorageService>();
@@ -251,7 +254,7 @@ namespace SparkiyClient
 		/// </summary>
 		public IUnityContainer Container => this.container;
 
-		#region IDisposable Support
+#region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
         void Dispose(bool disposing)
@@ -284,6 +287,6 @@ namespace SparkiyClient
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
-        #endregion
+#endregion
     }
 }
