@@ -204,11 +204,14 @@ namespace SparkiyClient
 
 			// Register ViewModels as Singeltons
 			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<ICreateProjectPageViewModel, CreateProjectPageViewModel>(new ContainerControlledLifetimeManager());
+			
 			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<IEditPageViewModel, EditPageViewModel>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IPlayPageViewModel, PlayPageViewModel>(new ContainerControlledLifetimeManager());
+#if WINDOWS_APP
+			this.container.RegisterType<ICreateProjectPageViewModel, CreateProjectPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IEditPageViewModel, EditPageViewModel>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IDebugPageViewModel, DebugPageViewModel>(new ContainerControlledLifetimeManager());
+#endif
 		}
 
 	    public static IEngineBindings InstantiateEngine(object panel)

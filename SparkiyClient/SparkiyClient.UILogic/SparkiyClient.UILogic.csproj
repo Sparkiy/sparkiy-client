@@ -57,9 +57,6 @@
     <Compile Include="Services\IStorageService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\StorageService.cs" />
-    <Compile Include="ViewModels\CreateProjectPageViewModel.cs" />
-    <Compile Include="ViewModels\DebugPageViewModel.cs" />
-    <Compile Include="ViewModels\EditPageViewModel.cs" />
     <Compile Include="ViewModels\IViewModelBase.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlaygroundPageViewModel.cs" />

@@ -1284,6 +1284,6 @@ namespace SparkiyClient.Views
 			timer.Start();
 		}
 
-		public IEditPageViewModel ViewModel => this.DataContext as IEditPageViewModel;
+		public new IEditPageViewModel ViewModel => this.DataContext as IEditPageViewModel;
 	}
 }

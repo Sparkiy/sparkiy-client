@@ -26,6 +26,6 @@ namespace SparkiyClient.Views
 		/// <summary>
 		/// The view model
 		/// </summary>
-		public IMainPageViewModel ViewModel => this.DataContext as IMainPageViewModel;
+		public new IMainPageViewModel ViewModel => this.DataContext as IMainPageViewModel;
     }
 }
