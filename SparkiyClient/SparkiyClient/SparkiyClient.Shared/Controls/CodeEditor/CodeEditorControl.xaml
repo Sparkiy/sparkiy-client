@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="SparkiyClient.Controls.CodeEditorControl"
+    x:Class="SparkiyClient.Controls.CodeEditor.CodeEditorControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SparkiyClient.Controls"
