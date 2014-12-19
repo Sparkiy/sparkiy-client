@@ -1278,7 +1278,8 @@ namespace SparkiyClient.Views
 			timer.Interval = TimeSpan.FromMilliseconds(400);
 			timer.Tick += (sender, o) =>
 			{
-
+				this.SideBarFiles.IsOpen = false;
+				this.SideBarAssets.IsOpen = false;
 				timer.Stop();
 			};
 			timer.Start();

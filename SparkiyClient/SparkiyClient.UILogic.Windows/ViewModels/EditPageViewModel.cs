@@ -166,7 +166,11 @@ namespace SparkiyClient.UILogic.ViewModels
 		public void AssignEditor(ICodeEditor editor)
 		{
 			this.editor = editor;
-			this.editor.OnCodeChanged += (sender, args) => this.SelectedFile.Code = this.editor.Code;
+			this.editor.OnCodeChanged += (sender, args) =>
+			{
+				if (this.SelectedFile != null)
+					this.SelectedFile.Code = this.editor.Code;
+			};
 		}
 
 

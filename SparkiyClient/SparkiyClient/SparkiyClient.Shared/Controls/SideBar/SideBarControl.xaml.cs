@@ -50,11 +50,15 @@ namespace SparkiyClient.Controls.SideBar
 
 	    private void SideBarToggleButtonOnClick(object sender, RoutedEventArgs e)
 	    {
-			if (this.IsOpen)
+		    this.IsOpen = !this.IsOpen;
+	    }
+
+	    public void SetIsOpen(bool value)
+	    {
+			if (!value)
 				this.GetHideStoryboard().Begin();
 			else this.GetShowStoryboard().Begin();
 
-			this.IsOpen = !this.IsOpen;
 			this.SideBarToggleButton.IsEnabled = false;
 		}
 
@@ -88,10 +92,19 @@ namespace SparkiyClient.Controls.SideBar
 			set { SetValue(IsOpenProperty, value); }
 		}
 		public static readonly DependencyProperty IsOpenProperty =
-			DependencyProperty.Register("IsOpen", typeof(bool), typeof(SideBarControl), new PropertyMetadata(true));
+			DependencyProperty.Register("IsOpen", typeof(bool), typeof(SideBarControl), new PropertyMetadata(true, IsOpenPropertyChangedCallback));
+
+	    private static void IsOpenPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+	    {
+		    var sender = dependencyObject as SideBarControl;
+			if (sender == null)
+				throw new NullReferenceException("Couldn't retrieve SideBar from dependency object");
+
+			sender.SetIsOpen((bool)dependencyPropertyChangedEventArgs.NewValue);
+	    }
 
 
-		public new object Content
+	    public new object Content
 		{
 			get { return (object)GetValue(ContentProperty); }
 			set { SetValue(ContentProperty, value); }
