@@ -78,10 +78,10 @@ namespace SparkiyClient.UILogic.ViewModels
 
 			this.AddNewFileCommand = new RelayCommand(this.AddNewFileCommandExecuteAsync);
 			this.AddNewAssetCommand = new RelayCommand(this.AddNewAssetCommandExecuteAsync);
-			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecuteAsync);
-			this.NavigateToProjectCommand = new RelayCommand(this.NavigateToProjectCommandExecuteAsync);
-			this.DebugProjectCommand = new RelayCommand(this.DebugProjectCommandExecuteAsync);
-			this.PlayProjectCommand = new RelayCommand(this.PlayProjectCommandExecuteAsync);
+			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecute);
+			this.NavigateToProjectCommand = new RelayCommand(this.NavigateToProjectCommandExecute);
+			this.DebugProjectCommand = new RelayCommand(this.DebugProjectCommandExecute);
+			this.PlayProjectCommand = new RelayCommand(this.PlayProjectCommandExecute);
 		}
 
 
@@ -102,22 +102,22 @@ namespace SparkiyClient.UILogic.ViewModels
 			base.OnNavigatedTo(e);
 		}
 
-		private async void NavigateToHomeCommandExecuteAsync()
+		private void NavigateToHomeCommandExecute()
 		{
 			this.navigationService.NavigateTo("MainPage");
 		}
 
-		private async void NavigateToProjectCommandExecuteAsync()
+		private void NavigateToProjectCommandExecute()
 		{
 			this.navigationService.NavigateTo("ProjectPage", this.Project);
 		}
 
-		private async void DebugProjectCommandExecuteAsync()
+		private void DebugProjectCommandExecute()
 		{
 			this.navigationService.NavigateTo("DebugPage", this.Project);
 		}
 
-		private async void PlayProjectCommandExecuteAsync()
+		private void PlayProjectCommandExecute()
 		{
 			this.navigationService.NavigateTo("PlayPage", this.Project);
 		}

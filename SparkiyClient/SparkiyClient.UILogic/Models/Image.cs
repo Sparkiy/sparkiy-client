@@ -13,10 +13,12 @@ namespace SparkiyClient.UILogic.Models
 		/// Gets the data asynchronously from given path.
 		/// </summary>
 		/// <returns></returns>
+#pragma warning disable 1998
 		public override async Task GetDataAsync()
 		{
 			this.Data = new BitmapImage(new Uri(this.Path, UriKind.Absolute));
 			Log.Debug("Loaded Image \"{0}\"", this.Name);
 		}
+#pragma warning restore 1998
 	}
 }

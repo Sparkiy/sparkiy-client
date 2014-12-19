@@ -46,8 +46,8 @@ namespace SparkiyClient.UILogic.ViewModels
 		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
 
 			this.InitializeWorkspaceCommand = new RelayCommand(this.InitializeWorkspaceCommandExecuteAsync);
-			this.ProjectSelectedCommand = new RelayCommand<Project>(this.ProjectSelectedCommandExecuteAsync);
-			this.NewProjectCommand = new RelayCommand(this.NewProjectCommandExecuteAsync);
+			this.ProjectSelectedCommand = new RelayCommand<Project>(this.ProjectSelectedCommandExecute);
+			this.NewProjectCommand = new RelayCommand(this.NewProjectCommandExecute);
 	    }
 
 
@@ -65,12 +65,12 @@ namespace SparkiyClient.UILogic.ViewModels
 		    }
 	    }
 
-	    private async void NewProjectCommandExecuteAsync()
+	    private void NewProjectCommandExecute()
 	    {
 			this.navigationService.NavigateTo("CreateProjectPage");
 		}
 
-	    protected async void ProjectSelectedCommandExecuteAsync(Project project)
+	    protected void ProjectSelectedCommandExecute(Project project)
 	    {
 		    this.navigationService.NavigateTo("ProjectPage", project);
 	    }

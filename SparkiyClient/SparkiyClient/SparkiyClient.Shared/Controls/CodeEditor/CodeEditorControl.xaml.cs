@@ -46,14 +46,14 @@ namespace SparkiyClient.Controls
 	        //this.CodeEditor.FontSize = this.fontSize;
 
 #if DEBUG
-            //this.CodeEditor.Document.SetText(TextSetOptions.None, this.debugTemplate.Replace("\t", this.tabValue));
+		    this.CodeEditor.Text = this.debugTemplate;
 #endif
 
-      //      this.CodeEditor.TextChanged += (o, args) =>
+		    //      this.CodeEditor.TextChanged += (o, args) =>
 		    //{
 		    //    this.OnCodeChanged?.Invoke(this, null);
 		    //};
-      //      this.CodeEditor.KeyDown += RichEditBoxOnKeyDown;
+		    //      this.CodeEditor.KeyDown += RichEditBoxOnKeyDown;
 	    }
 
 	    private void RichEditBoxOnKeyDown(object sender, KeyRoutedEventArgs e)
