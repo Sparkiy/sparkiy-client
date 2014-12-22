@@ -195,10 +195,11 @@ namespace SparkiyClient
 
 			// Register instances
 			this.container.RegisterInstance<IUnityContainer>(this.container);
-
+			
 			// Register services
 			this.container.RegisterType<IAlertMessageService, AlertMessageService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<INavigationService, NavigationService>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<EngineProviderService, EngineProviderService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IProjectService, ProjectService>(new ContainerControlledLifetimeManager());
 
