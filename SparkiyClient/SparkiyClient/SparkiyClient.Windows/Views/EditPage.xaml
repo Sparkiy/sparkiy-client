@@ -269,7 +269,7 @@
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>
 		
-		<sideBar:SideBarControl x:Name="SideBarAssets" IsLeft="false" Grid.Column="2">
+		<sideBar:SideBarControl x:Name="SideBarAssets" IsLeft="False" Grid.Column="2">
 			<sideBar:SideBarControl.Content>
 				<Grid>
 					<Grid.RowDefinitions>
