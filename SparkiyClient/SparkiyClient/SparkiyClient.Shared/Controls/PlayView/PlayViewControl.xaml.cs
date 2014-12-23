@@ -18,38 +18,14 @@ using MetroLog;
 using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.Services;
 using SparkiyClient.UILogic.Models;
+using SparkiyClient.UILogic.Services;
 using SparkiyEngine.Bindings.Component.Engine;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace SparkiyClient.Controls.PlayView
 {
-	public interface IProjectPlayStateManagment
-	{
-		Task AssignProjectAsync(Project project);
-
-		void PlayProject();
-
-		void PauseProject();
-
-		void RestartProject();
-
-		void TakeScreenshot();
-
-
-		bool IsInitialized { get; }
-
-		bool IsPlaying { get; }
-
-		bool IsPause { get; }
-	}
-
-	public interface IProjectPlayEngineManagement
-	{
-		IEngineBindings Engine { get; }
-	}
-
-    public sealed partial class PlayViewControl : UserControl, IProjectPlayStateManagment, IProjectPlayEngineManagement
+	public sealed partial class PlayViewControl : UserControl, IProjectPlayStateManagment, IProjectPlayEngineManagement
     {
 	    private static ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<PlayViewControl>();
 
@@ -57,8 +33,8 @@ namespace SparkiyClient.Controls.PlayView
 	    private IEngineBindings engine;
 
 		// State tracking
-	    private bool isPaused;
-	    private bool isInitialized;
+	    private bool isPaused = true;
+	    private bool isInitialized = false;
 
 
 	    public PlayViewControl()
@@ -67,7 +43,7 @@ namespace SparkiyClient.Controls.PlayView
         }
 
 
-	    public async Task AssignProjectAsync(Project project)
+	    public void AssignProject(Project project)
 	    {
 			// Stop currently running project
 		    if (this.IsInitialized)
@@ -76,15 +52,34 @@ namespace SparkiyClient.Controls.PlayView
 			// Assign new project
 		    this.project = project;
 
-			// TODO Load Scripts and Classes from project
-			// TODO Load assets from project
+			// Load assets from project
+		    var imageAssets = new List<ImageAsset>();
+		    foreach (var asset in this.project.Assets.Result)
+		    {
+			    if (asset is ImageAsset)
+			    {
+				    var imageAsset = asset as ImageAsset;
+					imageAssets.Add(imageAsset);
+			    }
+				else { 
+					throw new NotSupportedException("Provided asset type is not supported by this player.");
+				}
+			}
 
-			// TODO Combine Classes with scripts
+			// Combine all classes into one string
+		    var classesCombined = project.Files.Result
+			    .OfType<Class>()
+			    .Aggregate(
+				    String.Empty,
+				    (combined, current) => combined + current.Code);
 
+			// Instantiate new engine
 		    this.engine = ServiceLocator.Current.GetInstance<EngineProviderService>().GetLuaDxEngine(this.SwapChainPanel);
-			// TODO Add scripts to the engine
-			
-			throw new NotImplementedException();
+			this.engine.Initialize();
+
+			// Add scripts to the engine
+		    foreach (var script in project.Files.Result.OfType<Script>())
+			    this.engine.AddScript(script.Name, classesCombined + script.Code);
 
 			this.isInitialized = true;
 		}
@@ -104,8 +99,6 @@ namespace SparkiyClient.Controls.PlayView
 				return;
 
 			this.Engine.Play();
-
-		    throw new NotImplementedException();
 
 		    this.isPaused = false;
 	    }

@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AlertMessageService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\EngineProviderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ViewModelProviderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
