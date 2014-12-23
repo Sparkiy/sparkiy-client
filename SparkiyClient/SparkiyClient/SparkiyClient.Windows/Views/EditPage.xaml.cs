@@ -20,7 +20,6 @@ using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.ViewModels;
-using Image = SparkiyClient.UILogic.Models.Image;
 
 namespace SparkiyClient.Views
 {
@@ -1253,7 +1252,7 @@ namespace SparkiyClient.Views
 		/// <returns>DataTemplate cooresponsing to passed CodeFile Type</returns>
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			if (item is Image)
+			if (item is ImageAsset)
 				return this.ImageDataTemplate;
 
 			return base.SelectTemplateCore(item);

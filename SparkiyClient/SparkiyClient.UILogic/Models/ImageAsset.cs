@@ -5,9 +5,9 @@ using MetroLog;
 
 namespace SparkiyClient.UILogic.Models
 {
-	public class Image : AssetWithData<BitmapImage>
+	public class ImageAsset : AssetWithData<BitmapImage>
 	{
-		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<Image>();
+		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<ImageAsset>();
 
 		/// <summary>
 		/// Gets the data asynchronously from given path.
@@ -17,7 +17,7 @@ namespace SparkiyClient.UILogic.Models
 		public override async Task GetDataAsync()
 		{
 			this.Data = new BitmapImage(new Uri(this.Path, UriKind.Absolute));
-			Log.Debug("Loaded Image \"{0}\"", this.Name);
+			Log.Debug("Loaded ImageAsset \"{0}\"", this.Name);
 		}
 #pragma warning restore 1998
 	}
