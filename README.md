@@ -1,5 +1,7 @@
-# Sparkiy for Windows
-_Sparkiy/sparkiy-client_
+# Sparkiy
+_[Sparkiy/sparkiy-client](https://github.com/Sparkiy/sparkiy-client)_
+
+[![Bountysource](https://www.bountysource.com/badge/team?team_id=54298&style=bounties_posted)](https://www.bountysource.com/teams/sparkiy-client/bounties?utm_source=sparkiy-client&utm_medium=shield&utm_campaign=bounties_posted)
 
 ## Overview
 Bring your ideas to life. Make something everyone can play on their computer, tablet, phone and console.
@@ -12,6 +14,7 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 - Xbox One
 
 ## Project status
+
 |               | master | beta | development | edge |
 | ------------- | ------ | ---- | ----------- | ---- |
 | Windows       | [![master build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/master?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/master) | [![beta build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/beta?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/beta) | [![development build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/development?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/development) | [![edge build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/edge?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/edge) |
