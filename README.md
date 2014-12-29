@@ -1,6 +1,7 @@
 # Sparkiy
 _[Sparkiy/sparkiy-client](https://github.com/Sparkiy/sparkiy-client)_
 
+[![GratiPay Tips](https://img.shields.io/gratipay/sparkiy.svg?style=flat-square)](https://gratipay.com/sparkiy/)
 [![Bountysource](https://www.bountysource.com/badge/team?team_id=54298&style=bounties_posted)](https://www.bountysource.com/teams/sparkiy-client/bounties?utm_source=sparkiy-client&utm_medium=shield&utm_campaign=bounties_posted)
 
 ## Overview
