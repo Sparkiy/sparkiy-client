@@ -53,7 +53,17 @@ namespace SparkiyClient.Controls.SideBar
 			this.SideBarRightShowStoryboard.Completed += SideBarToggleStoryboardCompleted;
 		}
 
-	    private void SideBarToggleStoryboardCompleted(object sender, object e)
+		private void SideBarControlOnLoaded(object sender, RoutedEventArgs e)
+		{
+			// Fast hide if we are hidding on loaded
+			if (!this.IsOpen)
+			{
+				if (this.IsLeft) this.SideBarLeftHideStoryboard.SkipToFill();
+				else this.SideBarRightHideStoryboard.SkipToFill();
+			}
+		}
+
+		private void SideBarToggleStoryboardCompleted(object sender, object e)
 	    {
 			this.SideBarToggleButton.IsEnabled = true;
 		}
@@ -106,7 +116,6 @@ namespace SparkiyClient.Controls.SideBar
 		    sender.SideBarShadow.Style = isLeft ? sender.SideBarLeftShadowStyle : sender.SideBarRightShadowStyle;
 			sender.SideBarToggleButton.Style = isLeft ? sender.SideBarLeftToggleButtonStyle : sender.SideBarRightToggleButtonStyle;
 		}
-
 
 	    public bool IsOpen
 		{
