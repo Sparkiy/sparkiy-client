@@ -21,7 +21,7 @@
 		<sideBar:SideBarControl>
 			<sideBar:SideBarControl.Content>
 				<Grid>
-					<TextBlock>SideBar Content</TextBlock>
+					
 				</Grid>
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>
