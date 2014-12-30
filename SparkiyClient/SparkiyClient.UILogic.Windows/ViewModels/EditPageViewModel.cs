@@ -159,7 +159,7 @@ namespace SparkiyClient.UILogic.ViewModels
 			foreach (var selectedFile in selectedFiles)
 				await this.projectService.ImportAsset(this.Project, selectedFile);
 
-			var img = new Image();
+			var img = new ImageAsset();
 			
 		}
 
