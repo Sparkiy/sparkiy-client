@@ -141,7 +141,7 @@
 			
 		</Grid>
 		
-		<sideBar:SideBarControl x:Name="SideBarFiles">
+		<sideBar:SideBarControl x:Name="SideBarFiles" IsOpen="False">
 			<sideBar:SideBarControl.Content>
 				<Grid>
 					<Grid.RowDefinitions>
@@ -269,7 +269,7 @@
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>
 		
-		<sideBar:SideBarControl x:Name="SideBarAssets" IsLeft="False" Grid.Column="2">
+		<sideBar:SideBarControl x:Name="SideBarAssets" IsLeft="False" IsOpen="False" Grid.Column="2">
 			<sideBar:SideBarControl.Content>
 				<Grid>
 					<Grid.RowDefinitions>
