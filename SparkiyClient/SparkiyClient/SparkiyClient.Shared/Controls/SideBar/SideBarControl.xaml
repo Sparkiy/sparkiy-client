@@ -6,6 +6,7 @@
     xmlns:local="using:SparkiyClient.Controls.SideBar"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Loaded="SideBarControlOnLoaded"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -54,6 +55,43 @@
 			<Setter Property="BorderThickness" Value="0 1 1 1" />
 			<Setter Property="HorizontalAlignment" Value="Right" />
 		</Style>
+		<Style x:Key="SideBarToggleTabRightStyle" BasedOn="{StaticResource SideBarToggleTabStyle}" TargetType="Button">
+			<Setter Property="BorderThickness" Value="1 1 0 1" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+		</Style>
+		
+		<!-- Shadow style -->
+		<Style x:Key="SideBarShadowStyle" TargetType="Rectangle">
+			<Setter Property="Width" Value="32" />
+			<Setter Property="VerticalAlignment" Value="Stretch" />
+		</Style>
+		
+		<Style x:Key="SideBarShadowLeftStyle" BasedOn="{StaticResource SideBarShadowStyle}" TargetType="Rectangle">
+			<Setter Property="Margin" Value="0 0 -32 0" />
+			<Setter Property="HorizontalAlignment" Value="Right" />
+			<Setter Property="Fill">
+				<Setter.Value>
+					<LinearGradientBrush StartPoint="0,1" EndPoint="1,0.9998" MappingMode="RelativeToBoundingBox">
+						<GradientStop Offset="0" Color="#22000000" />
+						<GradientStop Offset="0.2" Color="#08000000" />
+						<GradientStop Offset="1" Color="#00FFFFFF" />
+					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style x:Key="SideBarShadowRightStyle" BasedOn="{StaticResource SideBarShadowStyle}" TargetType="Rectangle">
+			<Setter Property="Margin" Value="-32 0 0 0" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="Fill">
+				<Setter.Value>
+					<LinearGradientBrush StartPoint="1,1" EndPoint="0,0.9998"  MappingMode="RelativeToBoundingBox">
+						<GradientStop Offset="0" Color="#22000000" />
+						<GradientStop Offset="0.2" Color="#08000000" />
+						<GradientStop Offset="1" Color="#00FFFFFF" />
+					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
+		</Style>
 		
 		<!-- Scripts sidebar animations -->
 		<Storyboard x:Name="SideBarLeftHideStoryboard">
@@ -80,23 +118,13 @@
 		</Storyboard>
 	</UserControl.Resources>
 
+	<!-- Content -->
 	<Grid x:Name="SideBarGrid"
 		  Style="{StaticResource SideBarStyle}">
 		
 		<!-- Shadow -->
 		<Rectangle x:Name="SideBarShadow" 
-				   Width="32" 
-				   Margin="0 0 -32 0"
-				   HorizontalAlignment="Right" 
-				   VerticalAlignment="Stretch">
-			<Rectangle.Fill>
-				<LinearGradientBrush StartPoint="0,1" EndPoint="1,0.9998" MappingMode="RelativeToBoundingBox">
-					<GradientStop Offset="0" Color="#22000000" />
-					<GradientStop Offset="0.2" Color="#08000000" />
-					<GradientStop Offset="1" Color="#00FFFFFF" />
-				</LinearGradientBrush>
-			</Rectangle.Fill>
-		</Rectangle>
+				   Style="{StaticResource SideBarShadowLeftStyle}" />
 
 		<!-- Toggle Tab -->
 		<Button x:Name="SideBarToggleButton" 

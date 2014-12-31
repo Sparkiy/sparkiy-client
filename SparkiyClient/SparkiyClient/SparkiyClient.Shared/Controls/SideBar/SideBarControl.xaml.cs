@@ -22,10 +22,20 @@ namespace SparkiyClient.Controls.SideBar
     {
 		private double toggleButtonOpacity;
 
+	    private readonly Style SideBarLeftToggleButtonStyle;
+		private readonly Style SideBarRightToggleButtonStyle;
+		private readonly Style SideBarLeftShadowStyle;
+		private readonly Style SideBarRightShadowStyle;
+
 		public SideBarControl()
         {
             this.InitializeComponent();
 
+			// Retrive styles
+			this.SideBarLeftToggleButtonStyle = (Style)this.Resources["SideBarToggleTabLeftStyle"];
+			this.SideBarRightToggleButtonStyle = (Style)this.Resources["SideBarToggleTabRightStyle"];
+			this.SideBarLeftShadowStyle = (Style)this.Resources["SideBarShadowLeftStyle"];
+			this.SideBarRightShadowStyle = (Style)this.Resources["SideBarShadowRightStyle"];
 
 			// Opacity to 1 on pointer hover
 			this.SideBarToggleButton.PointerEntered += (s, e) =>
@@ -43,7 +53,17 @@ namespace SparkiyClient.Controls.SideBar
 			this.SideBarRightShowStoryboard.Completed += SideBarToggleStoryboardCompleted;
 		}
 
-	    private void SideBarToggleStoryboardCompleted(object sender, object e)
+		private void SideBarControlOnLoaded(object sender, RoutedEventArgs e)
+		{
+			// Fast hide if we are hidding on loaded
+			if (!this.IsOpen)
+			{
+				if (this.IsLeft) this.SideBarLeftHideStoryboard.SkipToFill();
+				else this.SideBarRightHideStoryboard.SkipToFill();
+			}
+		}
+
+		private void SideBarToggleStoryboardCompleted(object sender, object e)
 	    {
 			this.SideBarToggleButton.IsEnabled = true;
 		}
@@ -83,10 +103,21 @@ namespace SparkiyClient.Controls.SideBar
 			set { SetValue(IsLeftProperty, value); }
 		}
 		public static readonly DependencyProperty IsLeftProperty =
-			DependencyProperty.Register("IsLeft", typeof(bool), typeof(SideBarControl), new PropertyMetadata(true));
-		
+			DependencyProperty.Register("IsLeft", typeof(bool), typeof(SideBarControl), new PropertyMetadata(true, IsLeftPropertyChangedCallback));
 
-		public bool IsOpen
+	    private static void IsLeftPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+	    {
+			var sender = dependencyObject as SideBarControl;
+			if (sender == null)
+				throw new NullReferenceException("Couldn't retrieve SideBar from dependency object");
+
+		    bool isLeft = (bool) dependencyPropertyChangedEventArgs.NewValue;
+
+		    sender.SideBarShadow.Style = isLeft ? sender.SideBarLeftShadowStyle : sender.SideBarRightShadowStyle;
+			sender.SideBarToggleButton.Style = isLeft ? sender.SideBarLeftToggleButtonStyle : sender.SideBarRightToggleButtonStyle;
+		}
+
+	    public bool IsOpen
 		{
 			get { return (bool)GetValue(IsOpenProperty); }
 			set { SetValue(IsOpenProperty, value); }

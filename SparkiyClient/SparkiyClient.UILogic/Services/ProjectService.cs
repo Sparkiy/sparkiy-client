@@ -61,7 +61,7 @@ namespace SparkiyClient.UILogic.Services
 		private Asset ResolveAsset(StorageFile file)
 		{
 			if (file.ContentType == "image/png")
-				return new Image()
+				return new ImageAsset()
 				{
 					Name = file.DisplayName,
 					Path = file.Path

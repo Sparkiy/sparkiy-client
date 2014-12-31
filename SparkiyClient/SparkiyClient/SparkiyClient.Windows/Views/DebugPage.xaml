@@ -1,0 +1,40 @@
+﻿<common:PageBase
+    x:Class="SparkiyClient.Views.DebugPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SparkiyClient.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sideBar="using:SparkiyClient.Controls.SideBar"
+    xmlns:playView="using:SparkiyClient.Controls.PlayView"
+    xmlns:common="using:SparkiyClient.Common"
+    mc:Ignorable="d"
+	RequestedTheme="Light"
+	DataContext="{Binding Source={StaticResource Locator}, Path=DebugPage}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+	
+		<playView:PlayViewControl x:Name="PlayView" Grid.Column="1" />
+		
+		<sideBar:SideBarControl Grid.Column="0">
+			<sideBar:SideBarControl.Content>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					
+					<TextBlock Text="Output"
+							   Style="{StaticResource HeaderTextBlockStyle}" />
+					
+					<ListBox Grid.Row="1" />
+				</Grid>
+			</sideBar:SideBarControl.Content>
+		</sideBar:SideBarControl>
+	
+    </Grid>
+</common:PageBase>

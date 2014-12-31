@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Nito.AsyncEx;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
 
-namespace SparkiyClient.UILogic.ViewModels
+namespace SparkiyClient.UILogic.Windows.ViewModels
 {
 	public interface ICreateProjectPageViewModel
 	{
@@ -30,6 +28,21 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.projectService = projectService;
 
 			this.CreateProjectCommand = new RelayCommand(this.CreateProjectCommandExecuteAsync);
+
+			this.Project = new Project()
+			{
+				Files = NotifyTaskCompletion.Create(async () =>
+				{
+					return new ObservableCollection<CodeFile>()
+					{
+						new Script()
+						{
+							Name = "Entry",
+							Code = "function Created()\n\nend\n\nfunction Started()\n\nend\n\nfunction Draw()\n\nend\n\nfunction Touched(type, x, y)\n\nend\n\nfunction Stopped()\n\nend\n"
+						}
+					};
+				})
+			};
 		}
 
 
@@ -41,10 +54,17 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		public Project Project
 		{
-			get { return this.GetProperty<Project>(defaultValue: new Project()); }
+			get { return this.GetProperty<Project>(); }
 			set { this.SetProperty(value); }
 		}
 
 		public RelayCommand CreateProjectCommand { get; }
+	}
+
+	public sealed class CreateProjectPageViewModelDesignTime : CreateProjectPageViewModel
+	{
+		public CreateProjectPageViewModelDesignTime() : base(null, null)
+		{
+		}
 	}
 }
