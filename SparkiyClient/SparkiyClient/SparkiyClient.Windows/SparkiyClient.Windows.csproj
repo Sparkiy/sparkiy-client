@@ -18,7 +18,7 @@
     <PackageCertificateKeyFile>SparkiyClient.Windows_StoreKey.pfx</PackageCertificateKeyFile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PackageCertificateThumbprint>C8A1990B51B222792CBFBF1503A0F656387022C8</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>89F31F9F2D9F6D1AEFF3F56A3B7DA99F231087AE</PackageCertificateThumbprint>
     <NuGetPackageImportStamp>60303db4</NuGetPackageImportStamp>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
