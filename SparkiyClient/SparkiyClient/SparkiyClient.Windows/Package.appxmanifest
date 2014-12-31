@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="Sparkiy.Sparkiy" Publisher="CN=C921DF72-A1E0-450C-ACD3-BB0A8BDEA334" Version="1.1.0.2" />
+  <Identity Name="53858AleksandarToplek.Sparkiy" Publisher="CN=E746B84B-09A1-43E8-B524-41758B02DFE1" Version="1.1.0.1" />
   <Properties>
     <DisplayName>Sparkiy</DisplayName>
-    <PublisherDisplayName>Sparkiy</PublisherDisplayName>
+    <PublisherDisplayName>Aleksandar Toplek</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
