@@ -42,6 +42,7 @@ using MetroLog.Layouts;
 using MetroLog.Internal;
 using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.Common;
+using SparkiyClient.UILogic.Windows.ViewModels;
 using SparkiyClient.Views;
 
 namespace SparkiyClient

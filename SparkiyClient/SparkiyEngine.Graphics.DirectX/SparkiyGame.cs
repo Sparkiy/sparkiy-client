@@ -182,7 +182,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		private void RebuildFontFormat()
 		{
-			if (String.IsNullOrEmpty(this.FontFamily) || this.FontSize == 0)
+			if (String.IsNullOrEmpty(this.FontFamily) || MathUtil.NearEqual(0, this.FontSize))
 				return;
 
 			this.fontFormat = new TextFormat(this.Canvas.DirectWriteFactory, this.FontFamily, this.FontSize);
@@ -250,7 +250,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			}
 		}
 
-        public void DrawTexture(string assetName, float x, float y, float width, float height)
+        public void DrawTexture(string assetName, float x, float y, float width = -1f, float height = -1f)
         {
             var texture = this.Services.GetService<ITextureProvider>().GetTexture(assetName);
             this.Canvas.PushObject(

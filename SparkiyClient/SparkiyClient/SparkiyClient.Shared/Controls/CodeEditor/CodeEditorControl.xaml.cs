@@ -10,8 +10,6 @@ namespace SparkiyClient.Controls.CodeEditor
     {
 	    public event EventHandler OnCodeChanged;
 
-	    private const string DebugTemplate = "function Created()\n\t\nend\n\nfunction Started()\n\t\nend\n\nfunction Draw()\n\t\nend\n\nfunction Touched(state, x, y)\n\t\nend\n\nfunction Stopped()\n\t\nend\n";
-
 
         public CodeEditorControl()
         {
@@ -22,10 +20,6 @@ namespace SparkiyClient.Controls.CodeEditor
 
 	    private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
 	    {
-#if DEBUG
-		    this.CodeEditor.Text = DebugTemplate;
-#endif
-
 			this.CodeEditor.TextView.TextChanged += (o, args) =>
 		    {
 		        this.OnCodeChanged?.Invoke(this, null);

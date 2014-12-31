@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using Windows.Devices.Enumeration;
+using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
@@ -56,9 +57,9 @@ namespace SparkiyEngine.Input
             Contract.Requires(pointerRoutedEventArgs != null);
             Contract.Requires(this.surface != null);
 
-            this.RegisterPointer(
-                pointerRoutedEventArgs.Pointer,
-                pointerRoutedEventArgs.GetCurrentPoint(this.surface));
+	        this.RegisterPointer(
+		        pointerRoutedEventArgs.Pointer,
+		        pointerRoutedEventArgs.GetCurrentPoint(this.surface));
         }
 
         private void RegisterPointer(Pointer pointer, PointerPoint point)
@@ -75,7 +76,7 @@ namespace SparkiyEngine.Input
                     new TrackingPointer(pointer, point));
             this.trackedPointers[pointer.PointerId].RealType = InputTypes.Down;
 
-            // Assign primary pointer if first on tracking
+            // Assign primary pointer if first or changed input type
             if (this.trackedPointers.Count == 1 ||
                 this.PrimaryPointer.Pointer.PointerDeviceType != pointer.PointerDeviceType)
                 this.primaryPointerId = pointer.PointerId;

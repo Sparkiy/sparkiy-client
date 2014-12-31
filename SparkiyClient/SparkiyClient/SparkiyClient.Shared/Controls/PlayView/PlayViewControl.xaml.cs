@@ -45,6 +45,8 @@ namespace SparkiyClient.Controls.PlayView
 
 	    public void AssignProject(Project project)
 	    {
+			Log.Debug("Assigned project \"{0}\" to the PlayView", project.Name);
+
 			// Stop currently running project
 		    if (this.IsInitialized)
 			    this.StopProject();
@@ -60,6 +62,7 @@ namespace SparkiyClient.Controls.PlayView
 			    {
 				    var imageAsset = asset as ImageAsset;
 					imageAssets.Add(imageAsset);
+					Log.Debug("Added Asset:Image \"{0}\"", imageAsset.Name);
 			    }
 				else { 
 					throw new NotSupportedException("Provided asset type is not supported by this player.");
@@ -76,6 +79,8 @@ namespace SparkiyClient.Controls.PlayView
 			// Instantiate new engine
 		    this.engine = ServiceLocator.Current.GetInstance<EngineProviderService>().GetLuaDxEngine(this.SwapChainPanel);
 			this.engine.Initialize();
+
+			// TODO Add assets to the engine
 
 			// Add scripts to the engine
 		    foreach (var script in project.Files.Result.OfType<Script>())

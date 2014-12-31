@@ -19,6 +19,7 @@ using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.ViewModels;
+using SparkiyClient.UILogic.Windows.ViewModels;
 
 namespace SparkiyClient.Views
 {

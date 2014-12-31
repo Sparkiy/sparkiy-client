@@ -17,6 +17,7 @@ using SparkiyClient.Controls.PlayView;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
 using SparkiyClient.UILogic.ViewModels;
+using SparkiyClient.UILogic.Windows.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 

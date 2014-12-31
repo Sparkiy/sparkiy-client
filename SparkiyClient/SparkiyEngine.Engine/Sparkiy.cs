@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Windows.UI.Xaml;
+using MetroLog;
 using SparkiyEngine.Input;
 
 namespace SparkiyEngine.Engine
@@ -37,6 +38,8 @@ namespace SparkiyEngine.Engine
 
 	public class Sparkiy : IEngineBindings
 	{
+		private static ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<Sparkiy>();
+
 		private ILanguageBindings languageBindings;
 		private IGraphicsBindings graphicsBindings;
 	    private IGraphicsSettings graphicsSettings;
@@ -48,6 +51,7 @@ namespace SparkiyEngine.Engine
 	    private bool isReset;
 
 	    private DateTime startedTime;
+		private DateTime lastFrameTime;
 
 
 		/// <summary>
@@ -108,10 +112,12 @@ namespace SparkiyEngine.Engine
 	        if (!this.isInitialized)
                 throw new InvalidOperationException("Initialize engine before calling play.");
 
-	        if (this.isReset)
-	            this.startedTime = DateTime.Now;
+		    if (this.isReset)
+		    {
+			    this.startedTime = this.lastFrameTime = DateTime.Now;
+		    }
 
-	        this.GraphicsBindings.Play();
+		    this.GraphicsBindings.Play();
 
             if (this.scriptManager.HasInactiveScripts)
                 throw new NotImplementedException();
@@ -131,8 +137,12 @@ namespace SparkiyEngine.Engine
 
 	    public void AddScript(string name, string code)
 	    {
+			Contract.Requires(!String.IsNullOrWhiteSpace(name));
+
+			Log.Debug("Added script \"{0}\"", name);
+
 	        this.scriptManager.AddScript(name);
-	        this.LanguageBindings.LoadScript(name, code);
+	        this.LanguageBindings.LoadScript(name, code ?? String.Empty);
             this.CallCreated(name);
 	    }
 
@@ -141,10 +151,18 @@ namespace SparkiyEngine.Engine
             if (this.scriptManager.HasInactiveScripts)
                 throw new NotImplementedException();
 
-            this.LanguageBindings.SetVariable("DELTA", (double)(DateTime.Now - this.startedTime).TotalMilliseconds, DataTypes.Number);
+			// Calculate delta
+		    var delta = DateTime.Now - this.lastFrameTime;
+		    this.lastFrameTime = DateTime.Now;
 
-            // Call touched method if there are any pointers active
-	        if (this.pointerManager.PrimaryPointer != null)
+			// Calculate total time
+		    var total = DateTime.Now - this.startedTime;
+
+			this.LanguageBindings.SetVariable("DELTA", delta.TotalMilliseconds, DataTypes.Number);
+			this.LanguageBindings.SetVariable("TOTAL", total.TotalMilliseconds, DataTypes.Number);
+
+			// Call touched method if there are any pointers active
+			if (this.pointerManager.PrimaryPointer != null)
 	        {
 	            if (this.pointerManager.PrimaryPointer.InGameType != InputTypes.NotTracked)
 	                this.CallTouched(

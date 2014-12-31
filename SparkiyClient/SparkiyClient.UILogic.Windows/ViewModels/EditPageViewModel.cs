@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Navigation;
@@ -16,7 +14,7 @@ using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
 
-namespace SparkiyClient.UILogic.ViewModels
+namespace SparkiyClient.UILogic.Windows.ViewModels
 {
 	public interface INewFileViewModel
 	{
@@ -211,7 +209,7 @@ namespace SparkiyClient.UILogic.ViewModels
 		public RelayCommand PlayProjectCommand { get; }
 	}
 
-	public class EditPageViewModelDesignTime : EditPageViewModel
+	public sealed class EditPageViewModelDesignTime : EditPageViewModel
 	{
 		public EditPageViewModelDesignTime() : base(null, null)
 		{
