@@ -20,6 +20,8 @@
     <RestorePackages>true</RestorePackages>
     <PackageCertificateThumbprint>C8A1990B51B222792CBFBF1503A0F656387022C8</PackageCertificateThumbprint>
     <NuGetPackageImportStamp>60303db4</NuGetPackageImportStamp>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -111,6 +113,9 @@
     <Compile Include="Views\CreateProjectPage.xaml.cs">
       <DependentUpon>CreateProjectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DebugPage.xaml.cs">
+      <DependentUpon>DebugPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditPage.xaml.cs">
       <DependentUpon>EditPage.xaml</DependentUpon>
     </Compile>
@@ -127,7 +132,10 @@
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Square70x70Logo.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DebugPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\EditPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -262,5 +274,3 @@
   </Target>
   -->
 </Project>
-
-

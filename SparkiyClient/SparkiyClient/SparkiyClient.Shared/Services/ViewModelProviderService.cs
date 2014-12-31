@@ -1,6 +1,7 @@
 ﻿using Windows.ApplicationModel;
 using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.UILogic.ViewModels;
+using SparkiyClient.UILogic.Windows.ViewModels;
 
 namespace SparkiyClient.Services
 {
@@ -10,14 +11,14 @@ namespace SparkiyClient.Services
 
 		public IProjectPageViewModel ProjectPage => DesignMode.DesignModeEnabled ? new ProjectPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IProjectPageViewModel>();
 
-		public IPlayPageViewModel PlayPage => ServiceLocator.Current?.GetInstance<IPlayPageViewModel>();
+		public IPlayPageViewModel PlayPage => DesignMode.DesignModeEnabled ? new PlayPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IPlayPageViewModel>();
 
 #if WINDOWS_APP
-		public ICreateProjectPageViewModel CreateProjectPage => ServiceLocator.Current?.GetInstance<ICreateProjectPageViewModel>();
+		public ICreateProjectPageViewModel CreateProjectPage => DesignMode.DesignModeEnabled ? new CreateProjectPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<ICreateProjectPageViewModel>();
 
 		public IEditPageViewModel EditPage => DesignMode.DesignModeEnabled ? new EditPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IEditPageViewModel>();
 
-		public IDebugPageViewModel DebugPage => ServiceLocator.Current?.GetInstance<IDebugPageViewModel>();
+		public IDebugPageViewModel DebugPage => DesignMode.DesignModeEnabled ? new DebugPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IDebugPageViewModel>();
 #endif
 	}
 }

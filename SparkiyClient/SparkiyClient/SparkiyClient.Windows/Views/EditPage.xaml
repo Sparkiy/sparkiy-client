@@ -141,7 +141,7 @@
 			
 		</Grid>
 		
-		<sideBar:SideBarControl x:Name="SideBarFiles">
+		<sideBar:SideBarControl x:Name="SideBarFiles" IsOpen="False">
 			<sideBar:SideBarControl.Content>
 				<Grid>
 					<Grid.RowDefinitions>
@@ -269,7 +269,7 @@
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>
 		
-		<sideBar:SideBarControl x:Name="SideBarAssets" IsLeft="false" Grid.Column="2">
+		<sideBar:SideBarControl x:Name="SideBarAssets" IsLeft="False" IsOpen="False" Grid.Column="2">
 			<sideBar:SideBarControl.Content>
 				<Grid>
 					<Grid.RowDefinitions>
@@ -291,7 +291,7 @@
 							<extensions:AssetDataTemplateSelector>
 								<extensions:AssetDataTemplateSelector.ImageDataTemplate>
 									<DataTemplate>
-										<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:Image, IsDesignTimeCreatable=True}">
+										<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:ImageAsset, IsDesignTimeCreatable=True}">
 											<Border Margin="8 3" Background="{StaticResource AccentBrushDark}" VerticalAlignment="Center">
 												<Image Source="{Binding Data.UriSource}" Width="36" Height="36" Stretch="Uniform" />
 											</Border>

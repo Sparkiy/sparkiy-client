@@ -28,7 +28,7 @@ namespace SparkiyClient.UILogic.Models
 				await file.GetCodeAsync();
 
 			// Load images
-			foreach (var image in this.Assets.Result.OfType<Image>())
+			foreach (var image in this.Assets.Result.OfType<ImageAsset>())
 				await image.GetDataAsync();
 		}
 
