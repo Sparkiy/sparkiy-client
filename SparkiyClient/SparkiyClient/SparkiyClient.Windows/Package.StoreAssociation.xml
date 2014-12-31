@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StoreAssociation xmlns="http://schemas.microsoft.com/appx/2010/storeassociation">
-  <Publisher>CN=C921DF72-A1E0-450C-ACD3-BB0A8BDEA334</Publisher>
-  <PublisherDisplayName>Sparkiy</PublisherDisplayName>
+  <Publisher>CN=E746B84B-09A1-43E8-B524-41758B02DFE1</Publisher>
+  <PublisherDisplayName>Aleksandar Toplek</PublisherDisplayName>
   <GeneratePackageHash>http://www.w3.org/2001/04/xmlenc#sha256</GeneratePackageHash>
   <SupportedLocales>
     <Language Code="af" InMinimumRequirementSet="true" />
@@ -348,11 +348,14 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>Sparkiy.Sparkiy</MainPackageIdentityName>
+    <MainPackageIdentityName>53858AleksandarToplek.Sparkiy</MainPackageIdentityName>
     <ReservedNames>
       <ReservedName>Sparkiy</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
-  <AccountPackageIdentityNames />
-  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/2be20887-73d4-4cbc-94e7-3767202808e9" />
+  <AccountPackageIdentityNames>
+    <MainPackageIdentityName>53858AleksandarToplek.Project-Code</MainPackageIdentityName>
+    <MainPackageIdentityName>53858AleksandarToplek.Quantastic</MainPackageIdentityName>
+  </AccountPackageIdentityNames>
+  <PackageInfoList LandingUrl="https://appdev.microsoft.com:443/StorePortals/Developer/Catalog/ReleaseAnchor/b06800e1-6a95-4d7b-9feb-32a371613afd" />
 </StoreAssociation>
