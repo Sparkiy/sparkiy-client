@@ -11,4 +11,9 @@ namespace SparkiyClient.UILogic.ViewModels
 	{
 		
 	}
+
+	public sealed class PlayPageViewModelDesignTime : PlayPageViewModel
+	{
+		
+	}
 }

@@ -15,12 +15,11 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.ViewModels;
-using Image = SparkiyClient.UILogic.Models.Image;
+using SparkiyClient.UILogic.Windows.ViewModels;
 
 namespace SparkiyClient.Views
 {
@@ -1253,7 +1252,7 @@ namespace SparkiyClient.Views
 		/// <returns>DataTemplate cooresponsing to passed CodeFile Type</returns>
 		protected override DataTemplate SelectTemplateCore(object item)
 		{
-			if (item is Image)
+			if (item is ImageAsset)
 				return this.ImageDataTemplate;
 
 			return base.SelectTemplateCore(item);
@@ -1267,22 +1266,6 @@ namespace SparkiyClient.Views
             this.InitializeComponent();
 
 			this.ViewModel.AssignEditor(this.CodeEditor);
-		}
-
-		protected override void OnNavigatedTo(NavigationEventArgs e)
-		{
-			base.OnNavigatedTo(e);
-
-			// Hide sidebars
-			var timer = new DispatcherTimer();
-			timer.Interval = TimeSpan.FromMilliseconds(400);
-			timer.Tick += (sender, o) =>
-			{
-				this.SideBarFiles.IsOpen = false;
-				this.SideBarAssets.IsOpen = false;
-				timer.Stop();
-			};
-			timer.Start();
 		}
 
 		public new IEditPageViewModel ViewModel => this.DataContext as IEditPageViewModel;
