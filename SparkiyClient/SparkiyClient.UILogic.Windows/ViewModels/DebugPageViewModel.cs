@@ -3,7 +3,7 @@ using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
 
-namespace SparkiyClient.UILogic.ViewModels
+namespace SparkiyClient.UILogic.Windows.ViewModels
 {
 	public interface IDebugPageViewModel
 	{
@@ -39,5 +39,10 @@ namespace SparkiyClient.UILogic.ViewModels
 
 			this.projectPlayStateManager.PlayProject();
 		}
+	}
+
+	public sealed class DebugPageViewModelDesignTime : DebugPageViewModel
+	{
+		
 	}
 }

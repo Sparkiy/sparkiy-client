@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
 
-namespace SparkiyClient.UILogic.ViewModels
+namespace SparkiyClient.UILogic.Windows.ViewModels
 {
 	public interface ICreateProjectPageViewModel
 	{
@@ -46,5 +41,12 @@ namespace SparkiyClient.UILogic.ViewModels
 		}
 
 		public RelayCommand CreateProjectCommand { get; }
+	}
+
+	public sealed class CreateProjectPageViewModelDesignTime : CreateProjectPageViewModel
+	{
+		public CreateProjectPageViewModelDesignTime() : base(null, null)
+		{
+		}
 	}
 }

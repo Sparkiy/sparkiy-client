@@ -17,15 +17,24 @@
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
+	
+		<playView:PlayViewControl x:Name="PlayView" Grid.Column="1" />
 		
-		<sideBar:SideBarControl>
+		<sideBar:SideBarControl Grid.Column="0">
 			<sideBar:SideBarControl.Content>
 				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition />
+					</Grid.RowDefinitions>
 					
+					<TextBlock Text="Output"
+							   Style="{StaticResource HeaderTextBlockStyle}" />
+					
+					<ListBox Grid.Row="1" />
 				</Grid>
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>
-		
-		<playView:PlayViewControl x:Name="PlayView" Grid.Column="1" />
+	
     </Grid>
 </common:PageBase>
