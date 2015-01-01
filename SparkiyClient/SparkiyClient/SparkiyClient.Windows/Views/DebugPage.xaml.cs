@@ -36,22 +36,19 @@ namespace SparkiyClient.Views
 
 	    protected override async void OnNavigatedTo(NavigationEventArgs e)
 	    {
-		    var project = e.Parameter as Project;
+			base.OnNavigatedTo(e);
+
+			var project = e.Parameter as Project;
 			if (project == null)
 				throw new NullReferenceException("Passed data is not in expected format.");
 
 			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView as IProjectPlayEngineManagement);
 			this.ViewModel.AssignProjectPlayStateManager(this.PlayView as IProjectPlayStateManagment);
 
-#pragma warning disable 4014
-			// Note: We want this to run asynchronously to navigation
-			this.ViewModel.AssignProjectAsync(project);
-#pragma warning restore 4014
-
-		    base.OnNavigatedTo(e);
+			await this.ViewModel.AssignProjectAsync(project);
 	    }
 
 
-	    public IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;
+	    public new IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;
     }
 }

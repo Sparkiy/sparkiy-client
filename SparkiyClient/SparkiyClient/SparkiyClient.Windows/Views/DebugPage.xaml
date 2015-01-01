@@ -24,24 +24,34 @@
 		<sideBar:SideBarControl Grid.Column="0">
 			<sideBar:SideBarControl.Content>
 				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-					
-					<TextBlock Text="Output"
-							   Style="{StaticResource HeaderTextBlockStyle}" />
-					
-					<ListBox ItemsSource="{Binding OutputMessages}"
-							 Grid.Row="1">
-						<ListBox.ItemTemplate>
+					<ListView ItemsSource="{Binding OutputMessages}"
+							  SelectionMode="None"
+							  BorderThickness="0"
+							  Margin="0 10"
+							  Grid.Row="0">
+						<ListView.Header>
+							<TextBlock Text="Messages" 
+									   Margin="24 12"
+									   Style="{StaticResource SubheaderTextBlockStyle}" />
+						</ListView.Header>
+						<ListView.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Vertical" Background="#11000000" />
+							</ItemsPanelTemplate>
+						</ListView.ItemsPanel>
+						<ListView.ItemTemplate>
 							<DataTemplate>
 								<Grid d:DataContext="{d:DesignInstance Type=engine:EngineMessage}">
-									<TextBlock Text="{Binding Message}" />
+									<TextBlock Text="{Binding Message}"
+											   FontFamily="Calibri"
+											   FontSize="16"
+											   TextWrapping="Wrap" 
+											   Padding="8 10 2 10"
+											   Foreground="#444"/>
 								</Grid>
 							</DataTemplate>
-						</ListBox.ItemTemplate>
-					</ListBox>
+						</ListView.ItemTemplate>
+					</ListView>
 				</Grid>
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>

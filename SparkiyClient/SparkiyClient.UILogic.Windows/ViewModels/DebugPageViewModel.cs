@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
@@ -41,7 +42,18 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			this.project = project;
 			this.projectPlayEngineManager.AssignProject(this.project);
 
+			// Attach to on message created event and rigger first message read 
+			this.projectPlayEngineManager.Engine.OnMessageCreated += EngineOnOnMessageCreated;
+			this.EngineOnOnMessageCreated();
+
 			this.projectPlayStateManager.PlayProject();
+		}
+
+		private void EngineOnOnMessageCreated(object sender = null)
+		{
+			foreach (var engineMessage in this.projectPlayEngineManager.Engine.GetMessages())
+				this.OutputMessages.Add(engineMessage);
+			this.projectPlayEngineManager.Engine.ClearMessages();
 		}
 
 
@@ -50,6 +62,11 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 	public sealed class DebugPageViewModelDesignTime : DebugPageViewModel
 	{
-		
+		public DebugPageViewModelDesignTime()
+		{
+			this.OutputMessages.Add(new EngineMessage() { Message = "Test1" });
+			this.OutputMessages.Add(new EngineMessage() { Message = "Test2" });
+			this.OutputMessages.Add(new EngineMessage() { Message = "Test3" });
+		}
 	}
 }

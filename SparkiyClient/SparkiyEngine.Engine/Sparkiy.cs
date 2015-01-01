@@ -179,6 +179,13 @@ namespace SparkiyEngine.Engine
 
 	    private void CallCreated(string script = null)
 	    {
+		    this.AddMessage(new EngineMessage()
+		    {
+			    Message = "Script \"" + script + "\": Created",
+			    SourceType = BindingTypes.Engine,
+			    Source = this
+		    });
+
 	        this.CallFunction(script, "Created", MethodTypes.Call);
 	    }
 
