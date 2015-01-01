@@ -36,8 +36,10 @@ namespace SparkiyClient.Controls.PlayView
 	    private bool isPaused = true;
 	    private bool isInitialized = false;
 
+		public event ProjectPlayStateEventHandler OnStateChanged;
 
-	    public PlayViewControl()
+
+		public PlayViewControl()
         {
             this.InitializeComponent();
         }
@@ -96,7 +98,9 @@ namespace SparkiyClient.Controls.PlayView
 			this.Engine.Pause();
 			this.Engine.Reset();
 		    throw new NotImplementedException();
-	    }
+
+			this.OnStateChanged?.Invoke(this);
+	}
 
 	    public void PlayProject()
 	    {
@@ -106,7 +110,9 @@ namespace SparkiyClient.Controls.PlayView
 			this.Engine.Play();
 
 		    this.isPaused = false;
-	    }
+
+			this.OnStateChanged?.Invoke(this);
+		}
 
 	    public void PauseProject()
 	    {
@@ -115,9 +121,9 @@ namespace SparkiyClient.Controls.PlayView
 
 			this.Engine.Pause();
 
-			throw new NotImplementedException();
-
 			this.isPaused = true;
+
+			this.OnStateChanged?.Invoke(this);
 		}
 
 	    public void RestartProject()
@@ -126,7 +132,9 @@ namespace SparkiyClient.Controls.PlayView
 			// TODO Restart project (Re-add scripts)
 			this.Engine.Play();
 		    throw new NotImplementedException();
-	    }
+
+			this.OnStateChanged?.Invoke(this);
+		}
 
 	    public void TakeScreenshot()
 	    {
@@ -137,8 +145,8 @@ namespace SparkiyClient.Controls.PlayView
 
 	    public bool IsPlaying => !this.isPaused;
 
-	    public bool IsPause => this.isPaused;
+		public bool IsPause => this.isPaused;
 
-	    public IEngineBindings Engine => this.engine;
+		public IEngineBindings Engine => this.engine;
     }
 }

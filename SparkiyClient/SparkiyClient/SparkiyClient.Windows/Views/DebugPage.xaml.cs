@@ -40,15 +40,22 @@ namespace SparkiyClient.Views
 	    {
 			base.OnNavigatedTo(e);
 
+			// Retrieve passed project
 			var project = e.Parameter as Project;
 			if (project == null)
 				throw new NullReferenceException("Passed data is not in expected format.");
 
+			// Assign play engine
 			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView as IProjectPlayEngineManagement);
-			this.ViewModel.AssignProjectPlayStateManager(this.PlayView as IProjectPlayStateManagment);
 
+			// Assign play state manager
+			this.ViewModel.AssignProjectPlayStateManager(this.PlayView as IProjectPlayStateManagment);
+			this.PlaybackControlsControl.AssignPlayStateManager(this.ViewModel.ProjectPlayStateManagment);
+
+			// Assign project
 			await this.ViewModel.AssignProjectAsync(project);
 
+			// Watch output messages changes
 			this.ViewModel.OutputMessages.CollectionChanged += OutputMessagesOnCollectionChanged;
 	    }
 

@@ -9,6 +9,7 @@
     xmlns:playView="using:SparkiyClient.Controls.PlayView"
     xmlns:common="using:SparkiyClient.Common"
     xmlns:engine="using:SparkiyEngine.Bindings.Component.Engine"
+    xmlns:playbackControls="using:SparkiyClient.Controls.PlaybackControls"
     mc:Ignorable="d"
 	RequestedTheme="Light"
 	DataContext="{Binding Source={StaticResource Locator}, Path=DebugPage}">
@@ -20,6 +21,12 @@
 		</Grid.ColumnDefinitions>
 	
 		<playView:PlayViewControl x:Name="PlayView" Grid.Column="1" />
+		
+		<playbackControls:PlaybackControlsControl x:Name="PlaybackControlsControl" 
+												  VerticalAlignment="Bottom" 
+												  HorizontalAlignment="Left" 
+												  Margin="10"
+												  Grid.Column="1" />
 		
 		<sideBar:SideBarControl Grid.Column="0">
 			<sideBar:SideBarControl.Content>
