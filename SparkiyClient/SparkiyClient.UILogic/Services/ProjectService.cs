@@ -22,8 +22,8 @@ namespace SparkiyClient.UILogic.Services
 		private const string ProjectScreenshotsPath = "Screenshots";
 		private const string ProjectAssetsPath = "Assets";
 		private const string ProjectFilesPath = "Files";
-		private const string ProjectFilesScriptExtension = ".luascript";
-		private const string ProjectFilesClassExtension = ".luaclass";
+		private const string ProjectFilesScriptExtension = ".script.lua";
+		private const string ProjectFilesClassExtension = ".class.lua";
 
 		private readonly IStorageService storageService;
 
@@ -212,10 +212,11 @@ namespace SparkiyClient.UILogic.Services
 		private async Task<IEnumerable<T>> QueryFiles<T>(StorageFolder folder, string extension)
 			where T : CodeFile, new()
 		{
-			var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string>() {extension});
+			var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string>() {".lua"});
 			var queryResult = folder.CreateFileQueryWithOptions(queryOptions);
 			var files = await queryResult.GetFilesAsync();
-			var codeFiles = files.Select(f =>
+			var filesExtensionFilter = files.Where(f => f.Name.EndsWith(extension));
+			var codeFiles = filesExtensionFilter.Select(f =>
 				new T
 				{
 					Name = f.DisplayName,
