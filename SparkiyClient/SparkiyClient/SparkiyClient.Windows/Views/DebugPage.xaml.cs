@@ -46,11 +46,11 @@ namespace SparkiyClient.Views
 				throw new NullReferenceException("Passed data is not in expected format.");
 
 			// Assign play engine
-			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView as IProjectPlayEngineManagement);
+			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView);
 
 			// Assign play state manager
-			this.ViewModel.AssignProjectPlayStateManager(this.PlayView as IProjectPlayStateManagment);
-			this.PlaybackControlsControl.AssignPlayStateManager(this.ViewModel.ProjectPlayStateManagment);
+			this.ViewModel.AssignProjectPlayStateManager(this.PlayView);
+			this.PlaybackControlsControl.AssignPlayStateManager(this.PlayView);
 
 			// Assign project
 			await this.ViewModel.AssignProjectAsync(project);

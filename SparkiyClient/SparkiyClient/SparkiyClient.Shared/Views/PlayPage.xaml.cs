@@ -13,6 +13,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SparkiyClient.Common;
+using SparkiyClient.UILogic.Models;
+using SparkiyClient.UILogic.Services;
+using SparkiyClient.UILogic.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -27,5 +30,19 @@ namespace SparkiyClient.Views
         {
             this.InitializeComponent();
         }
-    }
+
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+
+			// Assign play engine
+			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView);
+
+			// Assign play state manager
+			this.ViewModel.AssignProjectPlayStateManager(this.PlayView);
+			this.PlaybackControlsControl.AssignPlayStateManager(this.PlayView);
+		}
+
+		public new IPlayPageViewModel ViewModel => this.DataContext as IPlayPageViewModel;
+	}
 }

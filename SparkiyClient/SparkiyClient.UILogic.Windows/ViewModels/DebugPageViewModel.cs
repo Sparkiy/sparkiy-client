@@ -18,8 +18,6 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		Task AssignProjectAsync(Project project);
 
 		ObservableCollection<EngineMessage> OutputMessages { get; }
-
-		IProjectPlayStateManagment ProjectPlayStateManagment { get; }
 	}
 
 	public class DebugPageViewModel : ExtendedViewModel, IDebugPageViewModel
@@ -69,8 +67,6 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		}
 
 		public ObservableCollection<EngineMessage> OutputMessages { get; } = new ObservableCollection<EngineMessage>();
-
-		public IProjectPlayStateManagment ProjectPlayStateManagment => this.projectPlayStateManager;
 	}
 
 	public sealed class DebugPageViewModelDesignTime : DebugPageViewModel
