@@ -8,6 +8,7 @@
     xmlns:sideBar="using:SparkiyClient.Controls.SideBar"
     xmlns:playView="using:SparkiyClient.Controls.PlayView"
     xmlns:common="using:SparkiyClient.Common"
+    xmlns:engine="using:SparkiyEngine.Bindings.Component.Engine"
     mc:Ignorable="d"
 	RequestedTheme="Light"
 	DataContext="{Binding Source={StaticResource Locator}, Path=DebugPage}">
@@ -31,7 +32,16 @@
 					<TextBlock Text="Output"
 							   Style="{StaticResource HeaderTextBlockStyle}" />
 					
-					<ListBox Grid.Row="1" />
+					<ListBox ItemsSource="{Binding OutputMessages}"
+							 Grid.Row="1">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid d:DataContext="{d:DesignInstance Type=engine:EngineMessage}">
+									<TextBlock Text="{Binding Message}" />
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
 				</Grid>
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>

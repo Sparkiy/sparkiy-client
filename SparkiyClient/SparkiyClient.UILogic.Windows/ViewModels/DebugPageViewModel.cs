@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
+using SparkiyEngine.Bindings.Component.Engine;
 
 namespace SparkiyClient.UILogic.Windows.ViewModels
 {
@@ -12,6 +14,8 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		void AssignProjectPlayStateManager(IProjectPlayStateManagment projectPlayStateManagment);
 
 		Task AssignProjectAsync(Project project);
+
+		ObservableCollection<EngineMessage> OutputMessages { get; }
 	}
 
 	public class DebugPageViewModel : ExtendedViewModel, IDebugPageViewModel
@@ -39,6 +43,9 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 			this.projectPlayStateManager.PlayProject();
 		}
+
+
+		public ObservableCollection<EngineMessage> OutputMessages { get; } = new ObservableCollection<EngineMessage>();
 	}
 
 	public sealed class DebugPageViewModelDesignTime : DebugPageViewModel
