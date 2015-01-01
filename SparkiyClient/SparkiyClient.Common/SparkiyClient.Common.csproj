@@ -60,6 +60,7 @@
     <Compile Include="Controls\ICodeEditor.cs" />
     <Compile Include="Controls\IMessagesPopup.cs" />
     <Compile Include="ExtendedViewModel.cs" />
+    <Compile Include="Extensions\VisualTreeHelperExtensions.cs" />
     <Compile Include="Helpers\DictionaryExtensions.cs" />
     <Compile Include="Helpers\StorageFolderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

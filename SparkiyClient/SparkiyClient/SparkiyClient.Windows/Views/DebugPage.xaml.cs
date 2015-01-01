@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SparkiyClient.Common;
+using SparkiyClient.Common.Extensions;
 using SparkiyClient.Controls.PlayView;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
@@ -46,7 +48,16 @@ namespace SparkiyClient.Views
 			this.ViewModel.AssignProjectPlayStateManager(this.PlayView as IProjectPlayStateManagment);
 
 			await this.ViewModel.AssignProjectAsync(project);
+
+			this.ViewModel.OutputMessages.CollectionChanged += OutputMessagesOnCollectionChanged;
 	    }
+
+	    private void OutputMessagesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+	    {
+			// Scroll to bottom
+		    var scrollViewer = this.SideBarMessagesListView.GetFirstDescendantOfType<ScrollViewer>();
+			scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
+		}
 
 
 	    public new IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;

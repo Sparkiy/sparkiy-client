@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
@@ -25,7 +26,27 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		private IProjectPlayStateManagment projectPlayStateManager;
 		private Project project;
 
+		private DispatcherTimer messagesCheckTimer;
 
+
+		public DebugPageViewModel()
+		{
+			this.messagesCheckTimer = new DispatcherTimer();
+			this.messagesCheckTimer.Interval = TimeSpan.FromMilliseconds(100);
+			this.messagesCheckTimer.Tick += MessagesCheckTimerOnTick;
+			this.messagesCheckTimer.Start();
+		}
+
+		private int counter = 0;
+		private void MessagesCheckTimerOnTick(object sender, object o)
+		{
+			if (this.projectPlayEngineManager?.Engine == null)
+				return;
+
+			foreach (var engineMessage in this.projectPlayEngineManager.Engine.GetMessages())
+				this.OutputMessages.Add(engineMessage);
+			this.projectPlayEngineManager.Engine.ClearMessages();
+		}
 
 		public void AssignProjectPlayEngineManager(IProjectPlayEngineManagement projectPlayEngineManager)
 		{
@@ -42,20 +63,8 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			this.project = project;
 			this.projectPlayEngineManager.AssignProject(this.project);
 
-			// Attach to on message created event and rigger first message read 
-			this.projectPlayEngineManager.Engine.OnMessageCreated += EngineOnOnMessageCreated;
-			this.EngineOnOnMessageCreated();
-
 			this.projectPlayStateManager.PlayProject();
 		}
-
-		private void EngineOnOnMessageCreated(object sender = null)
-		{
-			foreach (var engineMessage in this.projectPlayEngineManager.Engine.GetMessages())
-				this.OutputMessages.Add(engineMessage);
-			this.projectPlayEngineManager.Engine.ClearMessages();
-		}
-
 
 		public ObservableCollection<EngineMessage> OutputMessages { get; } = new ObservableCollection<EngineMessage>();
 	}

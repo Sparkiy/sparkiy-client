@@ -24,19 +24,26 @@
 		<sideBar:SideBarControl Grid.Column="0">
 			<sideBar:SideBarControl.Content>
 				<Grid>
-					<ListView ItemsSource="{Binding OutputMessages}"
+					<ListView x:Name="SideBarMessagesListView" 
+							  ItemsSource="{Binding OutputMessages}"
 							  SelectionMode="None"
 							  BorderThickness="0"
-							  Margin="0 10"
+							  Margin="0 10 0 10"
 							  Grid.Row="0">
 						<ListView.Header>
 							<TextBlock Text="Messages" 
-									   Margin="24 12"
+									   Margin="24 2 24 12"
 									   Style="{StaticResource SubheaderTextBlockStyle}" />
 						</ListView.Header>
 						<ListView.ItemsPanel>
 							<ItemsPanelTemplate>
-								<VirtualizingStackPanel Orientation="Vertical" Background="#11000000" />
+								<VirtualizingStackPanel Orientation="Vertical" Background="#11000000">
+									<VirtualizingStackPanel.Transitions>
+										<TransitionCollection>
+											<AddDeleteThemeTransition/>
+										 </TransitionCollection>
+									</VirtualizingStackPanel.Transitions>
+								</VirtualizingStackPanel>
 							</ItemsPanelTemplate>
 						</ListView.ItemsPanel>
 						<ListView.ItemTemplate>

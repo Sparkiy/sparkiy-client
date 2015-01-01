@@ -111,4 +111,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\sparkiy.png" />
     <Content Include="$(MSBuildThisFileDirectory)Controls\CodeEditor\Yellow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Controls\PlaybackControls\" />
+  </ItemGroup>
 </Project>
