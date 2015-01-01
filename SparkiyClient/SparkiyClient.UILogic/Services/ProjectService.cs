@@ -219,7 +219,7 @@ namespace SparkiyClient.UILogic.Services
 			var codeFiles = filesExtensionFilter.Select(f =>
 				new T
 				{
-					Name = f.DisplayName,
+					Name = f.Name.Replace(extension, String.Empty),
 					Path = f.Path
 				});
 

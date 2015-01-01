@@ -33,14 +33,14 @@ namespace SparkiyClient.Views
 
 		protected override async void OnNavigatedTo(NavigationEventArgs e)
 		{
-			base.OnNavigatedTo(e);
-
 			// Assign play engine
 			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView);
 
 			// Assign play state manager
 			this.ViewModel.AssignProjectPlayStateManager(this.PlayView);
 			this.PlaybackControlsControl.AssignPlayStateManager(this.PlayView);
+
+			base.OnNavigatedTo(e);
 		}
 
 		public new IPlayPageViewModel ViewModel => this.DataContext as IPlayPageViewModel;

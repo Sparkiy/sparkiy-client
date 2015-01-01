@@ -186,7 +186,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 				this.SetProperty(value);
 
 				if (editor != null)
-					this.editor.Code = this.SelectedFile?.Code;
+					this.editor.Code = this.SelectedFile?.Code ?? String.Empty;
 			}
 		}
 
