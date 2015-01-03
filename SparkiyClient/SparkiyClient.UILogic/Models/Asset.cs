@@ -29,7 +29,5 @@ namespace SparkiyClient.UILogic.Models
 			get { return this.GetProperty<string>(); }
 			set { this.SetProperty(value); }
 		}
-
-		
 	}
 }

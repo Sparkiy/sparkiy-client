@@ -95,7 +95,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			await this.Project.LoadAsync(this.projectService);
 
 			// Select first script
-			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
+			this.SelectedFile = this.Project.Files.FirstOrDefault();
 
 			base.OnNavigatedTo(e);
 		}
@@ -130,8 +130,8 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			else
 			{
 				if (this.NewFileViewModel.TypeIndex == 1)
-					this.Project.Files.Result.Add(new Class {Name = this.NewFileViewModel.Name});
-				else this.Project.Files.Result.Add(new Script {Name = this.NewFileViewModel.Name});
+					this.Project.Files.Add(new Class {Name = this.NewFileViewModel.Name});
+				else this.Project.Files.Add(new Script {Name = this.NewFileViewModel.Name});
 				await this.projectService.SaveAsync();
 
 				this.NewFileViewModel = null;
@@ -218,35 +218,15 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 				Author = "Aleksandar Toplek",
 				Description = "Sample description",
 				Name = "Sample project",
-				Files = new DumbINotifyTaskCompletion<ObservableCollection<CodeFile>> () { 
-					Result = new ObservableCollection<CodeFile>()
-					{
-						new Script {Code = "Sample code", Name = "main"},
-						new Script {Code = "Sample code", Name = "script1"},
-						new Script {Code = "Sample code", Name = "script2"},
-						new Class {Code = "Class sample", Name = "class1"}
-					}
+				Files = new ObservableCollection<CodeFile>()
+				{
+					new Script {Code = "Sample code", Name = "main"},
+					new Script {Code = "Sample code", Name = "script1"},
+					new Script {Code = "Sample code", Name = "script2"},
+					new Class {Code = "Class sample", Name = "class1"}
 				}
 			};
-			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
-		}
-
-		private class DumbINotifyTaskCompletion<T> : INotifyTaskCompletion<T>
-		{
-			public event PropertyChangedEventHandler PropertyChanged;
-			Task INotifyTaskCompletion.Task => Task;
-			public T Result { get; set; }
-			public Task<T> Task { get; set; }
-			public Task TaskCompleted { get; set; }
-			public TaskStatus Status { get; set; }
-			public bool IsCompleted { get; set; }
-			public bool IsNotCompleted { get; set; }
-			public bool IsSuccessfullyCompleted { get; set; }
-			public bool IsCanceled { get; set; }
-			public bool IsFaulted { get; set; }
-			public AggregateException Exception { get; set; }
-			public Exception InnerException { get; set; }
-			public string ErrorMessage { get; set; }
+			this.SelectedFile = this.Project.Files.FirstOrDefault();
 		}
 	}
 }

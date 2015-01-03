@@ -120,7 +120,7 @@
 					</Grid.RowDefinitions>
 			
 					<!-- Scripts list -->
-					<ListView ItemsSource="{Binding Project.Files.Result}"
+					<ListView ItemsSource="{Binding Project.Files}"
 							  SelectedItem="{Binding SelectedFile, Mode=TwoWay}"
 							  ItemContainerStyle="{StaticResource SideBarFilesListViewStyle}"
 							  SelectionMode="Single" Grid.Row="0">
@@ -248,7 +248,7 @@
 					</Grid.RowDefinitions>
 
 					<!-- Assets list -->
-					<ListView ItemsSource="{Binding Project.Assets.Result}"
+					<ListView ItemsSource="{Binding Project.Assets}"
 						  ItemContainerStyle="{StaticResource SideBarFilesListViewStyle}"
 						  SelectionMode="None" Grid.Row="0">
 						<ListView.Header>

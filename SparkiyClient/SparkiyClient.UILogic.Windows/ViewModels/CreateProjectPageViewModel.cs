@@ -31,17 +31,14 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 			this.Project = new Project()
 			{
-				Files = NotifyTaskCompletion.Create(async () =>
+				Files = new ObservableCollection<CodeFile>()
 				{
-					return new ObservableCollection<CodeFile>()
+					new Script()
 					{
-						new Script()
-						{
-							Name = "Entry",
-							Code = "function Created()\n\nend\n\nfunction Started()\n\nend\n\nfunction Draw()\n\nend\n\nfunction Touched(type, x, y)\n\nend\n\nfunction Stopped()\n\nend\n"
-						}
-					};
-				})
+						Name = "Entry",
+						Code = "function Created()\n\r\n\rend\n\r\n\rfunction Started()\n\r\n\rend\n\r\n\rfunction Draw()\n\r\n\rend\n\r\n\rfunction Touched(type, x, y)\n\r\n\rend\n\r\n\rfunction Stopped()\n\r\n\rend\n\r"
+					}
+				}
 			};
 		}
 

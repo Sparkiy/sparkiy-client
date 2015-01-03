@@ -58,7 +58,7 @@ namespace SparkiyClient.Controls.PlayView
 
 			// Load assets from project
 		    var imageAssets = new List<ImageAsset>();
-		    foreach (var asset in this.project.Assets.Result)
+		    foreach (var asset in this.project.Assets)
 		    {
 			    if (asset is ImageAsset)
 			    {
@@ -72,7 +72,7 @@ namespace SparkiyClient.Controls.PlayView
 			}
 
 			// Combine all classes into one string
-		    var classesCombined = project.Files.Result
+		    var classesCombined = project.Files
 			    .OfType<Class>()
 			    .Aggregate(
 				    String.Empty,
@@ -85,7 +85,7 @@ namespace SparkiyClient.Controls.PlayView
 			// TODO Add assets to the engine
 
 			// Add scripts to the engine
-		    foreach (var script in project.Files.Result.OfType<Script>())
+		    foreach (var script in project.Files.OfType<Script>())
 			    this.engine.AddScript(script.Name, classesCombined + script.Code);
 
 			this.isInitialized = true;

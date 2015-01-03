@@ -53,7 +53,7 @@ namespace SparkiyClient.UILogic.Services
 
 			var asset = this.ResolveAsset(localCopy);
 			if (asset != null)
-				project.Assets.Result.Add(asset);
+				project.Assets.Add(asset);
 
 			Log.Debug("Asset \"{0}\" imported.", asset?.Name ?? "<INVALID TYPE>");
 		}
@@ -105,7 +105,7 @@ namespace SparkiyClient.UILogic.Services
 			Log.Debug("Saving projects...");
 
 			// Retrieve all dirty projects
-			var dirtyProjects = this.projects.Where(p => p.IsDirty || (p.Files?.Result?.Any(s => s.IsDirty) ?? false));
+			var dirtyProjects = this.projects.Where(p => p.IsDirty || (p.Files?.Any(s => s.IsDirty) ?? false));
 			foreach (var dirtyProject in dirtyProjects)
 			{
 				// Create project folder if it doesnt exist or retrieve one from project files path
@@ -122,7 +122,7 @@ namespace SparkiyClient.UILogic.Services
 
 				// Save all dirty files
 				var scriptsFolder = await projectFolder.GetFolderAsync(ProjectFilesPath);
-				var dirtyFiles = dirtyProject.Files?.Result?.Where(s => s.IsDirty);
+				var dirtyFiles = dirtyProject.Files?.Where(s => s.IsDirty);
 				if (dirtyFiles != null)
 					foreach (var script in dirtyFiles)
 					{
