@@ -21,6 +21,7 @@
 			</Style>
 		</StackPanel.Resources>
 		
+		<Button Content="&#57691;" Style="{StaticResource ButtonStyle}" Click="ButtonStopOnClick" x:Name="StopButton" />
 		<Button Content="&#57602;" Style="{StaticResource ButtonStyle}" Click="ButtonPlayOnClick" x:Name="PlayButton" />
 		<Button Content="&#57603;" Style="{StaticResource ButtonStyle}" Click="ButtonPauseOnClick" x:Name="PauseButton" />
 		<Button Content="&#57673;" Style="{StaticResource ButtonStyle}" Click="ButtonRestartOnClick" />

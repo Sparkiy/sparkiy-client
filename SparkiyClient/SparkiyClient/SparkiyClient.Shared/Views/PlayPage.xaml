@@ -16,6 +16,7 @@
 		<playView:PlayViewControl x:Name="PlayView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 		
 		<playbackControls:PlaybackControlsControl x:Name="PlaybackControlsControl" 
+												  StopCommand="{Binding StopCommand}"
 												  VerticalAlignment="Bottom" 
 												  HorizontalAlignment="Left" 
 												  Margin="10" />

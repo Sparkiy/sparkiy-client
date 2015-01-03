@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
@@ -12,21 +14,33 @@ namespace SparkiyClient.UILogic.ViewModels
 		void AssignProjectPlayEngineManager(IProjectPlayEngineManagement projectPlayEngineManagement);
 
 		void AssignProjectPlayStateManager(IProjectPlayStateManagment projectPlayStateManagment);
+
+		RelayCommand StopCommand { get; }
 	}
 
 	public class PlayPageViewModel : ExtendedViewModel, IPlayPageViewModel
 	{
 		private readonly IProjectService projectService;
+		private readonly INavigationService navigationService;
 		private IProjectPlayStateManagment projectPlayStateManager;
 		private IProjectPlayEngineManagement projectPlayEngineManager;
 		private Project project;
 
 
-		public PlayPageViewModel(IProjectService projectService)
+		public PlayPageViewModel(IProjectService projectService, INavigationService navigationService)
 		{
 			this.projectService = projectService;
+			this.navigationService = navigationService;
+
+			this.StopCommand = new RelayCommand(this.StopCommandExecute);
 		}
 
+
+		private void StopCommandExecute()
+		{
+			this.projectPlayStateManager.PauseProject();
+			this.navigationService.GoBack();
+		}
 
 		public async override void OnNavigatedTo(NavigationEventArgs e)
 		{
@@ -64,11 +78,13 @@ namespace SparkiyClient.UILogic.ViewModels
 			// Run the project
 			this.projectPlayStateManager.PlayProject();
 		}
+
+		public RelayCommand StopCommand { get; }
 	}
 
 	public sealed class PlayPageViewModelDesignTime : PlayPageViewModel
 	{
-		public PlayPageViewModelDesignTime() : base(null)
+		public PlayPageViewModelDesignTime() : base(null, null)
 		{
 		}
 	}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -26,7 +27,15 @@ namespace SparkiyClient.Controls.PlaybackControls
         public PlaybackControlsControl()
         {
             this.InitializeComponent();
+
+			this.Loaded += OnLoaded;
         }
+
+	    private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+	    {
+		    if (this.StopCommand == null)
+				this.StopButton.Visibility = Visibility.Collapsed;
+	    }
 
 
 	    public void AssignPlayStateManager(IProjectPlayStateManagment manager)
@@ -72,5 +81,24 @@ namespace SparkiyClient.Controls.PlaybackControls
 	    {
 		    this.projectPlayStateManager.TakeScreenshot();
 	    }
-    }
+
+	    private void ButtonStopOnClick(object sender, RoutedEventArgs e)
+	    {
+			if (this.StopCommand == null)
+				throw new InvalidOperationException("Can't invoke command if not set.");
+
+		    if (this.StopCommand.CanExecute(null))
+				this.StopCommand.Execute(null);
+	    }
+
+
+		public ICommand StopCommand
+		{
+			get { return (ICommand)GetValue(StopCommandProperty); }
+			set { SetValue(StopCommandProperty, value); }
+		}
+
+		public static readonly DependencyProperty StopCommandProperty =
+			DependencyProperty.Register("StopCommand", typeof(ICommand), typeof(PlaybackControlsControl), new PropertyMetadata(null));
+	}
 }
