@@ -8,6 +8,7 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using MetroLog;
 using Nito.AsyncEx;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
@@ -63,6 +64,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 	public class EditPageViewModel : ExtendedViewModel, IEditPageViewModel
 	{
+		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<EditPageViewModel>();
 		private readonly IProjectService projectService;
 		private readonly INavigationService navigationService;
 
@@ -76,10 +78,10 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 			this.AddNewFileCommand = new RelayCommand(this.AddNewFileCommandExecuteAsync);
 			this.AddNewAssetCommand = new RelayCommand(this.AddNewAssetCommandExecuteAsync);
-			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecute);
-			this.NavigateToProjectCommand = new RelayCommand(this.NavigateToProjectCommandExecute);
-			this.DebugProjectCommand = new RelayCommand(this.DebugProjectCommandExecute);
-			this.PlayProjectCommand = new RelayCommand(this.PlayProjectCommandExecute);
+			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecuteAsync);
+			this.NavigateToProjectCommand = new RelayCommand(this.NavigateToProjectCommandExecuteAsync);
+			this.DebugProjectCommand = new RelayCommand(this.DebugProjectCommandExecuteAsync);
+			this.PlayProjectCommand = new RelayCommand(this.PlayProjectCommandExecuteAsync);
 		}
 
 
@@ -100,23 +102,27 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			base.OnNavigatedTo(e);
 		}
 
-		private void NavigateToHomeCommandExecute()
+		private async void NavigateToHomeCommandExecuteAsync()
 		{
+			await this.SaveChangesAsync();
 			this.navigationService.NavigateTo("MainPage");
 		}
 
-		private void NavigateToProjectCommandExecute()
+		private async void NavigateToProjectCommandExecuteAsync()
 		{
+			await this.SaveChangesAsync();
 			this.navigationService.NavigateTo("ProjectPage", this.Project);
 		}
 
-		private void DebugProjectCommandExecute()
+		private async void DebugProjectCommandExecuteAsync()
 		{
+			await this.SaveChangesAsync();
 			this.navigationService.NavigateTo("DebugPage", this.Project);
 		}
 
-		private void PlayProjectCommandExecute()
+		private async void PlayProjectCommandExecuteAsync()
 		{
+			await this.SaveChangesAsync();
 			this.navigationService.NavigateTo("PlayPage", this.Project);
 		}
 
@@ -171,6 +177,12 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			};
 		}
 
+		private async Task SaveChangesAsync()
+		{
+			SelectedFile.Code = this.editor.Code;
+			await this.projectService.SaveAsync();
+		}
+
 
 		public Project Project
 		{
@@ -183,10 +195,22 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			get { return this.GetProperty<CodeFile>(); }
 			set
 			{
+				if (this.SelectedFile == value)
+					return;
+
+				if (this.SelectedFile != null && this.editor?.Code != null)
+				{
+					Log.Debug("Assigning code from editor to file \"{0}\"", this.SelectedFile.Name);
+					this.SelectedFile.Code = this.editor.Code ?? String.Empty;
+				}
+
 				this.SetProperty(value);
 
-				if (editor != null)
-					this.editor.Code = this.SelectedFile?.Code ?? String.Empty;
+				if (this.SelectedFile != null && editor != null)
+				{
+					Log.Debug("Assigning code from file \"{0}\" to editor", this.SelectedFile.Name);
+					this.editor.Code = this.SelectedFile.Code ?? String.Empty;
+				}
 			}
 		}
 

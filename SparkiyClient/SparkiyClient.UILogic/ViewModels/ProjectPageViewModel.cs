@@ -62,18 +62,18 @@ namespace SparkiyClient.UILogic.ViewModels
 	    private async void EditCommandExecuteAsync()
 	    {
 			this.IsEditMode = false;
-			await this.SaveChanges();
+			await this.SaveChangesAsync();
 			this.navigationService.NavigateTo("EditPage", this.Project);
 	    }
 
 	    private async void PlayCommandExecuteAsync()
 	    {
 		    this.IsEditMode = false;
-			await this.SaveChanges();
+			await this.SaveChangesAsync();
 			this.navigationService.NavigateTo("PlayPage", this.Project);
 		}
 
-	    private async Task SaveChanges()
+	    private async Task SaveChangesAsync()
 	    {
 		    await this.projectService.SaveAsync();
 	    }
@@ -89,10 +89,13 @@ namespace SparkiyClient.UILogic.ViewModels
 		    get { return this.GetProperty<bool>(); }
 		    set
 		    {
+			    if (this.IsEditMode.Equals(value))
+				    return;
+
 			    this.SetProperty(value);
 
 #pragma warning disable 4014
-				this.SaveChanges();
+				this.SaveChangesAsync();
 #pragma warning restore 4014
 		    }
 	    }
