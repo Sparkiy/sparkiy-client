@@ -204,15 +204,15 @@ namespace SparkiyClient
 			this.container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IProjectService, ProjectService>(new ContainerControlledLifetimeManager());
 
-			// Register ViewModels as Singeltons
-			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
-			
-			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<IPlayPageViewModel, PlayPageViewModel>(new ContainerControlledLifetimeManager());
+			// Register ViewModels
+			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new PerResolveLifetimeManager());
+			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new PerResolveLifetimeManager());
+			this.container.RegisterType<IPlayPageViewModel, PlayPageViewModel>(new PerResolveLifetimeManager());
+
 #if WINDOWS_APP
-			this.container.RegisterType<ICreateProjectPageViewModel, CreateProjectPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<IEditPageViewModel, EditPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<IDebugPageViewModel, DebugPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<ICreateProjectPageViewModel, CreateProjectPageViewModel>(new PerResolveLifetimeManager());
+			this.container.RegisterType<IEditPageViewModel, EditPageViewModel>(new PerResolveLifetimeManager());
+			this.container.RegisterType<IDebugPageViewModel, DebugPageViewModel>(new PerResolveLifetimeManager());
 #endif
 		}
 
