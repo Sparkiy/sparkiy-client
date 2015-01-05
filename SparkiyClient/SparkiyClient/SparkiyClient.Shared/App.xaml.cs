@@ -215,18 +215,6 @@ namespace SparkiyClient
 #endif
 		}
 
-	    public static IEngineBindings InstantiateEngine(object panel)
-	    {
-            var engine = new Sparkiy();
-            var language = LuaImplementation.Instantiate(engine);
-            var graphics = new Renderer(engine);
-
-            engine.AssignBindings(language.GetLanguageBindings(), graphics);
-            engine.AssignPanel(panel);
-
-	        return engine;
-	    } 
-
 		/// <summary>
 		/// Override this method to register types in the container prior to any other code
 		/// being run. This is especially useful when types need to be registered for application

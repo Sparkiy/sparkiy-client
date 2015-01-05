@@ -48,7 +48,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			// Creates a graphics manager. This is mandatory.
 			this.graphicsDeviceManager = new GraphicsDeviceManager(this);
-
+			
 			// This flag is mandatory to support Direct2D
 			this.graphicsDeviceManager.DeviceCreationFlags |= SharpDX.Direct3D11.DeviceCreationFlags.BgraSupport;
 
@@ -73,8 +73,15 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		protected override void LoadContent()
 		{
+			this.OnWindowCreated();
+			this.GraphicsDevice.Presenter.Resize(
+				this.Window.ClientBounds.Width, 
+				this.Window.ClientBounds.Height,
+				Format.B8G8R8A8_UNorm);
+
 			// Create 2D Canvas for caching 
 			this.Canvas = new Canvas(this);
+			this.Canvas.ResetGraphicsDevice();
 			Brushes.Initialize(this.Canvas.DeviceContext);
 
 			// Reset variables

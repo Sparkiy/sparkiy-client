@@ -6,6 +6,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -45,7 +47,7 @@ namespace SparkiyClient.Controls.PlayView
         }
 
 
-	    public void AssignProject(Project project)
+		public void AssignProject(Project project)
 	    {
 			Log.Debug("Assigned project \"{0}\" to the PlayView", project.Name);
 
@@ -69,7 +71,7 @@ namespace SparkiyClient.Controls.PlayView
 			this.Engine.Reset();
 
 			this.OnStateChanged?.Invoke(this);
-	}
+		}
 
 	    public void PlayProject()
 	    {
