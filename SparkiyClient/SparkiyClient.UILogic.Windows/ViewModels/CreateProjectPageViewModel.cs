@@ -41,7 +41,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 					new Script()
 					{
 						Name = "Entry",
-						Code = "function Created()\n\r\n\rend\n\r\n\rfunction Started()\n\r\n\rend\n\r\n\rfunction Draw()\n\r\n\rend\n\r\n\rfunction Touched(type, x, y)\n\r\n\rend\n\r\n\rfunction Stopped()\n\r\n\rend\n\r"
+						Code = "function Created()\r\n\r\nend\r\n\r\nfunction Started()\r\n\r\nend\r\n\r\nfunction Draw()\r\n\r\nend\r\n\r\nfunction Touched(type, x, y)\r\n\r\nend\r\n\r\nfunction Stopped()\r\n\r\nend\r\n"
 					}
 				}
 			};

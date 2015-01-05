@@ -18,7 +18,7 @@ namespace SparkiyClient.UILogic.Services
 		private ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<ProjectService>();
 
 		// Project 
-		private const string ProjectFileExtension = ".sparkiyproj";
+		private const string ProjectFileExtension = ".sparkiyproj.xml";
 		private const string ProjectScreenshotsPath = "Screenshots";
 		private const string ProjectAssetsPath = "Assets";
 		private const string ProjectFilesPath = "Files";
@@ -171,10 +171,11 @@ namespace SparkiyClient.UILogic.Services
 			foreach (var projectFolder in folders)
 			{
 				// Retrieve project files
-				var projectFileQueryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string> { ProjectFileExtension });
+				var projectFileQueryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string> { ".xml" });
 				var projectFileResult = projectFolder.CreateFileQueryWithOptions(projectFileQueryOptions);
 				var projectFileResultsFiles = await projectFileResult.GetFilesAsync();
-				var projectFileKVPs = projectFileResultsFiles.Select(f => new KeyValuePair<string, StorageFile>(f.DisplayName, f));
+				var projectFileResultsFilesExtensionFilter = projectFileResultsFiles.Where(f => f.Name.EndsWith(ProjectFileExtension));
+				var projectFileKVPs = projectFileResultsFilesExtensionFilter.Select(f => new KeyValuePair<string, StorageFile>(f.DisplayName, f));
 				projectFiles.AddRange(projectFileKVPs);
 			}
 

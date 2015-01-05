@@ -210,7 +210,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 				if (this.SelectedFile != null && editor != null)
 				{
 					Log.Debug("Assigning code from file \"{0}\" to editor", this.SelectedFile.Name);
-					this.editor.Code = this.SelectedFile.Code ?? String.Empty;
+					this.editor.Code = this.SelectedFile.Code?.TrimEnd('\r', '\n') + "\r" ?? String.Empty;
 				}
 			}
 		}
