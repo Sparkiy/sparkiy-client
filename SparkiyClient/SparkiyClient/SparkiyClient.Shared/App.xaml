@@ -12,6 +12,7 @@
 			<converters:BooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter" TriggerValue="True" />
 			<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 			<converters:NullToVisibilityConverter x:Key="NegatedNullToVisibilityConverter" TriggerValue="True" />
+			<converters:StringFormatConverter x:Key="StringFormatConverter" />
 			
 			<SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="{StaticResource AccentColorBlue}" />
 			<SolidColorBrush x:Key="ListViewItemSelectedForegroundThemeBrush" Color="{StaticResource AccentColorLight}" />
@@ -20,6 +21,7 @@
 			
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Themes/ColorsDictionary.xaml" />
+				<ResourceDictionary Source="Themes/TopNavigationBarStyles.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

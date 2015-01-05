@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SparkiyClient.Common;
+using SparkiyClient.Common.Extensions;
 using SparkiyClient.Controls.PlayView;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
@@ -36,22 +38,35 @@ namespace SparkiyClient.Views
 
 	    protected override async void OnNavigatedTo(NavigationEventArgs e)
 	    {
-		    var project = e.Parameter as Project;
+			base.OnNavigatedTo(e);
+
+			// Retrieve passed project
+			var project = e.Parameter as Project;
 			if (project == null)
 				throw new NullReferenceException("Passed data is not in expected format.");
 
-			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView as IProjectPlayEngineManagement);
-			this.ViewModel.AssignProjectPlayStateManager(this.PlayView as IProjectPlayStateManagment);
+			// Assign play engine
+			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView);
 
-#pragma warning disable 4014
-			// Note: We want this to run asynchronously to navigation
-			this.ViewModel.AssignProjectAsync(project);
-#pragma warning restore 4014
+			// Assign play state manager
+			this.ViewModel.AssignProjectPlayStateManager(this.PlayView);
+			this.PlaybackControlsControl.AssignPlayStateManager(this.PlayView);
 
-		    base.OnNavigatedTo(e);
+			// Assign project
+			await this.ViewModel.AssignProjectAsync(project);
+
+			// Watch output messages changes
+			this.ViewModel.OutputMessages.CollectionChanged += OutputMessagesOnCollectionChanged;
 	    }
 
+	    private void OutputMessagesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+	    {
+			// Scroll to bottom
+		    var scrollViewer = this.SideBarMessagesListView.GetFirstDescendantOfType<ScrollViewer>();
+			scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
+		}
 
-	    public IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;
+
+	    public new IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;
     }
 }

@@ -20,11 +20,9 @@ m_isValid(false)
 // Destructor
 LuaScript::~LuaScript()
 {
-	this->Dispose();
-
-	delete(this->m_luaState);
-	delete(this->m_id);
-	delete(this->m_content);
+	delete this->m_luaState;
+	delete this->m_id;
+	delete this->m_content;
 }
 
 void LuaScript::Initialize()
@@ -39,13 +37,6 @@ void LuaScript::Initialize()
 	// Save pointer to this object
 	lua_pushlightuserdata(this->m_luaState, this);
 	lua_setglobal(this->m_luaState, ScriptPointerVariableName);
-}
-
-void LuaScript::Dispose()
-{
-	// Cleanup Lua vm
-	if (this->m_luaState != nullptr)
-		lua_close(this->m_luaState);
 }
 
 //
@@ -124,19 +115,6 @@ void LuaScript::Load()
 	{
 		this->HandleException();
 	}
-}
-
-//
-// Reset
-//
-void LuaScript::Reset()
-{
-	// Clean and reinitialize lua vm
-	this->Dispose();
-	this->Initialize();
-
-	// Reload script
-	this->Load();
 }
 
 //

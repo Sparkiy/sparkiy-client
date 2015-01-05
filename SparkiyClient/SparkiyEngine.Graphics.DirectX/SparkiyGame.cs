@@ -48,7 +48,7 @@ namespace SparkiyEngine.Graphics.DirectX
 
 			// Creates a graphics manager. This is mandatory.
 			this.graphicsDeviceManager = new GraphicsDeviceManager(this);
-
+			
 			// This flag is mandatory to support Direct2D
 			this.graphicsDeviceManager.DeviceCreationFlags |= SharpDX.Direct3D11.DeviceCreationFlags.BgraSupport;
 
@@ -73,8 +73,15 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		protected override void LoadContent()
 		{
+			this.OnWindowCreated();
+			this.GraphicsDevice.Presenter.Resize(
+				this.Window.ClientBounds.Width, 
+				this.Window.ClientBounds.Height,
+				Format.B8G8R8A8_UNorm);
+
 			// Create 2D Canvas for caching 
 			this.Canvas = new Canvas(this);
+			this.Canvas.ResetGraphicsDevice();
 			Brushes.Initialize(this.Canvas.DeviceContext);
 
 			// Reset variables
@@ -295,21 +302,23 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.Canvas.Clear();
 
 			// Clear all properties
-			this.BackgroundColor = Brushes.Black.Color;
-			this.StrokeColor = Brushes.White.Color;
+			this.BackgroundColor = Brushes.White.Color;
+			this.StrokeColor = Brushes.Gray.Color;
 			this.StrokeThickness = 2f;
 			this.IsStrokeEnabled = false;
 			this.FontSize = 24f;
-			this.FillColor = Brushes.White.Color;
+			this.FillColor = Brushes.Black.Color;
 			this.FontFamily = "Segoe UI";
-			this.FontColor = Brushes.White.Color;
+			this.FontColor = Brushes.Black.Color;
 
 			// Reset transform
 			this.transformMatrix = Matrix.Identity;
 			this.transformPushPopManagement.Clear();
 
-            // Set variables
-            this.engine.LanguageBindings.SetVariable("WIDTH", (double)this.GraphicsDevice.Viewport.Width, DataTypes.Number);
+			// Set variables
+			this.engine.LanguageBindings.SetVariable("DELTA", 0d, DataTypes.Number);
+			this.engine.LanguageBindings.SetVariable("TOTAL", 0d, DataTypes.Number);
+			this.engine.LanguageBindings.SetVariable("WIDTH", (double)this.GraphicsDevice.Viewport.Width, DataTypes.Number);
             this.engine.LanguageBindings.SetVariable("HEIGHT", (double)this.GraphicsDevice.Viewport.Height, DataTypes.Number);
         }
 

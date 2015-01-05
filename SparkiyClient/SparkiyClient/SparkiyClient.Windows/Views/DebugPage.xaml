@@ -8,9 +8,28 @@
     xmlns:sideBar="using:SparkiyClient.Controls.SideBar"
     xmlns:playView="using:SparkiyClient.Controls.PlayView"
     xmlns:common="using:SparkiyClient.Common"
+    xmlns:engine="using:SparkiyEngine.Bindings.Component.Engine"
+    xmlns:playbackControls="using:SparkiyClient.Controls.PlaybackControls"
+    xmlns:controls="using:SparkiyClient.Controls"
     mc:Ignorable="d"
 	RequestedTheme="Light"
 	DataContext="{Binding Source={StaticResource Locator}, Path=DebugPage}">
+	
+	<common:PageBase.TopAppBar>
+		<AppBar RequestedTheme="Dark" Background="#111">
+			<controls:TopNavigationControl Header="{Binding Project.Name, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\}\ \-\ Editor}" 
+										   GoBackCommand="{Binding NavigateToEditorCommand}">
+				<controls:TopNavigationControl.ItemsPrimary>
+					<Button Style="{StaticResource AppBarNavigationTabStyle}" Command="{Binding NavigateToHomeCommand}">
+						<StackPanel Orientation="Vertical">
+							<Path Fill="White" Stretch="Uniform" HorizontalAlignment="Left" Width="32" Margin="0 0 0 10" Data="F1 M 24.0033,56.0078L 24.0033,38.0053L 22.0031,40.0056L 19.0027,35.0049L 38.0053,20.0028L 45.0063,25.5299L 45.0063,21.753L 49.0068,21.0029L 49.0068,28.6882L 57.008,35.0049L 54.0075,40.0056L 52.0073,38.0053L 52.0073,56.0078L 24.0033,56.0078 Z M 38.0053,26.9204L 27.0038,36.005L 27.0038,53.0074L 33.0046,53.0074L 33.0046,42.006L 43.006,42.006L 43.006,53.0074L 49.0068,53.0074L 49.0068,36.005L 38.0053,26.9204 Z "/>
+							<TextBlock Text="Home" Margin="4 0 0 0" />
+						</StackPanel>
+					</Button>
+				</controls:TopNavigationControl.ItemsPrimary>
+			</controls:TopNavigationControl>
+		</AppBar>
+	</common:PageBase.TopAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.ColumnDefinitions>
@@ -20,18 +39,50 @@
 	
 		<playView:PlayViewControl x:Name="PlayView" Grid.Column="1" />
 		
+		<playbackControls:PlaybackControlsControl x:Name="PlaybackControlsControl" 
+												  VerticalAlignment="Bottom" 
+												  HorizontalAlignment="Left" 
+												  Margin="10"
+												  Grid.Column="1" />
+		
 		<sideBar:SideBarControl Grid.Column="0">
 			<sideBar:SideBarControl.Content>
 				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-					
-					<TextBlock Text="Output"
-							   Style="{StaticResource HeaderTextBlockStyle}" />
-					
-					<ListBox Grid.Row="1" />
+					<ListView x:Name="SideBarMessagesListView" 
+							  ItemsSource="{Binding OutputMessages}"
+							  SelectionMode="None"
+							  BorderThickness="0"
+							  Margin="0 10 0 10"
+							  Grid.Row="0">
+						<ListView.Header>
+							<TextBlock Text="Messages" 
+									   Margin="24 2 24 12"
+									   Style="{StaticResource SubheaderTextBlockStyle}" />
+						</ListView.Header>
+						<ListView.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Vertical" Background="#11000000">
+									<VirtualizingStackPanel.Transitions>
+										<TransitionCollection>
+											<AddDeleteThemeTransition/>
+										 </TransitionCollection>
+									</VirtualizingStackPanel.Transitions>
+								</VirtualizingStackPanel>
+							</ItemsPanelTemplate>
+						</ListView.ItemsPanel>
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid d:DataContext="{d:DesignInstance Type=engine:EngineMessage}">
+									<TextBlock Text="{Binding Message}"
+											   FontFamily="Calibri"
+											   FontSize="16"
+											   TextWrapping="Wrap" 
+											   Padding="8 10 2 10"
+											   Foreground="#444"/>
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
 				</Grid>
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>

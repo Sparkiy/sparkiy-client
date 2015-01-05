@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using MetroLog;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.ViewModels
 {
@@ -29,7 +32,9 @@ namespace SparkiyClient.UILogic.ViewModels
 
     [ComVisible(false)]
     public class MainPageViewModel : ExtendedViewModel, IMainPageViewModel
-	{
+    {
+	    private static ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<MainPageViewModel>();
+
 		private readonly INavigationService navigationService;
 		private readonly IAlertMessageService alertMessageService;
 	    private readonly IStorageService storageService;
@@ -57,12 +62,23 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		    if (this.LoadingData)
 		    {
-			    // Load available projects
-			    foreach (var project in await this.projectService.GetAvailableProjectsAsync())
-				    this.Projects.Add(project);
-
+			    await this.LoadProjectsAsync();
 			    this.LoadingData = false;
 		    }
+	    }
+
+	    private async Task LoadProjectsAsync()
+	    {
+			Log.Debug("Loading project...");
+		    if (this.storageService.RequiresHardStorageInitialization())
+		    {
+			    Log.Warn("Can't load projects. Storage isn't initialized.");
+			    return;
+		    }
+
+		    // Load available projects
+		    foreach (var project in await this.projectService.GetAvailableProjectsAsync())
+			    this.Projects.Add(project);
 	    }
 
 	    private void NewProjectCommandExecute()
@@ -79,6 +95,7 @@ namespace SparkiyClient.UILogic.ViewModels
 	    {
 		    await this.storageService.InitializeStorageAsync();
 		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
+		    await this.LoadProjectsAsync();
 	    }
 
 	    public bool LoadingData

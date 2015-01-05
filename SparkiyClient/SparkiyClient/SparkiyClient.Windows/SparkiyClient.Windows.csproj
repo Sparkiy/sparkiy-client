@@ -21,7 +21,7 @@
     <PackageCertificateThumbprint>89F31F9F2D9F6D1AEFF3F56A3B7DA99F231087AE</PackageCertificateThumbprint>
     <NuGetPackageImportStamp>60303db4</NuGetPackageImportStamp>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>

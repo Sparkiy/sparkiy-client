@@ -8,8 +8,6 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
-    <Grid>
-	    <SwapChainPanel x:Name="SwapChainPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-    </Grid>
+
+	<SwapChainPanel x:Name="SwapChainPanel" />
 </UserControl>

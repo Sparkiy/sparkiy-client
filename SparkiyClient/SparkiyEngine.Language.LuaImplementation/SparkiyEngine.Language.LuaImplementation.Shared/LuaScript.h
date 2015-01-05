@@ -21,13 +21,11 @@ namespace SparkiyEngine_Language_LuaImplementation
 		~LuaScript();
 
 		void Initialize();
-		void Dispose();
 
 		Platform::Object^ CallMethod(const char *name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Platform::Array<Platform::Object^>^ paramValues);
 		void RegisterMethod(SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^declaration);
 		void Load();
 		void Start();
-		void Reset();
 
 		// Variables and Constants
 		void SetConstant(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
