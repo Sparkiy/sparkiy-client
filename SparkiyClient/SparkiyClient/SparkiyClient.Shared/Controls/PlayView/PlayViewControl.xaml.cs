@@ -56,37 +56,7 @@ namespace SparkiyClient.Controls.PlayView
 			// Assign new project
 		    this.project = project;
 
-			// Load assets from project
-		    var imageAssets = new List<ImageAsset>();
-		    foreach (var asset in this.project.Assets)
-		    {
-			    if (asset is ImageAsset)
-			    {
-				    var imageAsset = asset as ImageAsset;
-					imageAssets.Add(imageAsset);
-					Log.Debug("Added Asset:Image \"{0}\"", imageAsset.Name);
-			    }
-				else { 
-					throw new NotSupportedException("Provided asset type is not supported by this player.");
-				}
-			}
-
-			// Combine all classes into one string
-		    var classesCombined = project.Files
-			    .OfType<Class>()
-			    .Aggregate(
-				    String.Empty,
-				    (combined, current) => combined + current.Code);
-
-			// Instantiate new engine
-		    this.engine = ServiceLocator.Current.GetInstance<EngineProviderService>().GetLuaDxEngine(this.SwapChainPanel);
-			this.engine.Initialize();
-
-			// TODO Add assets to the engine
-
-			// Add scripts to the engine
-		    foreach (var script in project.Files.OfType<Script>())
-			    this.engine.AddScript(script.Name, classesCombined + script.Code);
+			this.RebuildEngine();
 
 			this.isInitialized = true;
 		}
@@ -97,7 +67,6 @@ namespace SparkiyClient.Controls.PlayView
 
 			this.Engine.Pause();
 			this.Engine.Reset();
-		    throw new NotImplementedException();
 
 			this.OnStateChanged?.Invoke(this);
 	}
@@ -129,11 +98,46 @@ namespace SparkiyClient.Controls.PlayView
 	    public void RestartProject()
 	    {
 			this.StopProject();
-			// TODO Restart project (Re-add scripts)
+			this.RebuildEngine();
 			this.Engine.Play();
-		    throw new NotImplementedException();
 
 			this.OnStateChanged?.Invoke(this);
+		}
+
+		private void RebuildEngine()
+		{
+			// Load assets from project
+			var imageAssets = new List<ImageAsset>();
+			foreach (var asset in this.project.Assets)
+			{
+				if (asset is ImageAsset)
+				{
+					var imageAsset = asset as ImageAsset;
+					imageAssets.Add(imageAsset);
+					Log.Debug("Added Asset:Image \"{0}\"", imageAsset.Name);
+				}
+				else
+				{
+					throw new NotSupportedException("Provided asset type is not supported by this player.");
+				}
+			}
+
+			// Combine all classes into one string
+			var classesCombined = this.project.Files
+				.OfType<Class>()
+				.Aggregate(
+					String.Empty,
+					(combined, current) => combined + current.Code);
+
+			// Instantiate new engine
+			this.engine = ServiceLocator.Current.GetInstance<EngineProviderService>().GetLuaDxEngine(this.SwapChainPanel);
+			this.engine.Initialize();
+
+			// TODO Add assets to the engine
+
+			// Add scripts to the engine
+			foreach (var script in this.project.Files.OfType<Script>())
+				this.engine.AddScript(script.Name, classesCombined + script.Code);
 		}
 
 	    public void TakeScreenshot()
