@@ -24,7 +24,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Threading;
-using GalaSoft.MvvmLight.Views;
 using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
@@ -152,7 +151,7 @@ namespace SparkiyClient
 
 			// Navigate to home page if navigation stack isn't restored
 			if (rootFrame.Content == null)
-				rootFrame.Navigate(typeof(MainPage), e.Arguments);
+				navigationService.NavigateTo<MainPage>();
 			
 			// Ensure the current window is active
 			Window.Current.Activate();

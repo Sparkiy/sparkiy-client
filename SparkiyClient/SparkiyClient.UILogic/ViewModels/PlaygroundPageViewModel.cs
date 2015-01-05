@@ -12,6 +12,7 @@ using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Services;
 using SparkiyEngine.Bindings.Component.Engine;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.ViewModels
 {

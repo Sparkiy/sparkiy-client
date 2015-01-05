@@ -1,11 +1,16 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Nito.AsyncEx;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
+using SparkiyClient.UILogic.ViewModels;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.Windows.ViewModels
 {
@@ -43,10 +48,15 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		}
 
 
+		public override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+		}
+
 		private async void CreateProjectCommandExecuteAsync()
 		{
             await this.projectService.CreateProjectAsync(this.Project);
-			this.navigationService.NavigateTo("ProjectPage", this.Project);
+			this.navigationService.NavigateTo("ProjectPage", this.Project, false);
 		}
 
 		public Project Project

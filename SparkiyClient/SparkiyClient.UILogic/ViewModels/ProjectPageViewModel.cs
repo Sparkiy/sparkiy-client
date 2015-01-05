@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.Views;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.ViewModels
 {
@@ -24,7 +25,9 @@ namespace SparkiyClient.UILogic.ViewModels
 		RelayCommand EditCommand { get; }
 
 		RelayCommand PlayCommand { get; }
-	}
+
+		RelayCommand GoBackCommand { get; }
+    }
 
     [ComVisible(false)]
     public class ProjectPageViewModel : ExtendedViewModel, IProjectPageViewModel
@@ -45,6 +48,7 @@ namespace SparkiyClient.UILogic.ViewModels
 
 			this.EditCommand = new RelayCommand(this.EditCommandExecuteAsync);
 			this.PlayCommand = new RelayCommand(this.PlayCommandExecuteAsync);
+			this.GoBackCommand = new RelayCommand(this.GoBackCommandExecuteAsync);
         }
 
 
@@ -59,7 +63,14 @@ namespace SparkiyClient.UILogic.ViewModels
 		    base.OnNavigatedTo(e);
 	    }
 
-	    private async void EditCommandExecuteAsync()
+		private async void GoBackCommandExecuteAsync()
+		{
+			this.IsEditMode = false;
+			await this.SaveChangesAsync();
+			this.navigationService.GoBack();
+		}
+
+		private async void EditCommandExecuteAsync()
 	    {
 			this.IsEditMode = false;
 			await this.SaveChangesAsync();
@@ -103,6 +114,8 @@ namespace SparkiyClient.UILogic.ViewModels
 	    public RelayCommand EditCommand { get; }
 
 		public RelayCommand PlayCommand { get; }
+
+	    public RelayCommand GoBackCommand { get; }
 
 	    public bool LoadingData
         {

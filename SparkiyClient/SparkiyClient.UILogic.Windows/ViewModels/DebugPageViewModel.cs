@@ -8,6 +8,7 @@ using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
 using SparkiyEngine.Bindings.Component.Engine;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.Windows.ViewModels
 {
@@ -53,12 +54,12 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 		private void NavigateToEditorCommandExecute()
 		{
-			this.navigationService.NavigateTo("EditPage", this.Project);
+			this.navigationService.GoBack();
 		}
 
 		private void NavigateToHomeCommandExecute()
 		{
-			this.navigationService.NavigateTo("MainPage");
+			this.navigationService.GoHome();
 		}
 
 		private void MessagesCheckTimerOnTick(object sender, object o)

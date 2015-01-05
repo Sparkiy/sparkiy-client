@@ -12,6 +12,7 @@ using MetroLog;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.ViewModels
 {

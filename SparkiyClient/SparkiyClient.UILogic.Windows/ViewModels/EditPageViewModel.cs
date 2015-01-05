@@ -14,6 +14,7 @@ using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.Windows.ViewModels
 {
@@ -105,13 +106,13 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		private async void NavigateToHomeCommandExecuteAsync()
 		{
 			await this.SaveChangesAsync();
-			this.navigationService.NavigateTo("MainPage");
+			this.navigationService.GoHome();
 		}
 
 		private async void NavigateToProjectCommandExecuteAsync()
 		{
 			await this.SaveChangesAsync();
-			this.navigationService.NavigateTo("ProjectPage", this.Project);
+			this.navigationService.GoBack();
 		}
 
 		private async void DebugProjectCommandExecuteAsync()
