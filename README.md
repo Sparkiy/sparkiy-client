@@ -1,9 +1,9 @@
-[![Stories in Ready](https://badge.waffle.io/Sparkiy/sparkiy-client.png?label=ready&title=Ready)](https://waffle.io/Sparkiy/sparkiy-client)
 # Sparkiy
 _[Sparkiy/sparkiy-client](https://github.com/Sparkiy/sparkiy-client)_
 
 [![GratiPay Tips](https://img.shields.io/gratipay/sparkiy.svg?style=flat-square)](https://gratipay.com/sparkiy/)
 [![Bountysource](https://www.bountysource.com/badge/team?team_id=54298&style=bounties_posted)](https://www.bountysource.com/teams/sparkiy-client/bounties?utm_source=sparkiy-client&utm_medium=shield&utm_campaign=bounties_posted)
+[![Stories in Ready](https://badge.waffle.io/Sparkiy/sparkiy-client.png?label=ready&title=Ready)](https://waffle.io/Sparkiy/sparkiy-client)
 
 ## Overview
 Bring your ideas to life. Make something everyone can play on their computer, tablet, phone and console.
