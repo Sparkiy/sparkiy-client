@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Sparkiy/sparkiy-client.png?label=ready&title=Ready)](https://waffle.io/Sparkiy/sparkiy-client)
 # Sparkiy
 _[Sparkiy/sparkiy-client](https://github.com/Sparkiy/sparkiy-client)_
 
