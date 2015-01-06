@@ -1,11 +1,16 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Nito.AsyncEx;
 using SparkiyClient.Common;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
+using SparkiyClient.UILogic.ViewModels;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.Windows.ViewModels
 {
@@ -31,25 +36,27 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 			this.Project = new Project()
 			{
-				Files = NotifyTaskCompletion.Create(async () =>
+				Files = new ObservableCollection<CodeFile>()
 				{
-					return new ObservableCollection<CodeFile>()
+					new Script()
 					{
-						new Script()
-						{
-							Name = "Entry",
-							Code = "function Created()\n\nend\n\nfunction Started()\n\nend\n\nfunction Draw()\n\nend\n\nfunction Touched(type, x, y)\n\nend\n\nfunction Stopped()\n\nend\n"
-						}
-					};
-				})
+						Name = "Entry",
+						Code = "function Created()\r\n\r\nend\r\n\r\nfunction Started()\r\n\r\nend\r\n\r\nfunction Draw()\r\n\r\nend\r\n\r\nfunction Touched(type, x, y)\r\n\r\nend\r\n\r\nfunction Stopped()\r\n\r\nend\r\n"
+					}
+				}
 			};
 		}
 
 
+		public override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+		}
+
 		private async void CreateProjectCommandExecuteAsync()
 		{
             await this.projectService.CreateProjectAsync(this.Project);
-			this.navigationService.NavigateTo("ProjectPage", this.Project);
+			this.navigationService.NavigateTo("ProjectPage", this.Project, false);
 		}
 
 		public Project Project

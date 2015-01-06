@@ -5,11 +5,20 @@
 				 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 				 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				 xmlns:common="using:SparkiyClient.Common"
+				 xmlns:playView="using:SparkiyClient.Controls.PlayView"
+				 xmlns:playbackControls="using:SparkiyClient.Controls.PlaybackControls"
 				 mc:Ignorable="d"
 				 RequestedTheme="Dark"
 				 DataContext="{Binding Source={StaticResource Locator}, Path=PlayPage}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+		
+		<playView:PlayViewControl x:Name="PlayView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+		
+		<playbackControls:PlaybackControlsControl x:Name="PlaybackControlsControl" 
+												  StopCommand="{Binding StopCommand}"
+												  VerticalAlignment="Bottom" 
+												  HorizontalAlignment="Left" 
+												  Margin="10" />
     </Grid>
 </common:PageBase>

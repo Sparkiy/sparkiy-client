@@ -1,7 +1,9 @@
 ﻿using Windows.ApplicationModel;
 using Microsoft.Practices.ServiceLocation;
 using SparkiyClient.UILogic.ViewModels;
+#if WINDOWS_APP
 using SparkiyClient.UILogic.Windows.ViewModels;
+#endif
 
 namespace SparkiyClient.Services
 {

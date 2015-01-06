@@ -24,7 +24,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Threading;
-using GalaSoft.MvvmLight.Views;
 using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
@@ -152,7 +151,7 @@ namespace SparkiyClient
 
 			// Navigate to home page if navigation stack isn't restored
 			if (rootFrame.Content == null)
-				rootFrame.Navigate(typeof(MainPage), e.Arguments);
+				navigationService.NavigateTo<MainPage>();
 			
 			// Ensure the current window is active
 			Window.Current.Activate();
@@ -204,29 +203,17 @@ namespace SparkiyClient
 			this.container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IProjectService, ProjectService>(new ContainerControlledLifetimeManager());
 
-			// Register ViewModels as Singeltons
-			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new ContainerControlledLifetimeManager());
-			
-			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<IPlayPageViewModel, PlayPageViewModel>(new ContainerControlledLifetimeManager());
+			// Register ViewModels
+			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new PerResolveLifetimeManager());
+			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new PerResolveLifetimeManager());
+			this.container.RegisterType<IPlayPageViewModel, PlayPageViewModel>(new PerResolveLifetimeManager());
+
 #if WINDOWS_APP
-			this.container.RegisterType<ICreateProjectPageViewModel, CreateProjectPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<IEditPageViewModel, EditPageViewModel>(new ContainerControlledLifetimeManager());
-			this.container.RegisterType<IDebugPageViewModel, DebugPageViewModel>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<ICreateProjectPageViewModel, CreateProjectPageViewModel>(new PerResolveLifetimeManager());
+			this.container.RegisterType<IEditPageViewModel, EditPageViewModel>(new PerResolveLifetimeManager());
+			this.container.RegisterType<IDebugPageViewModel, DebugPageViewModel>(new PerResolveLifetimeManager());
 #endif
 		}
-
-	    public static IEngineBindings InstantiateEngine(object panel)
-	    {
-            var engine = new Sparkiy();
-            var language = LuaImplementation.Instantiate(engine);
-            var graphics = new Renderer(engine);
-
-            engine.AssignBindings(language.GetLanguageBindings(), graphics);
-            engine.AssignPanel(panel);
-
-	        return engine;
-	    } 
 
 		/// <summary>
 		/// Override this method to register types in the container prior to any other code

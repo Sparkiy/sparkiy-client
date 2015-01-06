@@ -16,5 +16,8 @@ namespace SparkiyClient.UILogic.Services
 		bool IsPlaying { get; }
 
 		bool IsPause { get; }
+
+
+		event ProjectPlayStateEventHandler OnStateChanged;
 	}
 }

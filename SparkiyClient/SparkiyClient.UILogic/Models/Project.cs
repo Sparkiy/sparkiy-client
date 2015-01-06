@@ -18,17 +18,15 @@ namespace SparkiyClient.UILogic.Models
 		/// <param name="projectService">The project service.</param>
 		public async Task LoadAsync(IProjectService projectService)
 		{
-			this.Files = NotifyTaskCompletion.Create(async () => new ObservableCollection<CodeFile>(await projectService.GetFilesAsync(this)));
-			this.Assets = NotifyTaskCompletion.Create(async () => new ObservableCollection<Asset>(await projectService.GetAssetsAsync(this)));
-			await this.Files.Task;
-			await this.Assets.Task;
+			this.Files = new ObservableCollection<CodeFile>(await projectService.GetFilesAsync(this));
+			this.Assets = new ObservableCollection<Asset>(await projectService.GetAssetsAsync(this));
 
 			// Load code to files
-			foreach (var file in this.Files.Result)
+			foreach (var file in this.Files)
 				await file.GetCodeAsync();
 
 			// Load images
-			foreach (var image in this.Assets.Result.OfType<ImageAsset>())
+			foreach (var image in this.Assets.OfType<ImageAsset>())
 				await image.GetDataAsync();
 		}
 
@@ -78,9 +76,9 @@ namespace SparkiyClient.UILogic.Models
 		/// The scripts.
 		/// </value>
 		[IgnoreDataMember]
-		public INotifyTaskCompletion<ObservableCollection<CodeFile>> Files
+		public ObservableCollection<CodeFile> Files
 		{
-			get { return this.GetProperty<INotifyTaskCompletion<ObservableCollection<CodeFile>>>(); }
+			get { return this.GetProperty<ObservableCollection<CodeFile>>(); }
 			set { this.SetProperty(value); }
 		}
 
@@ -91,9 +89,9 @@ namespace SparkiyClient.UILogic.Models
 		/// The assets.
 		/// </value>
 		[IgnoreDataMember]
-		public INotifyTaskCompletion<ObservableCollection<Asset>> Assets
+		public ObservableCollection<Asset> Assets
 		{
-			get { return this.GetProperty<INotifyTaskCompletion<ObservableCollection<Asset>>>(); }
+			get { return this.GetProperty<ObservableCollection<Asset>>(); }
 			set { this.SetProperty(value); }
 		}
 

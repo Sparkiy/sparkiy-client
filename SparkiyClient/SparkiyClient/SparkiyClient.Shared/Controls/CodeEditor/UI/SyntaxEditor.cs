@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Windows.ApplicationModel.Store;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
@@ -35,17 +36,21 @@ namespace SparkiyClient.Controls.CodeEditor.UI
 {
     public sealed class SyntaxEditor : Control
     {
-        public SyntaxEditor()
+	    private const string TabValue = "    ";
+
+
+	    public SyntaxEditor()
         {
             this.DefaultStyleKey = typeof(SyntaxEditor);
 
             LineNumberBlock = new TextBlock { Foreground = new SolidColorBrush(Color.FromArgb(255, 43, 145, 175)) };
             TextView = new RichEditBox();
+			TextView.KeyDown += TextViewOnKeyDown;
 
             this.Loaded += (s, e) => { BindTextViewerScrollViewer(); };
         }
 
-        #region Text View
+	    #region Text View
 
         public static readonly DependencyProperty TextViewProperty =
             DependencyProperty.Register("TextView", typeof(RichEditBox), typeof(SyntaxEditor),
@@ -56,7 +61,16 @@ namespace SparkiyClient.Controls.CodeEditor.UI
             ((SyntaxEditor)d).OnTextViewChanged((RichEditBox)e.OldValue, (RichEditBox)e.NewValue);
         }
 
-        public RichEditBox TextView
+		private void TextViewOnKeyDown(object sender, KeyRoutedEventArgs e)
+		{
+			if (e.Key == VirtualKey.Tab)
+			{
+				this.TextView.Document.Selection.TypeText(TabValue);
+				e.Handled = true;
+			}
+		}
+
+		public RichEditBox TextView
         {
             get { return (RichEditBox)GetValue(TextViewProperty); }
             set { SetValue(TextViewProperty, value); }

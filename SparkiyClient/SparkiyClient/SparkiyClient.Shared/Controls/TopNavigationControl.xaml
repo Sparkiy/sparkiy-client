@@ -1,0 +1,45 @@
+﻿<UserControl
+	x:Name="TopNavigationRoot"
+    x:Class="SparkiyClient.Controls.TopNavigationControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SparkiyClient.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<StackPanel Orientation="Horizontal">
+			
+			<Button Content="&lt;" 
+					Padding="28 0 28 6" 
+					BorderThickness="0" 
+					FontSize="24" 
+					FontWeight="Light" 
+					VerticalContentAlignment="Center"
+					Command="{Binding GoBackCommand, ElementName=TopNavigationRoot}" />
+			
+			<TextBlock Text="{Binding Header, ElementName=TopNavigationRoot}" 
+							   FontSize="{StaticResource ControlContentThemeFontSize}"
+							   Foreground="White"
+							   VerticalAlignment="Center" HorizontalAlignment="Stretch"
+							   Margin="4 4 0 0" />
+			
+		</StackPanel>
+		
+		<ItemsControl ItemsSource="{Binding ItemsPrimary, ElementName=TopNavigationRoot}" Margin="5,13" Grid.Row="1">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ItemsControl>
+		
+	</Grid>
+</UserControl>

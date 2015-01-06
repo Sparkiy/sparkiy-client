@@ -8,11 +8,13 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using MetroLog;
 using Nito.AsyncEx;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Controls;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
+using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
 
 namespace SparkiyClient.UILogic.Windows.ViewModels
 {
@@ -63,6 +65,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 	public class EditPageViewModel : ExtendedViewModel, IEditPageViewModel
 	{
+		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<EditPageViewModel>();
 		private readonly IProjectService projectService;
 		private readonly INavigationService navigationService;
 
@@ -76,10 +79,10 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 			this.AddNewFileCommand = new RelayCommand(this.AddNewFileCommandExecuteAsync);
 			this.AddNewAssetCommand = new RelayCommand(this.AddNewAssetCommandExecuteAsync);
-			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecute);
-			this.NavigateToProjectCommand = new RelayCommand(this.NavigateToProjectCommandExecute);
-			this.DebugProjectCommand = new RelayCommand(this.DebugProjectCommandExecute);
-			this.PlayProjectCommand = new RelayCommand(this.PlayProjectCommandExecute);
+			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecuteAsync);
+			this.NavigateToProjectCommand = new RelayCommand(this.NavigateToProjectCommandExecuteAsync);
+			this.DebugProjectCommand = new RelayCommand(this.DebugProjectCommandExecuteAsync);
+			this.PlayProjectCommand = new RelayCommand(this.PlayProjectCommandExecuteAsync);
 		}
 
 
@@ -95,28 +98,32 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			await this.Project.LoadAsync(this.projectService);
 
 			// Select first script
-			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
+			this.SelectedFile = this.Project.Files.FirstOrDefault();
 
 			base.OnNavigatedTo(e);
 		}
 
-		private void NavigateToHomeCommandExecute()
+		private async void NavigateToHomeCommandExecuteAsync()
 		{
-			this.navigationService.NavigateTo("MainPage");
+			await this.SaveChangesAsync();
+			this.navigationService.GoHome();
 		}
 
-		private void NavigateToProjectCommandExecute()
+		private async void NavigateToProjectCommandExecuteAsync()
 		{
-			this.navigationService.NavigateTo("ProjectPage", this.Project);
+			await this.SaveChangesAsync();
+			this.navigationService.GoBack();
 		}
 
-		private void DebugProjectCommandExecute()
+		private async void DebugProjectCommandExecuteAsync()
 		{
+			await this.SaveChangesAsync();
 			this.navigationService.NavigateTo("DebugPage", this.Project);
 		}
 
-		private void PlayProjectCommandExecute()
+		private async void PlayProjectCommandExecuteAsync()
 		{
+			await this.SaveChangesAsync();
 			this.navigationService.NavigateTo("PlayPage", this.Project);
 		}
 
@@ -130,8 +137,8 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			else
 			{
 				if (this.NewFileViewModel.TypeIndex == 1)
-					this.Project.Files.Result.Add(new Class {Name = this.NewFileViewModel.Name});
-				else this.Project.Files.Result.Add(new Script {Name = this.NewFileViewModel.Name});
+					this.Project.Files.Add(new Class {Name = this.NewFileViewModel.Name});
+				else this.Project.Files.Add(new Script {Name = this.NewFileViewModel.Name});
 				await this.projectService.SaveAsync();
 
 				this.NewFileViewModel = null;
@@ -171,6 +178,12 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			};
 		}
 
+		private async Task SaveChangesAsync()
+		{
+			SelectedFile.Code = this.editor.Code;
+			await this.projectService.SaveAsync();
+		}
+
 
 		public Project Project
 		{
@@ -183,10 +196,22 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			get { return this.GetProperty<CodeFile>(); }
 			set
 			{
+				if (this.SelectedFile == value)
+					return;
+
+				if (this.SelectedFile != null && this.editor?.Code != null)
+				{
+					Log.Debug("Assigning code from editor to file \"{0}\"", this.SelectedFile.Name);
+					this.SelectedFile.Code = this.editor.Code ?? String.Empty;
+				}
+
 				this.SetProperty(value);
 
-				if (editor != null)
-					this.editor.Code = this.SelectedFile?.Code;
+				if (this.SelectedFile != null && editor != null)
+				{
+					Log.Debug("Assigning code from file \"{0}\" to editor", this.SelectedFile.Name);
+					this.editor.Code = this.SelectedFile.Code?.TrimEnd('\r', '\n') + "\r" ?? String.Empty;
+				}
 			}
 		}
 
@@ -218,35 +243,15 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 				Author = "Aleksandar Toplek",
 				Description = "Sample description",
 				Name = "Sample project",
-				Files = new DumbINotifyTaskCompletion<ObservableCollection<CodeFile>> () { 
-					Result = new ObservableCollection<CodeFile>()
-					{
-						new Script {Code = "Sample code", Name = "main"},
-						new Script {Code = "Sample code", Name = "script1"},
-						new Script {Code = "Sample code", Name = "script2"},
-						new Class {Code = "Class sample", Name = "class1"}
-					}
+				Files = new ObservableCollection<CodeFile>()
+				{
+					new Script {Code = "Sample code", Name = "main"},
+					new Script {Code = "Sample code", Name = "script1"},
+					new Script {Code = "Sample code", Name = "script2"},
+					new Class {Code = "Class sample", Name = "class1"}
 				}
 			};
-			this.SelectedFile = this.Project.Files.Result.FirstOrDefault();
-		}
-
-		private class DumbINotifyTaskCompletion<T> : INotifyTaskCompletion<T>
-		{
-			public event PropertyChangedEventHandler PropertyChanged;
-			Task INotifyTaskCompletion.Task => Task;
-			public T Result { get; set; }
-			public Task<T> Task { get; set; }
-			public Task TaskCompleted { get; set; }
-			public TaskStatus Status { get; set; }
-			public bool IsCompleted { get; set; }
-			public bool IsNotCompleted { get; set; }
-			public bool IsSuccessfullyCompleted { get; set; }
-			public bool IsCanceled { get; set; }
-			public bool IsFaulted { get; set; }
-			public AggregateException Exception { get; set; }
-			public Exception InnerException { get; set; }
-			public string ErrorMessage { get; set; }
+			this.SelectedFile = this.Project.Files.FirstOrDefault();
 		}
 	}
 }

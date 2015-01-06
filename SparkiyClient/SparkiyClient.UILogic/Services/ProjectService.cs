@@ -18,12 +18,12 @@ namespace SparkiyClient.UILogic.Services
 		private ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<ProjectService>();
 
 		// Project 
-		private const string ProjectFileExtension = ".sparkiyproj";
+		private const string ProjectFileExtension = ".sparkiyproj.xml";
 		private const string ProjectScreenshotsPath = "Screenshots";
 		private const string ProjectAssetsPath = "Assets";
 		private const string ProjectFilesPath = "Files";
-		private const string ProjectFilesScriptExtension = ".luascript";
-		private const string ProjectFilesClassExtension = ".luaclass";
+		private const string ProjectFilesScriptExtension = ".script.lua";
+		private const string ProjectFilesClassExtension = ".class.lua";
 
 		private readonly IStorageService storageService;
 
@@ -53,7 +53,7 @@ namespace SparkiyClient.UILogic.Services
 
 			var asset = this.ResolveAsset(localCopy);
 			if (asset != null)
-				project.Assets.Result.Add(asset);
+				project.Assets.Add(asset);
 
 			Log.Debug("Asset \"{0}\" imported.", asset?.Name ?? "<INVALID TYPE>");
 		}
@@ -105,7 +105,7 @@ namespace SparkiyClient.UILogic.Services
 			Log.Debug("Saving projects...");
 
 			// Retrieve all dirty projects
-			var dirtyProjects = this.projects.Where(p => p.IsDirty || (p.Files?.Result?.Any(s => s.IsDirty) ?? false));
+			var dirtyProjects = this.projects.Where(p => p.IsDirty || (p.Files?.Any(s => s.IsDirty) ?? false));
 			foreach (var dirtyProject in dirtyProjects)
 			{
 				// Create project folder if it doesnt exist or retrieve one from project files path
@@ -122,7 +122,7 @@ namespace SparkiyClient.UILogic.Services
 
 				// Save all dirty files
 				var scriptsFolder = await projectFolder.GetFolderAsync(ProjectFilesPath);
-				var dirtyFiles = dirtyProject.Files?.Result?.Where(s => s.IsDirty);
+				var dirtyFiles = dirtyProject.Files?.Where(s => s.IsDirty);
 				if (dirtyFiles != null)
 					foreach (var script in dirtyFiles)
 					{
@@ -171,10 +171,11 @@ namespace SparkiyClient.UILogic.Services
 			foreach (var projectFolder in folders)
 			{
 				// Retrieve project files
-				var projectFileQueryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string> { ProjectFileExtension });
+				var projectFileQueryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string> { ".xml" });
 				var projectFileResult = projectFolder.CreateFileQueryWithOptions(projectFileQueryOptions);
 				var projectFileResultsFiles = await projectFileResult.GetFilesAsync();
-				var projectFileKVPs = projectFileResultsFiles.Select(f => new KeyValuePair<string, StorageFile>(f.DisplayName, f));
+				var projectFileResultsFilesExtensionFilter = projectFileResultsFiles.Where(f => f.Name.EndsWith(ProjectFileExtension));
+				var projectFileKVPs = projectFileResultsFilesExtensionFilter.Select(f => new KeyValuePair<string, StorageFile>(f.DisplayName, f));
 				projectFiles.AddRange(projectFileKVPs);
 			}
 
@@ -212,13 +213,14 @@ namespace SparkiyClient.UILogic.Services
 		private async Task<IEnumerable<T>> QueryFiles<T>(StorageFolder folder, string extension)
 			where T : CodeFile, new()
 		{
-			var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string>() {extension});
+			var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, new List<string>() {".lua"});
 			var queryResult = folder.CreateFileQueryWithOptions(queryOptions);
 			var files = await queryResult.GetFilesAsync();
-			var codeFiles = files.Select(f =>
+			var filesExtensionFilter = files.Where(f => f.Name.EndsWith(extension));
+			var codeFiles = filesExtensionFilter.Select(f =>
 				new T
 				{
-					Name = f.DisplayName,
+					Name = f.Name.Replace(extension, String.Empty),
 					Path = f.Path
 				});
 

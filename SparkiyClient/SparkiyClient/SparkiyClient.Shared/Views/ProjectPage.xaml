@@ -37,7 +37,7 @@
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
 					<Button Margin="0,0,39,0" 
-							Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+							Command="{Binding GoBackCommand}"
 							Style="{StaticResource NavigationBackButtonNormalStyle}"
 							VerticalAlignment="Top"/>
 					<TextBlock Text="{Binding Project.Name}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 

@@ -179,6 +179,13 @@ namespace SparkiyEngine.Engine
 
 	    private void CallCreated(string script = null)
 	    {
+		    this.AddMessage(new EngineMessage()
+		    {
+			    Message = "Script \"" + script + "\": Created",
+			    SourceType = BindingTypes.Engine,
+			    Source = this
+		    });
+
 	        this.CallFunction(script, "Created", MethodTypes.Call);
 	    }
 
@@ -189,11 +196,11 @@ namespace SparkiyEngine.Engine
 
         private void CallTouched(InputTypes type, float x, float y, string script = null)
 	    {
-	        this.CallFunction(script, "Touched", MethodTypes.Set, new Dictionary<DataTypes, object>
+	        this.CallFunction(script, "Touched", MethodTypes.Set, new Dictionary<object, DataTypes>
 	        {
-	            {DataTypes.Number, (double) type},
-                {DataTypes.Number, (double) x},
-                {DataTypes.Number, (double) y}
+	            {(double) type, DataTypes.Number },
+                {(double) x, DataTypes.Number },
+                {(double) y, DataTypes.Number }
             });
         }
 
@@ -202,7 +209,7 @@ namespace SparkiyEngine.Engine
 	        this.CallFunction(script, "Stopped", MethodTypes.Call);
 	    }
 
-	    private object CallFunction(string script, string name, MethodTypes type, Dictionary<DataTypes, object> inputParameters = null)
+	    private object CallFunction(string script, string name, MethodTypes type, Dictionary<object, DataTypes> inputParameters = null)
 	    {
 	        if (script != null)
 	        {
@@ -210,9 +217,9 @@ namespace SparkiyEngine.Engine
                     new MethodDeclarationOverloadDetails()
                     {
                         Type = type,
-                        Input = inputParameters?.Keys.ToArray() ?? new DataTypes[0]
+                        Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
                     },
-                    inputParameters?.Values.ToArray() ?? new object[0]);
+                    inputParameters?.Keys.ToArray() ?? new object[0]);
             }
 	        else
 	        {
@@ -220,9 +227,9 @@ namespace SparkiyEngine.Engine
 	                new MethodDeclarationOverloadDetails()
 	                {
 	                    Type = type,
-	                    Input = inputParameters?.Keys.ToArray() ?? new DataTypes[0]
+	                    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
 	                },
-	                inputParameters?.Values.ToArray() ?? new object[0]);
+	                inputParameters?.Keys.ToArray() ?? new object[0]);
 	        }
 	    }
 
