@@ -17,8 +17,7 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 
 ## Project status
 
-[![Stories in Backlog](https://badge.waffle.io/Sparkiy/sparkiy-client.png?label=backlog&title=Backlog)](https://waffle.io/Sparkiy/sparkiy-client)
-[![Stories in Ready](https://badge.waffle.io/Sparkiy/sparkiy-client.png?label=ready&title=Ready)](https://waffle.io/Sparkiy/sparkiy-client)
+[![Stories in Ready](https://badge.waffle.io/Sparkiy/sparkiy-client.png?label=ready&title=Tasks Ready)](https://waffle.io/Sparkiy/sparkiy-client)
 
 |               | master | beta | development | edge |
 | ------------- | ------ | ---- | ----------- | ---- |
