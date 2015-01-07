@@ -36,15 +36,8 @@ namespace SparkiyClient.Views
         }
 
 
-	    protected override async void OnNavigatedTo(NavigationEventArgs e)
+	    protected override void OnNavigatedTo(NavigationEventArgs e)
 	    {
-			base.OnNavigatedTo(e);
-
-			// Retrieve passed project
-			var project = e.Parameter as Project;
-			if (project == null)
-				throw new NullReferenceException("Passed data is not in expected format.");
-
 			// Assign play engine
 			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView);
 
@@ -52,11 +45,10 @@ namespace SparkiyClient.Views
 			this.ViewModel.AssignProjectPlayStateManager(this.PlayView);
 			this.PlaybackControlsControl.AssignPlayStateManager(this.PlayView);
 
-			// Assign project
-			await this.ViewModel.AssignProjectAsync(project);
-
 			// Watch output messages changes
 			this.ViewModel.OutputMessages.CollectionChanged += OutputMessagesOnCollectionChanged;
+
+			base.OnNavigatedTo(e);
 	    }
 
 	    private void OutputMessagesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)

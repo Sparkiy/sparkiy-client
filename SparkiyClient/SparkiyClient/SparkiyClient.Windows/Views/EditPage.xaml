@@ -110,7 +110,7 @@
 			
 		</Grid>
 		
-		<sideBar:SideBarControl x:Name="SideBarFiles" IsOpen="False">
+		<sideBar:SideBarControl IsOpen="False">
 			<sideBar:SideBarControl.Content>
 				<Grid>
 					<Grid.RowDefinitions>
@@ -163,27 +163,27 @@
 									   FontFamily="Segoe UI" FontWeight="Light" FontSize="32"
 									   Padding="0,0,0,8" Margin="0" />
 						</Button>
-						<Grid DataContext="{Binding ElementName=pageRoot, Path=DataContext.NewFileViewModel}"
-							  Visibility="{Binding ElementName=pageRoot, Path=DataContext.NewFileViewModel, Converter={StaticResource NegatedNullToVisibilityConverter}}"
-							  Margin="18 4 18 0">
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-								<RowDefinition />
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition />
-							</Grid.ColumnDefinitions>
-					
-							<!-- File name -->
-							<TextBlock Text="Name" 
+						<Border Visibility="{Binding NewFileViewModel, Converter={StaticResource NegatedNullToVisibilityConverter}}"
+								Margin="18 4 18 0">
+							<Grid DataContext="{Binding NewFileViewModel}">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition />
+								</Grid.RowDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+
+								<!-- File name -->
+								<TextBlock Text="Name" 
 									   Style="{StaticResource BaseTextBlockStyle}" 
 									   Margin="0 0 16 0"
 									   VerticalAlignment="Center"
 									   Grid.Row="0" Grid.Column="0" />
-							<TextBox x:Name="NewFileNameTextBox" 
+								<TextBox x:Name="NewFileNameTextBox" 
 									 Text="{Binding Name, Mode=TwoWay}" 
 									 extensions:FieldValidationExtensions.Format="MatchesRegexPattern"
 									 extensions:FieldValidationExtensions.Pattern="^(?!(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.[^.]*)?$)[^&lt;&gt;:\&quot;/\\|?*\x00-\x1F]*[^&lt;&gt;:\&quot;/\\|?*\x00-\x1F\ .]$"
@@ -191,54 +191,55 @@
 									 extensions:FieldValidationExtensions.InvalidBrush="{StaticResource SideBarBrushNameInvalid}"
 									 Margin="0 8"
 									 Grid.Row="0" Grid.Column="1" />
-							<TextBlock Text="{Binding (extensions:FieldValidationExtensions.ValidationMessage), ElementName=NewFileNameTextBox}"
+								<TextBlock Text="{Binding (extensions:FieldValidationExtensions.ValidationMessage), ElementName=NewFileNameTextBox}"
 									   Visibility="{Binding (extensions:FieldValidationExtensions.ValidationMessageVisibility), ElementName=NewFileNameTextBox}"
 									   Padding="0 0 0 12"
 									   TextWrapping="Wrap"
 									   Foreground="{StaticResource AccentBrushRed}"
 									   Grid.Row="1" Grid.Column="1"/>
 
-							<!-- File type -->
-							<TextBlock Text="Type" 
+								<!-- File type -->
+								<TextBlock Text="Type" 
 									   Style="{StaticResource BaseTextBlockStyle}" 
 									   Margin="0 0 16 0"
 									   VerticalAlignment="Center"
 									   Grid.Row="2" Grid.Column="0" />
-							<ComboBox SelectedIndex="{Binding TypeIndex, Mode=TwoWay}" 
+								<ComboBox SelectedIndex="{Binding TypeIndex, Mode=TwoWay}" 
 									  Margin="0 8" 
 									  Grid.Row="2" Grid.Column="1">
-								<ComboBox.Resources>
-									<Style TargetType="TextBlock"> 
-										<Setter Property="VerticalAlignment" Value="Center" /> 
-										<Setter Property="Margin" Value="8,3" /> 
-										<Setter Property="FontSize" Value="14" /> 
-										<Setter Property="Foreground" Value="#555" /> 
-									</Style> 
-								</ComboBox.Resources>
-								<ComboBoxItem>
-									<StackPanel Orientation="Horizontal">
-										<Border Background="DarkViolet">
-											<TextBlock Text="S" Foreground="White" />
-										</Border>
-										<TextBlock Text="Script" />
-									</StackPanel>
-								</ComboBoxItem>
-								<ComboBoxItem>
-									<StackPanel Orientation="Horizontal">
-										<Border Background="ForestGreen">
-											<TextBlock Text="C" Foreground="White" />
-										</Border>
-										<TextBlock Text="Class" />
-									</StackPanel>
-								</ComboBoxItem>
-							</ComboBox>
-						</Grid>
+									<ComboBox.Resources>
+										<Style TargetType="TextBlock">
+											<Setter Property="VerticalAlignment" Value="Center" />
+											<Setter Property="Margin" Value="8,3" />
+											<Setter Property="FontSize" Value="14" />
+											<Setter Property="Foreground" Value="#555" />
+										</Style>
+									</ComboBox.Resources>
+									<ComboBoxItem>
+										<StackPanel Orientation="Horizontal">
+											<Border Background="DarkViolet">
+												<TextBlock Text="S" Foreground="White" />
+											</Border>
+											<TextBlock Text="Script" />
+										</StackPanel>
+									</ComboBoxItem>
+									<ComboBoxItem>
+										<StackPanel Orientation="Horizontal">
+											<Border Background="ForestGreen">
+												<TextBlock Text="C" Foreground="White" />
+											</Border>
+											<TextBlock Text="Class" />
+										</StackPanel>
+									</ComboBoxItem>
+								</ComboBox>
+							</Grid>
+						</Border>
 					</StackPanel>
 				</Grid>
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>
 		
-		<sideBar:SideBarControl x:Name="SideBarAssets" IsLeft="False" IsOpen="False" Grid.Column="2">
+		<sideBar:SideBarControl IsLeft="False" IsOpen="False" Grid.Column="2">
 			<sideBar:SideBarControl.Content>
 				<Grid>
 					<Grid.RowDefinitions>
