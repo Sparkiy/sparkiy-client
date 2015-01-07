@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using SparkiyClient.Common;
@@ -31,6 +32,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 	public class DebugPageViewModel : ExtendedViewModel, IDebugPageViewModel
 	{
+		private readonly IProjectService projectService;
 		private readonly INavigationService navigationService;
 		private IProjectPlayEngineManagement projectPlayEngineManager;
 		private IProjectPlayStateManagment projectPlayStateManager;
@@ -39,8 +41,9 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		private DispatcherTimer messagesCheckTimer;
 
 
-		public DebugPageViewModel(INavigationService navigationService)
+		public DebugPageViewModel(IProjectService projectService, INavigationService navigationService)
 		{
+			this.projectService = projectService;
 			this.navigationService = navigationService;
 
 			this.messagesCheckTimer = new DispatcherTimer();
@@ -50,6 +53,22 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecute);
 			this.NavigateToEditorCommand = new RelayCommand(this.NavigateToEditorCommandExecute);
+		}
+
+		public async override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+
+			// Retrieve passed project
+			var project = e.Parameter as Project;
+			if (project == null)
+				throw new NullReferenceException("Passed data is not in expected format.");
+
+			// Load project
+			await project.LoadAsync(this.projectService);
+
+			// Assign the project to the engine
+			await this.AssignProjectAsync(project);
 		}
 
 		private void NavigateToEditorCommandExecute()
@@ -85,8 +104,11 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		public async Task AssignProjectAsync(Project project)
 		{
 			this.project = project;
+
+			// Assign project to the engine
 			this.projectPlayEngineManager.AssignProject(this.project);
 
+			// Run the project
 			this.projectPlayStateManager.PlayProject();
 		}
 
@@ -103,7 +125,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 	public sealed class DebugPageViewModelDesignTime : DebugPageViewModel
 	{
-		public DebugPageViewModelDesignTime() : base(null)
+		public DebugPageViewModelDesignTime() : base(null, null)
 		{
 			this.OutputMessages.Add(new EngineMessage() { Message = "Test1" });
 			this.OutputMessages.Add(new EngineMessage() { Message = "Test2" });
