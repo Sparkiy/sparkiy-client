@@ -31,8 +31,8 @@ namespace SparkiyClient.Controls.CodeEditor.Languages
 				new GrammerRule(TokenType.Identifier, new Regex(@"^[a-z_]\w*")),
 
 				// String Marker
-				new GrammerRule(TokenType.String, new Regex(@"^(?:\[(=*)\[[\s\S]*?(?:\]\1\]|$)|[^\r\n]*)[-]*", RegexOptions.IgnoreCase | RegexOptions.Multiline)),
-				new GrammerRule(TokenType.String, new Regex(@"^([""'])(?:\\\1|.)*?\1", RegexOptions.IgnoreCase | RegexOptions.Singleline)),	
+				new GrammerRule(TokenType.String, new Regex(@"^(?:\""(?:[^\""\\]|\\[\s\S])*(?:\""|$)|\'(?:[^\'\\]|\\[\s\S])*(?:\'|$))", RegexOptions.IgnoreCase | RegexOptions.Singleline)),
+				new GrammerRule(TokenType.String, new Regex(@"^\[(=*)\[[\s\S]*?(?:\]\1\]|$)", RegexOptions.IgnoreCase | RegexOptions.Multiline)),
 			};
 
 			Keywords = new string[]
