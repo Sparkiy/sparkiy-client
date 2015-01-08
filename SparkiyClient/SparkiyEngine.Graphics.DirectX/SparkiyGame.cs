@@ -277,15 +277,16 @@ namespace SparkiyEngine.Graphics.DirectX
 			// Clears the screen with the Color.CornflowerBlue
 			this.GraphicsDevice.Clear(this.BackgroundColor);
 
-			// Draw 2D
-			this.Reset();
-
 			if (this.isPlaying)
 			{
+				// Draw 2D
+				this.Reset();
+
 				// Execute users draw loop
 				this.engine.CallDrawFunction();
-				this.Canvas.Render();
 			}
+
+			this.Canvas.Render();
 		}
 
 		public void Reset()
