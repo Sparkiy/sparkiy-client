@@ -58,6 +58,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TopNavigationControl.xaml.cs">
       <DependentUpon>TopNavigationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToBrushConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AlertMessageService.cs" />

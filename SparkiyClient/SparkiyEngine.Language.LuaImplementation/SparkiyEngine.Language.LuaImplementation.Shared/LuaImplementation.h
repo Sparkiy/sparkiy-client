@@ -27,9 +27,12 @@ namespace SparkiyEngine_Language_LuaImplementation
 		void SetConstant(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
 		void SetVariable(const char *name, Platform::Object^ value, SparkiyEngine::Bindings::Component::Common::DataTypes dataType);
 
-		std::map<const char *, SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^, StrCompare>				 m_declarations;
+		std::map<const char *, SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^, StrCompare>	 m_declarations;
 
 		void Reset();
+
+		void ScriptError(const char* scriptId, const char* message);
+		SparkiyEngine::Bindings::Component::Language::LanguageScriptError^ GetScriptError();
 
 	private:
 		void Initialize();
@@ -38,5 +41,6 @@ namespace SparkiyEngine_Language_LuaImplementation
 		SparkiyEngine::Bindings::Component::Engine::IEngineBindings													^m_engine;
 		SparkiyEngine::Bindings::Component::Language::ILanguageBindings												^m_languageBindings;
 		std::map<const char *, LuaScript *, StrCompare>																 m_scripts;
+		SparkiyEngine::Bindings::Component::Language::LanguageScriptError											^m_scriptError;
 	};
 }

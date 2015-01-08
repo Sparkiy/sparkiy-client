@@ -10,6 +10,8 @@ namespace SparkiyEngine.Bindings.Component.Engine
 
 		public BindingTypes SourceType { get; set; }
 
+		public bool IsError { get; set; }
+
 
 		public override string ToString()
 		{
