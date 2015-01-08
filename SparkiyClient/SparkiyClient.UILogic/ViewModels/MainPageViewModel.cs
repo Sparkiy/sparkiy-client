@@ -21,6 +21,10 @@ namespace SparkiyClient.UILogic.ViewModels
 	{
 		bool RequiresWorkspaceInitialization { get; }
 
+		TimeSpan NextReleaseCountdown { get; }
+
+		bool IsNextReleaseReady { get; }
+
 		ObservableCollection<Project> Projects { get; } 
 
 		RelayCommand InitializeWorkspaceCommand { get; }
@@ -40,6 +44,8 @@ namespace SparkiyClient.UILogic.ViewModels
 	    private readonly IStorageService storageService;
 	    private readonly IProjectService projectService;
 
+	    private readonly DispatcherTimer nextReleaseCountdownTimer;
+
 
 	    public MainPageViewModel(INavigationService navigationService, IAlertMessageService alertMessageService, IStorageService storageService, IProjectService projectService)
 	    {
@@ -53,8 +59,14 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.InitializeWorkspaceCommand = new RelayCommand(this.InitializeWorkspaceCommandExecuteAsync);
 			this.ProjectSelectedCommand = new RelayCommand<Project>(this.ProjectSelectedCommandExecute);
 			this.NewProjectCommand = new RelayCommand(this.NewProjectCommandExecute);
-	    }
 
+			this.NextReleaseCountdown = (new DateTime(2015, 1, 12, 0, 0, 0)) - DateTime.Now;
+			this.nextReleaseCountdownTimer = new DispatcherTimer();
+		    this.nextReleaseCountdownTimer.Interval = TimeSpan.FromSeconds(1);
+			this.nextReleaseCountdownTimer.Tick += NextReleaseCountdownTimerOnTick;
+			this.nextReleaseCountdownTimer.Start();
+		    this.NextReleaseCountdownTimerOnTick(null, null);
+	    }
 
 	    public override async void OnNavigatedTo(NavigationEventArgs e)
 	    {
@@ -67,7 +79,14 @@ namespace SparkiyClient.UILogic.ViewModels
 		    }
 	    }
 
-	    private async Task LoadProjectsAsync()
+		private void NextReleaseCountdownTimerOnTick(object sender, object o)
+		{
+			this.NextReleaseCountdown = NextReleaseCountdown - TimeSpan.FromSeconds(1);
+			if (NextReleaseCountdown.TotalSeconds <= 0)
+				this.IsNextReleaseReady = true;
+		}
+
+		private async Task LoadProjectsAsync()
 	    {
 			Log.Debug("Loading project...");
 		    if (this.storageService.RequiresHardStorageInitialization())
@@ -107,6 +126,18 @@ namespace SparkiyClient.UILogic.ViewModels
 		public bool RequiresWorkspaceInitialization
 		{
 			get { return this.GetProperty<bool>(defaultValue: true); }
+			protected set { this.SetProperty(value); }
+		}
+
+	    public TimeSpan NextReleaseCountdown
+	    {
+		    get { return this.GetProperty<TimeSpan>(); }
+			protected set { this.SetProperty(value); }
+	    }
+
+		public bool IsNextReleaseReady
+		{
+			get { return this.GetProperty<bool>(); }
 			protected set { this.SetProperty(value); }
 		}
 
