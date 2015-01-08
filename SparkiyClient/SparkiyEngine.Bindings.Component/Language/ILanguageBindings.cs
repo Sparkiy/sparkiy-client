@@ -25,13 +25,18 @@ namespace SparkiyEngine.Bindings.Component.Language
 		//
 		// Scripts
 		// 
-	    void LoadScript(string id, string content);
+	    bool LoadScript(string id, string content);
 	    void StartScript(string id);
 
 		// 
 		// Settings
 		//
 		void Reset();
+
+		//
+		// Error
+		//
+		LanguageScriptError GetError();
 
         /// <summary>
         /// Gets the language that is implemented with this instance of bindings.

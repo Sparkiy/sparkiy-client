@@ -75,7 +75,7 @@ void LanguageBindings::SetVariable(String^ name, Object^ value, SparkiyEngine::B
 //
 // LoadScript
 //
-void LanguageBindings::LoadScript(String ^id, String ^content)
+bool LanguageBindings::LoadScript(String ^id, String ^content)
 {
 	// Convert to C compatible strings
 	const char *cId = GetCString(id);
@@ -94,13 +94,15 @@ void LanguageBindings::LoadScript(String ^id, String ^content)
 	});
 
 	// Load content to the script
-	script->Load();
+	auto isValid = script->Load();
 
 	// Add to the scripts list
 	this->m_luaImpl->AddScript(cId, script);
 
 	// mark that binding loaded at least one script
 	this->m_didLoadScript = true;
+
+	return isValid;
 }
 
 // 
@@ -124,6 +126,14 @@ void LanguageBindings::StartScript(String ^id)
 void LanguageBindings::Reset()
 {
 	this->m_luaImpl->Reset();
+}
+
+//
+// GetError
+//
+LanguageScriptError^ LanguageBindings::GetError() 
+{
+	return this->m_luaImpl->GetScriptError();
 }
 
 SupportedLanguages LanguageBindings::Language::get()

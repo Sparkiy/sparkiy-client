@@ -12,7 +12,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 	{
 	public:
 		virtual void MapToGraphicsMethods(IMapView<String ^, SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^> ^declarations);
-		virtual void LoadScript(String ^id, String ^content);
+		virtual bool LoadScript(String ^id, String ^content);
 		virtual void StartScript(String ^id);
 
 		// Methods
@@ -25,6 +25,10 @@ namespace SparkiyEngine_Language_LuaImplementation
 
 		// Settings
 		virtual void Reset();
+
+		// Error
+		virtual SparkiyEngine::Bindings::Component::Language::LanguageScriptError^ GetError();
+
 
 		virtual property SparkiyEngine::Bindings::Component::Common::SupportedLanguages Language
 		{
