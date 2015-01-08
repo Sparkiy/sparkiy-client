@@ -173,8 +173,8 @@ namespace SparkiyEngine.Engine
 	            this.pointerManager.PrimaryPointer.UpdateType();
 	        }
 
-            // Call use draw method
-            this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+			// Call use draw method
+			this.CallFunction(null, "Draw", MethodTypes.Call);
 	    }
 
 	    private void CallCreated(string script = null)
@@ -209,28 +209,45 @@ namespace SparkiyEngine.Engine
 	        this.CallFunction(script, "Stopped", MethodTypes.Call);
 	    }
 
-	    private object CallFunction(string script, string name, MethodTypes type, Dictionary<object, DataTypes> inputParameters = null)
+	    public object CallFunction(string script, string name, MethodTypes type, Dictionary<object, DataTypes> inputParameters = null)
 	    {
-	        if (script != null)
-	        {
-                return this.LanguageBindings.CallMethod(script, name,
-                    new MethodDeclarationOverloadDetails()
-                    {
-                        Type = type,
-                        Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
-                    },
-                    inputParameters?.Keys.ToArray() ?? new object[0]);
-            }
-	        else
-	        {
-	            return this.LanguageBindings.CallMethod(name,
-	                new MethodDeclarationOverloadDetails()
-	                {
-	                    Type = type,
-	                    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
-	                },
-	                inputParameters?.Keys.ToArray() ?? new object[0]);
-	        }
+		    try
+		    {
+			    if (script != null)
+			    {
+				    return this.LanguageBindings.CallMethod(script, name,
+					    new MethodDeclarationOverloadDetails()
+					    {
+						    Type = type,
+						    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
+					    },
+					    inputParameters?.Keys.ToArray() ?? new object[0]);
+			    }
+			    else
+			    {
+				    return this.LanguageBindings.CallMethod(name,
+					    new MethodDeclarationOverloadDetails()
+					    {
+						    Type = type,
+						    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
+					    },
+					    inputParameters?.Keys.ToArray() ?? new object[0]);
+			    }
+		    }
+		    catch (Exception ex)
+		    {
+				this.Pause();
+				this.Reset();
+
+				this.AddMessage(new EngineMessage()
+				{
+					Message = String.Format("Function \"{0}\" throw an exception:\n{1}", name, ex.Message),
+					Source = this,
+					SourceType = BindingTypes.Engine
+				});
+
+			    return null;
+		    }
 	    }
 
 	    #region Messages

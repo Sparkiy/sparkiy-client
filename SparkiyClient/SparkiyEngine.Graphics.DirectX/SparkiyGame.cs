@@ -272,28 +272,20 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		protected override void Draw(GameTime gameTime)
 		{
-		    if (!isPlaying) return;
-
-			base.Draw(gameTime);
+		    base.Draw(gameTime);
 
 			// Clears the screen with the Color.CornflowerBlue
 			this.GraphicsDevice.Clear(this.BackgroundColor);
 
 			// Draw 2D
 			this.Reset();
-			//this.Canvas.Render();
 
-			// Execute users draw loop
-			try
+			if (this.isPlaying)
 			{
-			    this.engine.CallDrawFunction();
+				// Execute users draw loop
+				this.engine.CallDrawFunction();
+				this.Canvas.Render();
 			}
-			catch(Exception ex)
-			{
-				this.StoppedByException(ex);
-			}
-
-			this.Canvas.Render();
 		}
 
 		public void Reset()
@@ -320,12 +312,6 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.engine.LanguageBindings.SetVariable("TOTAL", 0d, DataTypes.Number);
 			this.engine.LanguageBindings.SetVariable("WIDTH", (double)this.GraphicsDevice.Viewport.Width, DataTypes.Number);
             this.engine.LanguageBindings.SetVariable("HEIGHT", (double)this.GraphicsDevice.Viewport.Height, DataTypes.Number);
-        }
-
-		private void StoppedByException(Exception ex)
-		{
-			this.Pause();
-            this.Reset();
         }
 
 		#region Surface
