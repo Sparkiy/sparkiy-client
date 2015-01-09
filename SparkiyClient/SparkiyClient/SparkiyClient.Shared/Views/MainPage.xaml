@@ -65,7 +65,7 @@
 			</SemanticZoom.ZoomedOutView>
 			
 			<SemanticZoom.ZoomedInView>
-				<Hub>
+				<Hub Background="{StaticResource AccentBrushDarkLighter3}" >
 					<Hub.Header>
 						<StackPanel Orientation="Horizontal">
 							<Grid Margin="5 0 20 0">
@@ -80,7 +80,7 @@
 					</Hub.Header>
 			
 					<!-- Content -->
-					<HubSection Width="780" VerticalContentAlignment="Stretch">
+					<HubSection Background="{StaticResource AccentBrushLight}" Width="780" VerticalContentAlignment="Stretch">
 						<DataTemplate>
 							<Grid>
 								<Grid.RowDefinitions>
