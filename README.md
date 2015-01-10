@@ -17,8 +17,6 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 
 ## Project status
 
-[![Stories in Ready](https://badge.waffle.io/Sparkiy/sparkiy-client.png?label=ready&title=Tasks Ready)](https://waffle.io/Sparkiy/sparkiy-client)
-
 |               | master | beta | development | edge |
 | ------------- | ------ | ---- | ----------- | ---- |
 | Windows       | [![master build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/master?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/master) | [![beta build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/beta?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/beta) | [![development build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/development?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/development) | [![edge build status](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/edge?svg=true&pendingText=pending...&passingText=OK&failingText=failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/edge) |
