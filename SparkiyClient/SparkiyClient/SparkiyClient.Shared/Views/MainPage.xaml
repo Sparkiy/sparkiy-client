@@ -127,6 +127,7 @@
 										<Style TargetType="TextBlock" x:Key="TextBlockCountdownStyle">
 											<Setter Property="FontSize" Value="28" />
 											<Setter Property="FontWeight" Value="ExtraLight" />
+											<Setter Property="Foreground" Value="{StaticResource AccentBrushDark}" />
 										</Style>
 									</Grid.Resources>
 									<StackPanel Orientation="Horizontal"
@@ -145,7 +146,7 @@
 											   Visibility="{Binding IsNextReleaseReady, Converter={StaticResource BooleanToVisibilityConverter}}" />
 								</Grid>
 								
-								<TextBlock Text="v1.2.1" FontSize="16" FontWeight="ExtraLight" Margin="0 4" Grid.Row="3" />
+								<TextBlock Text="{Binding CurrentVersion}" Foreground="{StaticResource AccentBrushDark}" FontSize="16" FontWeight="ExtraLight" Margin="0 4" Grid.Row="3" />
 							</Grid>
 						</DataTemplate>
 					</HubSection>

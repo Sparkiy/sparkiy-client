@@ -59,7 +59,9 @@ namespace SparkiyClient.Views
 			{
 				scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
 		    }
-	    }
+
+			throw new InvalidOperationException("O' no you di'in'!");
+		}
 
 
 	    public new IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;

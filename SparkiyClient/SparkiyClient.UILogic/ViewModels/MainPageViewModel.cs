@@ -4,12 +4,14 @@ using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using MetroLog;
 using SparkiyClient.Common;
+using SparkiyClient.Common.Extensions;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
 using INavigationService = SparkiyClient.UILogic.Services.INavigationService;
@@ -19,6 +21,8 @@ namespace SparkiyClient.UILogic.ViewModels
 	[ComVisible(false)]
 	public interface IMainPageViewModel : IViewModelBase
 	{
+		string CurrentVersion { get; }
+
 		bool RequiresWorkspaceInitialization { get; }
 
 		TimeSpan NextReleaseCountdown { get; }
@@ -60,7 +64,7 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.ProjectSelectedCommand = new RelayCommand<Project>(this.ProjectSelectedCommandExecute);
 			this.NewProjectCommand = new RelayCommand(this.NewProjectCommandExecute);
 
-			this.NextReleaseCountdown = (new DateTime(2015, 1, 19, 0, 0, 0)) - DateTime.Now;
+			this.NextReleaseCountdown = (new DateTime(2015, 1, 26, 0, 0, 0)) - DateTime.Now;
 			this.nextReleaseCountdownTimer = new DispatcherTimer();
 		    this.nextReleaseCountdownTimer.Interval = TimeSpan.FromSeconds(1);
 			this.nextReleaseCountdownTimer.Tick += NextReleaseCountdownTimerOnTick;
@@ -140,6 +144,8 @@ namespace SparkiyClient.UILogic.ViewModels
 			get { return this.GetProperty<bool>(); }
 			protected set { this.SetProperty(value); }
 		}
+
+	    public string CurrentVersion => Application.Current.GetVersion();
 
 		public RelayCommand InitializeWorkspaceCommand { get; }
 
