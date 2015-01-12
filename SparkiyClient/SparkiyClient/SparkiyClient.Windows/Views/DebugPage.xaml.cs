@@ -54,9 +54,12 @@ namespace SparkiyClient.Views
 	    private void OutputMessagesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 	    {
 			// Scroll to bottom
-		    var scrollViewer = this.SideBarMessagesListView.GetFirstDescendantOfType<ScrollViewer>();
-			scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
-		}
+			var scrollViewer = this.SideBarMessagesListView.GetFirstDescendantOfType<ScrollViewer>();
+			if (scrollViewer != null)
+			{
+				scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
+		    }
+	    }
 
 
 	    public new IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;
