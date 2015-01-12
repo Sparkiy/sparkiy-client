@@ -65,6 +65,7 @@ namespace SparkiyClient
 		{
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
+			this.UnhandledException += OnUnhandledException;
 
 			// Create container and register itself
 			this.container = new UnityContainer();
@@ -88,6 +89,13 @@ namespace SparkiyClient
 			// Configure crash handling
 			GlobalCrashHandler.Configure();
 			Log.Debug("Global crash handler configured.");
+		}
+
+		private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+#if DEBUG
+			System.Diagnostics.Debug.WriteLine(e.Message);
+#endif
 		}
 
 		/// <summary>

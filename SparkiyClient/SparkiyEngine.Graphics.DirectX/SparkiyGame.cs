@@ -2,6 +2,7 @@
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.InteropServices;
+using MetroLog;
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
@@ -17,22 +18,18 @@ namespace SparkiyEngine.Graphics.DirectX
     [ComVisible(false)]
     public class SparkiyGame : Game
     {
+	    private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<SparkiyGame>();
         private readonly IEngineBindings engine;
 		private GraphicsDeviceManager graphicsDeviceManager;
 
         private bool isPlaying = false;
 
+	    private static readonly Color4 DefaultBackgroundColor = new Color4(new Vector4(1f, 1f, 1f, 1f));
 		private Color4 backgroundColor;
         
 		// Styles
         private Style2D style2D;
         private readonly PushPopManagement<Style2D> stylePushPopManagement = new PushPopManagement<Style2D>(); 
-
-		// Text
-		private string fontFamily;
-		private float fontSize;
-		private TextFormat fontFormat;
-		private Color4 fontColor;
 
 		// Transform
 		private Matrix transformMatrix;
@@ -78,11 +75,11 @@ namespace SparkiyEngine.Graphics.DirectX
 				this.Window.ClientBounds.Width, 
 				this.Window.ClientBounds.Height,
 				Format.B8G8R8A8_UNorm);
+			Log.Debug("Resized graphics device to {0}x{1}", this.Window.ClientBounds.Width, this.Window.ClientBounds.Height);
 
 			// Create 2D Canvas for caching 
 			this.Canvas = new Canvas(this);
 			this.Canvas.ResetGraphicsDevice();
-			Brushes.Initialize(this.Canvas.DeviceContext);
 
 			// Reset variables
 			this.Reset();
@@ -180,7 +177,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.Canvas.PushObject(
 				new CanvasText(
 					text,
-					this.fontFormat,
+					this.style2D.FontFormat,
 					new RectangleF(x, y, this.GraphicsDevice.Viewport.Width - x, this.GraphicsDevice.Viewport.Height - y),
 					new SolidColorBrush(this.Canvas.DeviceContext, this.FontColor),
 					DrawTextOptions.NoSnap,
@@ -192,7 +189,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			if (String.IsNullOrEmpty(this.FontFamily) || MathUtil.NearEqual(0, this.FontSize))
 				return;
 
-			this.fontFormat = new TextFormat(this.Canvas.DirectWriteFactory, this.FontFamily, this.FontSize);
+			this.style2D.FontFormat = new TextFormat(this.Canvas.DirectWriteFactory, this.FontFamily, this.FontSize);
 		}
 
 		public void DrawLine(float x1, float y1, float x2, float y2)
@@ -295,14 +292,9 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.Canvas.Clear();
 
 			// Clear all properties
-			this.BackgroundColor = Brushes.White.Color;
-			this.StrokeColor = Brushes.Gray.Color;
-			this.StrokeThickness = 2f;
-			this.IsStrokeEnabled = false;
-			this.FontSize = 24f;
-			this.FillColor = Brushes.Black.Color;
-			this.FontFamily = "Segoe UI";
-			this.FontColor = Brushes.Black.Color;
+			this.style2D = new Style2D();
+			this.RebuildFontFormat();
+			this.BackgroundColor = DefaultBackgroundColor;
 
 			// Reset transform
 			this.transformMatrix = Matrix.Identity;
@@ -329,28 +321,28 @@ namespace SparkiyEngine.Graphics.DirectX
 
 		public string FontFamily
 		{
-			get { return this.fontFamily; }
+			get { return this.style2D.FontFamily; }
 			set
 			{
-				this.fontFamily = value;
+				this.style2D.FontFamily = value;
 				this.RebuildFontFormat();
 			}
 		}
 
 		public float FontSize
 		{
-			get { return this.fontSize; }
+			get { return this.style2D.FontSize; }
 			set
 			{
-				this.fontSize = Math.Max(0, value);
+				this.style2D.FontSize = Math.Max(0, value);
 				this.RebuildFontFormat();
 			}
 		}
 
 		public Color4 FontColor
 		{
-			get { return this.fontColor; }
-			set { this.fontColor = value; }
+			get { return this.style2D.FontColor; }
+			set { this.style2D.FontColor = value; }
 		}
 
 		#endregion Text

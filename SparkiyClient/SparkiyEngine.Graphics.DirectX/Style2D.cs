@@ -1,56 +1,48 @@
 using SharpDX;
+using SharpDX.DirectWrite;
 using SharpDX.Toolkit.Direct2D;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
     internal struct Style2D
     {
-        private Color4 strokeColor;
-        private float strokeThickness;
-        private bool isStrokeEnabled;
-        private Color4 fillColor;
-        private bool isFillEnabled;
+		private static readonly Color4 DefaultStrokeColor = new Color4(new Vector4(0, 0, 0, 1));
+		private static readonly Color4 DefaultFillColor = new Color4(new Vector4(0, 0, 0, 1));
+		private static readonly Color4 DefaultFontColor = new Color4(new Vector4(0, 0, 0, 1));
 
 
-        public Style2D()
+		public Style2D()
         {
-            this.strokeColor = Brushes.White.Color;
-            this.strokeThickness = 2f;
-            this.isStrokeEnabled = false;
+			this.StrokeColor = DefaultStrokeColor;
+			this.StrokeThickness = 2f;
+			this.IsStrokeEnabled = false;
 
-            this.fillColor = Brushes.White.Color;
-            this.isFillEnabled = true;
-        }
+			this.FillColor = DefaultFillColor;
+			this.IsFillEnabled = true;
+
+			this.FontFamily = "Segoe UI";
+			this.FontSize = 24f;
+			this.FontColor = DefaultFontColor;
+			this.FontFormat = null;
+		}
 
 
-        public Color4 StrokeColor
-        {
-            get { return strokeColor; }
-            set { strokeColor = value; }
-        }
+        public Color4 StrokeColor { get; set; }
 
-        public float StrokeThickness
-        {
-            get { return strokeThickness; }
-            set { strokeThickness = value; }
-        }
+	    public float StrokeThickness { get; set; }
 
-        public bool IsStrokeEnabled
-        {
-            get { return isStrokeEnabled; }
-            set { isStrokeEnabled = value; }
-        }
+	    public bool IsStrokeEnabled { get; set; }
 
-        public Color4 FillColor
-        {
-            get { return fillColor; }
-            set { fillColor = value; }
-        }
+	    public Color4 FillColor { get; set; }
 
-        public bool IsFillEnabled
-        {
-            get { return isFillEnabled; }
-            set { isFillEnabled = value; }
-        }
-    }
+	    public bool IsFillEnabled { get; set; }
+
+		public string FontFamily { get; set; }
+
+		public float FontSize { get; set; }
+
+		public TextFormat FontFormat { get; set; }
+
+		public Color4 FontColor { get; set; }
+	}
 }
