@@ -51,16 +51,6 @@ void LuaScript::RegisterMethod(MethodDeclarationDetails ^declaration)
 	this->RegisterFunction(cName, UniversalFunction);
 }
 
-//
-// Start
-//
-void LuaScript::Start()
-{
-	OutputDebugStringW(GetWString("Starting script with id(" + GetString(this->m_id) + ")\n").c_str());
-
-	this->m_isRunning = true;
-}
-
 // 
 // RegisterFunction
 //
@@ -71,12 +61,20 @@ void LuaScript::RegisterFunction(const char *name, FunctionPointer pt)
 	lua_setglobal(this->m_luaState, name);
 }
 
-// 
-// RegisterLibrary
 //
-void LuaScript::RegisterLibrary(const char *name, const luaL_Reg *functions) {
-	luaL_newlib(this->m_luaState, functions);
-	lua_setglobal(this->m_luaState, name);
+// Start
+//
+void LuaScript::Start()
+{
+	if (!this->m_isValid) 
+	{
+		luaL_error(this->m_luaState, "Can't start invalid script");
+		return;
+	}
+
+	OutputDebugStringW(GetWString("Starting script with id(" + GetString(this->m_id) + ")\n").c_str());
+
+	this->m_isRunning = true;
 }
 
 //
@@ -94,27 +92,45 @@ const char* LuaScript::GetErrorMessage()
 //
 void LuaScript::HandleException() 
 {
+	this->m_isValid = false;
+	throw;
+}
+
+//
+// HandleError
+//
+void LuaScript::HandleError() 
+{
+	this->m_isValid = false;
 	auto errorMessage = this->GetErrorMessage();
-	this->m_luaImpl->CreateMessage("Error: " + GetString(errorMessage) + "\n");
+	this->m_luaImpl->ScriptError(this->m_id, errorMessage);
 }
 
 //
 // Load
 //
-void LuaScript::Load()
+bool LuaScript::Load()
 {
 	try 
 	{
 		// Run the script
 		this->m_isValid = luaL_dostring(m_luaState, this->m_content) == LUA_OK;
 
-		if (!this->m_isValid)
-			this->HandleException();
+		if (!this->m_isValid) 
+		{
+			this->HandleError();
+			return false;
+		}
+
+		return true;
 	}
 	catch (...) 
 	{
+		// This should not happen
 		this->HandleException();
 	}
+
+	return false;
 }
 
 //
@@ -303,6 +319,9 @@ LuaScript* LuaScript::GetCallerScript(lua_State *luaState) {
 //
 int LuaScript::PanicHandler(lua_State *luaState)
 {
+	auto callerScript = GetCallerScript(luaState);
+	auto message = callerScript->GetErrorMessage();
+	callerScript->m_luaImpl->ScriptError(callerScript->m_id, message);
 	throw;
 
 	// This should not be reached
@@ -318,17 +337,35 @@ bool LuaScript::FunctionExist(lua_State *luaState, const char *name) {
 }
 
 // static
+// HandleProtectedCallError
+//
+void LuaScript::HandleProtectedCallError(lua_State *luaState, const char *name)
+{
+	const char *functionExecutionError = "%s:%s:%s";
+	auto callerScript = GetCallerScript(luaState);
+	auto message = callerScript->GetErrorMessage();
+	luaL_error(luaState, functionExecutionError, callerScript->m_id, name, message);
+}
+
+// static
 // CallFunction
 //
-int LuaScript::CallFunction(lua_State *luaState, const char *name, int numParameters, int numResults) {
-	const char *functionExecutionError = "An error occured while executing function \"%s\"";
+bool LuaScript::CallFunction(lua_State *luaState, const char *name, int numParameters, int numResults) {
+	try 
+	{
+		lua_getglobal(luaState, name);
+		lua_insert(luaState, numParameters);
+		int errorCode = lua_pcall(luaState, numParameters, numResults, 0);
+		if (!errorCode)
+			return true;
+		else LuaScript::HandleProtectedCallError(luaState, name);
+	}
+	catch (Exception^ ex) 
+	{
+		// This should not happen
+		throw ref new Exception(0x81000001, "Exception in protected function call. This should not have happened. Resolve before exception is thrown." + ex->Message);
+	}
 
-	lua_getglobal(luaState, name);
-	lua_insert(luaState, numParameters);
-	int errorCode = lua_pcall(luaState, numParameters, numResults, 0);
-	if (errorCode)
-		luaL_error(luaState, functionExecutionError, name);
-
-	return errorCode;
+	return false;
 }
 

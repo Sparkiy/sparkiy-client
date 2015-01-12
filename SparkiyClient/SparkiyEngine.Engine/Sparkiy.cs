@@ -135,15 +135,37 @@ namespace SparkiyEngine.Engine
             this.CallStopped();
 	    }
 
-	    public void AddScript(string name, string code)
+	    public bool AddScript(string name, string code)
 	    {
 			Contract.Requires(!String.IsNullOrWhiteSpace(name));
 
 			Log.Debug("Added script \"{0}\"", name);
 
 	        this.scriptManager.AddScript(name);
-	        this.LanguageBindings.LoadScript(name, code ?? String.Empty);
-            this.CallCreated(name);
+		    try
+		    {
+			    bool isLoaded = this.LanguageBindings.LoadScript(name, code ?? String.Empty);
+				if (!isLoaded)
+					throw new Exception();
+
+				this.CallCreated(name);
+
+			    return true;
+		    }
+		    catch (Exception ex)
+		    {
+				this.AddMessage(new EngineMessage()
+				{
+					Message = this.LanguageBindings.GetError().Message,
+					Source = this.LanguageBindings,
+					SourceType = BindingTypes.Language,
+					IsError = true
+				});
+
+				this.Reset();
+			}
+
+		    return false;
 	    }
 
 	    public void CallDrawFunction()
@@ -173,15 +195,15 @@ namespace SparkiyEngine.Engine
 	            this.pointerManager.PrimaryPointer.UpdateType();
 	        }
 
-            // Call use draw method
-            this.LanguageBindings.CallMethod("Draw", new MethodDeclarationOverloadDetails() {Type = MethodTypes.Call}, new object[] {});
+			// Call use draw method
+			this.CallFunction(null, "Draw", MethodTypes.Call);
 	    }
 
-	    private void CallCreated(string script = null)
+	    private void CallCreated(string script)
 	    {
 		    this.AddMessage(new EngineMessage()
 		    {
-			    Message = "Script \"" + script + "\": Created",
+			    Message = "Script \"" + script + "\" created",
 			    SourceType = BindingTypes.Engine,
 			    Source = this
 		    });
@@ -191,7 +213,14 @@ namespace SparkiyEngine.Engine
 
 	    private void CallStarted(string script = null)
 	    {
-	        this.CallFunction(script, "Started", MethodTypes.Call);
+			this.AddMessage(new EngineMessage()
+			{
+				Message = script == null ? "All scripts started" : "Script \"" + script + "\" started",
+				SourceType = BindingTypes.Engine,
+				Source = this
+			});
+
+			this.CallFunction(script, "Started", MethodTypes.Call);
 	    }
 
         private void CallTouched(InputTypes type, float x, float y, string script = null)
@@ -206,31 +235,55 @@ namespace SparkiyEngine.Engine
 
 	    private void CallStopped(string script = null)
 	    {
-	        this.CallFunction(script, "Stopped", MethodTypes.Call);
+			this.AddMessage(new EngineMessage()
+			{
+				Message = script == null ? "All scripts stopped" : "Script \"" + script + "\" stopped",
+				SourceType = BindingTypes.Engine,
+				Source = this
+			});
+
+			this.CallFunction(script, "Stopped", MethodTypes.Call);
 	    }
 
-	    private object CallFunction(string script, string name, MethodTypes type, Dictionary<object, DataTypes> inputParameters = null)
+	    public object CallFunction(string script, string name, MethodTypes type, Dictionary<object, DataTypes> inputParameters = null)
 	    {
-	        if (script != null)
-	        {
-                return this.LanguageBindings.CallMethod(script, name,
-                    new MethodDeclarationOverloadDetails()
-                    {
-                        Type = type,
-                        Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
-                    },
-                    inputParameters?.Keys.ToArray() ?? new object[0]);
-            }
-	        else
-	        {
-	            return this.LanguageBindings.CallMethod(name,
-	                new MethodDeclarationOverloadDetails()
-	                {
-	                    Type = type,
-	                    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
-	                },
-	                inputParameters?.Keys.ToArray() ?? new object[0]);
-	        }
+		    try
+		    {
+			    if (script != null)
+			    {
+				    return this.LanguageBindings.CallMethod(script, name,
+					    new MethodDeclarationOverloadDetails()
+					    {
+						    Type = type,
+						    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
+					    },
+					    inputParameters?.Keys.ToArray() ?? new object[0]);
+			    }
+			    else
+			    {
+				    return this.LanguageBindings.CallMethod(name,
+					    new MethodDeclarationOverloadDetails()
+					    {
+						    Type = type,
+						    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
+					    },
+					    inputParameters?.Keys.ToArray() ?? new object[0]);
+			    }
+		    }
+		    catch (Exception ex)
+		    {
+				this.Reset();
+
+				this.AddMessage(new EngineMessage()
+				{
+					Message = this.LanguageBindings.GetError().Message,
+					Source = this,
+					SourceType = BindingTypes.Engine,
+					IsError = true
+				});
+
+			    return null;
+		    }
 	    }
 
 	    #region Messages
@@ -302,9 +355,6 @@ namespace SparkiyEngine.Engine
 			// Clear subsystems
 			this.LanguageBindings.Reset();
 			this.GraphicsBindings.Reset();
-
-			// Clear engine
-			this.ClearMessages();
 
             // Clear scripts
 		    this.scriptManager.Reset();

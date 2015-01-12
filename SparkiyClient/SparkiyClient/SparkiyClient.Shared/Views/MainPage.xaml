@@ -65,7 +65,7 @@
 			</SemanticZoom.ZoomedOutView>
 			
 			<SemanticZoom.ZoomedInView>
-				<Hub>
+				<Hub Background="{StaticResource AccentBrushDarkLighter3}" >
 					<Hub.Header>
 						<StackPanel Orientation="Horizontal">
 							<Grid Margin="5 0 20 0">
@@ -80,12 +80,14 @@
 					</Hub.Header>
 			
 					<!-- Content -->
-					<HubSection Width="780">
+					<HubSection Background="{StaticResource AccentBrushLight}" Width="780" VerticalContentAlignment="Stretch">
 						<DataTemplate>
 							<Grid>
 								<Grid.RowDefinitions>
 									<RowDefinition Height="Auto" />
 									<RowDefinition />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
 								</Grid.RowDefinitions>
 						
 								<!-- Select workspace folder message -->
@@ -119,6 +121,31 @@
 												Grid.Column="2"/>
 									</Grid>
 								</Border>
+								
+								<Grid Grid.Row="2">
+									<Grid.Resources>
+										<Style TargetType="TextBlock" x:Key="TextBlockCountdownStyle">
+											<Setter Property="FontSize" Value="28" />
+											<Setter Property="FontWeight" Value="ExtraLight" />
+										</Style>
+									</Grid.Resources>
+									<StackPanel Orientation="Horizontal"
+												Visibility="{Binding IsNextReleaseReady, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
+										<TextBlock Text="Next release in" Style="{StaticResource TextBlockCountdownStyle}" Margin="0 0 20 0" />
+										<TextBlock Text="{Binding NextReleaseCountdown.Days, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\:00\}}" Style="{StaticResource TextBlockCountdownStyle}" />
+										<TextBlock Text=":" Style="{StaticResource TextBlockCountdownStyle}" />
+										<TextBlock Text="{Binding NextReleaseCountdown.Hours, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\:00\}}" Style="{StaticResource TextBlockCountdownStyle}" />
+										<TextBlock Text=":" Style="{StaticResource TextBlockCountdownStyle}" />
+										<TextBlock Text="{Binding NextReleaseCountdown.Minutes, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\:00\}}" Style="{StaticResource TextBlockCountdownStyle}" />
+										<TextBlock Text=":" Style="{StaticResource TextBlockCountdownStyle}" />
+										<TextBlock Text="{Binding NextReleaseCountdown.Seconds, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0\:00\}}" Style="{StaticResource TextBlockCountdownStyle}" />
+									</StackPanel>
+									<TextBlock Text="New release will be available soon." 
+											   Style="{StaticResource TextBlockCountdownStyle}"
+											   Visibility="{Binding IsNextReleaseReady, Converter={StaticResource BooleanToVisibilityConverter}}" />
+								</Grid>
+								
+								<TextBlock Text="v1.3.0" FontSize="16" FontWeight="ExtraLight" Margin="0 4" Grid.Row="3" />
 							</Grid>
 						</DataTemplate>
 					</HubSection>

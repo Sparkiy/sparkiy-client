@@ -8,11 +8,14 @@
 	<Color x:Key="AccentColorGreen">#92CA45</Color>
 	<Color x:Key="AccentColorDark">#2F4750</Color>
 	<Color x:Key="AccentColorLight">#FFFFFF</Color>
+	<Color x:Key="AccentColorDarkLighter3">#F8F9F9</Color>
 	<SolidColorBrush x:Key="AccentBrushBlue" Color="{StaticResource AccentColorBlue}" />
 	<SolidColorBrush x:Key="AccentBrushRed" Color="{StaticResource AccentColorRed}" />
 	<SolidColorBrush x:Key="AccentBrushGreen" Color="{StaticResource AccentColorGreen}" />
 	<SolidColorBrush x:Key="AccentBrushDark" Color="{StaticResource AccentColorDark}" />
 	<SolidColorBrush x:Key="AccentBrushLight" Color="{StaticResource AccentColorLight}" />
+	<SolidColorBrush x:Key="AccentBrushDarkLighter3" Color="{StaticResource AccentColorDarkLighter3}" />
+	
 	
 	
 </ResourceDictionary>

@@ -74,7 +74,7 @@ namespace SparkiyEngine.Bindings.Component.Engine
 
         #region Scripts
 
-	    void AddScript(string name, string code);
+	    bool AddScript(string name, string code);
 
         #endregion Scripts
 

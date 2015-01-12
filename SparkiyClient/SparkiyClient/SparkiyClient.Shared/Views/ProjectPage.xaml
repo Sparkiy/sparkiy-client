@@ -67,8 +67,9 @@
 								<Grid>
 									<TextBlock Text="{Binding Project.Description}" 
                                                Foreground="#333333" 
-                                               Style="{StaticResource BodyTextBlockStyle}"
-											   VerticalAlignment="Center"
+											   FontSize="15"
+											   TextWrapping="Wrap"
+											   Padding="0 10 0 0"
 											   Visibility="{Binding IsEditMode, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" />
 									<TextBox Text="{Binding Project.Description, Mode=TwoWay}" 
 											 Visibility="{Binding IsEditMode, Converter={StaticResource BooleanToVisibilityConverter}}" 
@@ -89,7 +90,10 @@
 									   Margin="0,8,8,8" 
 									   VerticalAlignment="Center" />
 							<TextBlock Text="{Binding Project.Author}" 
-									   Style="{StaticResource SubtitleTextBlockStyle}"
+									   FontSize="15"
+									   TextWrapping="NoWrap"
+									   TextTrimming="CharacterEllipsis"
+									   Padding="0 10 0 0"
 									   Margin="8" Foreground="#666666" Grid.Column="1"
 									   Visibility="{Binding IsEditMode, Converter={StaticResource NegatedBooleanToVisibilityConverter}}"/>
 							<TextBox Text="{Binding Project.Author, Mode=TwoWay}" Margin="8" Grid.Column="1"
