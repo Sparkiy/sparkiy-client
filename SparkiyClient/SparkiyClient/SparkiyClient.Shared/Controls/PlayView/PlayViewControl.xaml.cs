@@ -59,8 +59,6 @@ namespace SparkiyClient.Controls.PlayView
 		    this.project = project;
 
 			this.RebuildEngine();
-
-			this.isInitialized = true;
 		}
 
 	    private void StopProject()
@@ -75,7 +73,7 @@ namespace SparkiyClient.Controls.PlayView
 
 	    public void PlayProject()
 	    {
-			if (this.IsPlaying)
+			if (!this.IsInitialized || this.IsPlaying)
 				return;
 
 			this.Engine.Play();
@@ -87,7 +85,7 @@ namespace SparkiyClient.Controls.PlayView
 
 	    public void PauseProject()
 	    {
-		    if (this.IsPause)
+		    if (!this.IsInitialized || this.IsPause)
 			    return;
 
 			this.Engine.Pause();
@@ -138,8 +136,12 @@ namespace SparkiyClient.Controls.PlayView
 			// TODO Add assets to the engine
 
 			// Add scripts to the engine
+			bool allScriptsValid = true;
 			foreach (var script in this.project.Files.OfType<Script>())
-				this.engine.AddScript(script.Name, classesCombined + script.Code);
+				allScriptsValid &= this.engine.AddScript(script.Name, classesCombined + script.Code);
+			if (!allScriptsValid)
+				this.isInitialized = false;
+			else this.isInitialized = true;
 		}
 
 	    public void TakeScreenshot()

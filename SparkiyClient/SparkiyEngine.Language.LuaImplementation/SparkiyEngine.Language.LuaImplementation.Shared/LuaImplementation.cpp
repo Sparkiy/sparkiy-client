@@ -138,3 +138,21 @@ void LuaImplementation::Reset()
 
 	this->m_scripts.clear();
 }
+
+//
+// ScriptError
+//
+void LuaImplementation::ScriptError(const char* scriptId, const char* message) 
+{
+	this->m_scriptError = ref new LanguageScriptError();
+	this->m_scriptError->ScriptId = GetPString(scriptId);
+	this->m_scriptError->Message = GetPString(message);
+}
+
+//
+// GetScriptError
+//
+LanguageScriptError^ LuaImplementation::GetScriptError()
+{
+	return this->m_scriptError;
+}

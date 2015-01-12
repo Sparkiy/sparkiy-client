@@ -24,7 +24,7 @@ namespace SparkiyEngine_Language_LuaImplementation
 
 		Platform::Object^ CallMethod(const char *name, SparkiyEngine::Bindings::Component::Common::MethodDeclarationOverloadDetails^ declaration, const Platform::Array<Platform::Object^>^ paramValues);
 		void RegisterMethod(SparkiyEngine::Bindings::Component::Common::MethodDeclarationDetails ^declaration);
-		void Load();
+		bool Load();
 		void Start();
 
 		// Variables and Constants
@@ -33,8 +33,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 
 	protected:
 		void RegisterFunction(const char *name, FunctionPointer pt);
-		void RegisterLibrary(const char *name, const luaL_Reg *functions);
 		const char* GetErrorMessage();
+		void HandleError();
 		void HandleException();
 
 		// Helper methods
@@ -45,7 +45,8 @@ namespace SparkiyEngine_Language_LuaImplementation
 		static LuaScript* GetCallerScript(lua_State *luaState);
 		static int PanicHandler(lua_State *luaState);
 		static bool FunctionExist(lua_State *luaState, const char *name);
-		static int CallFunction(lua_State *luaState, const char *name, int numParameters, int numResults);
+		static bool CallFunction(lua_State *luaState, const char *name, int numParameters, int numResults);
+		static void HandleProtectedCallError(lua_State *luaState, const char *name);
 
 	private:
 		// Script info

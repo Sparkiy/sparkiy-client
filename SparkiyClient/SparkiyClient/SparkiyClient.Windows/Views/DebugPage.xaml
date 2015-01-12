@@ -11,9 +11,17 @@
     xmlns:engine="using:SparkiyEngine.Bindings.Component.Engine"
     xmlns:playbackControls="using:SparkiyClient.Controls.PlaybackControls"
     xmlns:controls="using:SparkiyClient.Controls"
+    xmlns:converters="using:SparkiyClient.Converters"
     mc:Ignorable="d"
 	RequestedTheme="Light"
 	DataContext="{Binding Source={StaticResource Locator}, Path=DebugPage}">
+	
+	<common:PageBase.Resources>
+		<SolidColorBrush Color="#444" x:Key="NormalMessageForegroundBrush" />
+		<SolidColorBrush Color="OrangeRed" x:Key="ErrorMessageForegroundBrush" />
+		
+		<converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterMessages" TrueBrush="{StaticResource ErrorMessageForegroundBrush}" FalseBrush="{StaticResource NormalMessageForegroundBrush}" />
+	</common:PageBase.Resources>
 	
 	<common:PageBase.TopAppBar>
 		<AppBar RequestedTheme="Dark" Background="#111">
@@ -78,7 +86,7 @@
 											   FontSize="16"
 											   TextWrapping="Wrap" 
 											   Padding="8 10 2 10"
-											   Foreground="#444"/>
+											   Foreground="{Binding IsError, Converter={StaticResource BooleanToBrushConverterMessages}}" />
 								</Grid>
 							</DataTemplate>
 						</ListView.ItemTemplate>

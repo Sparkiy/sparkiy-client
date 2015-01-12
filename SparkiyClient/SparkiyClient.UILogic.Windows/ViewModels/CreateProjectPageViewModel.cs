@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.System.UserProfile;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -36,6 +37,8 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 			this.Project = new Project()
 			{
+				Description = "Amazing new project. Touch Play button and try it out yourself. It's great!",
+				Author = "Unknown",
 				Files = new ObservableCollection<CodeFile>()
 				{
 					new Script()
