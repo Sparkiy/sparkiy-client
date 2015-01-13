@@ -13,6 +13,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
@@ -54,7 +55,7 @@ namespace SparkiyClient
 	public sealed partial class App : Application, IDisposable
 	{
 		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<App>();
-		private readonly RaygunClient raygunClient = new RaygunClient("CzQz3DiT+vy/OLMwmrcWWg==");
+		private readonly RaygunClient raygunClient = new RaygunClient("LyFQVN1nJetaY37Lea/5Kw==");
 		private readonly IUnityContainer container = null;
 
 		//Bootstrap: App singleton service declarations
@@ -93,7 +94,7 @@ namespace SparkiyClient
 			}
 
 			// Configure crash handling
-			GlobalCrashHandler.Configure();
+			//GlobalCrashHandler.Configure();
 			Log.Debug("Global crash handler configured.");
 		}
 

@@ -59,8 +59,6 @@ namespace SparkiyClient.Views
 			{
 				scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
 		    }
-
-			throw new InvalidOperationException("O' no you di'in'!");
 		}
 
 
