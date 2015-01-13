@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SparkiyEngine.Bindings.Component.Engine
 {
-	public interface IEngineBindings : IBindingsBase
+	public interface IEngineBindings : IBindingsBase, IDisposable
     {
         #region Messages
 
@@ -70,11 +70,17 @@ namespace SparkiyEngine.Bindings.Component.Engine
         /// </summary>
         void Pause();
 
-        #endregion
+		/// <summary>
+		/// Stops this instance.
+		/// This will dispose all resources.
+		/// </summary>
+		void Stop();
 
-        #region Scripts
+		#endregion
 
-	    bool AddScript(string name, string code);
+		#region Scripts
+
+		bool AddScript(string name, string code);
 
         #endregion Scripts
 

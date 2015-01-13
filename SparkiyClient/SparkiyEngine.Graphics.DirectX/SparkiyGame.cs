@@ -307,7 +307,19 @@ namespace SparkiyEngine.Graphics.DirectX
             this.engine.LanguageBindings.SetVariable("HEIGHT", (double)this.GraphicsDevice.Viewport.Height, DataTypes.Number);
         }
 
-		#region Surface
+	    protected override void OnExiting(object sender, EventArgs args)
+	    {
+			base.OnExiting(sender, args);
+
+			if (this.Canvas != null)
+		    {
+			    this.Canvas.Clear();
+			    this.Canvas.Dispose();
+			    this.Canvas = null;
+		    }
+	    }
+
+	    #region Surface
 
 		public Color4 BackgroundColor
 		{
