@@ -180,8 +180,6 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 		private async Task SaveChangesAsync()
 		{
-			throw new InvalidOperationException("Oh no you di'int!");
-
 			SelectedFile.Code = this.editor.Code;
 			await this.projectService.SaveAsync();
 		}

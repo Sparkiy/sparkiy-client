@@ -35,5 +35,6 @@
     <Capability Name="musicLibrary" />
     <Capability Name="picturesLibrary" />
     <Capability Name="removableStorage" />
+    <Capability Name="internetClient" />
   </Capabilities>
 </Package>
