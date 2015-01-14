@@ -1,6 +1,7 @@
 # Sparkiy
 _[Sparkiy/sparkiy-client](https://github.com/Sparkiy/sparkiy-client)_
 
+[![Windows Store](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/master?svg=true&pendingText=Store: pending...&passingText=Store: OK&failingText=Store: failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/master)
 [![GratiPay Tips](https://img.shields.io/gratipay/sparkiy.svg?style=flat-square)](https://gratipay.com/sparkiy/)
 [![Bountysource](https://www.bountysource.com/badge/team?team_id=54298&style=bounties_posted)](https://www.bountysource.com/teams/sparkiy-client/bounties?utm_source=sparkiy-client&utm_medium=shield&utm_campaign=bounties_posted)
 
