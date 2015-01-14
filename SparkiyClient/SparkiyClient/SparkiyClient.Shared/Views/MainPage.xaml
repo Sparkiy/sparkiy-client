@@ -7,6 +7,7 @@
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:system="using:System"
 				xmlns:common="using:SparkiyClient.Common"
+				xmlns:news="using:SparkiyClient.Controls.News"
 				mc:Ignorable="d"
 				RequestedTheme="Light"
 				DataContext="{Binding Source={StaticResource Locator}, Path=MainPage}">
@@ -92,10 +93,11 @@
 						
 								<!-- Select workspace folder message -->
 								<Border Visibility="{Binding RequiresWorkspaceInitialization, Converter={StaticResource BooleanToVisibilityConverter}}"
-										BorderBrush="#CCC" 
-										Background="#EDEDED" 
+										BorderBrush="{StaticResource AccentBrushDarkLighter10}" 
+										Background="{StaticResource AccentBrushDarkLighter3}" 
 										BorderThickness="1"
-										HorizontalAlignment="Center">
+										HorizontalAlignment="Center"
+										Margin="0 12">
 									<Grid HorizontalAlignment="Stretch"> 
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="Auto" />
@@ -113,14 +115,18 @@
 												   Grid.Column="1"/>
 										<Button Content="Select a folder"
 												FontSize="14"
-												Padding="12 8" Margin="20 8"
-												BorderThickness="1"
-												BorderBrush="#333"
-												Background="Transparent"
+												Foreground="White"
+												Padding="12 8" Margin="20 8 8 8"
+												BorderThickness="0"
+												Background="{StaticResource AccentBrushBlue}"
 												Command="{Binding InitializeWorkspaceCommand}"
 												Grid.Column="2"/>
 									</Grid>
 								</Border>
+								
+								<news:NewsControl x:Name="NewsControl" 
+												  MinWidth="640" 
+												  Grid.Row="1" />
 								
 								<Grid Grid.Row="2">
 									<Grid.Resources>
