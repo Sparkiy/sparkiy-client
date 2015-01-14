@@ -13,7 +13,7 @@ namespace SparkiyEngine.Graphics.DirectX
     /// </summary>
     public partial class GraphicsBindings : Component, IGraphicsBindings
 	{
-		private readonly SparkiyGame game;
+		private SparkiyGame game;
 
 
 		/// <summary>
@@ -43,6 +43,13 @@ namespace SparkiyEngine.Graphics.DirectX
         {
             this.game.Pause();
         }
+
+	    public void Stop()
+	    {
+		    this.game?.Exit();
+			this.game?.Dispose();
+		    this.game = null;
+	    }
 
         #region Pre2DDraw
 

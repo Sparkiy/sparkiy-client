@@ -132,5 +132,11 @@ namespace SparkiyEngine.Bindings.Component.Graphics
         /// Pauses this instance.
         /// </summary>
         void Pause();
+
+		/// <summary>
+		/// Stops this instance.
+		/// This will dispose all resources.
+		/// </summary>
+		void Stop();
 	}
 }

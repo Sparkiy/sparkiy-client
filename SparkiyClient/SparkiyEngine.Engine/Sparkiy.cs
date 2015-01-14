@@ -135,7 +135,13 @@ namespace SparkiyEngine.Engine
             this.CallStopped();
 	    }
 
-	    public bool AddScript(string name, string code)
+		public void Stop()
+		{
+			this.Reset();
+			this.GraphicsBindings.Stop();
+		}
+
+		public bool AddScript(string name, string code)
 	    {
 			Contract.Requires(!String.IsNullOrWhiteSpace(name));
 
@@ -394,5 +400,19 @@ namespace SparkiyEngine.Engine
 	    {
 	        get { return this.graphicsSettings; }
 	    }
-    }
+
+		public void Dispose()
+		{
+			this.scriptManager.Reset();
+			this.scriptManager = null;
+
+			this.pointerManager = null;
+
+			this.GraphicsBindings.Stop();
+			this.graphicsSettings = null;
+
+			this.LanguageBindings.Reset();
+			this.languageBindings = null;
+		}
+	}
 }

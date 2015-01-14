@@ -7,6 +7,7 @@
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:system="using:System"
 				xmlns:common="using:SparkiyClient.Common"
+				xmlns:news="using:SparkiyClient.Controls.News"
 				mc:Ignorable="d"
 				RequestedTheme="Light"
 				DataContext="{Binding Source={StaticResource Locator}, Path=MainPage}">
@@ -92,10 +93,11 @@
 						
 								<!-- Select workspace folder message -->
 								<Border Visibility="{Binding RequiresWorkspaceInitialization, Converter={StaticResource BooleanToVisibilityConverter}}"
-										BorderBrush="#CCC" 
-										Background="#EDEDED" 
+										BorderBrush="{StaticResource AccentBrushDarkLighter10}" 
+										Background="{StaticResource AccentBrushDarkLighter3}" 
 										BorderThickness="1"
-										HorizontalAlignment="Center">
+										HorizontalAlignment="Center"
+										Margin="0 12">
 									<Grid HorizontalAlignment="Stretch"> 
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="Auto" />
@@ -113,20 +115,25 @@
 												   Grid.Column="1"/>
 										<Button Content="Select a folder"
 												FontSize="14"
-												Padding="12 8" Margin="20 8"
-												BorderThickness="1"
-												BorderBrush="#333"
-												Background="Transparent"
+												Foreground="White"
+												Padding="12 8" Margin="20 8 8 8"
+												BorderThickness="0"
+												Background="{StaticResource AccentBrushBlue}"
 												Command="{Binding InitializeWorkspaceCommand}"
 												Grid.Column="2"/>
 									</Grid>
 								</Border>
+								
+								<news:NewsControl x:Name="NewsControl" 
+												  MinWidth="640" 
+												  Grid.Row="1" />
 								
 								<Grid Grid.Row="2">
 									<Grid.Resources>
 										<Style TargetType="TextBlock" x:Key="TextBlockCountdownStyle">
 											<Setter Property="FontSize" Value="28" />
 											<Setter Property="FontWeight" Value="ExtraLight" />
+											<Setter Property="Foreground" Value="{StaticResource AccentBrushDark}" />
 										</Style>
 									</Grid.Resources>
 									<StackPanel Orientation="Horizontal"
@@ -145,7 +152,7 @@
 											   Visibility="{Binding IsNextReleaseReady, Converter={StaticResource BooleanToVisibilityConverter}}" />
 								</Grid>
 								
-								<TextBlock Text="v1.2.1" FontSize="16" FontWeight="ExtraLight" Margin="0 4" Grid.Row="3" />
+								<TextBlock Text="{Binding CurrentVersion}" Foreground="{StaticResource AccentBrushDark}" FontSize="16" FontWeight="ExtraLight" Margin="0 4" Grid.Row="3" />
 							</Grid>
 						</DataTemplate>
 					</HubSection>

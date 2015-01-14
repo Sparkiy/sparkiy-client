@@ -59,7 +59,7 @@ namespace SparkiyClient.Views
 			{
 				scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
 		    }
-	    }
+		}
 
 
 	    public new IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;

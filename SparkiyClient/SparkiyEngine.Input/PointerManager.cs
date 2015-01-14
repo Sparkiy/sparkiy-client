@@ -4,6 +4,8 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using Windows.Devices.Enumeration;
+using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
@@ -183,7 +185,7 @@ namespace SparkiyEngine.Input
                 this.InGameType = InputTypes.NotTracked;
                 this.RealType = InputTypes.NotTracked;
 
-                this.Pointer = pointer;
+				this.Pointer = pointer;
                 this.Update(point);
             }
 
@@ -204,8 +206,10 @@ namespace SparkiyEngine.Input
             {
                 Contract.Requires(point != null);
 
-                this.X = (float) point.Position.X;
-                this.Y = (float) point.Position.Y;
+	            float scale = DisplayProperties.LogicalDpi/96.0f;
+
+	            this.X = (float) (point.RawPosition.X*scale);
+	            this.Y = (float) (point.RawPosition.Y*scale);
             }
         }
     }
