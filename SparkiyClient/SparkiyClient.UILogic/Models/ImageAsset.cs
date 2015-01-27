@@ -6,7 +6,7 @@ using MetroLog;
 
 namespace SparkiyClient.UILogic.Models
 {
-	public class ImageAsset : AssetWithData<BitmapImage>
+	public class ImageAsset : AssetWithData<WriteableBitmap>
 	{
 		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<ImageAsset>();
 
@@ -16,10 +16,12 @@ namespace SparkiyClient.UILogic.Models
 		/// <returns></returns>
 		public override async Task GetDataAsync()
 		{
+		    if (this.Data != null) return;
+
 		    var imageFile = await StorageFile.GetFileFromPathAsync(this.Path);
 		    var imageStream = await imageFile.OpenReadAsync();
 
-            this.Data = new BitmapImage();
+            this.Data = new WriteableBitmap(1, 1);
             await this.Data.SetSourceAsync(imageStream);
 
             Log.Debug("Loaded ImageAsset \"{0}\"", this.Name);

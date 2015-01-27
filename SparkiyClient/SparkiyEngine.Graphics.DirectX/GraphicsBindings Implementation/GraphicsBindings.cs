@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
@@ -50,6 +51,11 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.game?.Dispose();
 		    this.game = null;
 	    }
+
+        public void AddImageAsset(string name, WriteableBitmap imageAsset)
+        {
+            this.game.AddImageAsset(name, imageAsset);
+        }
 
         #region Pre2DDraw
 

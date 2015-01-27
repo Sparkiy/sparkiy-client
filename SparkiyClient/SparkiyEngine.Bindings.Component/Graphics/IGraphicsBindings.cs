@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace SparkiyEngine.Bindings.Component.Graphics
 {
@@ -138,5 +139,7 @@ namespace SparkiyEngine.Bindings.Component.Graphics
 		/// This will dispose all resources.
 		/// </summary>
 		void Stop();
+
+	    void AddImageAsset(string name, WriteableBitmap imageAsset);
 	}
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace SparkiyEngine.Bindings.Component.Engine
 {
@@ -83,6 +84,17 @@ namespace SparkiyEngine.Bindings.Component.Engine
 		bool AddScript(string name, string code);
 
         #endregion Scripts
+
+        #region Assets
+        
+        /// <summary>
+        /// Adds new image asset to the texture manager
+        /// </summary>
+        /// <param name="name">Name of the asset</param>
+        /// <param name="imageAsset">Image asset data</param>
+        void AddImageAsset(string name, WriteableBitmap imageAsset);
+
+        #endregion Assets
 
         /// <summary>
         /// Resets this instance and all sub-systems.
