@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 using MetroLog;
 
@@ -13,12 +14,15 @@ namespace SparkiyClient.UILogic.Models
 		/// Gets the data asynchronously from given path.
 		/// </summary>
 		/// <returns></returns>
-#pragma warning disable 1998
 		public override async Task GetDataAsync()
 		{
-			this.Data = new BitmapImage(new Uri(this.Path, UriKind.Absolute));
-			Log.Debug("Loaded ImageAsset \"{0}\"", this.Name);
+		    var imageFile = await StorageFile.GetFileFromPathAsync(this.Path);
+		    var imageStream = await imageFile.OpenReadAsync();
+
+            this.Data = new BitmapImage();
+            await this.Data.SetSourceAsync(imageStream);
+
+            Log.Debug("Loaded ImageAsset \"{0}\"", this.Name);
 		}
-#pragma warning restore 1998
 	}
 }

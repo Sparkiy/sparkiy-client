@@ -263,7 +263,7 @@
 									<DataTemplate>
 										<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance Type=models:ImageAsset, IsDesignTimeCreatable=True}">
 											<Border Margin="8 3" Background="{StaticResource AccentBrushDark}" VerticalAlignment="Center">
-												<Image Source="{Binding Data.UriSource}" Width="36" Height="36" Stretch="Uniform" />
+												<Image Source="{Binding Data}" Width="36" Height="36" Stretch="Uniform" />
 											</Border>
 											<TextBlock Text="{Binding Name}" Margin="8 10 16 10" />
 										</StackPanel>
