@@ -42,7 +42,8 @@
 							<GridView ItemsSource="{Binding Projects}"
 									  SelectionMode="Single"
 									  IsItemClickEnabled="True"
-									  IsSwipeEnabled="True">
+									  IsSwipeEnabled="True"
+                                      ItemClick="ProjectOnItemClick">
 								<GridView.ItemTemplate>
 									<DataTemplate>
 										<StackPanel Orientation="Horizontal">
