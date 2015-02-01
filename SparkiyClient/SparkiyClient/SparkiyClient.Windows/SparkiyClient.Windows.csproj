@@ -161,9 +161,23 @@
     <Content Include="Assets\Wide310x150Logo.scale-140.png" />
     <Content Include="Assets\Wide310x150Logo.scale-180.png" />
     <Content Include="Assets\Wide310x150Logo.scale-80.png" />
+    <Content Include="defaultAdSettings.xml" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AdDuplex.Controls">
+      <HintPath>..\..\packages\AdDuplexWindows.8.0.5\lib\winrt45\AdDuplex.Controls.winmd</HintPath>
+    </Reference>
+    <Reference Include="AdDuplex.WinRT">
+      <HintPath>..\..\packages\AdDuplexWindows.8.0.5\lib\winrt45\AdDuplex.WinRT.winmd</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AdRotator">
+      <HintPath>..\..\packages\AdRotator.2.1.1\lib\netcore451\AdRotator.dll</HintPath>
+    </Reference>
+    <Reference Include="AdRotator.Core">
+      <HintPath>..\..\packages\AdRotator.2.1.1\lib\netcore451\AdRotator.Core.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>$(SolutionDir)packages\MvvmLightLibs.5.0.2.0\lib\netcore451\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
@@ -234,6 +248,9 @@
     <Reference Include="SharpDX.Toolkit.Graphics, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="SOMAW81">
+      <HintPath>..\..\packages\SOMAW81_Package.1.1.6\lib\netcore45\SOMAW81.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

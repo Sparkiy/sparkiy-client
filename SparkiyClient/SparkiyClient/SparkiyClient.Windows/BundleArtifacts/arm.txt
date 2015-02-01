@@ -1,4 +1,4 @@
-MainPackage=C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\ARM\Release\SparkiyClient.Windows_1.2.1.1_ARM.appx
-SymbolPackage=C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\AppPackages\SparkiyClient.Windows_1.2.1.1_Test\SparkiyClient.Windows_1.2.1.1_ARM.appxsym
-ResourcePack=C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\ARM\Release\SparkiyClient.Windows_1.2.1.1_scale-140.appx
-ResourcePack=C:\Users\Aleksandar\Documents\GitHub\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\ARM\Release\SparkiyClient.Windows_1.2.1.1_scale-180.appx
+MainPackage=C:\Users\Aleksandar\Source\Repos\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\ARM\Release\SparkiyClient.Windows_1.5.0.2_ARM.appx
+SymbolPackage=C:\Users\Aleksandar\Source\Repos\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\AppPackages\SparkiyClient.Windows_1.5.0.2_Test\SparkiyClient.Windows_1.5.0.2_ARM.appxsym
+ResourcePack=C:\Users\Aleksandar\Source\Repos\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\ARM\Release\SparkiyClient.Windows_1.5.0.2_scale-140.appx
+ResourcePack=C:\Users\Aleksandar\Source\Repos\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\ARM\Release\SparkiyClient.Windows_1.5.0.2_scale-180.appx

@@ -59,14 +59,14 @@ namespace SparkiyClient
 		private readonly RaygunClient raygunClient = new RaygunClient("LyFQVN1nJetaY37Lea/5Kw==");
 		private readonly IUnityContainer container = null;
 
-		//Bootstrap: App singleton service declarations
-		//private TileUpdater tileUpdater;
+        //Bootstrap: App singleton service declarations
+        //private TileUpdater tileUpdater;
 
-		/// <summary>
-		/// Initializes the singleton application object.  This is the first line of authored code
-		/// executed, and as such is the logical equivalent of main() or WinMain().
-		/// </summary>
-		public App()
+        /// <summary>
+        /// Initializes the singleton application object.  This is the first line of authored code
+        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// </summary>
+        public App()
 		{
 			// Setup Raygun
 			this.raygunClient.ApplicationVersion = this.GetVersion(true);
