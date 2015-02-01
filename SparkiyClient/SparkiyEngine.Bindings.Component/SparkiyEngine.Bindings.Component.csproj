@@ -60,6 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Attributes\MethodDeclarationAttribute.cs" />
+    <Compile Include="Common\Attributes\MethodDeclarationDocumentationAttribute.cs" />
+    <Compile Include="Common\MethodDeclarationDocumentationDetails.cs" />
+    <Compile Include="Common\Attributes\MethodDeclarationDocumentationExampleAttribute.cs" />
+    <Compile Include="Common\Attributes\MethodDeclarationDocumentationParamAttribute.cs" />
     <Compile Include="Common\Attributes\MethodDeclarationResolver.cs" />
     <Compile Include="Common\BindingsVersion.cs" />
     <Compile Include="Common\BindingTypes.cs" />
@@ -67,6 +71,8 @@
     <Compile Include="Common\IBindingsBase.cs" />
     <Compile Include="Common\LatestBindingsVersion.cs" />
     <Compile Include="Common\MethodDeclarationDetails.cs" />
+    <Compile Include="Common\MethodDeclarationDocumentationDetailsExample.cs" />
+    <Compile Include="Common\MethodDeclarationDocumentationDetailsParam.cs" />
     <Compile Include="Common\MethodDeclarationOverloadDetails.cs" />
     <Compile Include="Common\MethodTypes.cs" />
     <Compile Include="Common\NumberGroup2.cs" />
