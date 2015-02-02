@@ -280,8 +280,12 @@ namespace SparkiyEngine.Graphics.DirectX
 				// Draw 2D
 				this.Reset();
 
+			    var startTime = DateTime.Now;
+
 				// Execute users draw loop
 				this.engine.CallDrawFunction();
+
+                Log.Warn("Draw: " + (DateTime.Now - startTime).TotalMilliseconds.ToString());
 			}
 
 			this.Canvas.Render();
