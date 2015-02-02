@@ -8,9 +8,13 @@ namespace SparkiyEngine.Bindings.Component.Common
 
 		public DataTypes[] Input { get; set; }
 
+        public string[] InputNames { get; set; }
+
 		public DataTypes[] Return { get; set; }
 
-		public string Uid { get; set; }
+        public string[] ReturnNames { get; set; }
+
+        public string Uid { get; set; }
 
 		public Object Method { get; set; }
 

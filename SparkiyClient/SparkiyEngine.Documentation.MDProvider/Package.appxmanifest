@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+  <Identity Name="242bb592-a877-4645-8cef-84819a34bc30" Publisher="CN=Aleksandar" Version="0.1.0.0" />
+  <Properties>
+    <DisplayName>Sparkiy Reference Content Generator</DisplayName>
+    <PublisherDisplayName>Sparkiy</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.3.0</OSMinVersion>
+    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SparkiyEngine.Documentation.MDProvider.App">
+      <m2:VisualElements DisplayName="Sparkiy Reference Content Generator" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="Sparkiy Reference Content Generator. This generator generated .md files that are source of Sparkiy Reference API pages" ForegroundText="light" BackgroundColor="#464646">
+        <m2:SplashScreen Image="Assets\SplashScreen.png" />
+      </m2:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="musicLibrary" />
+    <Capability Name="picturesLibrary" />
+    <Capability Name="removableStorage" />
+    <Capability Name="videosLibrary" />
+  </Capabilities>
+</Package>

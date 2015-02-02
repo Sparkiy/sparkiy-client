@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media.Imaging;
 using MetroLog;
 using SparkiyEngine.Input;
 
@@ -135,7 +136,13 @@ namespace SparkiyEngine.Engine
             this.CallStopped();
 	    }
 
-	    public bool AddScript(string name, string code)
+		public void Stop()
+		{
+			this.Reset();
+			this.GraphicsBindings.Stop();
+		}
+
+		public bool AddScript(string name, string code)
 	    {
 			Contract.Requires(!String.IsNullOrWhiteSpace(name));
 
@@ -166,6 +173,11 @@ namespace SparkiyEngine.Engine
 			}
 
 		    return false;
+	    }
+
+	    public void AddImageAsset(string name, WriteableBitmap imageAsset)
+	    {
+	        this.GraphicsBindings.AddImageAsset(name, imageAsset);
 	    }
 
 	    public void CallDrawFunction()
@@ -394,5 +406,19 @@ namespace SparkiyEngine.Engine
 	    {
 	        get { return this.graphicsSettings; }
 	    }
-    }
+
+		public void Dispose()
+		{
+			this.scriptManager.Reset();
+			this.scriptManager = null;
+
+			this.pointerManager = null;
+
+			this.GraphicsBindings.Stop();
+			this.graphicsSettings = null;
+
+			this.LanguageBindings.Reset();
+			this.languageBindings = null;
+		}
+	}
 }

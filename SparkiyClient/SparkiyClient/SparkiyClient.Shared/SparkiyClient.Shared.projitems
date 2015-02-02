@@ -46,6 +46,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MessagesPopupControl.xaml.cs">
       <DependentUpon>MessagesPopupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\News\NewsControl.xaml.cs">
+      <DependentUpon>NewsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PlaybackControls\PlaybackControlsControl.xaml.cs">
       <DependentUpon>PlaybackControlsControl.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Controls\MessagesPopupControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\News\NewsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
