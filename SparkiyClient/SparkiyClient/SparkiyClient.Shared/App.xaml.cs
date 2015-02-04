@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -13,6 +14,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
@@ -33,6 +35,7 @@ using SparkiyEngine.Graphics.DirectX;
 using SparkiyEngine_Language_LuaImplementation;
 #if WINDOWS_APP
 using Windows.UI.ApplicationSettings;
+using SparkiyClient.UILogic.Windows.ViewModels;
 #endif
 using SparkiyClient.UILogic.ViewModels;
 using MetroLog;
@@ -40,8 +43,9 @@ using MetroLog.Targets;
 using MetroLog.Layouts;
 using MetroLog.Internal;
 using Microsoft.Practices.ServiceLocation;
+using Mindscape.Raygun4Net;
 using SparkiyClient.Common;
-using SparkiyClient.UILogic.Windows.ViewModels;
+using SparkiyClient.Common.Extensions;
 using SparkiyClient.Views;
 
 namespace SparkiyClient
@@ -52,20 +56,25 @@ namespace SparkiyClient
 	public sealed partial class App : Application, IDisposable
 	{
 		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<App>();
+		private readonly RaygunClient raygunClient = new RaygunClient("LyFQVN1nJetaY37Lea/5Kw==");
 		private readonly IUnityContainer container = null;
 
-		//Bootstrap: App singleton service declarations
-		//private TileUpdater tileUpdater;
+        //Bootstrap: App singleton service declarations
+        //private TileUpdater tileUpdater;
 
-		/// <summary>
-		/// Initializes the singleton application object.  This is the first line of authored code
-		/// executed, and as such is the logical equivalent of main() or WinMain().
-		/// </summary>
-		public App()
+        /// <summary>
+        /// Initializes the singleton application object.  This is the first line of authored code
+        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// </summary>
+        public App()
 		{
+			// Setup Raygun
+			this.raygunClient.ApplicationVersion = this.GetVersion(true);
+
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
-
+			this.UnhandledException += OnUnhandledException;
+			
 			// Create container and register itself
 			this.container = new UnityContainer();
 			this.container.RegisterInstance(this.container);
@@ -86,9 +95,15 @@ namespace SparkiyClient
 			}
 
 			// Configure crash handling
-			GlobalCrashHandler.Configure();
+			//GlobalCrashHandler.Configure();
 			Log.Debug("Global crash handler configured.");
 		}
+
+		private void OnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
+		{
+			this.raygunClient.Send(unhandledExceptionEventArgs.Exception);
+		}
+
 
 		/// <summary>
 		/// Invoked when the application is launched normally by the end user.  Other entry points
@@ -164,7 +179,7 @@ namespace SparkiyClient
 		/// <param name="e">Details about the navigation failure</param>
 		void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
 		{
-			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+			throw new Exception("Failed to load Page " + e.SourcePageType.FullName, e.Exception);
 		}
 
 		/// <summary>

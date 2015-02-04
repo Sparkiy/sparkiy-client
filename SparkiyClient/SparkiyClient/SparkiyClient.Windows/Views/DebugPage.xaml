@@ -12,6 +12,7 @@
     xmlns:playbackControls="using:SparkiyClient.Controls.PlaybackControls"
     xmlns:controls="using:SparkiyClient.Controls"
     xmlns:converters="using:SparkiyClient.Converters"
+    xmlns:adRotator="using:AdRotator"
     mc:Ignorable="d"
 	RequestedTheme="Light"
 	DataContext="{Binding Source={StaticResource Locator}, Path=DebugPage}">
@@ -56,6 +57,11 @@
 		<sideBar:SideBarControl Grid.Column="0">
 			<sideBar:SideBarControl.Content>
 				<Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
 					<ListView x:Name="SideBarMessagesListView" 
 							  ItemsSource="{Binding OutputMessages}"
 							  SelectionMode="None"
@@ -91,6 +97,16 @@
 							</DataTemplate>
 						</ListView.ItemTemplate>
 					</ListView>
+                    
+                    <adRotator:AdRotatorControl x:Name="AdRotatorControl"
+                                                Margin="0 5 0 10"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Stretch"
+                                                RemoteSettingsLocation="http://adrotator.apphb.com/V2defaultAdSettings.xml"
+                                                LocalSettingsLocation="AdSettings.xml"
+                                                AdWidth="320" AdHeight="125"
+                                                AutoStartAds="True" 
+                                                Grid.Row="1" />
 				</Grid>
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>

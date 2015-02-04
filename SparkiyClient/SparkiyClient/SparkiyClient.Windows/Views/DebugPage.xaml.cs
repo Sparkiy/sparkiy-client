@@ -13,6 +13,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AdRotator;
+using AdRotator.Model;
+using MetroLog;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Extensions;
 using SparkiyClient.Controls.PlayView;
@@ -30,9 +33,18 @@ namespace SparkiyClient.Views
     /// </summary>
     public sealed partial class DebugPage : PageBase
     {
+        private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<DebugPage>();
+
+
         public DebugPage()
         {
             this.InitializeComponent();
+
+#if DEBUG
+            AdRotatorControl.IsTest = true;
+#endif
+            AdRotatorControl.PlatformAdProviderComponents.Add(AdType.AdDuplex, typeof(AdDuplex.Controls.AdControl));
+            AdRotatorControl.Log += message => Log.Debug(message);
         }
 
 
@@ -54,8 +66,11 @@ namespace SparkiyClient.Views
 	    private void OutputMessagesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 	    {
 			// Scroll to bottom
-		    var scrollViewer = this.SideBarMessagesListView.GetFirstDescendantOfType<ScrollViewer>();
-			scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
+			var scrollViewer = this.SideBarMessagesListView.GetFirstDescendantOfType<ScrollViewer>();
+			if (scrollViewer != null)
+			{
+				scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null);
+		    }
 		}
 
 

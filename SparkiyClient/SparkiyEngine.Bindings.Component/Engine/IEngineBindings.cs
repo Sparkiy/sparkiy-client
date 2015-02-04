@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace SparkiyEngine.Bindings.Component.Engine
 {
-	public interface IEngineBindings : IBindingsBase
+	public interface IEngineBindings : IBindingsBase, IDisposable
     {
         #region Messages
 
@@ -70,13 +71,30 @@ namespace SparkiyEngine.Bindings.Component.Engine
         /// </summary>
         void Pause();
 
-        #endregion
+		/// <summary>
+		/// Stops this instance.
+		/// This will dispose all resources.
+		/// </summary>
+		void Stop();
 
-        #region Scripts
+		#endregion
 
-	    bool AddScript(string name, string code);
+		#region Scripts
+
+		bool AddScript(string name, string code);
 
         #endregion Scripts
+
+        #region Assets
+        
+        /// <summary>
+        /// Adds new image asset to the texture manager
+        /// </summary>
+        /// <param name="name">Name of the asset</param>
+        /// <param name="imageAsset">Image asset data</param>
+        void AddImageAsset(string name, WriteableBitmap imageAsset);
+
+        #endregion Assets
 
         /// <summary>
         /// Resets this instance and all sub-systems.

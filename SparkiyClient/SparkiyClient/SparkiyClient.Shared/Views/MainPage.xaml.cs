@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SparkiyClient.Common;
+using SparkiyClient.UILogic.Models.News;
 using SparkiyClient.UILogic.ViewModels;
 
 namespace SparkiyClient.Views
