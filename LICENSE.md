@@ -3,6 +3,8 @@
 Copyright (c) Aleksandar Toplek. All rights reserved.
 Email: aleksandar.toplek@sparkiy.com
 
+- [Syntax Editor for WinRT license]()
+
 
 ### Syntax Editor for WinRT
 _[Source](https://gallery.technet.microsoft.com/scriptcenter/Syntax-Editor-for-WinRT-c556d223/view/Reviews)_
