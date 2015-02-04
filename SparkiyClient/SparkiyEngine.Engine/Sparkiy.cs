@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media.Imaging;
 using MetroLog;
 using SparkiyEngine.Input;
 
@@ -172,6 +173,11 @@ namespace SparkiyEngine.Engine
 			}
 
 		    return false;
+	    }
+
+	    public void AddImageAsset(string name, WriteableBitmap imageAsset)
+	    {
+	        this.GraphicsBindings.AddImageAsset(name, imageAsset);
 	    }
 
 	    public void CallDrawFunction()

@@ -2,6 +2,7 @@
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Windows.UI.Xaml.Media.Imaging;
 using MetroLog;
 using SharpDX;
 using SharpDX.Direct2D1;
@@ -60,7 +61,7 @@ namespace SparkiyEngine.Graphics.DirectX
 			this.Services.AddService(typeof(IGraphicsBindings), new GraphicsBindings(this));
 
             // Add Texture provider
-            this.Services.AddService(typeof(ITextureProvider), new BasicTextureProvider(this));
+            this.Services.AddService(typeof(ITextureProvider), new BitmapImageTextureProvider(this));
 		}
 
 		protected override void Initialize()
@@ -446,5 +447,11 @@ namespace SparkiyEngine.Graphics.DirectX
 		{
 			get { return this.Services.GetService<IGraphicsBindings>(); }
 		}
-	}
+
+        public void AddImageAsset(string name, WriteableBitmap imageAsset)
+        {
+            var textureProvider = this.Services.GetService<ITextureProvider>() as BitmapImageTextureProvider;
+            textureProvider.AddImageAsset(name, imageAsset);
+        }
+    }
 }

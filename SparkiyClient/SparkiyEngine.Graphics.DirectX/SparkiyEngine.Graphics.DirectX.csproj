@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicTextureProvider.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\IBufferExtensions.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindings.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindings2D.cs" />
     <Compile Include="GraphicsBindings Implementation\GraphicsBindingsStyle.cs" />

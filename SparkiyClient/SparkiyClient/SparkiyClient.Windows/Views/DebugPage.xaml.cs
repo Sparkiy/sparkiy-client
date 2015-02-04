@@ -13,6 +13,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AdRotator;
+using AdRotator.Model;
+using MetroLog;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Extensions;
 using SparkiyClient.Controls.PlayView;
@@ -30,9 +33,18 @@ namespace SparkiyClient.Views
     /// </summary>
     public sealed partial class DebugPage : PageBase
     {
+        private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<DebugPage>();
+
+
         public DebugPage()
         {
             this.InitializeComponent();
+
+#if DEBUG
+            AdRotatorControl.IsTest = true;
+#endif
+            AdRotatorControl.PlatformAdProviderComponents.Add(AdType.AdDuplex, typeof(AdDuplex.Controls.AdControl));
+            AdRotatorControl.Log += message => Log.Debug(message);
         }
 
 

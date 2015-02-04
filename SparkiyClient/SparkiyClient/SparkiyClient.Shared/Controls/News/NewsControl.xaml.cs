@@ -24,10 +24,6 @@ namespace SparkiyClient.Controls.News
         public NewsControl()
         {
             this.InitializeComponent();
-
-	        this.Articles.Add(new Article() {Summary = "Details 1"});
-	        this.Articles.Add(new Article() {Summary = "Details 2"});
-	        this.Articles.Add(new Article() {Summary = "Details 3"});
         }
 
 

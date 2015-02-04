@@ -61,7 +61,7 @@ namespace SparkiyEngine.Graphics.DirectX
 		/// <remarks>
 		/// Value will not be negative. Stroke Thickness is used in all 2D shapes that have borders. The obvious exceptions are sprites and textures.
 		/// </remarks>
-		public float GetStrokeThickness()
+		public double GetStrokeThickness()
 		{
 			return this.game.StrokeThickness;
 		}
