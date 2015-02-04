@@ -1,7 +1,10 @@
 # License
 
 Copyright (c) Sparkiy 2015 under GNU GPL v3.0 that is included below
+
 Email: info@sparkiy.com for more information
+
+## Content
 
 - [Sparkiy license](#sparkiy)
 - [Syntax Editor for WinRT license](#syntax-editor-for-winrt)
