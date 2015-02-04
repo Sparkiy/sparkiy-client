@@ -64,7 +64,7 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.ProjectSelectedCommand = new RelayCommand<Project>(this.ProjectSelectedCommandExecute);
 			this.NewProjectCommand = new RelayCommand(this.NewProjectCommandExecute, NewProjectCommandCanExecute);
 
-			this.NextReleaseCountdown = (new DateTime(2015, 2, 9, 0, 0, 0)) - DateTime.Now;
+			this.NextReleaseCountdown = (new DateTime(2015, 2, 16, 0, 0, 0)) - DateTime.Now;
 			this.nextReleaseCountdownTimer = new DispatcherTimer();
 		    this.nextReleaseCountdownTimer.Interval = TimeSpan.FromSeconds(1);
 			this.nextReleaseCountdownTimer.Tick += NextReleaseCountdownTimerOnTick;
