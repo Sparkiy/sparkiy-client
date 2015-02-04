@@ -3,7 +3,7 @@
 Copyright (c) Aleksandar Toplek. All rights reserved.
 Email: aleksandar.toplek@sparkiy.com
 
-- [Syntax Editor for WinRT license]()
+- [Syntax Editor for WinRT license](#syntax-editor-for-winrt)
 
 
 ### Syntax Editor for WinRT
