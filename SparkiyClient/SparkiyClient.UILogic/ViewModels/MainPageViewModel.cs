@@ -47,16 +47,18 @@ namespace SparkiyClient.UILogic.ViewModels
 		private readonly IAlertMessageService alertMessageService;
 	    private readonly IStorageService storageService;
 	    private readonly IProjectService projectService;
+        private readonly ISamplesService samplesService;
 
 	    private readonly DispatcherTimer nextReleaseCountdownTimer;
 
 
-	    public MainPageViewModel(INavigationService navigationService, IAlertMessageService alertMessageService, IStorageService storageService, IProjectService projectService)
+	    public MainPageViewModel(INavigationService navigationService, IAlertMessageService alertMessageService, IStorageService storageService, IProjectService projectService, ISamplesService samplesService)
 	    {
 		    this.navigationService = navigationService;
 		    this.alertMessageService = alertMessageService;
 		    this.storageService = storageService;
 		    this.projectService = projectService;
+	        this.samplesService = samplesService;
 
 		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
 
@@ -123,9 +125,10 @@ namespace SparkiyClient.UILogic.ViewModels
 	    {
 		    await this.storageService.InitializeStorageAsync();
 		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
-		    await this.LoadProjectsAsync();
+            await this.samplesService.GetSamplesAsync();
+            await this.LoadProjectsAsync();
             this.NewProjectCommand?.RaiseCanExecuteChanged();
-        }
+	    }
 
 	    public bool LoadingData
 		{
@@ -165,7 +168,7 @@ namespace SparkiyClient.UILogic.ViewModels
 	[ComVisible(false)]
 	public class MainPageViewModelDesignTime : MainPageViewModel
 	{
-		public MainPageViewModelDesignTime() : base(null, null, new StorageService(), new ProjectService(new StorageService()))
+		public MainPageViewModelDesignTime() : base(null, null, new StorageService(), new ProjectService(new StorageService()), null)
 		{
 			this.Projects.Add(new Project() { Name = "Project One" });
 			this.Projects.Add(new Project() { Name = "Project Two" });
