@@ -185,7 +185,8 @@ namespace SparkiyClient.UILogic.Services
 		public async Task<IEnumerable<CodeFile>> GetFilesAsync(Project project)
 		{
 			var projectFolder = await this.storageService.WorkspaceFolder.GetFolderAsync(project.Name);
-			var filesFolder = await projectFolder.GetFolderAsync(ProjectFilesPath);
+            await projectFolder.EnsureFolderExistsAsync(ProjectFilesPath);
+            var filesFolder = await projectFolder.GetFolderAsync(ProjectFilesPath);
 
 			var scripts = (await this.QueryFiles<Script>(filesFolder, ProjectFilesScriptExtension)).ToList();
 			var classes = (await this.QueryFiles<Class>(filesFolder, ProjectFilesClassExtension)).ToList();
@@ -200,8 +201,9 @@ namespace SparkiyClient.UILogic.Services
 
 		public async Task<IEnumerable<Asset>> GetAssetsAsync(Project project)
 		{
-			var projectFolder = await this.storageService.WorkspaceFolder.GetFolderAsync(project.Name);
-			var assetsFolder = await projectFolder.GetFolderAsync(ProjectAssetsPath);
+            var projectFolder = await this.storageService.WorkspaceFolder.GetFolderAsync(project.Name);
+            await projectFolder.EnsureFolderExistsAsync(ProjectAssetsPath);
+            var assetsFolder = await projectFolder.GetFolderAsync(ProjectAssetsPath);
 
 			var assetFiles = await assetsFolder.GetFilesAsync();
 

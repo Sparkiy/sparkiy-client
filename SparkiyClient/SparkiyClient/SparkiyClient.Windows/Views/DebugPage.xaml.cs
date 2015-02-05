@@ -58,9 +58,6 @@ namespace SparkiyClient.Views
             adRotatorControl.AdHeight = 125;
             adRotatorControl.AutoStartAds = true;
             adRotatorControl.PlatformAdProviderComponents.Add(AdType.AdDuplex, typeof(AdDuplex.Controls.AdControl));
-#if DEBUG
-            adRotatorControl.IsTest = true;
-#endif
             Grid.SetRow(adRotatorControl, 1);
             (this.SideBarControl.Content as Grid).Children.Add(adRotatorControl);
         }
