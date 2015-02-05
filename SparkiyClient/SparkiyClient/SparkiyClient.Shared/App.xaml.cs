@@ -164,8 +164,8 @@ namespace SparkiyClient
 			if (!storageService.RequiresHardStorageInitialization())
 				await storageService.InitializeStorageAsync();
 
-			// Navigate to home page if navigation stack isn't restored
-			if (rootFrame.Content == null)
+            // Navigate to home page if navigation stack isn't restored
+            if (rootFrame.Content == null)
 				navigationService.NavigateTo<MainPage>();
 			
 			// Ensure the current window is active
@@ -217,9 +217,10 @@ namespace SparkiyClient
 			this.container.RegisterType<EngineProviderService, EngineProviderService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IProjectService, ProjectService>(new ContainerControlledLifetimeManager());
+            this.container.RegisterType<ISamplesService, SamplesService>(new ContainerControlledLifetimeManager());
 
-			// Register ViewModels
-			this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new PerResolveLifetimeManager());
+            // Register ViewModels
+            this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new PerResolveLifetimeManager());
 			this.container.RegisterType<IProjectPageViewModel, ProjectPageViewModel>(new PerResolveLifetimeManager());
 			this.container.RegisterType<IPlayPageViewModel, PlayPageViewModel>(new PerResolveLifetimeManager());
 

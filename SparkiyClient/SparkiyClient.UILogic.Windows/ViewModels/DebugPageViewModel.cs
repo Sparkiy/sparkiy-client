@@ -73,12 +73,14 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 		private void NavigateToEditorCommandExecute()
 		{
-			this.navigationService.GoBack();
+            this.projectPlayStateManager.StopProject();
+            this.navigationService.GoBack();
 		}
 
 		private void NavigateToHomeCommandExecute()
 		{
-			this.navigationService.GoHome();
+            this.projectPlayStateManager.StopProject();
+            this.navigationService.GoHome();
 		}
 
 		private void MessagesCheckTimerOnTick(object sender, object o)

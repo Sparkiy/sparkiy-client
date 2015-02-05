@@ -54,9 +54,9 @@
 												  Margin="10"
 												  Grid.Column="1" />
 		
-		<sideBar:SideBarControl Grid.Column="0">
+		<sideBar:SideBarControl x:Name="SideBarControl" Grid.Column="0">
 			<sideBar:SideBarControl.Content>
-				<Grid>
+				<Grid x:Name="SidebarContentGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -98,15 +98,6 @@
 						</ListView.ItemTemplate>
 					</ListView>
                     
-                    <adRotator:AdRotatorControl x:Name="AdRotatorControl"
-                                                Margin="0 5 0 10"
-                                                VerticalAlignment="Bottom"
-                                                HorizontalAlignment="Stretch"
-                                                RemoteSettingsLocation="http://adrotator.apphb.com/V2defaultAdSettings.xml"
-                                                LocalSettingsLocation="AdSettings.xml"
-                                                AdWidth="320" AdHeight="125"
-                                                AutoStartAds="True" 
-                                                Grid.Row="1" />
 				</Grid>
 			</sideBar:SideBarControl.Content>
 		</sideBar:SideBarControl>

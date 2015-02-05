@@ -75,6 +75,7 @@
     <Compile Include="Services\IProjectPlayEngineManagement.cs" />
     <Compile Include="Services\IProjectPlayStateManagment.cs" />
     <Compile Include="Services\IProjectService.cs" />
+    <Compile Include="Services\ISamplesService.cs" />
     <Compile Include="Services\IStorageService.cs" />
     <Compile Include="Services\ProjectPlayStateEventHandler.cs" />
     <Compile Include="Services\ProjectService.cs" />
