@@ -1,2 +1,2 @@
-MainPackage=C:\Users\Aleksandar\Source\Repos\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\x86\Release\SparkiyClient.Windows_1.6.0.2_x86.appx
-SymbolPackage=C:\Users\Aleksandar\Source\Repos\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\AppPackages\SparkiyClient.Windows_1.6.0.2_Test\SparkiyClient.Windows_1.6.0.2_x86.appxsym
+MainPackage=C:\Users\Aleksandar\Source\Repos\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\bin\x86\Release\SparkiyClient.Windows_1.6.1.1_x86.appx
+SymbolPackage=C:\Users\Aleksandar\Source\Repos\sparkiy-client\SparkiyClient\SparkiyClient\SparkiyClient.Windows\AppPackages\SparkiyClient.Windows_1.6.1.1_Test\SparkiyClient.Windows_1.6.1.1_x86.appxsym
