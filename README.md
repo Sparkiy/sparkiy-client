@@ -41,3 +41,7 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 - [Fluent Assertions](https://github.com/dennisdoomen/fluentassertions)
 - [MetroLog](https://github.com/mbrit/MetroLog)
 - [Syntax Editor for WinRT](https://gallery.technet.microsoft.com/scriptcenter/Syntax-Editor-for-WinRT-c556d223/view/Reviews)
+
+## Powered by:
+
+<img src="https://brandfolder.com/raygun/assets/14l8cwle" alt="Logo Black">

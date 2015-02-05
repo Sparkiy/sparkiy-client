@@ -39,7 +39,7 @@ namespace SparkiyClient.UILogic.ViewModels
 
 		private void StopCommandExecute()
 		{
-			this.projectPlayStateManager.PauseProject();
+			this.projectPlayStateManager.StopProject();
 			this.navigationService.GoBack();
 		}
 

@@ -208,7 +208,7 @@ namespace SparkiyEngine.Engine
 	        }
 
 			// Call use draw method
-			this.CallFunction(null, "Draw", MethodTypes.Call);
+			this.CallFunction(null, "draw", MethodTypes.Call);
 	    }
 
 	    private void CallCreated(string script)
@@ -220,7 +220,7 @@ namespace SparkiyEngine.Engine
 			    Source = this
 		    });
 
-	        this.CallFunction(script, "Created", MethodTypes.Call);
+	        this.CallFunction(script, "created", MethodTypes.Call);
 	    }
 
 	    private void CallStarted(string script = null)
@@ -232,12 +232,12 @@ namespace SparkiyEngine.Engine
 				Source = this
 			});
 
-			this.CallFunction(script, "Started", MethodTypes.Call);
+			this.CallFunction(script, "started", MethodTypes.Call);
 	    }
 
         private void CallTouched(InputTypes type, float x, float y, string script = null)
 	    {
-	        this.CallFunction(script, "Touched", MethodTypes.Set, new Dictionary<object, DataTypes>
+	        this.CallFunction(script, "touched", MethodTypes.Set, new Dictionary<object, DataTypes>
 	        {
 	            {(double) type, DataTypes.Number },
                 {(double) x, DataTypes.Number },
@@ -254,7 +254,7 @@ namespace SparkiyEngine.Engine
 				Source = this
 			});
 
-			this.CallFunction(script, "Stopped", MethodTypes.Call);
+			this.CallFunction(script, "stopped", MethodTypes.Call);
 	    }
 
 	    public object CallFunction(string script, string name, MethodTypes type, Dictionary<object, DataTypes> inputParameters = null)

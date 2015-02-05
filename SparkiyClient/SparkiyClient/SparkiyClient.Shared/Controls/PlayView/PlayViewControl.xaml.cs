@@ -63,7 +63,7 @@ namespace SparkiyClient.Controls.PlayView
 			this.RebuildEngine();
 		}
 
-	    private void StopProject()
+	    public void StopProject()
 	    {
 			this.isInitialized = false;
 
