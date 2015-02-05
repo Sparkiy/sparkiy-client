@@ -164,8 +164,8 @@ namespace SparkiyClient
 			if (!storageService.RequiresHardStorageInitialization())
 				await storageService.InitializeStorageAsync();
 
-			// Navigate to home page if navigation stack isn't restored
-			if (rootFrame.Content == null)
+            // Navigate to home page if navigation stack isn't restored
+            if (rootFrame.Content == null)
 				navigationService.NavigateTo<MainPage>();
 			
 			// Ensure the current window is active

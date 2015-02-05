@@ -97,7 +97,6 @@
     <Content Include="Assets\Square71x71Logo.scale-240.png" />
     <Content Include="Assets\StoreLogo.scale-240.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
-    <Content Include="defaultAdSettings.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AdDuplex.Universal.Controls.WinPhone.XAML">
@@ -139,7 +138,7 @@
       <HintPath>$(SolutionDir)packages\Unity.3.5.1405-prerelease\lib\portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Mindscape.Raygun4Net.WindowsStore">
-      <HintPath>..\..\packages\Mindscape.Raygun4Net.4.1.0\lib\portable-net45+win81+wpa81+windows81\Mindscape.Raygun4Net.WindowsStore.dll</HintPath>
+      <HintPath>..\..\packages\Mindscape.Raygun4Net.4.2.0\lib\portable-net45+win81+wpa81+windows81\Mindscape.Raygun4Net.WindowsStore.dll</HintPath>
     </Reference>
     <Reference Include="Nito.AsyncEx">
       <HintPath>$(SolutionDir)packages\Nito.AsyncEx.3.0.0\lib\wpa81\Nito.AsyncEx.dll</HintPath>

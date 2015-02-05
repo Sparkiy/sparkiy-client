@@ -36,5 +36,6 @@
     <Capability Name="picturesLibrary" />
     <Capability Name="removableStorage" />
     <Capability Name="internetClient" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>
