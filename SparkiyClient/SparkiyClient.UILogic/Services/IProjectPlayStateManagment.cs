@@ -6,6 +6,8 @@ namespace SparkiyClient.UILogic.Services
 
 		void PauseProject();
 
+	    void StopProject();
+
 		void RestartProject();
 
 		void TakeScreenshot();

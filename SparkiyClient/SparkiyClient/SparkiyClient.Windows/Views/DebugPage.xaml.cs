@@ -13,9 +13,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AdDuplex.Controls;
 using AdRotator;
 using AdRotator.Model;
 using MetroLog;
+using SOMAW81;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Extensions;
 using SparkiyClient.Controls.PlayView;
@@ -34,21 +36,36 @@ namespace SparkiyClient.Views
     public sealed partial class DebugPage : PageBase
     {
         private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<DebugPage>();
-
+        private SomaAdViewer somaAdViewer;
+        private AdDuplex.Controls.AdControl adduplexAdControl;
 
         public DebugPage()
         {
             this.InitializeComponent();
-
-#if DEBUG
-            AdRotatorControl.IsTest = true;
-#endif
-            AdRotatorControl.PlatformAdProviderComponents.Add(AdType.AdDuplex, typeof(AdDuplex.Controls.AdControl));
-            AdRotatorControl.Log += message => Log.Debug(message);
+            this.Loaded += OnLoaded;
         }
 
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            // Load AdRotator
+            AdRotatorControl.Log += message => Log.Debug(message);
+            var adRotatorControl = new AdRotator.AdRotatorControl();
+            adRotatorControl.Margin = new Thickness(0, 5, 0, 10);
+            adRotatorControl.VerticalAlignment = VerticalAlignment.Bottom;
+            adRotatorControl.HorizontalAlignment = HorizontalAlignment.Stretch;
+            adRotatorControl.LocalSettingsLocation = "AdSettings.xml";
+            adRotatorControl.AdWidth = 320;
+            adRotatorControl.AdHeight = 125;
+            adRotatorControl.AutoStartAds = true;
+            adRotatorControl.PlatformAdProviderComponents.Add(AdType.AdDuplex, typeof(AdDuplex.Controls.AdControl));
+#if DEBUG
+            adRotatorControl.IsTest = true;
+#endif
+            Grid.SetRow(adRotatorControl, 1);
+            (this.SideBarControl.Content as Grid).Children.Add(adRotatorControl);
+        }
 
-	    protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
 	    {
 			// Assign play engine
 			this.ViewModel.AssignProjectPlayEngineManager(this.PlayView);
