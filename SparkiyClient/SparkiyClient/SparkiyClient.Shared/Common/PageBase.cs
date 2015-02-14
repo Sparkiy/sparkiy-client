@@ -64,6 +64,6 @@ namespace SparkiyClient.Common
 		/// <summary>
 		/// View Model
 		/// </summary>
-		protected ExtendedViewModel ViewModel => this.DataContext as ExtendedViewModel;
+		protected ExtendedViewModel ViewModel { get { return this.DataContext as ExtendedViewModel; } }
 	}
 }

@@ -113,6 +113,9 @@ namespace SparkiyEngine.Documentation.MDProvider
             var groupedPages = validPages.GroupBy(llp => llp.Substring(0, llp.LastIndexOf('/'))).ToDictionary(grouping => grouping.Key, grouping => grouping);
             foreach (var group in groupedPages)
             {
+                if (group.Key == "reference")
+                    continue;
+
                 var pageContent = this.GenerateLinkPage(group.Key, group.Value);
                 var pageUrl = this.GetLinkCategory(group.Key);
 
@@ -146,6 +149,7 @@ namespace SparkiyEngine.Documentation.MDProvider
             const string page =
                 "---\r\n" +
                 "title: {0} -- Sparkiy Reference\r\n" +
+                "headerActiveClass: reference\r\n" +
                 "generatorVersion: {1}\r\n" +
                 "generatedDate: {2}\r\n" +
                 "---\r\n" +
@@ -181,6 +185,7 @@ namespace SparkiyEngine.Documentation.MDProvider
             const string page =
                 "---\r\n" +
                 "title: {0} -- Sparkiy Reference\r\n" +
+                "headerActiveClass: reference\r\n" +
                 "generatorVersion: {1}\r\n" +
                 "generatedDate: {2}\r\n" +
                 "---\r\n" +
@@ -298,12 +303,12 @@ namespace SparkiyEngine.Documentation.MDProvider
 
         private string GetLinkCategory(string category)
         {
-            return "/" + category?.TrimStart('/');
+			return "/" + category != null ? category.TrimStart('/') : String.Empty;
         }
 
         private string GetLink(MethodDeclarationDocumentationDetails details)
         {
-            return "/api/" + details.Category?.TrimStart('/') + details.Declaration.Name;
+			return "reference/api/" + details.Category != null ? details.Category.TrimStart('/') : String.Empty + details.Declaration.Name;
         }
     }
 }

@@ -13,11 +13,11 @@ namespace SparkiyEngine.Bindings.Component.Common.Attributes
         }
 
 
-        public string Name { get; }
+		public string Name { get; private set; }
 
-        public DataTypes Type { get; }
+		public DataTypes Type { get; private set; }
 
-        public string Description { get; }
+		public string Description { get; private set; }
 
 
         protected bool Equals(MethodDeclarationDocumentationParamAttribute other)
@@ -36,7 +36,7 @@ namespace SparkiyEngine.Bindings.Component.Common.Attributes
         {
             unchecked
             {
-                return (base.GetHashCode() * 397) ^ (Name?.GetHashCode() ?? 0);
+                return (base.GetHashCode() * 397) ^ (Name == null ? 0 : Name.GetHashCode());
             }
         }
     }

@@ -111,11 +111,11 @@ namespace SparkiyClient.UILogic.ViewModels
 		    }
 	    }
 
-	    public RelayCommand EditCommand { get; }
+		public RelayCommand EditCommand { get; private set; }
 
-		public RelayCommand PlayCommand { get; }
+		public RelayCommand PlayCommand { get; private set; }
 
-	    public RelayCommand GoBackCommand { get; }
+		public RelayCommand GoBackCommand { get; private set; }
 
 	    public bool LoadingData
         {

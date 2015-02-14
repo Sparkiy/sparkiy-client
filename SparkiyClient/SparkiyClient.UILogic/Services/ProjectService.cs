@@ -55,7 +55,7 @@ namespace SparkiyClient.UILogic.Services
 			if (asset != null)
 				project.Assets.Add(asset);
 
-			Log.Debug("Asset \"{0}\" imported.", asset?.Name ?? "<INVALID TYPE>");
+			Log.Debug("Asset \"{0}\" imported.", asset != null ? asset.Name : "<INVALID TYPE>");
 		}
 
 		private Asset ResolveAsset(StorageFile file)
@@ -105,7 +105,7 @@ namespace SparkiyClient.UILogic.Services
 			Log.Debug("Saving projects...");
 
 			// Retrieve all dirty projects
-			var dirtyProjects = this.projects.Where(p => p.IsDirty || (p.Files?.Any(s => s.IsDirty) ?? false));
+			var dirtyProjects = this.projects.Where(p => p.IsDirty || (p.Files != null ? p.Files.Any(s => s.IsDirty) : false));
 			foreach (var dirtyProject in dirtyProjects)
 			{
 				// Create project folder if it doesnt exist or retrieve one from project files path
@@ -122,17 +122,22 @@ namespace SparkiyClient.UILogic.Services
 
 				// Save all dirty files
 				var scriptsFolder = await projectFolder.GetFolderAsync(ProjectFilesPath);
-				var dirtyFiles = dirtyProject.Files?.Where(s => s.IsDirty);
-				if (dirtyFiles != null)
-					foreach (var script in dirtyFiles)
+				if (dirtyProject.Files != null)
+				{
+					var dirtyFiles = dirtyProject.Files.Where(s => s.IsDirty);
+					if (dirtyFiles != null)
 					{
-						await SaveFileSafeAsync(
-							scriptsFolder, 
-							script.Name, 
-							script is Script ? ProjectFilesScriptExtension : ProjectFilesClassExtension, 
-							script.Code ?? String.Empty);
-						script.MarkAsClean();
+						foreach (var script in dirtyFiles)
+						{
+							await SaveFileSafeAsync(
+								scriptsFolder,
+								script.Name,
+								script is Script ? ProjectFilesScriptExtension : ProjectFilesClassExtension,
+								script.Code ?? String.Empty);
+							script.MarkAsClean();
+						}
 					}
+				}
 
 				dirtyProject.MarkAsClean();
 

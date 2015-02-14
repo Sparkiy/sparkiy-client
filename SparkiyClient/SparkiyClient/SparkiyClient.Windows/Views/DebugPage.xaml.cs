@@ -49,15 +49,17 @@ namespace SparkiyClient.Views
         {
             // Load AdRotator
             AdRotatorControl.Log += message => Log.Debug(message);
-            var adRotatorControl = new AdRotator.AdRotatorControl();
-            adRotatorControl.Margin = new Thickness(0, 5, 0, 10);
-            adRotatorControl.VerticalAlignment = VerticalAlignment.Bottom;
-            adRotatorControl.HorizontalAlignment = HorizontalAlignment.Stretch;
-            adRotatorControl.LocalSettingsLocation = "AdSettings.xml";
-            adRotatorControl.AdWidth = 320;
-            adRotatorControl.AdHeight = 125;
-            adRotatorControl.AutoStartAds = true;
+            var adRotatorControl = new AdRotator.AdRotatorControl
+            {
+                Margin = new Thickness(0, 5, 0, 10),
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                LocalSettingsLocation = "AdSettings.xml",
+                AutoStartAds = true,
+                AdRefreshInterval = 20,
+            };
             adRotatorControl.PlatformAdProviderComponents.Add(AdType.AdDuplex, typeof(AdDuplex.Controls.AdControl));
+            adRotatorControl.PlatformAdProviderComponents.Add(AdType.Smaato, typeof(SOMAW81.AdViewer));
             Grid.SetRow(adRotatorControl, 1);
             (this.SideBarControl.Content as Grid).Children.Add(adRotatorControl);
         }
@@ -88,6 +90,9 @@ namespace SparkiyClient.Views
 		}
 
 
-	    public new IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;
+		public new IDebugPageViewModel ViewModel
+		{
+			get { return this.DataContext as IDebugPageViewModel; }
+		}
     }
 }

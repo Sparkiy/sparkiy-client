@@ -227,7 +227,8 @@ namespace SparkiyClient.Controls.CodeEditor.UI
             get
             {
                 string text = String.Empty;
-	            this.TextView?.Document.GetText(TextGetOptions.None, out text);
+				if (this.TextView != null)
+					this.TextView.Document.GetText(TextGetOptions.None, out text);
 	            return text;
             }
             set

@@ -4,7 +4,7 @@ using SharpDX.Toolkit.Direct2D;
 
 namespace SparkiyEngine.Graphics.DirectX
 {
-    internal struct Style2D
+    internal class Style2D
     {
 		private static readonly Color4 DefaultStrokeColor = new Color4(new Vector4(0, 0, 0, 1));
 		private static readonly Color4 DefaultFillColor = new Color4(new Vector4(0, 0, 0, 1));

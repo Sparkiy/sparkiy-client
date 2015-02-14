@@ -1268,6 +1268,9 @@ namespace SparkiyClient.Views
 			this.ViewModel.AssignEditor(this.CodeEditor);
 		}
 
-		public new IEditPageViewModel ViewModel => this.DataContext as IEditPageViewModel;
+		public new IEditPageViewModel ViewModel
+		{
+			get { return this.DataContext as IEditPageViewModel; }
+		}
 	}
 }

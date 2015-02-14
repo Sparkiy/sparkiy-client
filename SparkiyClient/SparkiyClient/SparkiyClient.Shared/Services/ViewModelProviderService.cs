@@ -9,18 +9,18 @@ namespace SparkiyClient.Services
 {
 	public class ViewModelProviderService
 	{
-		public IMainPageViewModel MainPage => DesignMode.DesignModeEnabled ? new MainPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IMainPageViewModel>();
+		public IMainPageViewModel MainPage { get { return DesignMode.DesignModeEnabled ? new MainPageViewModelDesignTime() : ServiceLocator.Current == null ? null : ServiceLocator.Current.GetInstance<IMainPageViewModel>();}}
 
-		public IProjectPageViewModel ProjectPage => DesignMode.DesignModeEnabled ? new ProjectPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IProjectPageViewModel>();
+		public IProjectPageViewModel ProjectPage { get { return DesignMode.DesignModeEnabled ? new ProjectPageViewModelDesignTime() : ServiceLocator.Current == null ? null : ServiceLocator.Current.GetInstance<IProjectPageViewModel>();}}
 
-		public IPlayPageViewModel PlayPage => DesignMode.DesignModeEnabled ? new PlayPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IPlayPageViewModel>();
+		public IPlayPageViewModel PlayPage { get { return DesignMode.DesignModeEnabled ? new PlayPageViewModelDesignTime() : ServiceLocator.Current == null ? null : ServiceLocator.Current.GetInstance<IPlayPageViewModel>();}}
 
 #if WINDOWS_APP
-		public ICreateProjectPageViewModel CreateProjectPage => DesignMode.DesignModeEnabled ? new CreateProjectPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<ICreateProjectPageViewModel>();
+		public ICreateProjectPageViewModel CreateProjectPage { get { return DesignMode.DesignModeEnabled ? new CreateProjectPageViewModelDesignTime() : ServiceLocator.Current == null ? null : ServiceLocator.Current.GetInstance<ICreateProjectPageViewModel>();}}
 
-		public IEditPageViewModel EditPage => DesignMode.DesignModeEnabled ? new EditPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IEditPageViewModel>();
+		public IEditPageViewModel EditPage { get { return DesignMode.DesignModeEnabled ? new EditPageViewModelDesignTime() : ServiceLocator.Current == null ? null : ServiceLocator.Current.GetInstance<IEditPageViewModel>();}}
 
-		public IDebugPageViewModel DebugPage => DesignMode.DesignModeEnabled ? new DebugPageViewModelDesignTime() : ServiceLocator.Current?.GetInstance<IDebugPageViewModel>();
+		public IDebugPageViewModel DebugPage { get { return DesignMode.DesignModeEnabled ? new DebugPageViewModelDesignTime() : ServiceLocator.Current == null ? null : ServiceLocator.Current.GetInstance<IDebugPageViewModel>(); }}
 #endif
 	}
 }

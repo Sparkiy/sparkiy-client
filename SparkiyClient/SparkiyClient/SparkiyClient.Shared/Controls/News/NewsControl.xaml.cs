@@ -23,13 +23,19 @@ namespace SparkiyClient.Controls.News
     {
         public NewsControl()
         {
+			this.Articles = new ObservableCollection<Article>();
+
             this.InitializeComponent();
         }
 
 
 		private void ArticleDismissOnClick(object sender, RoutedEventArgs e)
 		{
-			var article = ((e.OriginalSource as FrameworkElement)?.DataContext as Article);
+			var sourceElement = e.OriginalSource as FrameworkElement;
+			if (sourceElement == null)
+				throw new NullReferenceException("Could not retrieve Article from source");
+
+			var article = sourceElement.DataContext as Article;
 			if (article == null)
 				throw new NullReferenceException("Could not retrieve Article from source");
 
@@ -38,13 +44,17 @@ namespace SparkiyClient.Controls.News
 
 		private void ArticleOnClick(object sender, RoutedEventArgs e)
 		{
-			var article = ((e.OriginalSource as FrameworkElement)?.DataContext as Article);
+			var sourceElement = e.OriginalSource as FrameworkElement;
+			if (sourceElement == null)
+				throw new NullReferenceException("Could not retrieve Article from source");
+
+			var article = sourceElement.DataContext as Article;
 			if (article == null)
 				throw new NullReferenceException("Could not retrieve Article from source");
 
 			article.Action.Invoke();
 		}
 
-		public ObservableCollection<Article> Articles { get; } = new ObservableCollection<Article>();
+		public ObservableCollection<Article> Articles { get; private set; }
     }
 }

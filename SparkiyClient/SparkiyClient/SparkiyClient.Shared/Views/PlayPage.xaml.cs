@@ -43,6 +43,6 @@ namespace SparkiyClient.Views
 			base.OnNavigatedTo(e);
 		}
 
-		public new IPlayPageViewModel ViewModel => this.DataContext as IPlayPageViewModel;
+		public new IPlayPageViewModel ViewModel { get { return this.DataContext as IPlayPageViewModel; } }
 	}
 }

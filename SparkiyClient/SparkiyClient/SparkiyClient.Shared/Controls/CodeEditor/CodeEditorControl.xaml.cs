@@ -22,7 +22,8 @@ namespace SparkiyClient.Controls.CodeEditor
 	    {
 			this.CodeEditor.TextView.TextChanged += (o, args) =>
 		    {
-		        this.OnCodeChanged?.Invoke(this, null);
+				if (this.OnCodeChanged != null)
+					this.OnCodeChanged.Invoke(this, null);
 		    };
 	    }
 

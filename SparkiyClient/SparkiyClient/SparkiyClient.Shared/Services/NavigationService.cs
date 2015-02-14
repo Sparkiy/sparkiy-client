@@ -21,7 +21,7 @@ namespace SparkiyClient.Services
 
 		public string CurrentPageKey { get; private set; }
 
-		public bool CanGoBack => this.historyStack.Any();
+		public bool CanGoBack { get { return this.historyStack.Any(); } }
 
 		private static Frame GetFrame()
 		{

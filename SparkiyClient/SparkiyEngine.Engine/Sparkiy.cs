@@ -20,7 +20,7 @@ namespace SparkiyEngine.Engine
         private readonly List<string> activeScripts = new List<string>(); 
         private readonly List<string> inactiveScripts = new List<string>();
 
-        public bool HasInactiveScripts => this.inactiveScripts.Any();
+		public bool HasInactiveScripts { get { return this.inactiveScripts.Any(); } }
 
         public void AddScript(string name)
         {
@@ -267,9 +267,9 @@ namespace SparkiyEngine.Engine
 					    new MethodDeclarationOverloadDetails()
 					    {
 						    Type = type,
-						    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
+							Input = inputParameters == null ? new DataTypes[0] : inputParameters.Values.ToArray()
 					    },
-					    inputParameters?.Keys.ToArray() ?? new object[0]);
+					    inputParameters == null ? new object[0] : inputParameters.Keys.ToArray());
 			    }
 			    else
 			    {
@@ -277,9 +277,9 @@ namespace SparkiyEngine.Engine
 					    new MethodDeclarationOverloadDetails()
 					    {
 						    Type = type,
-						    Input = inputParameters?.Values.ToArray() ?? new DataTypes[0]
+							Input = inputParameters == null ? new DataTypes[0] : inputParameters.Values.ToArray()
 					    },
-					    inputParameters?.Keys.ToArray() ?? new object[0]);
+					    inputParameters == null ? new object[0] : inputParameters.Keys.ToArray());
 			    }
 		    }
 		    catch (Exception ex)
@@ -318,7 +318,8 @@ namespace SparkiyEngine.Engine
 		{
 		    this.messages.Add(message);
 
-		    this.OnMessageCreated?.Invoke(this);
+			if (this.OnMessageCreated != null)
+				this.OnMessageCreated.Invoke(this);
 		}
 
 		/// <summary>

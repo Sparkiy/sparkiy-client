@@ -255,12 +255,18 @@ namespace SparkiyClient
 		/// Get an reference to the current Application instance
 		/// as an MvvmAppBase object.
 		/// </summary>
-		public static new App Current => (App)Application.Current;
+		public static new App Current
+		{
+			get { return (App)Application.Current; }
+		}
 
 		/// <summary>
 		/// Get the IoC Unity Container 
 		/// </summary>
-		public IUnityContainer Container => this.container;
+		public IUnityContainer Container 
+		{ 
+			get { return this.container; }
+		}
 
 #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -271,7 +277,8 @@ namespace SparkiyClient
             {
                 if (disposing)
                 {
-                    this.container?.Dispose();
+					if (this.container != null)
+						this.container.Dispose();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
