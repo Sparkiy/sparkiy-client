@@ -44,4 +44,4 @@ Sparkiy is fully-featured platform for game and application development. Touch f
 
 ## Powered by:
 
-<img src="https://brandfolder.com/raygun/assets/14l8cwle" alt="Logo Black">
+![Raygun website](https://brandfolder.com/raygun/assets/14l8cwle)(https://raygun.io)
