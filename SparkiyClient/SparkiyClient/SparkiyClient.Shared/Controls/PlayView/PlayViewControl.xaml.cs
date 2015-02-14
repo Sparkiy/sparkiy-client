@@ -30,49 +30,50 @@ using SparkiyEngine.Bindings.Component.Engine;
 namespace SparkiyClient.Controls.PlayView
 {
 	public sealed partial class PlayViewControl : UserControl, IProjectPlayStateManagment, IProjectPlayEngineManagement
-    {
-	    private static ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<PlayViewControl>();
+	{
+		private static ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<PlayViewControl>();
 
-	    private Project project;
-	    private IEngineBindings engine;
+		private Project project;
+		private IEngineBindings engine;
 
 		// State tracking
-	    private bool isPaused = true;
-	    private bool isInitialized = false;
+		private bool isPaused = true;
+		private bool isInitialized = false;
 
 		public event ProjectPlayStateEventHandler OnStateChanged;
 
 
 		public PlayViewControl()
-        {
-            this.InitializeComponent();
-        }
+		{
+			this.InitializeComponent();
+		}
 
 
 		public void AssignProject(Project project)
-	    {
+		{
 			Log.Debug("Assigned project \"{0}\" to the PlayView", project.Name);
 
 			// Stop currently running project
-		    if (this.IsInitialized)
-			    this.StopProject();
+			if (this.IsInitialized)
+				this.StopProject();
 
 			// Assign new project
-		    this.project = project;
+			this.project = project;
 
 			this.RebuildEngine();
 		}
 
-	    public void StopProject()
+		public void StopProject()
 	    {
 			this.isInitialized = false;
 
 		    this.Engine.Stop();
 
-			this.OnStateChanged?.Invoke(this);
+			if (this.OnStateChanged != null)
+				this.OnStateChanged.Invoke(this);
 		}
 
-	    public void PlayProject()
+		public void PlayProject()
 	    {
 			if (!this.IsInitialized || this.IsPlaying)
 				return;
@@ -81,10 +82,11 @@ namespace SparkiyClient.Controls.PlayView
 
 		    this.isPaused = false;
 
-			this.OnStateChanged?.Invoke(this);
+			if (this.OnStateChanged != null)
+				this.OnStateChanged.Invoke(this);
 		}
 
-	    public void PauseProject()
+		public void PauseProject()
 	    {
 		    if (!this.IsInitialized || this.IsPause)
 			    return;
@@ -93,16 +95,18 @@ namespace SparkiyClient.Controls.PlayView
 
 			this.isPaused = true;
 
-			this.OnStateChanged?.Invoke(this);
+			if (this.OnStateChanged != null)
+				this.OnStateChanged.Invoke(this);
 		}
 
-	    public void RestartProject()
+		public void RestartProject()
 	    {
 			this.StopProject();
 			this.RebuildEngine();
 			this.Engine.Play();
 
-			this.OnStateChanged?.Invoke(this);
+			if (this.OnStateChanged != null)
+				this.OnStateChanged.Invoke(this);
 		}
 
 		private void RebuildEngine()
@@ -140,10 +144,10 @@ namespace SparkiyClient.Controls.PlayView
 			this.engine.Initialize();
 
 			// Add assets to the engine
-		    foreach (var imageAsset in imageAssets)
-		    {
-		        this.engine.AddImageAsset(imageAsset.Name, imageAsset.Data);
-		    }
+			foreach (var imageAsset in imageAssets)
+			{
+				this.engine.AddImageAsset(imageAsset.Name, imageAsset.Data);
+			}
 
 			// Add scripts to the engine
 			bool allScriptsValid = true;
@@ -154,17 +158,17 @@ namespace SparkiyClient.Controls.PlayView
 			else this.isInitialized = true;
 		}
 
-	    public void TakeScreenshot()
-	    {
+		public void TakeScreenshot()
+		{
 			throw new NotImplementedException();
-	    }
+		}
 
-	    public bool IsInitialized => this.isInitialized;
+		public bool IsInitialized { get { return this.isInitialized; } }
 
-	    public bool IsPlaying => !this.isPaused;
+		public bool IsPlaying { get { return !this.isPaused; } }
 
-		public bool IsPause => this.isPaused;
+		public bool IsPause { get { return this.isPaused; } }
 
-		public IEngineBindings Engine => this.engine;
-    }
+		public IEngineBindings Engine { get { return this.engine; } }
+	}
 }

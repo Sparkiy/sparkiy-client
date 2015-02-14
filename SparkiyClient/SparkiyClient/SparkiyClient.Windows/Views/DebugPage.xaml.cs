@@ -90,6 +90,9 @@ namespace SparkiyClient.Views
 		}
 
 
-	    public new IDebugPageViewModel ViewModel => this.DataContext as IDebugPageViewModel;
+		public new IDebugPageViewModel ViewModel
+		{
+			get { return this.DataContext as IDebugPageViewModel; }
+		}
     }
 }

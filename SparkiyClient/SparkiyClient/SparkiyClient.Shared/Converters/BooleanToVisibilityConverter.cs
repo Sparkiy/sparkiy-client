@@ -12,7 +12,7 @@ namespace SparkiyClient.Converters
 		/// <summary>
 		/// Set to true if you want to show control when expression value is true. Set to false if you want to hide/collapse control when expression value is true.
 		/// </summary>
-		public bool TriggerValue { get; set; } = false;
+		public bool TriggerValue { get; set; }
 
 		/// <summary>
 		/// Set to true if you just want to hide the control else set to false if you want to collapse the control

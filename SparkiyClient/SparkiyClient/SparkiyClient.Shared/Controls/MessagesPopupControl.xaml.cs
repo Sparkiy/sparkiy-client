@@ -18,13 +18,13 @@ namespace SparkiyClient.Controls
         private static readonly Brush MessageBackgroundBrushDefault =
             new SolidColorBrush(new Color() {R = 0x42, G = 0x98, B = 0xED, A = 255});
 
-        public ObservableCollection<string> Messages { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> Messages { get; private set; }
 
-        public Brush MessageBackgroundBrush { get; set; } = MessageBackgroundBrushDefault;
+        public Brush MessageBackgroundBrush { get; set; }
 
-        public Brush ErrorBackgroundBrush { get; set; } = new SolidColorBrush(Colors.OrangeRed);
+        public Brush ErrorBackgroundBrush { get; set; }
 
-        public int TemporaryMessageDisplayTime { get; set; } = 5000;
+        public int TemporaryMessageDisplayTime { get; set; }
 
 
         public Brush CurrentBackgroundBrush
@@ -63,6 +63,12 @@ namespace SparkiyClient.Controls
 
         public MessagesPopupControl()
         {
+			// Set default values
+			this.Messages = new ObservableCollection<string>();
+			this.MessageBackgroundBrush = MessageBackgroundBrushDefault;
+			this.ErrorBackgroundBrush = new SolidColorBrush(Colors.OrangeRed);
+			this.TemporaryMessageDisplayTime = 5000;
+
             this.InitializeComponent();
 
             this.DataContext = this;
