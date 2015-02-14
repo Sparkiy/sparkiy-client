@@ -17,7 +17,7 @@
     <SynthesizeLinkMetadata>true</SynthesizeLinkMetadata>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>f194d491</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>0e81a453</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -149,24 +149,6 @@
     <Reference Include="Nito.AsyncEx.Enlightenment">
       <HintPath>$(SolutionDir)packages\Nito.AsyncEx.3.0.0\lib\wpa81\Nito.AsyncEx.Enlightenment.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct3D11">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Direct3D11.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DXGI">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.DXGI.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Toolkit">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Toolkit.Game">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Toolkit.Graphics">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Graphics.dll</HintPath>
-    </Reference>
     <Reference Include="SOMAWP81">
       <HintPath>..\..\packages\SOMAW81_Package.1.1.6\lib\wpa81\SOMAWP81.dll</HintPath>
       <Private>True</Private>
@@ -213,8 +195,6 @@
   </PropertyGroup>
   <Import Project="..\SparkiyClient.Shared\SparkiyClient.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <Import Project="..\..\packages\SharpDX.2.6.3\build\SharpDX.targets" Condition="Exists('..\..\packages\SharpDX.2.6.3\build\SharpDX.targets')" />
-  <Import Project="..\..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets" Condition="Exists('..\..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
