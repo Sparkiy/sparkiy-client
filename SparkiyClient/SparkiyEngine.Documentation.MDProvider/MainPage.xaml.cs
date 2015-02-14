@@ -303,12 +303,12 @@ namespace SparkiyEngine.Documentation.MDProvider
 
         private string GetLinkCategory(string category)
         {
-            return "/" + category?.TrimStart('/');
+			return "/" + category != null ? category.TrimStart('/') : String.Empty;
         }
 
         private string GetLink(MethodDeclarationDocumentationDetails details)
         {
-            return "reference/api/" + details.Category?.TrimStart('/') + details.Declaration.Name;
+			return "reference/api/" + details.Category != null ? details.Category.TrimStart('/') : String.Empty + details.Declaration.Name;
         }
     }
 }
