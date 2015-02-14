@@ -199,7 +199,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 				if (this.SelectedFile == value)
 					return;
 
-				if (this.SelectedFile != null && this.editor?.Code != null)
+				if (this.SelectedFile != null && this.editor != null && this.editor.Code != null)
 				{
 					Log.Debug("Assigning code from editor to file \"{0}\"", this.SelectedFile.Name);
 					this.SelectedFile.Code = this.editor.Code ?? String.Empty;
@@ -210,12 +210,12 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 				if (this.SelectedFile != null && editor != null)
 				{
 					Log.Debug("Assigning code from file \"{0}\" to editor", this.SelectedFile.Name);
-					this.editor.Code = this.SelectedFile.Code?.TrimEnd('\r', '\n') + "\r" ?? String.Empty;
+					this.editor.Code = this.SelectedFile.Code != null ? this.SelectedFile.Code.TrimEnd('\r', '\n') + "\r" : String.Empty;
 				}
 			}
 		}
 
-		public RelayCommand AddNewFileCommand { get; }
+		public RelayCommand AddNewFileCommand { get; private set; }
 
 		public INewFileViewModel NewFileViewModel
 		{
@@ -223,15 +223,15 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			protected set { this.SetProperty(value); }
 		}
 
-		public RelayCommand AddNewAssetCommand { get; }
+		public RelayCommand AddNewAssetCommand { get; private set; }
 
-		public RelayCommand NavigateToHomeCommand { get; }
+		public RelayCommand NavigateToHomeCommand { get; private set; }
 
-		public RelayCommand NavigateToProjectCommand { get; }
+		public RelayCommand NavigateToProjectCommand { get; private set; }
 
-		public RelayCommand DebugProjectCommand { get; }
+		public RelayCommand DebugProjectCommand { get; private set; }
 
-		public RelayCommand PlayProjectCommand { get; }
+		public RelayCommand PlayProjectCommand { get; private set; }
 	}
 
 	public sealed class EditPageViewModelDesignTime : EditPageViewModel

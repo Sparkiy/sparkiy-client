@@ -83,6 +83,6 @@ namespace SparkiyClient.UILogic.Services
 		/// <summary>
 		/// The workspace folder
 		/// </summary>
-		public StorageFolder WorkspaceFolder => this.workspaceFolder;
+		public StorageFolder WorkspaceFolder { get { return this.workspaceFolder; } }
 	}
 }

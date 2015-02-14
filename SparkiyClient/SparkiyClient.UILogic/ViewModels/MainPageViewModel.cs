@@ -72,6 +72,8 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.nextReleaseCountdownTimer.Tick += NextReleaseCountdownTimerOnTick;
 			this.nextReleaseCountdownTimer.Start();
 		    this.NextReleaseCountdownTimerOnTick(null, null);
+
+			this.Projects = new ObservableCollection<Project>();
 	    }
 
         private bool NewProjectCommandCanExecute()
@@ -127,7 +129,9 @@ namespace SparkiyClient.UILogic.ViewModels
 		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
             await this.samplesService.GetSamplesAsync();
             await this.LoadProjectsAsync();
-            this.NewProjectCommand?.RaiseCanExecuteChanged();
+
+			if (this.NewProjectCommand != null)
+				this.NewProjectCommand.RaiseCanExecuteChanged();
 	    }
 
 	    public bool LoadingData
@@ -154,15 +158,15 @@ namespace SparkiyClient.UILogic.ViewModels
 			protected set { this.SetProperty(value); }
 		}
 
-	    public string CurrentVersion => Application.Current.GetVersion();
+	    public string CurrentVersion { get { return Application.Current.GetVersion(); } }
 
-		public RelayCommand InitializeWorkspaceCommand { get; }
+		public RelayCommand InitializeWorkspaceCommand { get; private set; }
 
-		public RelayCommand<Project> ProjectSelectedCommand { get; }
+		public RelayCommand<Project> ProjectSelectedCommand { get; private set; }
 
-		public ObservableCollection<Project> Projects { get; } = new ObservableCollection<Project>();
+		public ObservableCollection<Project> Projects { get; private set; }
 
-		public RelayCommand NewProjectCommand { get; }
+		public RelayCommand NewProjectCommand { get; private set; }
 	}
 
 	[ComVisible(false)]

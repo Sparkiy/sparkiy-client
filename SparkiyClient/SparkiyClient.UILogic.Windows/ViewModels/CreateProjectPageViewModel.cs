@@ -68,7 +68,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 			set { this.SetProperty(value); }
 		}
 
-		public RelayCommand CreateProjectCommand { get; }
+		public RelayCommand CreateProjectCommand { get; private set; }
 	}
 
 	public sealed class CreateProjectPageViewModelDesignTime : CreateProjectPageViewModel

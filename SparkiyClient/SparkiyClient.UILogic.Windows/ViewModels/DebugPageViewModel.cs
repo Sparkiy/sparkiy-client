@@ -53,6 +53,8 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 			this.NavigateToHomeCommand = new RelayCommand(this.NavigateToHomeCommandExecute);
 			this.NavigateToEditorCommand = new RelayCommand(this.NavigateToEditorCommandExecute);
+
+			this.OutputMessages = new ObservableCollection<EngineMessage>();
 		}
 
 		public async override void OnNavigatedTo(NavigationEventArgs e)
@@ -85,7 +87,7 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 
 		private void MessagesCheckTimerOnTick(object sender, object o)
 		{
-			if (this.projectPlayEngineManager?.Engine == null)
+			if (this.projectPlayEngineManager == null || this.projectPlayEngineManager.Engine == null)
 				return;
 
 			foreach (var engineMessage in this.projectPlayEngineManager.Engine.GetMessages())
@@ -115,14 +117,14 @@ namespace SparkiyClient.UILogic.Windows.ViewModels
 		}
 
 
-		public RelayCommand NavigateToEditorCommand { get; }
+		public RelayCommand NavigateToEditorCommand { get; private set; }
 
-		public RelayCommand NavigateToHomeCommand { get; }
+		public RelayCommand NavigateToHomeCommand { get; private set; }
 
 
-		public Project Project => this.project;
+		public Project Project { get { return this.project; } }
 
-		public ObservableCollection<EngineMessage> OutputMessages { get; } = new ObservableCollection<EngineMessage>();
+		public ObservableCollection<EngineMessage> OutputMessages { get; private set; }
 	}
 
 	public sealed class DebugPageViewModelDesignTime : DebugPageViewModel

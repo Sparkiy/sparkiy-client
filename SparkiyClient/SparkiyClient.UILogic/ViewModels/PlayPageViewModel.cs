@@ -80,7 +80,7 @@ namespace SparkiyClient.UILogic.ViewModels
 			this.projectPlayStateManager.PlayProject();
 		}
 
-		public RelayCommand StopCommand { get; }
+		public RelayCommand StopCommand { get; private set; }
 	}
 
 	public sealed class PlayPageViewModelDesignTime : PlayPageViewModel

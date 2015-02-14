@@ -82,7 +82,10 @@ namespace SparkiyClient.Common
 			base.RaisePropertyChanged(propertyName);
 		}
 
-		public bool IsDirty => this.propertyManager.IsDirty;
+		public bool IsDirty 
+		{ 
+			get { return  this.propertyManager.IsDirty; } 
+		}
 
 		public void MarkAsClean()
 		{
@@ -174,8 +177,8 @@ namespace SparkiyClient.Common
 				this.propertyValues[propertyName] = defaultValue;
 			return (T)this.propertyValues[propertyName];
 		}
-		
-		public bool IsDirty => this.isDirty;
+
+		public bool IsDirty { get { return this.isDirty; } }
 
 		public void MarkAsClean()
 		{

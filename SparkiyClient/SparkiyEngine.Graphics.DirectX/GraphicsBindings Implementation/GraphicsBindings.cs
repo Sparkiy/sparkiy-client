@@ -47,9 +47,11 @@ namespace SparkiyEngine.Graphics.DirectX
 
 	    public void Stop()
 	    {
-		    this.game?.Exit();
-			this.game?.Dispose();
-		    this.game = null;
+			if (this.game != null) {
+				this.game.Exit();
+				this.game.Dispose();
+				this.game = null;
+			}
 	    }
 
         public void AddImageAsset(string name, WriteableBitmap imageAsset)
