@@ -17,12 +17,6 @@ namespace SparkiyEngine.Bindings.Component.Graphics
 		bool IsMouseVisible { get; set; }
 
 		/// <summary>
-		/// Assigns the panel as drawing surface.
-		/// </summary>
-		/// <param name="panel">The panel to assign.</param>
-		void AssignPanel(object panel);
-
-		/// <summary>
 		/// Gets the graphics bindings.
 		/// </summary>
 		/// <value>

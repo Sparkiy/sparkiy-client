@@ -31,7 +31,6 @@ using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
 using SparkiyEngine.Bindings.Component.Language;
 using SparkiyEngine.Engine;
-using SparkiyEngine.Graphics.DirectX;
 using SparkiyEngine_Language_LuaImplementation;
 #if WINDOWS_APP
 using Windows.UI.ApplicationSettings;

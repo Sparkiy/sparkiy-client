@@ -178,9 +178,9 @@
       <Project>{79259DB5-4D17-450E-9861-09FA93BFF6FD}</Project>
       <Name>SparkiyEngine.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.csproj">
-      <Project>{e9172dfa-125c-4c68-8df8-ef88e36ab410}</Project>
-      <Name>SparkiyEngine.Graphics.DirectX</Name>
+    <ProjectReference Include="..\..\SparkiyEngine.Graphics.WindowsPhone\SparkiyEngine.Graphics.WindowsPhone.csproj">
+      <Project>{b9fa1899-8f79-4375-9110-1a28914595e7}</Project>
+      <Name>SparkiyEngine.Graphics.WindowsPhone</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SparkiyEngine.Language.LuaImplementation\SparkiyEngine.Language.LuaImplementation.WindowsPhone\SparkiyEngine.Language.LuaImplementation.WindowsPhone.vcxproj">
       <Project>{5e82d3af-4629-4992-95dc-e94fa0ed0a19}</Project>

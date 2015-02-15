@@ -18,8 +18,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MetroLog;
 using Microsoft.Practices.ServiceLocation;
-using SharpDX;
-using SharpDX.Toolkit.Graphics;
 using SparkiyClient.Services;
 using SparkiyClient.UILogic.Models;
 using SparkiyClient.UILogic.Services;
@@ -137,7 +135,8 @@ namespace SparkiyClient.Controls.PlayView
 			// Instantiate new engine
 			if (this.engine != null)
 			{
-				Utilities.Dispose(ref this.engine);
+				this.engine.Dispose();
+				this.engine = null;
 			}
 
 			this.engine = ServiceLocator.Current.GetInstance<EngineProviderService>().GetLuaDxEngine(this.SwapChainPanel);

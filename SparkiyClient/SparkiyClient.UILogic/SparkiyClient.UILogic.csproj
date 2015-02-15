@@ -166,10 +166,6 @@
       <Project>{79259DB5-4D17-450E-9861-09FA93BFF6FD}</Project>
       <Name>SparkiyEngine.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SparkiyEngine.Graphics.DirectX\SparkiyEngine.Graphics.DirectX.csproj">
-      <Project>{E9172DFA-125C-4C68-8DF8-EF88E36AB410}</Project>
-      <Name>SparkiyEngine.Graphics.DirectX</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -82,12 +82,6 @@ namespace SparkiyEngine.Engine
 			this.graphicsBindings = this.graphicsSettings.GraphicsBindings;
 		}
 
-	    public void AssignPanel(object panel)
-	    {
-            Contract.Requires(panel != null);
-
-            this.graphicsSettings.AssignPanel(panel);
-        }
 	    public void Initialize()
 	    {
             // Map methods Graphics > Language
