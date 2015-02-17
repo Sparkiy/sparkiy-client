@@ -1,3 +1,6 @@
 [submodule "SparkiyClient/SharpDX.Toolkit.Game.Direct2D"]
 	path = SparkiyClient/SharpDX.Toolkit.Game.Direct2D
 	url = https://github.com/Sparkiy/SharpDX.Toolkit.Game.Direct2D.git
+[submodule "SparkiyClient/MonoGame"]
+	path = SparkiyClient/MonoGame
+	url = https://github.com/Sparkiy/MonoGame.git

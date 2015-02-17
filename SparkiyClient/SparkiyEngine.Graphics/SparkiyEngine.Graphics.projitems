@@ -9,6 +9,7 @@
     <Import_RootNamespace>SparkiyEngine.Graphics</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Renderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SparkiyGame.cs" />
   </ItemGroup>
 </Project>
