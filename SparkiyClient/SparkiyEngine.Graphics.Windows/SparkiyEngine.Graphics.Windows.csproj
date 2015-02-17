@@ -119,6 +119,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MonoGame\MonoGame.Framework\MonoGame.Framework.Net.Windows8.csproj">
+      <Project>{a65b8326-1ddd-4e5d-8130-e74f70919e81}</Project>
+      <Name>MonoGame.Framework.Net.Windows8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonoGame\MonoGame.Framework\MonoGame.Framework.Windows8.csproj">
+      <Project>{0518563c-acca-4a14-8c5d-ddbe93e2605f}</Project>
+      <Name>MonoGame.Framework.Windows8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj">
       <Project>{B30085FC-1478-496B-B615-0B0FAD4AEC35}</Project>
       <Name>SparkiyEngine.Bindings.Component</Name>
