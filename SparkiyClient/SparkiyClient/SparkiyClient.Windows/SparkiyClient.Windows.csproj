@@ -288,10 +288,6 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.Windows8.csproj">
-      <Project>{0518563c-acca-4a14-8c5d-ddbe93e2605f}</Project>
-      <Name>MonoGame.Framework.Windows8</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SparkiyClient.Common\SparkiyClient.Common.csproj">
       <Project>{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}</Project>
       <Name>SparkiyClient.Common</Name>

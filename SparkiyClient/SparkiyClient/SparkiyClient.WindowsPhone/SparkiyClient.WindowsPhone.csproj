@@ -181,10 +181,6 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.WindowsPhone81.csproj">
-      <Project>{6522b7e9-25a5-4250-b164-42cc2c4eccad}</Project>
-      <Name>MonoGame.Framework.WindowsPhone81</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SparkiyClient.Common\SparkiyClient.Common.csproj">
       <Project>{8CDE3F03-4EFA-4F3D-823E-62F7A93E077B}</Project>
       <Name>SparkiyClient.Common</Name>

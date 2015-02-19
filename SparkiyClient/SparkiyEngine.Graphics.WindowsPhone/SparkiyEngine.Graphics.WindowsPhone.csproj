@@ -93,10 +93,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MonoGame\MonoGame.Framework\MonoGame.Framework.WindowsPhone81.csproj">
-      <Project>{6522b7e9-25a5-4250-b164-42cc2c4eccad}</Project>
-      <Name>MonoGame.Framework.WindowsPhone81</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj">
       <Project>{b30085fc-1478-496b-b615-0b0fad4aec35}</Project>
       <Name>SparkiyEngine.Bindings.Component</Name>
