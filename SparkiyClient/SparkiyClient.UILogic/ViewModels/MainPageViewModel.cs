@@ -48,17 +48,25 @@ namespace SparkiyClient.UILogic.ViewModels
 	    private readonly IStorageService storageService;
 	    private readonly IProjectService projectService;
         private readonly ISamplesService samplesService;
+	    private readonly IAuthenticationService authenticationService;
 
 	    private readonly DispatcherTimer nextReleaseCountdownTimer;
 
 
-	    public MainPageViewModel(INavigationService navigationService, IAlertMessageService alertMessageService, IStorageService storageService, IProjectService projectService, ISamplesService samplesService)
+	    public MainPageViewModel(
+			INavigationService navigationService, 
+			IAlertMessageService alertMessageService, 
+			IStorageService storageService, 
+			IProjectService projectService, 
+			ISamplesService samplesService,
+			IAuthenticationService authenticationService)
 	    {
 		    this.navigationService = navigationService;
 		    this.alertMessageService = alertMessageService;
 		    this.storageService = storageService;
 		    this.projectService = projectService;
 	        this.samplesService = samplesService;
+		    this.authenticationService = authenticationService;
 
 		    this.RequiresWorkspaceInitialization = this.storageService.RequiresHardStorageInitialization();
 
@@ -84,6 +92,8 @@ namespace SparkiyClient.UILogic.ViewModels
         public override async void OnNavigatedTo(NavigationEventArgs e)
 	    {
 		    base.OnNavigatedTo(e);
+
+	        await this.authenticationService.AuthenticateAsync();
 
 		    if (this.LoadingData)
 		    {
@@ -172,7 +182,7 @@ namespace SparkiyClient.UILogic.ViewModels
 	[ComVisible(false)]
 	public class MainPageViewModelDesignTime : MainPageViewModel
 	{
-		public MainPageViewModelDesignTime() : base(null, null, new StorageService(), new ProjectService(new StorageService()), null)
+		public MainPageViewModelDesignTime() : base(null, null, new StorageService(), new ProjectService(new StorageService()), null, null)
 		{
 			this.Projects.Add(new Project() { Name = "Project One" });
 			this.Projects.Add(new Project() { Name = "Project Two" });

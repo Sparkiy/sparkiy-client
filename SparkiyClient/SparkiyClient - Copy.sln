@@ -78,6 +78,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Framework.Windows8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Framework.WindowsPhone81", "MonoGame\MonoGame.Framework\MonoGame.Framework.WindowsPhone81.csproj", "{6522B7E9-25A5-4250-B164-42CC2C4ECCAD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Canvas", "Canvas", "{B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SparkiyEngine.Language.LuaImplementation\SparkiyEngine.Language.LuaImplementation.Shared\SparkiyEngine.Language.LuaImplementation.Shared.vcxitems*{b14c3355-3485-4977-928d-00cf669a0614}*SharedItemsImports = 9
@@ -828,5 +830,6 @@ Global
 		{7C827645-509A-488E-9B6F-A37598267CEC} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
 		{0518563C-ACCA-4A14-8C5D-DDBE93E2605F} = {7C827645-509A-488E-9B6F-A37598267CEC}
 		{6522B7E9-25A5-4250-B164-42CC2C4ECCAD} = {7C827645-509A-488E-9B6F-A37598267CEC}
+		{B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
 	EndGlobalSection
 EndGlobal

@@ -66,6 +66,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AlertMessageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\EngineProviderService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AuthenticationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ViewModelProviderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">

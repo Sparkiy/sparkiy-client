@@ -42,6 +42,7 @@ using MetroLog.Targets;
 using MetroLog.Layouts;
 using MetroLog.Internal;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.WindowsAzure.MobileServices;
 using Mindscape.Raygun4Net;
 using SparkiyClient.Common;
 using SparkiyClient.Common.Extensions;
@@ -103,6 +104,20 @@ namespace SparkiyClient
 			this.raygunClient.Send(unhandledExceptionEventArgs.Exception);
 		}
 
+		protected override void OnActivated(IActivatedEventArgs args)
+		{
+			// Windows Phone 8.1 requires you to handle the respose from the WebAuthenticationBroker.
+			#if WINDOWS_PHONE_APP
+				if (args.Kind == ActivationKind.WebAuthenticationBrokerContinuation)
+				{
+					// Completes the sign-in process started by LoginAsync.
+					// Change 'MobileService' to the name of your MobileServiceClient instance. 
+					App.MobileService.LoginComplete(args as WebAuthenticationBrokerContinuationEventArgs);
+				}
+			#endif
+
+			base.OnActivated(args);
+		}
 
 		/// <summary>
 		/// Invoked when the application is launched normally by the end user.  Other entry points
@@ -143,7 +158,7 @@ namespace SparkiyClient
 			{
 				this.OnUnhandledRegistrationException(ex);
 			}
-
+			
 			// Initialize navigation
 			var navigationService = this.Container.Resolve<INavigationService>() as NavigationService;
 			if (navigationService == null)
@@ -217,6 +232,8 @@ namespace SparkiyClient
 			this.container.RegisterType<IStorageService, StorageService>(new ContainerControlledLifetimeManager());
 			this.container.RegisterType<IProjectService, ProjectService>(new ContainerControlledLifetimeManager());
             this.container.RegisterType<ISamplesService, SamplesService>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IMobileServiceProvider, MobileServiceProvider>(new ContainerControlledLifetimeManager());
+			this.container.RegisterType<IAuthenticationService, AuthenticationService>(new ContainerControlledLifetimeManager());
 
             // Register ViewModels
             this.container.RegisterType<IMainPageViewModel, MainPageViewModel>(new PerResolveLifetimeManager());
