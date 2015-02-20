@@ -78,6 +78,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Graphics.Canv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkiyEngine.Graphics.Canvas.WindowsPhone81", "sparkiy-canvas\SparkiyEngine.Graphics.Canvas\SparkiyEngine.Graphics.Canvas.WindowsPhone81\SparkiyEngine.Graphics.Canvas.WindowsPhone81.csproj", "{17BB1EA0-54F3-4949-A89D-2FBC7997F795}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SparkiyEngine.Graphics.Canvas", "sparkiy-canvas\SparkiyEngine.Graphics.Canvas\SparkiyEngine.Graphics.Canvas\SparkiyEngine.Graphics.Canvas.shproj", "{6F4F1A42-1F64-4F9A-B434-0DE1C598FD45}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SparkiyEngine.Language.LuaImplementation\SparkiyEngine.Language.LuaImplementation.Shared\SparkiyEngine.Language.LuaImplementation.Shared.vcxitems*{b14c3355-3485-4977-928d-00cf669a0614}*SharedItemsImports = 9
@@ -94,6 +96,7 @@ Global
 		SparkiyEngine.Graphics\SparkiyEngine.Graphics.projitems*{b9fa1899-8f79-4375-9110-1a28914595e7}*SharedItemsImports = 4
 		SparkiyEngine.Graphics\SparkiyEngine.Graphics.projitems*{d4f9f40f-c001-4fe6-aff9-5227b50dabe1}*SharedItemsImports = 13
 		sparkiy-canvas\SparkiyEngine.Graphics.Canvas\SparkiyEngine.Graphics.Canvas\SparkiyEngine.Graphics.Canvas.projitems*{17bb1ea0-54f3-4949-a89d-2fbc7997f795}*SharedItemsImports = 4
+		sparkiy-canvas\SparkiyEngine.Graphics.Canvas\SparkiyEngine.Graphics.Canvas\SparkiyEngine.Graphics.Canvas.projitems*{6f4f1a42-1f64-4f9a-b434-0de1c598fd45}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -851,5 +854,6 @@ Global
 		{B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E} = {2BF6B7FE-6318-45C0-B5E8-BB1EA05C8AC1}
 		{2B49C1FA-78C3-4EF9-B798-705AB94A2FAA} = {B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E}
 		{17BB1EA0-54F3-4949-A89D-2FBC7997F795} = {B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E}
+		{6F4F1A42-1F64-4F9A-B434-0DE1C598FD45} = {B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E}
 	EndGlobalSection
 EndGlobal
