@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
+using SparkiyEngine.Graphics.Canvas;
+using SparkiyEngine.Graphics.Canvas.Debug;
 
 namespace SparkiyEngine.Graphics
 {
@@ -91,6 +93,7 @@ namespace SparkiyEngine.Graphics
 
 		public void DrawSquare(double x, double y, double size)
 		{
+			//this.Game
 			throw new NotImplementedException();
 		}
 
@@ -171,7 +174,7 @@ namespace SparkiyEngine.Graphics
 
 		public void Play()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
 		public void Pause()
@@ -196,6 +199,7 @@ namespace SparkiyEngine.Graphics
 		private readonly GraphicsDeviceManager graphicsDeviceManager;
 	    private IEngineBindings engine;
 
+
 	    public SparkiyGame()
 	    {
 			// Creates a graphics manager. This is mandatory.
@@ -205,20 +209,30 @@ namespace SparkiyEngine.Graphics
 			// for loading contents with the ContentManager
 			this.Content.RootDirectory = "Assets";
 
-			// Add Bindings service
+			// Add services
 			this.Services.AddService(typeof(IGraphicsBindings), new GraphicsBindings(this));
-	    }
 
+			// Add components 
+		    this.Canvas = new SparkiyCanvas(this);
+			this.Components.Add(this.Canvas);
+		    this.Components.Add(new TimeDebuger(this));
+
+			// MOuse is visible by default
+		    this.IsMouseVisible = true;
+	    }
+		
 
 	    protected override void Draw(GameTime gameTime)
 	    {
-		    base.Draw(gameTime);
+			// Clears the screen with the Color.CornflowerBlue
+			this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-		    // Clears the screen with the Color.CornflowerBlue
-		    this.GraphicsDevice.Clear(Color.CornflowerBlue);
+		    base.Draw(gameTime);
 	    }
 
-		public IGraphicsBindings GraphicsBindings
+		public SparkiyCanvas Canvas { get; private set; }
+
+	    public IGraphicsBindings GraphicsBindings
 		{
 			get { return this.Services.GetService<IGraphicsBindings>(); }
 		}

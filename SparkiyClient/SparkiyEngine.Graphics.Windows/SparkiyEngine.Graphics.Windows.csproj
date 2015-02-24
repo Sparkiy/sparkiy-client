@@ -154,6 +154,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\sparkiy-canvas\SparkiyEngine.Graphics.Canvas\SparkiyEngine.Graphics.Canvas.Windows81\SparkiyEngine.Graphics.Canvas.Windows81.csproj">
+      <Project>{2B49C1FA-78C3-4EF9-B798-705AB94A2FAA}</Project>
+      <Name>SparkiyEngine.Graphics.Canvas.Windows81</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SparkiyEngine.Bindings.Component\SparkiyEngine.Bindings.Component.csproj">
       <Project>{B30085FC-1478-496B-B615-0B0FAD4AEC35}</Project>
       <Name>SparkiyEngine.Bindings.Component</Name>
