@@ -9,6 +9,10 @@
     <Import_RootNamespace>SparkiyEngine.Graphics</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BitmapImageTextureProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ColorExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IBufferExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ITextureProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Renderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SparkiyGame.cs" />
   </ItemGroup>

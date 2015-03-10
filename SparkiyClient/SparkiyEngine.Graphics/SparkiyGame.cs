@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using Windows.UI.Xaml.Media.Imaging;
 using MetroLog;
@@ -8,19 +7,19 @@ using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
 using SparkiyEngine.Graphics.Canvas;
-using SparkiyEngine.Graphics.Canvas.Debug;
 
 namespace SparkiyEngine.Graphics
 {
 	public class GraphicsBindings : GameComponent, IGraphicsBindings
 	{
-		public GraphicsBindings(Game game) : base(game)
+		public GraphicsBindings(SparkiyGame game) : base(game)
 		{
+			this.Game = game;
 		}
 
 		public void SetStrokeColor(double red, double green, double blue)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.SetStrokeColor((float)red, (float)green, (float)blue);
 		}
 
 		public NumberGroup3 GetStrokeColor()
@@ -31,7 +30,7 @@ namespace SparkiyEngine.Graphics
 
 		public void SetStrokeThickness(double thickness)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.SetStrokeThickness((float)thickness);
 		}
 
 		public double GetStrokeThickness()
@@ -42,12 +41,12 @@ namespace SparkiyEngine.Graphics
 
 		public void StrokeDisable()
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.StrokeDisable();
 		}
 
 		public void SetFill(double red, double green, double blue)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.SetFill((float)red, (float)green, (float)blue);
 		}
 
 		public NumberGroup3 GetFill()
@@ -58,43 +57,42 @@ namespace SparkiyEngine.Graphics
 
 		public void FillDisable()
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.FillDisable();
 		}
 
 		public void PushStyle()
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.PushStyle();
 		}
 
 		public void PopStyle()
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.PopStyle();
 		}
 
 		public void SaveStyle(string key)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.SaveStyle(key);
 		}
 
 		public void LoadStyle(string key)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.LoadStyle(key);
 		}
 
 		public void ResetStyle()
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.ResetStyle();
 		}
 
 		public void DrawRectangle(double x, double y, double width, double height)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.DrawRect((float)x, (float)y, (float)width, (float)height);
 		}
 
 		public void DrawSquare(double x, double y, double size)
 		{
-			//this.Game
-			throw new NotImplementedException();
+			this.Game.Canvas.DrawSquare((float)x, (float)y, (float)size);
 		}
 
 		public void DrawEllipse(double x, double y, double majorRadius, double minorRadius)
@@ -109,7 +107,7 @@ namespace SparkiyEngine.Graphics
 
 		public void DrawLine(double x1, double y1, double x2, double y2)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.DrawLine((float)x1, (float)y1, (float)x2, (float)y2);
 		}
 
 		public void DrawTexture(string assetName, double x, double y)
@@ -191,6 +189,19 @@ namespace SparkiyEngine.Graphics
 		{
 			throw new NotImplementedException();
 		}
+
+
+		#region Properties
+
+		/// <summary>
+		/// Gets the game.
+		/// </summary>
+		/// <value>
+		/// The game.
+		/// </value>
+		public new SparkiyGame Game { get; private set; }
+
+		#endregion /Properties
 	}
 
     public class SparkiyGame : Game
@@ -215,7 +226,7 @@ namespace SparkiyEngine.Graphics
 			// Add components 
 		    this.Canvas = new SparkiyCanvas(this);
 			this.Components.Add(this.Canvas);
-		    this.Components.Add(new TimeDebuger(this));
+		    //this.Components.Add(new TimeDebuger(this));
 
 			// MOuse is visible by default
 		    this.IsMouseVisible = true;
