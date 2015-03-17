@@ -97,12 +97,12 @@ namespace SparkiyEngine.Graphics
 
 		public void DrawEllipse(double x, double y, double majorRadius, double minorRadius)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.DrawEllipse((float)x, (float)y, (float)majorRadius * 2f, (float)minorRadius * 2f);
 		}
 
 		public void DrawCircle(double x, double y, double radius)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.DrawEllipse((float)x, (float)y, (float)radius * 2f, (float)radius * 2f);
 		}
 
 		public void DrawLine(double x1, double y1, double x2, double y2)
