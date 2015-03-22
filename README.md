@@ -1,4 +1,6 @@
 # Sparkiy
+
+[![Join the chat at https://gitter.im/Sparkiy/sparkiy-client](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Sparkiy/sparkiy-client?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 _[Sparkiy/sparkiy-client](https://github.com/Sparkiy/sparkiy-client)_
 
 [![Windows Store](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/master?svg=true&pendingText=Windows Store: pending...&passingText=Windows Store: OK&failingText=Windows Store: failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/master)
