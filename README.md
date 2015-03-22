@@ -1,12 +1,12 @@
 # Sparkiy
 
-[![Join the chat at https://gitter.im/Sparkiy/sparkiy-client](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Sparkiy/sparkiy-client?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 _[Sparkiy/sparkiy-client](https://github.com/Sparkiy/sparkiy-client)_
 
 [![Windows Store](https://ci.appveyor.com/api/projects/status/gvxevc5yih5oodnn/branch/master?svg=true&pendingText=Windows Store: pending...&passingText=Windows Store: OK&failingText=Windows Store: failed)](https://ci.appveyor.com/project/AleksandarDev/sparkiy-client/branch/master)
 [![GratiPay Tips](https://img.shields.io/gratipay/sparkiy.svg?style=flat-square)](https://gratipay.com/sparkiy/)
 [![Bountysource](https://www.bountysource.com/badge/team?team_id=54298&style=bounties_posted)](https://www.bountysource.com/teams/sparkiy-client/bounties?utm_source=sparkiy-client&utm_medium=shield&utm_campaign=bounties_posted)
 
+[![Join the chat at https://gitter.im/Sparkiy/sparkiy-client](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Sparkiy/sparkiy-client?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Overview
 Bring your ideas to life. Make something everyone can play on their computer, tablet, phone and console.
