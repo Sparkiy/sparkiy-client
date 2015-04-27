@@ -34,6 +34,7 @@ namespace SparkiyEngine.Graphics
 			return this.textures[assetName];
 		}
 
+		#region Static methods
 
 		public static Texture2D FromImage(WriteableBitmap image, GraphicsDevice device)
 		{
@@ -53,5 +54,7 @@ namespace SparkiyEngine.Graphics
 
 			return texture;
 		}
+
+		#endregion /Static methods
 	}
 }

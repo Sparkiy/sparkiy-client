@@ -3,6 +3,7 @@ using System.Text;
 using Windows.UI.Xaml.Media.Imaging;
 using MetroLog;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SparkiyEngine.Bindings.Component.Common;
 using SparkiyEngine.Bindings.Component.Engine;
 using SparkiyEngine.Bindings.Component.Graphics;
@@ -112,12 +113,20 @@ namespace SparkiyEngine.Graphics
 
 		public void DrawTexture(string assetName, double x, double y)
 		{
-			throw new NotImplementedException();
+			// Retrieve texture
+			var texture = this.Game.ResolveTexture(assetName);
+
+			// Call canvas method to draw texture
+			this.Game.Canvas.DrawTexture((float) x, (float) y, texture.Width, texture.Height, texture);
 		}
 
 		public void DrawTexture(string assetName, double x, double y, double width, double height)
 		{
-			throw new NotImplementedException();
+			// Retrieve texture
+			var texture = this.Game.ResolveTexture(assetName);
+
+			// Call canvas method to draw texture
+			this.Game.Canvas.DrawTexture((float)x, (float)y, (float)width, (float)height, texture);
 		}
 
 		public void SetBackground(double red, double green, double blue)
@@ -187,7 +196,7 @@ namespace SparkiyEngine.Graphics
 
 		public void AddImageAsset(string name, WriteableBitmap imageAsset)
 		{
-			throw new NotImplementedException();
+			this.Game.AddImageAsset(name, imageAsset);
 		}
 
 
@@ -209,6 +218,7 @@ namespace SparkiyEngine.Graphics
 		private static readonly ILogger Log = LogManagerFactory.DefaultLogManager.GetLogger<SparkiyGame>();
 		private readonly GraphicsDeviceManager graphicsDeviceManager;
 	    private IEngineBindings engine;
+	    private ITextureProvider textureProvider;
 
 
 	    public SparkiyGame()
@@ -223,15 +233,28 @@ namespace SparkiyEngine.Graphics
 			// Add services
 			this.Services.AddService(typeof(IGraphicsBindings), new GraphicsBindings(this));
 
-			// Add components 
+			// Initialize canvas
 		    this.Canvas = new SparkiyCanvas(this);
+			this.Canvas.DrawReady += CanvasOnDrawReady;
 			this.Components.Add(this.Canvas);
-		    //this.Components.Add(new TimeDebuger(this));
+
+			// Instantiate texture provider
+			this.textureProvider = new BitmapImageTextureProvider(this);
 
 			// MOuse is visible by default
 		    this.IsMouseVisible = true;
 	    }
-		
+
+
+	    private void CanvasOnDrawReady(object sender)
+	    {
+		    this.engine.CallDrawFunction();
+	    }
+
+	    internal Texture2D ResolveTexture(string assetName)
+	    {
+		    return this.textureProvider.GetTexture(assetName);
+	    }
 
 	    protected override void Draw(GameTime gameTime)
 	    {
@@ -248,9 +271,25 @@ namespace SparkiyEngine.Graphics
 			get { return this.Services.GetService<IGraphicsBindings>(); }
 		}
 
+	    internal ITextureProvider TextureProvider
+	    {
+			get { return this.textureProvider; }
+	    }
+
 	    public void AssignEngine(IEngineBindings engine)
 	    {
 		    this.engine = engine;
 	    }
+
+		public void AddImageAsset(string name, WriteableBitmap imageAsset)
+		{
+			// Check if current instance of texture provider is supported and not null
+			var provider = textureProvider as BitmapImageTextureProvider;
+			if (provider == null)
+				throw new InvalidOperationException("Texture provider not supported.");
+
+			// Add image asset to texture provider
+			provider.AddImageAsset(name, imageAsset);
+		}
     }
 }
