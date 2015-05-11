@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using MetroLog;
 using SparkiyEngine.Input;
@@ -134,6 +135,10 @@ namespace SparkiyEngine.Engine
 		{
 			this.Reset();
 			this.GraphicsBindings.Stop();
+			this.GraphicsSettings.Dispose();
+
+			this.graphicsBindings = null;
+			this.graphicsSettings = null;
 		}
 
 		public bool AddScript(string name, string code)

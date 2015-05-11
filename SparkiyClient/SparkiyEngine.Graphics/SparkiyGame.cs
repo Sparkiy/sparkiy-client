@@ -25,8 +25,13 @@ namespace SparkiyEngine.Graphics
 
 		public NumberGroup3 GetStrokeColor()
 		{
-			throw new NotImplementedException();
-			return new NumberGroup3();
+			var strokeColor = this.Game.Canvas.GetStrokeColor();
+			return new NumberGroup3
+			{
+				First = strokeColor.R / 255.0,
+				Second = strokeColor.G / 255.0,
+				Third = strokeColor.B / 255.0
+			};
 		}
 
 		public void SetStrokeThickness(double thickness)
@@ -36,8 +41,7 @@ namespace SparkiyEngine.Graphics
 
 		public double GetStrokeThickness()
 		{
-			throw new NotImplementedException();
-			return 0;
+			return this.Game.Canvas.GetStrokeThickness();
 		}
 
 		public void StrokeDisable()
@@ -52,8 +56,13 @@ namespace SparkiyEngine.Graphics
 
 		public NumberGroup3 GetFill()
 		{
-			throw new NotImplementedException();
-			return new NumberGroup3();
+			var fillColor = this.Game.Canvas.GetFill();
+			return new NumberGroup3
+			{
+				First = fillColor.R / 255.0,
+				Second = fillColor.G / 255.0,
+				Third = fillColor.B / 255.0
+			};
 		}
 
 		public void FillDisable()
@@ -131,7 +140,8 @@ namespace SparkiyEngine.Graphics
 
 		public void SetBackground(double red, double green, double blue)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.SetBackgroundColor((float)red, (float)green, (float)blue);
+			this.Game.Canvas.ClearBackground();
 		}
 
 		public void SetTranslation(double x, double y)
@@ -151,47 +161,47 @@ namespace SparkiyEngine.Graphics
 
 		public void PushTransform()
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.PushTransform();
 		}
 
 		public void PopTransform()
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.PopStyle();
 		}
 
 		public void SaveTransform(string key)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.SaveTransform(key);
 		}
 
 		public void LoadTransform(string key)
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.LoadTransform(key);
 		}
 
 		public void ResetTransform()
 		{
-			throw new NotImplementedException();
+			this.Game.Canvas.ResetTransform();
 		}
 
 		public void Reset()
 		{
-			throw new NotImplementedException();
+			this.Game.Reset();
 		}
 
 		public void Play()
 		{
-			//throw new NotImplementedException();
+			this.Game.Play();
 		}
 
 		public void Pause()
 		{
-			throw new NotImplementedException();
+			this.Game.Pause();
 		}
 
 		public void Stop()
 		{
-			throw new NotImplementedException();
+			this.Game.Pause();
 		}
 
 		public void AddImageAsset(string name, WriteableBitmap imageAsset)
@@ -220,6 +230,8 @@ namespace SparkiyEngine.Graphics
 	    private IEngineBindings engine;
 	    private ITextureProvider textureProvider;
 
+	    private bool isRunning;
+
 
 	    public SparkiyGame()
 	    {
@@ -233,18 +245,33 @@ namespace SparkiyEngine.Graphics
 			// Add services
 			this.Services.AddService(typeof(IGraphicsBindings), new GraphicsBindings(this));
 
+			// Initialize
+			this.InitializeResources();
+	    }
+
+	    private void InitializeResources()
+	    {
+		    this.isRunning = false;
+
 			// Initialize canvas
-		    this.Canvas = new SparkiyCanvas(this);
+			this.Canvas = new SparkiyCanvas(this);
 			this.Canvas.DrawReady += CanvasOnDrawReady;
 			this.Components.Add(this.Canvas);
 
 			// Instantiate texture provider
 			this.textureProvider = new BitmapImageTextureProvider(this);
 
-			// MOuse is visible by default
-		    this.IsMouseVisible = true;
+			// Mouse is visible by default
+			this.IsMouseVisible = true;
 	    }
 
+
+	    protected override void Draw(GameTime gameTime)
+	    {
+			// Do not call components if game is not running
+			if (this.isRunning)
+				base.Draw(gameTime);
+	    }
 
 	    private void CanvasOnDrawReady(object sender)
 	    {
@@ -256,15 +283,7 @@ namespace SparkiyEngine.Graphics
 		    return this.textureProvider.GetTexture(assetName);
 	    }
 
-	    protected override void Draw(GameTime gameTime)
-	    {
-			// Clears the screen with the Color.CornflowerBlue
-			this.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-		    base.Draw(gameTime);
-	    }
-
-		public SparkiyCanvas Canvas { get; private set; }
+	    public SparkiyCanvas Canvas { get; private set; }
 
 	    public IGraphicsBindings GraphicsBindings
 		{
@@ -274,6 +293,28 @@ namespace SparkiyEngine.Graphics
 	    internal ITextureProvider TextureProvider
 	    {
 			get { return this.textureProvider; }
+	    }
+
+	    public void Play()
+	    {
+		    this.isRunning = true;
+	    }
+
+	    public void Pause()
+	    {
+			this.isRunning = false;
+	    }
+
+	    public void Reset()
+	    {
+			// Stop the game
+		    this.Pause();
+
+			// Reset canvas
+			this.Canvas.Reset();
+
+		    // Initialize game
+		    this.InitializeResources();
 	    }
 
 	    public void AssignEngine(IEngineBindings engine)

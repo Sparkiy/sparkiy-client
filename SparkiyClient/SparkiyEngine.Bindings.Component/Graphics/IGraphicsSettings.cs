@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Diagnostics.Contracts;
 using SparkiyEngine.Bindings.Component.Language;
 
 namespace SparkiyEngine.Bindings.Component.Graphics
@@ -6,7 +7,7 @@ namespace SparkiyEngine.Bindings.Component.Graphics
 	/// <summary>
 	/// Graphics Settings manager should implement this interface
 	/// </summary>
-	public interface IGraphicsSettings
+	public interface IGraphicsSettings : IDisposable
 	{
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is mouse visible.

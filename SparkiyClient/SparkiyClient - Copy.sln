@@ -47,6 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Graph.dgml = Graph.dgml
 		..\LICENSE.md = ..\LICENSE.md
+		Performance1.psess = Performance1.psess
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
@@ -855,5 +856,8 @@ Global
 		{2B49C1FA-78C3-4EF9-B798-705AB94A2FAA} = {B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E}
 		{17BB1EA0-54F3-4949-A89D-2FBC7997F795} = {B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E}
 		{6F4F1A42-1F64-4F9A-B434-0DE1C598FD45} = {B99780EA-D7D4-41C0-A1FF-C5D3AFCD129E}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
